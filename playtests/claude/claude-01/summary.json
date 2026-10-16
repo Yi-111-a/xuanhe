@@ -1,0 +1,7 @@
+{
+  "agent": "claude",
+  "run": "claude-01",
+  "exit": 0,
+  "seconds": 677,
+  "report": true
+}

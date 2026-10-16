@@ -104,10 +104,11 @@
   kind: random
   conditions:
     all:
+      - {kind: season, value: [夏, 秋]}
       - {kind: turn, operator: gte, value: 1}
       - {kind: turn, operator: lte, value: 3}
       - {kind: resource, id: dongnan, operator: gte, value: 55}
-  gravity: 0.45
+  gravity: 0.6
   importance: 1
   region: liangzhe
   text: 两浙旱，蝗起于睦、歙山间。应奉之役不减，州县催科如故，乡民或聚或散。
@@ -594,6 +595,7 @@
       - {kind: turn, operator: gte, value: 11}
       - {kind: region_controller, region: yanshan, faction: liao}
       - {kind: resource, id: liao_zuo, operator: lt, value: 30}
+      - {kind: flag, key: beifa_started, value: true}
   gravity: 0.9
   importance: 3
   region: yanshan
@@ -605,6 +607,28 @@
     - {op: adjust_army, army: liao_yanjing, delta: -100000, reason: 燕京辽军溃散}
     - {op: adjust_resource, resource: liao_zuo, delta: -8, reason: 辽失燕京}
     - {op: adjust_resource, resource: jin_contempt, delta: 4, reason: 宋不能取燕，倚金取之}
+  illustration: event.yanjing_taken
+
+- id: jin_takes_yanjing_alone
+  title: 金取燕京
+  kind: conditional
+  conditions:
+    all:
+      - {kind: turn, operator: gte, value: 11}
+      - {kind: region_controller, region: yanshan, faction: liao}
+      - {kind: resource, id: liao_zuo, operator: lt, value: 30}
+      - {kind: flag, key: beifa_started, operator: absent}
+  gravity: 0.9
+  importance: 3
+  region: yanshan
+  text: 金兵自居庸关入燕，辽人不战而溃，燕京遂为金有。宋未尝出兵，燕云故地尽入女真，金之兵锋与河北只隔一水。
+  effects:
+    - {op: set_flag, key: yanjing_jin, value: true}
+    - {op: set_region_controller, region: yanshan, faction: jin}
+    - {op: set_region_controller, region: pingzhou, faction: jin}
+    - {op: adjust_army, army: liao_yanjing, delta: -100000, reason: 燕京辽军溃散}
+    - {op: adjust_resource, resource: liao_zuo, delta: -8, reason: 辽失燕京}
+    - {op: adjust_resource, resource: jin_contempt, delta: 2, reason: 金人独取燕京}
   illustration: event.yanjing_taken
 
 # 常胜军若仍在燕京城中而燕京归金，则退入河北东路。
@@ -1079,6 +1103,7 @@
   kind: conditional
   conditions:
     all:
+      - {kind: flag, key: jin_invaded, value: true}
       - {kind: flag, key: bianjing_besieged, value: true}
       - {kind: flag, key: qinwang, operator: absent}
       - {kind: flag, key: jin_withdrawn, operator: absent}
@@ -1295,8 +1320,11 @@
   kind: random
   repeatable: true
   cooldown: 6
-  conditions: {kind: region_controller, region: hebei_dong, faction: song}
-  gravity: 0.1
+  conditions:
+    all:
+      - {kind: region_controller, region: hebei_dong, faction: song}
+      - {kind: season, value: [夏, 秋]}
+  gravity: 0.2
   importance: 1
   region: hebei_dong
   text: 黄河决于河北，漂没民田庐舍，流民南徙。都水监请发丁夫塞决口，或请且赈且徙、待水势稍定。逾期不决，依例赈济。
@@ -1327,9 +1355,10 @@
 - id: capital_flood
   title: 京师大水
   kind: random
+  conditions: {kind: season, value: [夏, 秋]}
   repeatable: true
   cooldown: 8
-  gravity: 0.06
+  gravity: 0.12
   importance: 1
   region: bianjing
   text: 京师大雨，汴水暴涨，城外民居多没。言者以为阴气太盛，宜防盗贼、外患。
@@ -1345,9 +1374,10 @@
   cooldown: 4
   conditions:
     all:
+      - {kind: season, value: 春}
       - {kind: resource, id: morale, operator: gte, value: 45}
       - {kind: flag, key: jin_invaded, operator: absent}
-  gravity: 0.12
+  gravity: 0.36
   importance: 1
   region: bianjing
   text: 上元夜，宣德门前结彩山，灯火连十余里，陛下登楼观灯，赐酒万民。都人士女，通宵游赏。
@@ -1436,8 +1466,11 @@
   kind: random
   repeatable: true
   cooldown: 4
-  conditions: {kind: region_controller, region: jiangnan, faction: song}
-  gravity: 0.15
+  conditions:
+    all:
+      - {kind: region_controller, region: jiangnan, faction: song}
+      - {kind: season, value: 秋}
+  gravity: 0.45
   importance: 1
   region: jiangnan
   text: 江南、淮南大稔，米价平，漕舟相衔而北。
@@ -1646,11 +1679,33 @@
   gravity: 0.6
   importance: 2
   region: jin
-  text: 金人侦知宋以粮帛助辽，遣使诘问：「南朝既与我通好，何为资我仇敌？」宋使支吾以对。
+  text: 金人侦知宋以粮帛助辽，遣使诘问：「南朝何为资我仇敌？」宋使支吾以对。
   effects:
     - {op: set_flag, key: jin_questions_aid_done, value: true}
     - {op: adjust_resource, resource: jin_contempt, delta: 2, reason: 宋阴助辽}
     - {op: adjust_resource, resource: nanmu, delta: 1, reason: 金人疑宋}
+  illustration: event.jin_envoy
+
+# 宋助辽者，金人逐年加兵攻辽，并陈兵燕山之北以示宋（联辽之路的代价：胡马南牧与金人轻宋随之上升）。
+- id: jin_presses_liao
+  title: 金人移兵问罪
+  kind: random
+  repeatable: true
+  cooldown: 3
+  conditions:
+    all:
+      - {kind: flag, key: liao_aided, value: true}
+      - {kind: turn, operator: gte, value: 10}
+      - {kind: flag, key: liao_fallen, operator: absent}
+      - {kind: flag, key: jin_invaded, operator: absent}
+  gravity: 0.45
+  importance: 2
+  region: jin
+  text: 金人以宋输粮帛资辽，增兵攻辽余众，又陈兵燕山之北，扬言将问南朝资敌之罪。
+  effects:
+    - {op: adjust_resource, resource: liao_zuo, delta: -4, reason: 金人增兵攻辽}
+    - {op: adjust_resource, resource: nanmu, delta: 4, reason: 金人以助辽问罪}
+    - {op: adjust_resource, resource: jin_contempt, delta: 2, reason: 金人以宋为辽之党}
   illustration: event.jin_envoy
 
 - id: liao_rallies
@@ -1902,8 +1957,11 @@
   kind: random
   repeatable: true
   cooldown: 6
-  conditions: {kind: region_controller, region: jingdong, faction: song}
-  gravity: 0.1
+  conditions:
+    all:
+      - {kind: region_controller, region: jingdong, faction: song}
+      - {kind: season, value: [夏, 秋]}
+  gravity: 0.2
   importance: 1
   region: jingdong
   text: 京东飞蝗蔽野，所过禾稼一空，州县捕蝗不及。
@@ -1992,6 +2050,7 @@
       - {kind: flag, key: liao_fallen, operator: absent}
       - {kind: flag, key: invite_tianzuo_done, operator: absent}
       - {kind: character_status, character: yelu_yanxi, value: alive}
+      - {kind: resource, id: liao_zuo, operator: lte, value: 30}
   gravity: 0.6
   importance: 2
   region: yunzhong
@@ -2019,7 +2078,8 @@
   kind: conditional
   conditions:
     all:
-      - {kind: flag, key: aguda_dead, value: true}
+      - {kind: flag_age, key: aguda_dead, operator: gte, value: 2}
+      - {kind: flag, key: "memorial:t14_aguda", operator: absent}
       - {kind: flag, key: jin_coronation_done, operator: absent}
       - any:
           - {kind: flag, key: haishang_ally, value: true}
@@ -2253,8 +2313,11 @@
   kind: random
   repeatable: true
   cooldown: 6
-  conditions: {kind: turn, operator: gte, value: 2}
-  gravity: 0.12
+  conditions:
+    all:
+      - {kind: turn, operator: gte, value: 2}
+      - {kind: season, value: 冬}
+  gravity: 0.36
   importance: 1
   region: bianjing
   text: 冬寒，汴河冰合，漕舟不能进，京师仓廪仰给于陆运，所费倍常。

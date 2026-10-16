@@ -38,12 +38,13 @@ export const SOURCE_NAMES: Record<string, string> = {
   autonomy: '将领自主',
 };
 
-/** 有司稽迟 / 驿程遥远（令达于下季） / 将领自主 — the three ways a clause is put off. */
+/** 有司稽迟 / 驿程遥远（令达于下季） / 将领自主 / 随前条延期 — the ways a clause is put off. */
 export function delayKindLabel(c: Clause): string | null {
   if (c.status !== 'delayed') return null;
   const kind = c.delay_kind ?? (/驿程|令达/.test(c.delay_reason ?? '') ? 'courier' : 'bureaucratic');
   if (kind === 'courier') return '驿程遥远（令达于下季）';
   if (kind === 'autonomy') return '将领自主';
+  if (kind === 'dependency') return '随前条延期';
   return '有司稽迟';
 }
 

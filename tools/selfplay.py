@@ -71,7 +71,7 @@ def main(argv: list[str]) -> int:
                 args["cards"] = cards
             receipt = run("draft_edict", args)
             print(receipt)
-            if re.search(r"rejected|驳回|被拒", receipt):
+            if re.search(r"^\d+\. \[rejected", receipt, re.MULTILINE):
                 print("草案有被驳回的条款：本季不确认，请改了再拟。")
                 return 1
             edict = re.search(r"edict-[0-9a-f]+", receipt)

@@ -115,6 +115,8 @@ export interface ChoiceOption {
   effects?: Op[];
   conditions?: unknown;
   hint?: string;
+  /** engine: effect summary per op (same wording as memorial options) */
+  summary?: string[];
 }
 
 export interface PendingChoice {
@@ -540,7 +542,7 @@ export interface Clause {
   card_title?: string;
   cost_hint?: string;
   /** delayed clauses: 有司稽迟 / 驿程 / 将领自主 (§7.3, §7.5) */
-  delay_kind?: 'bureaucratic' | 'courier' | 'autonomy' | string;
+  delay_kind?: 'bureaucratic' | 'courier' | 'autonomy' | 'dependency' | string;
   autonomy_risk?: '低' | '中' | '高' | string | null;
   autonomy_note?: string;
   memorial_id?: ID;

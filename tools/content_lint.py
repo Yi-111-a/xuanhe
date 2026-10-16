@@ -65,6 +65,20 @@ NAMED_EVENTS: dict[str, set[str]] = {
     "南幸": {"jin_invaded", "court_south"},
     "太原被围": {"taiyuan_besieged"},
     "太原陷": {"taiyuan_fallen"},
+    # 反事实路线不得套用史实的既成事实（gpt-01 #2）
+    "南讨之后": {"nanzheng_sent"},
+    "南讨归来": {"nanzheng_sent"},
+    "西兵东调": {"xijun_east", "nanzheng_sent", "beifa_started", "region:guanzhong:song_xijun"},
+    "燕京已在": {"yanjing_song", "yanjing_bought", "region:yanshan:song"},
+    "燕山既复": {"yanjing_song", "yanjing_bought", "region:yanshan:song"},
+    "燕山馈运": {"yanjing_song", "yanjing_bought", "region:yanshan:song", "jin_grain_asked"},
+    "燕山之戍": {"yanjing_song", "yanjing_bought", "region:yanshan:song"},
+    "伐燕丧师": {"beifa_lost"},
+    "伐燕之败": {"beifa_lost"},
+    "金人与我为盟": {"haishang_ally"},
+    "云中已非辽有": {"region:yunzhong:jin"},
+    "王黼专政": {"office:taizai:wang_fu"},
+    "宰相王黼": {"office:taizai:wang_fu", "office:shaozai:wang_fu"},
 }
 # 只在说「已发生」时才算具名史事：带这些字眼的句子（劝阻、假设）不计
 HYPOTHETICAL = ("若", "倘", "恐", "万一", "防", "备", "预", "将来", "或", "免", "则", "可", "宜", "勿", "莫")
@@ -91,6 +105,11 @@ def positive_flags(cond: Any, negated: bool = False) -> set[str]:
             op = cond.get("operator", "eq")
             if op != "absent" and not (op == "eq" and cond.get("value") is False):
                 out.add(str(cond.get("key")))
+        # 地区归属、官职在任也算守卫（伪键 region:<地区>:<势力>、office:<官职>:<人物>）
+        if kind == "region_controller" and not negated:
+            out.add(f"region:{cond.get('region')}:{cond.get('faction')}")
+        if kind == "office_holder" and not negated and cond.get("character"):
+            out.add(f"office:{cond.get('office')}:{cond.get('character')}")
     return out
 
 

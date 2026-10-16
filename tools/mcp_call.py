@@ -28,7 +28,7 @@ def server_params() -> StdioServerParameters:
         "PYTHONUTF8": "1",
         "PYTHONIOENCODING": "utf-8",
         "SIM_GAME_ROOT": str(ROOT),
-        "SIM_SCENARIOS_DIR": str(ROOT / "scenarios"),
+        "SIM_SCENARIOS_DIR": os.environ.get("XUANHE_SCENARIOS_DIR", str(ROOT / "scenarios")),
         "LLM_SIM_HOME": os.environ.get("LLM_SIM_HOME", str(ROOT / "playtests" / "home")),
         "SIM_MCP_MODE": os.environ.get("SIM_MCP_MODE", "client"),
         "SIM_MCP_NAME": "xuanhe",
@@ -37,7 +37,7 @@ def server_params() -> StdioServerParameters:
         command=str(PYTHON),
         args=["-m", "cli.main", "mcp"],
         env=env,
-        cwd=str(ROOT / "engine" / "backend"),
+        cwd=str(Path(os.environ.get("XUANHE_ENGINE_DIR", ROOT / "engine")) / "backend"),
     )
 
 

@@ -287,7 +287,7 @@
     portrait: portrait.zong_ze.default
     wants: 起复一用；守土
     reacts: 受命则死守不退
-    greeting: 罪臣宗泽叩见陛下。臣虽在编管，不敢忘国。
+    greeting: 臣宗泽叩见陛下。臣虽老，不敢一日忘国。
     examples:
       - 河北之民皆赤子，岂可弃之？
       - 臣老矣，愿得一州，死守而已！
@@ -534,7 +534,7 @@
 
 - id: wanyan_wuqimai
   name: 完颜吴乞买
-  title: 谙班勃极烈
+  title: 金国宗室
   faction: jin
   offices: []
   bloc: null

@@ -37,6 +37,7 @@ export function ChoiceModal({ choice }: { choice: PendingChoice }) {
                 <button key={o.id} className="choice-option" data-testid={present ? `choice.option.${o.id}` : undefined} disabled={g.busy.choice || !present} onClick={() => g.choose(choice.id, o.id)}>
                   <span className="choice-option-text t-title">{o.text}</span>
                   {o.hint && <small>{o.hint}</small>}
+                  {!o.hint && o.summary && o.summary.length > 0 && <small data-testid={present ? `choice.option.${o.id}.summary` : undefined}>{o.summary.join('；')}</small>}
                 </button>
               ))}
             </div>

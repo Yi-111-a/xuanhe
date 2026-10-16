@@ -179,6 +179,11 @@ export function evalCond(cond: unknown, s: PublicState): boolean {
       const rel = s.factions?.[String(c.a)]?.relations?.[String(c.b)] ?? 0;
       return cmp(rel, op, c.value);
     }
+    case 'season': {
+      const names = Array.isArray(c.value) ? c.value.map(String) : [String(c.value)];
+      const season = String((s as { calendar?: { season?: string } }).calendar?.season ?? '');
+      return names.includes(season) !== (op === 'ne');
+    }
     default:
       return true;
   }

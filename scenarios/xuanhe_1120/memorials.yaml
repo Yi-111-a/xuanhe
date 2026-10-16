@@ -24,7 +24,7 @@
   options:
     - id: loose
       label: 遣使通好，只议燕京旧地，不约夹攻之期
-      memory: {character: zhao_liangsi, text: 宣和二年春，奉命使金通好，只议燕京旧地}
+      memory: {character: zhao_liangsi, text: "{when}，奉命使金通好，只议燕京旧地"}
       ops:
         - {op: set_flag, key: haishang_loose, value: true}
         - {op: adjust_resource, resource: liao_zuo, delta: -1, reason: 宋金通好}
@@ -40,7 +40,7 @@
       hint: 辽祚 +2，佞幸 −2，金人轻宋（风闻）↑。燕京不能由盟约取得；辽之亡缓而未止
     - id: spy
       label: 遣马扩随使觇其虚实，盟议缓定
-      memory: {character: ma_kuo, text: 宣和二年春，奉命随使至金，觇其虚实}
+      memory: {character: ma_kuo, text: "{when}，奉命随使至金，觇其虚实"}
       ops:
         - {op: set_flag, key: haishang_delay, value: true}
         - {op: set_flag, key: "intel:jin_contempt", value: true}
@@ -48,7 +48,7 @@
       hint: 国库 −15；得金人虚实之报（「金人轻宋」的风闻区间减半，只减半一次、不叠加）；盟议下季再定
     - id: ally
       label: 遣赵良嗣使金，约夹攻辽、宋取燕京
-      memory: {character: zhao_liangsi, text: 宣和二年春，奉命浮海使金，约夹攻辽}
+      memory: {character: zhao_liangsi, text: "{when}，奉命浮海使金，约夹攻辽"}
       ops:
         - {op: set_flag, key: haishang_ally, value: true}
         - {op: adjust_resource, resource: liao_zuo, delta: -3, reason: 宋金夹攻之约}
@@ -74,7 +74,7 @@
   options:
     - id: raise
       label: 照准，增应奉岁额
-      memory: {character: zhu_mian, text: 宣和二年春，陛下准增应奉岁额}
+      memory: {character: zhu_mian, text: "{when}，陛下准增应奉岁额"}
       ops:
         - {op: set_flag, key: huashi_raised, value: true}
         - {op: add_ledger, id: yingfeng_extra, name: 应奉增额, category: treasury, amount: -8, kind: recurring, reason: 增应奉岁额（游戏折算）, cancellable: false}
@@ -84,7 +84,7 @@
       hint: 每季另支应奉增额 8 万缗；东南民怨 +6，佞幸 +2，君威 +1
     - id: abolish
       label: 罢苏杭应奉局与花石纲，召还朱勔
-      memory: {character: zhu_mian, text: 宣和二年春，陛下罢应奉局，召臣还京}
+      memory: {character: zhu_mian, text: "{when}，陛下罢应奉局，召臣还京"}
       ops:
         - {op: set_flag, key: huashi_abolished, value: true}
         - {op: set_flag, key: zhumian_dismissed, value: true}
@@ -138,7 +138,7 @@
       hint: 国库每季 −40 共三季；成后禁军素质 +0.08、武备 +4、汴京防务 +4
     - id: kuo
       label: 遣使括实阙额，汰老弱一万，责将校占役
-      memory: {character: gao_qiu, text: 宣和二年春，陛下遣使括禁军阙额，殿前司诸将多受责}
+      memory: {character: gao_qiu, text: "{when}，陛下遣使括禁军阙额，殿前司诸将多受责"}
       ops:
         - {op: adjust_army, army: jinjun, delta: -10000, quality_delta: 0.1, reason: 括实阙额，汰老弱一万}
         - {op: adjust_resource, resource: wubei, delta: 5, reason: 括禁军之实}
@@ -174,7 +174,6 @@
       hint: 李纲移江南，仍不在朝；佞幸 −1
     - id: recall
       label: 召还李纲，除御史中丞
-      memory: {character: li_gang, text: 宣和二年春，陛下召臣还朝，除御史中丞}
       ops:
         - {op: appoint, character: li_gang, office: yushi, dispatch: true}
         - {op: set_flag, key: ligang_recalled, value: true}
@@ -206,7 +205,7 @@
   options:
     - id: retire_check
       label: 准致仕，并核其门下滥授恩赏
-      memory: {character: cai_jing, text: 宣和二年夏，老臣致仕，陛下又命有司核我门下恩赏}
+      memory: {character: cai_jing, text: "{when}，老臣致仕，陛下又命有司核我门下恩赏"}
       ops:
         - {op: dismiss, character: cai_jing, office: taishi}
         - {op: set_character_status, character: cai_jing, status: retired, cause: 致仕，门下恩赏被核}
@@ -226,7 +225,7 @@
       hint: 佞幸 +1，君威 −1；蔡京仍总治三省
     - id: retire
       label: 准致仕，仍朝朔望
-      memory: {character: cai_jing, text: 宣和二年夏，陛下准老臣致仕，仍朝朔望}
+      memory: {character: cai_jing, text: "{when}，陛下准老臣致仕，仍朝朔望"}
       ops:
         - {op: dismiss, character: cai_jing, office: taishi}
         - {op: set_character_status, character: cai_jing, status: retired, cause: 致仕，仍朝朔望}
@@ -292,7 +291,7 @@
   options:
     - id: ally
       label: 遣赵良嗣使金，约夹攻辽、宋取燕京
-      memory: {character: zhao_liangsi, text: 宣和二年夏，奉命浮海使金，约夹攻辽}
+      memory: {character: zhao_liangsi, text: "{when}，奉命浮海使金，约夹攻辽"}
       ops:
         - {op: set_flag, key: haishang_ally, value: true}
         - {op: adjust_resource, resource: liao_zuo, delta: -3, reason: 宋金夹攻之约}
@@ -447,7 +446,7 @@
   options:
     - id: wang
       label: 以王黼进太宰
-      memory: {character: wang_fu, text: 宣和二年秋，陛下以臣进太宰}
+      memory: {character: wang_fu, text: "{when}，陛下以臣进太宰"}
       ops:
         - {op: dismiss, character: yu_shen, office: taizai}
         - {op: set_character_status, character: yu_shen, status: retired, cause: 罢太宰}
@@ -458,7 +457,7 @@
       hint: 王黼总中书门下；佞幸 +3，东南民怨 +2
     - id: check
       label: 王黼进太宰，以李纲为尚书右丞以制之
-      memory: {character: li_gang, text: 宣和二年秋，陛下以臣为尚书右丞}
+      memory: {character: li_gang, text: "{when}，陛下以臣为尚书右丞"}
       ops:
         - {op: dismiss, character: yu_shen, office: taizai}
         - {op: set_character_status, character: yu_shen, status: retired, cause: 罢太宰}
@@ -498,7 +497,7 @@
   options:
     - id: wang
       label: 以王黼进太宰
-      memory: {character: wang_fu, text: 宣和二年秋，陛下以臣进太宰}
+      memory: {character: wang_fu, text: "{when}，陛下以臣进太宰"}
       ops:
         - {op: dismiss, character: yu_shen, office: taizai}
         - {op: set_character_status, character: yu_shen, status: retired, cause: 罢太宰}
@@ -568,7 +567,7 @@
   options:
     - id: favor
       label: 加恩郓王，赐第宅、增俸
-      memory: {character: zhao_kai, text: 宣和二年秋，父皇加恩于我}
+      memory: {character: zhao_kai, text: "{when}，父皇加恩于我"}
       ops:
         - {op: set_flag, key: yunwang_favored, value: true}
         - {op: adjust_trait, character: zhao_kai, trait: favor, delta: 1}
@@ -583,7 +582,7 @@
       hint: 无增减；储位之议或再起
     - id: curb
       label: 罢郓王提举皇城司，以安东宫
-      memory: {character: zhao_kai, text: 宣和二年秋，父皇罢我提举皇城司}
+      memory: {character: zhao_kai, text: "{when}，父皇罢我提举皇城司"}
       ops:
         - {op: dismiss, character: zhao_kai, office: huangcheng}
         - {op: set_flag, key: donggong_secure, value: true}
@@ -694,7 +693,7 @@
   options:
     - id: tong
       label: 以童贯为宣抚使，统西军五万、禁旅一万南讨
-      memory: {character: tong_guan, text: 宣和二年冬，奉命宣抚江淮荆浙，讨方腊}
+      memory: {character: tong_guan, text: "{when}，奉命宣抚江淮荆浙，讨方腊"}
       ops:
         - {op: set_flag, key: nanzheng_sent, value: true}
         - {op: adjust_army, army: xijun_jingyuan, delta: -30000, reason: 抽泾原兵三万南讨}
@@ -708,7 +707,7 @@
       hint: 泾原军 −30000、秦凤熙河军 −20000、京师禁军 −10000，合为南讨诸军 60000，童贯统之，进讨两浙（总兵额不变，养兵照旧）；国库 −80；西军北伐之备因之而缓
     - id: zhong
       label: 以种师中统西军五万南讨，童贯留枢密
-      memory: {character: zhong_shizhong, text: 宣和二年冬，奉命统西军南讨方腊}
+      memory: {character: zhong_shizhong, text: "{when}，奉命统西军南讨方腊"}
       ops:
         - {op: set_flag, key: nanzheng_sent, value: true}
         - {op: adjust_army, army: xijun_jingyuan, delta: -30000, reason: 抽泾原兵三万南讨}
@@ -764,7 +763,7 @@
       hint: 京东治安 +5，武备 +1，国库 −15。宋江是否随征方腊，史载存疑（本游戏设定）
     - id: amnesty
       label: 命张叔夜设伏焚舟，招降之
-      memory: {character: zhang_shuye, text: 宣和三年，于海州焚舟设伏，招降宋江}
+      memory: {character: zhang_shuye, text: "{when}，于海州焚舟设伏，招降宋江"}
       ops:
         - {op: set_flag, key: songjiang_amnesty, value: true}
         - {op: adjust_region, region: jingdong, stat: order, delta: 6}
@@ -834,7 +833,7 @@
   options:
     - id: abolish
       label: 罢苏杭造作局、花石纲，召还朱勔
-      memory: {character: zhu_mian, text: 宣和三年春，因方腊之乱，陛下罢应奉，召臣还京}
+      memory: {character: zhu_mian, text: "{when}，因方腊之乱，陛下罢应奉，召臣还京"}
       ops:
         - {op: set_flag, key: huashi_abolished, value: true}
         - {op: set_flag, key: zhumian_dismissed, value: true}
@@ -877,7 +876,7 @@
       hint: 无增减
     - id: abolish
       label: 尽罢苏杭造作局，召还朱勔
-      memory: {character: zhu_mian, text: 宣和三年春，因方腊之乱，陛下尽罢应奉，召臣还京}
+      memory: {character: zhu_mian, text: "{when}，因方腊之乱，陛下尽罢应奉，召臣还京"}
       ops:
         - {op: set_flag, key: huashi_abolished, value: true}
         - {op: set_flag, key: zhumian_dismissed, value: true}
@@ -1079,7 +1078,7 @@
       hint: 粮储 −60，东南民怨 −4，两浙治安 +8
     - id: punish
       label: 削朱勔官爵，流之远方，以谢东南
-      memory: {character: zhu_mian, text: 宣和三年，以东南之乱获罪，削官流放}
+      memory: {character: zhu_mian, text: "{when}，以东南之乱获罪，削官流放"}
       ops:
         - {op: set_flag, key: zhumian_dismissed, value: true}
         - {op: set_character_status, character: zhu_mian, status: exiled, cause: 削官流放}
@@ -1178,7 +1177,7 @@
 - id: t6_caiji
   turn: 6
   title: 户部告乏
-  summary: 户部奏：今岁军兴之费、禁中供奉与岁币并集，左藏所余无几；明年又有河北之备，岁计恐不能支。请或增杂税，或裁冗费。
+  summary: 户部奏：今岁军兴之费、禁中供奉与岁币并集，左藏出多入少；明年又有河北之备，岁计恐不能支。请或增杂税，或裁冗费。
   region: bianjing
   illustration: event.court_debate
   proposal: tax
@@ -1236,13 +1235,13 @@
   options:
     - id: summon
       label: 召种师道入京面议边事，宣抚使暂缓
-      memory: {character: zhong_shidao, text: 宣和三年秋，奉诏入京面议边事}
+      memory: {character: zhong_shidao, text: "{when}，奉诏入京面议边事"}
       ops:
         - {op: move_character, character: zhong_shidao, to_region: bianjing}
       hint: 种师道入京（行程见回执），泾原军副将暂摄；人在京师即可召对、廷议，日后出师自京赴河北较近
     - id: tong
       label: 以童贯兼河北河东宣抚使（以枢密遥领）
-      memory: {character: tong_guan, text: 宣和三年秋，陛下以老奴兼河北河东宣抚使}
+      memory: {character: tong_guan, text: "{when}，陛下以老奴兼河北河东宣抚使"}
       ops:
         - {op: appoint, character: tong_guan, office: hebei_xuanfu, dispatch: false}
         - {op: adjust_resource, resource: ningxing, delta: 2, reason: 童贯再兼宣抚}
@@ -1250,7 +1249,7 @@
       hint: 童贯兼统河北西路禁军（人仍在所在，副将暂摄）；佞幸 +2，武备 +1。日后伐燕，可径以宣抚使出师
     - id: zhong
       label: 以种师道为河北河东宣抚使，赴真定视事
-      memory: {character: zhong_shidao, text: 宣和三年秋，陛下以老臣宣抚河北河东}
+      memory: {character: zhong_shidao, text: "{when}，陛下以老臣宣抚河北河东"}
       ops:
         - {op: appoint, character: zhong_shidao, office: hebei_xuanfu, dispatch: true}
         - {op: adjust_resource, resource: wubei, delta: 2, reason: 宿将宣抚河北}
@@ -1278,7 +1277,7 @@
   keywords: [西军, 河北, 武备]
   advisors:
     - {character: tong_guan, stance: support, option: hebei, line: 西兵一到河北，契丹残部望风而走。官家，此事宜早不宜迟。}
-    - {character: zhong_shidao, stance: oppose, option: keep, requires: {region: xibian}, line: （自泾原驰表）南讨之后，泾原所存无几。夏人窥伺，堡寨一空，臣恐西边先有事。}
+    - {character: zhong_shidao, stance: oppose, option: keep, requires: {region: xibian}, line: （自泾原驰表）西兵连岁戍守，泾原所存不厚。夏人窥伺，堡寨一空，臣恐西边先有事。}
     - {character: zhang_xiaochun, stance: neutral, option: guanzhong, requires: {region: hedong}, line: （自太原驰奏）屯于京兆，东可援河东，北可趋河北，西可回援泾原，臣以为进退皆便。}
   options:
     - id: guanzhong
@@ -1365,7 +1364,7 @@
   options:
     - id: abolish
       label: 罢应奉司
-      memory: {character: li_gang, text: 宣和三年秋，臣论应奉司，陛下罢之}
+      memory: {character: li_gang, text: "{when}，臣论应奉司，陛下罢之"}
       ops:
         - {op: cancel_ledger, ledger_id: yingfeng_si}
         - {op: set_flag, key: yingfeng_si_abolished, value: true}
@@ -1407,7 +1406,7 @@
   options:
     - id: spy
       label: 遣马扩随使觇金虚实，再定出师之期
-      memory: {character: ma_kuo, text: 宣和三年冬，奉命再随使至金，觇其虚实}
+      memory: {character: ma_kuo, text: "{when}，奉命再随使至金，觇其虚实"}
       ops:
         - {op: set_flag, key: "intel:jin_contempt", value: true}
         - {op: adjust_resource, resource: treasury, delta: -15, reason: 遣使觇金}
@@ -1480,7 +1479,7 @@
   advisors:
     - {character: tong_guan, stance: support, option: repel, line: 当年老奴在西边，夏贼何曾敢筑一垒？发兵平了便是。}
     - {character: zhong_shizhong, stance: support, option: repel, requires: {region: xibian}, line: （自秦州驰表）末将请出兵。夏人筑垒，是要进一步；不打，明年就筑到咱们寨下了。}
-    - {character: zhong_shidao, stance: oppose, option: defend, requires: {region: xibian}, line: （自泾原驰表）西兵东调之际，不宜与夏人开衅。严守堡寨，彼来则击，去则勿追。}
+    - {character: zhong_shidao, stance: oppose, option: defend, requires: {region: xibian}, line: （自泾原驰表）西兵或将东调，此时不宜与夏人开衅。严守堡寨，彼来则击，去则勿追。}
   options:
     - id: defend
       label: 严守堡寨，不与之争
@@ -1562,7 +1561,7 @@
   options:
     - id: favor
       label: 以李邦彦为尚书右丞
-      memory: {character: li_bangyan, text: 宣和三年冬，陛下以臣为尚书右丞}
+      memory: {character: li_bangyan, text: "{when}，陛下以臣为尚书右丞"}
       ops:
         - {op: dismiss, character: li_bangyan, office: hanlin}
         - {op: appoint, character: li_bangyan, office: youcheng}
@@ -1570,7 +1569,7 @@
       hint: 李邦彦执政；佞幸 +1
     - id: integrity
       label: 召张叔夜入为尚书右丞
-      memory: {character: zhang_shuye, text: 宣和三年冬，陛下召臣入为尚书右丞}
+      memory: {character: zhang_shuye, text: "{when}，陛下召臣入为尚书右丞"}
       ops:
         - {op: dismiss, character: zhang_shuye, office: haizhou}
         - {op: appoint, character: zhang_shuye, office: youcheng}
@@ -1666,7 +1665,7 @@
   options:
     - id: march
       label: 以童贯宣抚、蔡攸副之，合兵七万出师伐燕
-      memory: {character: tong_guan, text: 宣和四年春，奉命宣抚河北河东，统兵伐燕}
+      memory: {character: tong_guan, text: "{when}，奉命宣抚河北河东，统兵伐燕"}
       ops:
         - {op: set_flag, key: beifa_started, value: true}
         - {op: adjust_army, army: xijun_jingyuan, delta: -25000, reason: 抽泾原兵二万五千伐燕}
@@ -1686,7 +1685,7 @@
         行程见回执，未到前副将暂摄）；与辽绝好；国库 −150，辽祚 −3；养兵不增（兵额对调）。伐燕不克，金人轻宋（风闻）↑
     - id: zhong_lead
       label: 以种师道专制伐燕诸军，先屯河间整军，持重而进
-      memory: {character: zhong_shidao, text: 宣和四年春，奉命专制伐燕诸军}
+      memory: {character: zhong_shidao, text: "{when}，奉命专制伐燕诸军"}
       ops:
         - {op: set_flag, key: beifa_started, value: true}
         - {op: adjust_army, army: xijun_jingyuan, delta: -25000, reason: 抽泾原兵二万五千伐燕}
@@ -1783,7 +1782,7 @@
       hint: 粮储 −100，辽祚 +12，佞幸 −2；金人轻宋（风闻）↑↑、胡马南牧（风闻）↑（背盟）。辽祚若再衰（低于三十），燕京终不能守
     - id: march
       label: 以童贯宣抚，南讨诸军并河北禁军二万出师伐燕
-      memory: {character: tong_guan, text: 宣和四年春，奉命宣抚河北河东，统兵伐燕}
+      memory: {character: tong_guan, text: "{when}，奉命宣抚河北河东，统兵伐燕"}
       ops:
         - {op: set_flag, key: beifa_started, value: true}
         - {op: set_flag, key: "memorial:t8_beifa", value: march}
@@ -1803,7 +1802,7 @@
         行程见回执）；与辽绝好；国库 −120，辽祚 −3；养兵不增（兵额对调）
     - id: zhong_lead
       label: 以种师道专制南讨诸军并河北禁军二万，持重而进
-      memory: {character: zhong_shidao, text: 宣和四年春，奉命专制伐燕诸军}
+      memory: {character: zhong_shidao, text: "{when}，奉命专制伐燕诸军"}
       ops:
         - {op: set_flag, key: beifa_started, value: true}
         - {op: set_flag, key: "memorial:t8_beifa", value: zhong_lead}
@@ -1853,7 +1852,7 @@
   options:
     - id: zhong_lead
       label: 宣抚使种师道专制出师，伐燕诸军移屯真定与之会师
-      memory: {character: zhong_shidao, text: 宣和四年春，以宣抚使专制伐燕诸军}
+      memory: {character: zhong_shidao, text: "{when}，以宣抚使专制伐燕诸军"}
       ops:
         - {op: set_flag, key: beifa_started, value: true}
         - {op: set_flag, key: "memorial:t8_beifa", value: zhong_lead}
@@ -1897,7 +1896,7 @@
       hint: 粮储 −100，辽祚 +12，佞幸 −2；金人轻宋（风闻）↑↑、胡马南牧（风闻）↑（背盟）。辽祚若再衰（低于三十），燕京终不能守
     - id: march
       label: 以童贯督师，合兵七万出师伐燕
-      memory: {character: tong_guan, text: 宣和四年春，奉命督师伐燕}
+      memory: {character: tong_guan, text: "{when}，奉命督师伐燕"}
       ops:
         - {op: set_flag, key: beifa_started, value: true}
         - {op: set_flag, key: "memorial:t8_beifa", value: march}
@@ -1940,7 +1939,7 @@
   options:
     - id: lianliao
       label: 与燕京约和，免其岁币，输粮助守
-      memory: {character: zhong_shidao, text: 宣和四年春，朝廷与燕京约和存辽}
+      memory: {character: zhong_shidao, text: "{when}，朝廷与燕京约和存辽"}
       ops:
         - {op: set_flag, key: lian_liao, value: true}
         - {op: cancel_ledger, ledger_id: suibi_liao}
@@ -2060,7 +2059,7 @@
   options:
     - id: wang
       label: 准置经抚房，括诸路钱物给边
-      memory: {character: wang_fu, text: 宣和四年春，陛下准臣置经抚房}
+      memory: {character: wang_fu, text: "{when}，陛下准臣置经抚房"}
       ops:
         - {op: set_flag, key: jingfu_set, value: true}
         - {op: adjust_resource, resource: treasury, delta: 100, reason: 经抚房括诸路钱物}
@@ -2377,7 +2376,7 @@
       hint: 京师禁军 −10000、伐燕诸军 +10000，再攻燕京（行程见回执）；国库 −80；养兵不增（兵额对调）。再败则金人益轻宋
     - id: zhong_lead
       label: 易帅：以种师道节制伐燕诸军，再攻燕京
-      memory: {character: zhong_shidao, text: 宣和四年秋，奉命代童贯节制伐燕诸军}
+      memory: {character: zhong_shidao, text: "{when}，奉命代童贯节制伐燕诸军"}
       ops:
         - {op: set_army_commander, army: beifa_army, character: zhong_shidao, dispatch: true}
         - {op: adjust_army, army: beifa_army, quality_delta: 0.05, reason: 易帅，申严号令}
@@ -2426,7 +2425,7 @@
       hint: 郭药师自疑（忠诚 −1）；日后若有变，可早为之备
     - id: favor
       label: 授以节钺，厚赐金帛
-      memory: {character: guo_yaoshi, text: 宣和四年秋，来降，朝廷授以节钺，厚赐金帛}
+      memory: {character: guo_yaoshi, text: "{when}，来降，朝廷授以节钺，厚赐金帛"}
       ops:
         - {op: adjust_resource, resource: treasury, delta: -40, reason: 厚赐降将}
         - {op: adjust_trait, character: guo_yaoshi, trait: loyalty, delta: 2}
@@ -2435,7 +2434,7 @@
       hint: 国库 −40，君威 +1；郭药师感恩（忠诚 +2）
     - id: split
       label: 分常胜军四千屯河北西路
-      memory: {character: guo_yaoshi, text: 宣和四年秋，来降，朝廷分我常胜军之众}
+      memory: {character: guo_yaoshi, text: "{when}，来降，朝廷分我常胜军之众"}
       ops:
         - {op: detach, army: changsheng, strength: 4000, to_region: hebei_xi, new_army_name: 常胜军分屯}
         - {op: set_flag, key: changsheng_split, value: true}
@@ -2469,7 +2468,7 @@
   options:
     - id: punish
       label: 切责王黼，申东宫之分
-      memory: {character: wang_fu, text: 宣和四年秋，陛下切责臣交结郓王}
+      memory: {character: wang_fu, text: "{when}，陛下切责臣交结郓王"}
       ops:
         - {op: set_flag, key: donggong_secure, value: true}
         - {op: adjust_resource, resource: ningxing, delta: -3, reason: 王黼被责}
@@ -2480,7 +2479,7 @@
       hint: 东宫安；佞幸 −3，君威 +2；王黼失宠，郓王稍疏
     - id: yichu
       label: 易储：废皇太子，立郓王为皇太子
-      memory: {character: zhao_kai, text: 宣和四年秋，父皇立我为皇太子}
+      memory: {character: zhao_kai, text: "{when}，父皇立我为皇太子"}
       ops:
         - {op: dismiss, character: zhao_huan, office: crown_prince}
         - {op: appoint, character: zhao_kai, office: crown_prince}
@@ -2529,7 +2528,7 @@
       hint: 伐燕诸军全数并为燕山戍军；燕京防务 +8；戍兵衣粮仰给河北转输，河北东路治安 −3；佞幸 +1
     - id: zhang
       label: 以张叔夜为燕山府路宣抚使，留伐燕诸军二万戍燕
-      memory: {character: zhang_shuye, text: 宣和四年，奉命宣抚燕山}
+      memory: {character: zhang_shuye, text: "{when}，奉命宣抚燕山"}
       ops:
         - {op: appoint, character: zhang_shuye, office: yanshan_xuanfu, dispatch: true}
         - {op: adjust_army, army: beifa_army, delta: -20000, reason: 留伐燕兵二万戍燕}
@@ -2540,7 +2539,7 @@
       hint: 张叔夜兼统燕山戍军（行程见回执）；伐燕诸军 −20000 改为燕山戍军 +20000，余众归河北西路禁军；燕京治安 +6，国库 −30；养兵不增（兵额对调）
     - id: zhong
       label: 以种师道为燕山府路宣抚使，留伐燕诸军三万戍燕
-      memory: {character: zhong_shidao, text: 宣和四年，奉命宣抚燕山}
+      memory: {character: zhong_shidao, text: "{when}，奉命宣抚燕山"}
       ops:
         - {op: appoint, character: zhong_shidao, office: yanshan_xuanfu, dispatch: true}
         - {op: adjust_army, army: beifa_army, delta: -30000, reason: 留伐燕兵三万戍燕}
@@ -2634,6 +2633,7 @@
     all:
       - {not: {kind: region_controller, region: yanshan, faction: song}}
       - {kind: region_controller, region: hebei_xi, faction: song}
+      - {kind: region_stat, region: hebei_xi, stat: defense, operator: lt, value: 55}
   proposal: fortify
   keywords: [河北, 城防, 武备]
   advisors:
@@ -2728,7 +2728,7 @@
       hint: 君威 −1
     - id: exile
       label: 以狂妄编管远州
-      memory: {character: chen_dong, text: 宣和四年冬，以伏阙上书获罪编管}
+      memory: {character: chen_dong, text: "{when}，以伏阙上书获罪编管"}
       ops:
         - {op: set_character_status, character: chen_dong, status: exiled, cause: 伏阙上书，以狂妄编管远州}
         - {op: adjust_resource, resource: ningxing, delta: 2, reason: 言者获罪}
@@ -2737,7 +2737,7 @@
       hint: 陈东编管远州（此后不在朝）；佞幸 +2，民心 −2，君威 −1
     - id: frank
       label: 召对嘉纳其言
-      memory: {character: chen_dong, text: 宣和四年冬，伏阙上书，陛下召对嘉纳}
+      memory: {character: chen_dong, text: "{when}，伏阙上书，陛下召对嘉纳"}
       ops:
         - {op: adjust_resource, resource: ningxing, delta: -2, reason: 诸生之言见纳}
         - {op: adjust_resource, resource: authority, delta: 1, reason: 开言路}
@@ -2955,7 +2955,7 @@
       hint: 无增减；燕山戍军仍无统帅
     - id: zhang
       label: 以张叔夜为燕山府路宣抚使，安集燕民
-      memory: {character: zhang_shuye, text: 宣和五年，奉命宣抚燕山}
+      memory: {character: zhang_shuye, text: "{when}，奉命宣抚燕山"}
       ops:
         - {op: appoint, character: zhang_shuye, office: yanshan_xuanfu, dispatch: true}
         - {op: adjust_region, region: yanshan, stat: order, delta: 6}
@@ -2963,7 +2963,7 @@
       hint: 张叔夜兼统燕山戍军（行程见回执）；燕京治安 +6，国库 −30
     - id: zhong
       label: 以种师道为燕山府路宣抚使，抽河北禁军一万增戍
-      memory: {character: zhong_shidao, text: 宣和五年，奉命宣抚燕山}
+      memory: {character: zhong_shidao, text: "{when}，奉命宣抚燕山"}
       ops:
         - {op: appoint, character: zhong_shidao, office: yanshan_xuanfu, dispatch: true}
         - {op: adjust_army, army: hebei_army, delta: -10000, reason: 抽河北禁军一万增戍燕山}
@@ -2987,7 +2987,7 @@
   keywords: [李纲, 言路, 武备, 佞幸]
   advisors:
     - {character: li_gang, stance: support, option: frank, requires: {region: bianjing}, line: 陛下，臣有三事不敢不言：一曰修武备，二曰收人心，三曰远小人。祖宗二百年基业，不可寄于一纸盟书。}
-    - {character: wang_fu, stance: oppose, option: keep, requires: {office: [shaozai, taizai]}, line: 李中丞所言，无非老生常谈。燕京已在掌握，天下太平，何必自扰？}
+    - {character: wang_fu, stance: oppose, option: keep, requires: {office: [shaozai, taizai]}, line: 李中丞所言，无非老生常谈。边事粗定，天下太平，何必自扰？}
     - {character: gao_qiu, stance: neutral, option: partial, requires: {office: dianshuai}, line: 修城练兵，臣无异议。至于汰兵……禁军仪仗，天下第一，这个汰不得。}
   options:
     - id: keep
@@ -3004,7 +3004,7 @@
       hint: 国库 −30，武备 +1
     - id: frank
       label: 嘉纳，三事次第施行
-      memory: {character: li_gang, text: 宣和五年春，论边备三事，陛下嘉纳}
+      memory: {character: li_gang, text: "{when}，论边备三事，陛下嘉纳"}
       ops:
         - {op: adjust_resource, resource: wubei, delta: 2, reason: 修边汰冗}
         - {op: adjust_resource, resource: treasury, delta: -50, reason: 修城练兵之费}
@@ -3042,14 +3042,14 @@
       hint: 京师禁军素质 +0.03，武备 +1，佞幸 −1
     - id: dismiss
       label: 罢高俅殿帅
-      memory: {character: gao_qiu, text: 宣和五年春，以殿前占役罢殿帅}
+      memory: {character: gao_qiu, text: "{when}，以殿前占役罢殿帅"}
       ops:
         - {op: dismiss, character: gao_qiu, office: dianshuai}
         - {op: set_flag, key: gaoqiu_dismissed, value: true}
         - {op: adjust_resource, resource: ningxing, delta: -4, reason: 罢高俅}
         - {op: adjust_resource, resource: wubei, delta: 2, reason: 禁军可整}
         - {op: adjust_resource, resource: authority, delta: 1, reason: 整肃禁旅}
-      hint: 高俅罢殿帅，京师禁军暂无统帅（可用政令卡另择殿帅）；佞幸 −4，武备 +2，君威 +1
+      hint: 高俅罢殿帅（他所统的京师禁军须另择统帅，可用政令卡）；佞幸 −4，武备 +2，君威 +1
 
 - id: t12_dudie
   turn: 12
@@ -3061,7 +3061,7 @@
   keywords: [度牒, 财赋, 僧道]
   advisors:
     - {character: wang_fu, stance: support, option: tax, requires: {office: [shaozai, taizai]}, line: 一纸度牒，值钱百千，朝廷不费分毫。边用方急，何可不卖？}
-    - {character: chen_dong, stance: oppose, option: refuse, line: 度牒多一道，则耕夫少一人。卖牒以给边，是以东南之耕夫养燕山之戍卒也！}
+    - {character: chen_dong, stance: oppose, option: refuse, line: 度牒多一道，则耕夫少一人。卖牒以给边，是以东南之耕夫养北边之戍卒也！}
     - {character: cai_jing, stance: neutral, option: limit, line: 卖之可也，而有其限。限则价高，不限则滥。}
   options:
     - id: refuse
@@ -3155,7 +3155,7 @@
   options:
     - id: favor
       label: 厚饷安抚，岁增常胜军衣粮
-      memory: {character: guo_yaoshi, text: 宣和五年，朝廷厚饷常胜军}
+      memory: {character: guo_yaoshi, text: "{when}，朝廷厚饷常胜军"}
       ops:
         - {op: add_ledger, id: changsheng_xiang, name: 常胜军厚饷, category: treasury, amount: -6, kind: recurring, reason: 常胜军衣粮加给（游戏折算）, cancellable: false}
         - {op: adjust_trait, character: guo_yaoshi, trait: loyalty, delta: 2}
@@ -3171,7 +3171,7 @@
       hint: 国库 −10；郭药师自疑（忠诚 −1）；日后若有变，可早为之备
     - id: split
       label: 分常胜军四千屯河北西路
-      memory: {character: guo_yaoshi, text: 宣和五年，朝廷分我常胜军之众}
+      memory: {character: guo_yaoshi, text: "{when}，朝廷分我常胜军之众"}
       ops:
         - {op: detach, army: changsheng, strength: 4000, to_region: hebei_xi, new_army_name: 常胜军分屯}
         - {op: set_flag, key: changsheng_split, value: true}
@@ -3181,7 +3181,7 @@
 - id: t13_ji
   turn: 13
   title: 河北京东告饥
-  summary: 河北、京东、淮南诸路奏：今岁水旱相仍，民多艰食，流移者众，盗贼间起；又困于燕山馈运。
+  summary: 河北、京东、淮南诸路奏：今岁水旱相仍，民多艰食，流移者众，盗贼间起；又困于北边馈运。
   region: jingdong
   illustration: event.famine
   proposal: relief
@@ -3189,7 +3189,7 @@
   advisors:
     - {character: zhang_shuye, stance: support, option: relief, requires: {region: jingdong}, line: （自京东驰奏）饥民一聚，便是盗。开仓之粟，胜于捕盗之兵。}
     - {character: chen_dong, stance: support, option: remit, line: 民既无食，又督其租，是驱之为盗也。}
-    - {character: wang_fu, stance: oppose, option: none, requires: {office: [shaozai, taizai]}, line: 燕山馈运正急，仓粟岂可轻发？州县自行赈恤便是。}
+    - {character: wang_fu, stance: oppose, option: none, requires: {office: [shaozai, taizai]}, line: 北边馈运正急，仓粟岂可轻发？州县自行赈恤便是。}
   options:
     - id: remit
       label: 蠲被灾州县租赋
@@ -3252,7 +3252,7 @@
   summary: 金主阿骨打卒于还师途中，弟吴乞买嗣立。新主持重而有吞并之志，诸将粘罕、斡离不各握重兵。朝议遣使吊祭、贺即位。
   region: bianjing
   illustration: event.aguda_death
-  conditions: {kind: flag, key: aguda_dead, value: true}
+  conditions: {kind: flag_age, key: aguda_dead, operator: gte, value: 1}
   proposal: gifts
   keywords: [金使, 阿骨打, 吴乞买]
   advisors:
@@ -3273,7 +3273,7 @@
       hint: 金人轻宋（风闻）↑
     - id: spy
       label: 遣马扩随使，觇金新主与诸将虚实
-      memory: {character: ma_kuo, text: 宣和五年秋，奉命随吊祭使至金，觇新主与诸将虚实}
+      memory: {character: ma_kuo, text: "{when}，奉命随吊祭使至金，觇新主与诸将虚实"}
       ops:
         - {op: set_flag, key: "intel:jin_contempt", value: true}
         - {op: adjust_resource, resource: treasury, delta: -15, reason: 遣使觇金}
@@ -3373,7 +3373,7 @@
   proposal: tax
   keywords: [燕山, 岁计, 馈运, 屯田]
   advisors:
-    - {character: wang_fu, stance: support, option: tax, requires: {office: [shaozai, taizai]}, line: 燕山既复，河北之民亦当分其劳。稍增其税，以给戍兵，理所当然。}
+    - {character: wang_fu, stance: support, option: tax, requires: {office: [shaozai, taizai]}, line: 边费日增，河北之民亦当分其劳。稍增其税，以给戍兵，理所当然。}
     - {character: zhong_shidao, stance: oppose, option: tun, requires: {region: [xibian, bianjing, yanshan]}, line: 戍兵仰给于转输，则河北困；屯田于燕山，则戍兵自给。此西边之成法。}
     - {character: li_bangyan, stance: neutral, option: keep, line: 钱不够就再想法子，反正年年都是这么过的。}
   options:
@@ -3413,7 +3413,7 @@
   keywords: [郊祀, 赏赉, 财赋]
   advisors:
     - {character: cai_jing, stance: support, option: grand, line: 郊祀推恩，祖宗之制。丰亨豫大，正当其时，不可减。}
-    - {character: li_gang, stance: oppose, option: border, requires: {region: bianjing}, line: 郊赏之费，岁以百万计；河北之城、燕山之戍，皆嗷嗷待哺。移此以给边，天下必知陛下之志。}
+    - {character: li_gang, stance: oppose, option: border, requires: {region: bianjing}, line: 郊赏之费，岁以百万计；河北之城、北边之戍，皆嗷嗷待哺。移此以给边，天下必知陛下之志。}
     - {character: yu_shen, stance: neutral, option: thrift, line: 循例固好，减半亦可……臣以为二说皆有理，当请陛下圣裁。}
   options:
     - id: thrift
@@ -3449,8 +3449,8 @@
   keywords: [河东, 太原, 边储, 城防]
   advisors:
     - {character: zhang_xiaochun, stance: support, option: hedi, requires: {region: hedong}, line: （自太原驰奏）太原城高池深，然守具多朽、粮储只够半年。陛下若肯拨钱修治，臣保太原不失。}
-    - {character: wang_fu, stance: oppose, option: keep, requires: {office: [shaozai, taizai]}, line: 金人与我为盟，太原何来兵事？张孝纯多虑了。}
-    - {character: ma_kuo, stance: neutral, option: half, line: 云中已非辽有，太原首当其冲。纵不能全修，亦当先修其要。}
+    - {character: wang_fu, stance: oppose, option: keep, requires: {office: [shaozai, taizai]}, line: 金人远在塞外，太原何来兵事？张孝纯多虑了。}
+    - {character: ma_kuo, stance: neutral, option: half, line: 金人兵锋日近云中，太原首当其冲。纵不能全修，亦当先修其要。}
   options:
     - id: hedi
       label: 和籴储粮，修治太原守具
@@ -3543,7 +3543,7 @@
 #   id 用 t_ 前缀（金兵南下的季数因局而异，约在宣和六年冬到宣和七年冬之间）。
 # - 罢黜一律用 set_character_status（retired 罢归 / exiled 窜逐）：引擎在人物离任时自动空出其全部官职，不受其兼何职的影响；
 #   文字说「某官某人」处仍以 office_holder 守卫。
-# - 常设条目（s_ 前缀）处置后由一项零费用的「勘会」工程在若干季后清除 memorial:<id>，届时该条重新呈上（冷却）。
+# - 常设条目（s_ 前缀）写 cooldown: N：处置满 N 季后重新呈上（引擎的奏疏冷却，memorial:<id> 保留上次批答）。
 # 文本为本游戏写作（【设】）；史事以 docs/FACT_CHECK_RESEARCH.md 为准，拿不准者写作本游戏设定或模糊处理。
 
 # ============================== T16 宣和六年春 ==============================
@@ -3571,7 +3571,7 @@
   options:
     - id: press
       label: 据誓书再遣使，力索山后诸州
-      memory: {character: zhao_liangsi, text: 宣和六年春，朝廷再遣使索山后诸州}
+      memory: {character: zhao_liangsi, text: "{when}，朝廷再遣使索山后诸州"}
       ops:
         - {op: adjust_resource, resource: treasury, delta: -10, reason: 遣使索山后}
         - {op: adjust_resource, resource: authority, delta: 1, reason: 不弃故疆之志}
@@ -3688,7 +3688,7 @@
   turn: 17
   title: 免夫钱
   summary: >-
-    宰相王黼以燕山馈运、边费不给，奏括天下丁夫，令纳免夫钱，每夫三十贯，限期输纳；所得当以千万缗计。言者谓河北、京东方饥，
+    宰相王黼以北边馈运、边费不给，奏括天下丁夫，令纳免夫钱，每夫三十贯，限期输纳；所得甚巨。言者谓河北、京东方饥，
     东南疮痍未复，不可再扰。若不处置，下季照王黼所奏施行。
   region: bianjing
   illustration: event.mianfu
@@ -3702,7 +3702,7 @@
   proposal: mianfu
   keywords: [免夫钱, 财赋, 王黼, 燕山]
   advisors:
-    - {character: wang_fu, stance: support, option: mianfu, requires: {office: [taizai, shaozai]}, line: 燕山既复，岁费浩繁。取之于丁夫，人出无几而国用自足——此恢复故疆之费，百姓岂有不乐输者？}
+    - {character: wang_fu, stance: support, option: mianfu, requires: {office: [taizai, shaozai]}, line: 北边岁费浩繁。取之于丁夫，人出无几而国用自足——此安边之费，百姓岂有不乐输者？}
     - {character: cai_jing, stance: neutral, option: half, line: 钱可取，民不可尽。饥荒之路蠲之，余路减半，庶几两全。老臣行钞法数十年，深知取民不可过急。}
     - {character: chen_dong, stance: oppose, option: thrift, requires: {region: bianjing}, line: 学生斗胆！河北之民父子相食，而朝廷犹按户索钱，是驱民为盗也！}
   options:
@@ -3737,7 +3737,7 @@
 - id: t17_mianfu_hubu
   turn: 17
   title: 免夫钱
-  summary: 户部以燕山馈运、边费不给，请括天下丁夫，令纳免夫钱，每夫三十贯；所得当以千万缗计。言者谓河北、京东方饥，东南疮痍未复，不可再扰。
+  summary: 户部以北边馈运、边费不给，请括天下丁夫，令纳免夫钱，每夫三十贯；所得甚巨。言者谓河北、京东方饥，东南疮痍未复，不可再扰。
   region: bianjing
   illustration: event.mianfu
   variant_of: t17_mianfu
@@ -3784,7 +3784,7 @@
   turn: 17
   expires_after: 1
   title: 河北京东饥
-  summary: 河北、京东连岁水旱，又困于燕山馈运，流民塞道，父子相食者有之；饥民啸聚，群盗因之而起。两路转运司请发常平仓赈济，或请蠲租。
+  summary: 河北、京东连岁水旱，又困于北边馈运，流民塞道，父子相食者有之；饥民啸聚，群盗因之而起。两路转运司请发常平仓赈济，或请蠲租。
   region: hebei_dong
   illustration: event.famine
   conditions: {kind: flag, key: hebei_famine, value: true}
@@ -3805,7 +3805,7 @@
         - {op: adjust_region, region: jingdong, stat: order, delta: 6}
       hint: 粮储 −80，国库 −40；民心 +4，河北东路、京东治安各 +6
     - id: remit
-      label: 蠲两路本年租赋，罢燕山馈运之役
+      label: 蠲两路本年租赋，暂罢北边馈运之役
       ops:
         - {op: adjust_resource, resource: treasury, delta: -60, reason: 蠲河北京东租赋}
         - {op: adjust_resource, resource: morale, delta: 3, reason: 蠲赋罢役}
@@ -3941,7 +3941,7 @@
   options:
     - id: ligang
       label: 罢王黼，擢李纲为少宰，不起蔡京
-      memory: {character: li_gang, text: 宣和六年秋，陛下罢王黼，以臣为少宰}
+      memory: {character: li_gang, text: "{when}，陛下罢王黼，以臣为少宰"}
       ops:
         - {op: set_flag, key: wangfu_dismissed, value: true}
         - {op: set_character_status, character: wang_fu, status: retired, cause: 罢相致仕}
@@ -3953,7 +3953,7 @@
       hint: 王黼致仕，李纲兼少宰；佞幸 −6，君威 +2，武备 +1；梁师成辈不悦
     - id: cai
       label: 依中书所拟：罢王黼，起蔡京领三省事，李邦彦为少宰
-      memory: {character: cai_jing, text: 宣和六年秋，老臣复起领三省事}
+      memory: {character: cai_jing, text: "{when}，老臣复起领三省事"}
       ops:
         - {op: set_flag, key: wangfu_dismissed, value: true}
         - {op: set_character_status, character: wang_fu, status: retired, cause: 罢相致仕}
@@ -4009,7 +4009,7 @@
   options:
     - id: zhang
       label: 罢王黼，召张叔夜入为少宰，不起蔡京
-      memory: {character: zhang_shuye, text: 宣和六年秋，陛下召臣入为少宰}
+      memory: {character: zhang_shuye, text: "{when}，陛下召臣入为少宰"}
       ops:
         - {op: set_flag, key: wangfu_dismissed, value: true}
         - {op: set_character_status, character: wang_fu, status: retired, cause: 罢相致仕}
@@ -4020,7 +4020,7 @@
       hint: 王黼致仕；张叔夜自京东入京为少宰（行程见回执）；佞幸 −5，君威 +1
     - id: cai
       label: 依中书所拟：罢王黼，起蔡京领三省事，李邦彦为少宰
-      memory: {character: cai_jing, text: 宣和六年秋，老臣复起领三省事}
+      memory: {character: cai_jing, text: "{when}，老臣复起领三省事"}
       ops:
         - {op: set_flag, key: wangfu_dismissed, value: true}
         - {op: set_character_status, character: wang_fu, status: retired, cause: 罢相致仕}
@@ -4075,7 +4075,7 @@
   options:
     - id: cai
       label: 依中书所拟：罢王黼，起蔡京领三省事，李邦彦为少宰
-      memory: {character: cai_jing, text: 宣和六年秋，老臣复起领三省事}
+      memory: {character: cai_jing, text: "{when}，老臣复起领三省事"}
       ops:
         - {op: set_flag, key: wangfu_dismissed, value: true}
         - {op: set_character_status, character: wang_fu, status: retired, cause: 罢相致仕}
@@ -4149,7 +4149,7 @@
   turn: 19
   expires_after: 1
   title: 罢应奉司
-  summary: 应奉司复置以来，花石之求换了名目，又起于东南；燕山馈运、河北饥荒，国用方急。言者交章请罢应奉司。
+  summary: 应奉司复置以来，花石之求换了名目，又起于东南；北边馈运、河北饥荒，国用方急。言者交章请罢应奉司。
   region: bianjing
   illustration: event.huashi
   conditions:
@@ -4209,7 +4209,7 @@
       hint: 吏治积弊 +1
     - id: retire
       label: 令蔡京致仕，不复起用
-      memory: {character: cai_jing, text: 宣和六年冬，陛下令老臣致仕}
+      memory: {character: cai_jing, text: "{when}，陛下令老臣致仕"}
       ops:
         - {op: set_character_status, character: cai_jing, status: retired, cause: 昏耄不能视事，再致仕}
         - {op: set_flag, key: cai_dismissed, value: true}
@@ -4337,7 +4337,7 @@
       hint: 国库 −80，君威 −3；金人轻宋（风闻）略↑，而胡马南牧（风闻）略↓
     - id: spy
       label: 遣马扩随报聘之使北行，觇其虚实
-      memory: {character: ma_kuo, text: 宣和七年夏，奉命随报聘之使北行，觇金人虚实}
+      memory: {character: ma_kuo, text: "{when}，奉命随报聘之使北行，觇金人虚实"}
       ops:
         - {op: set_flag, key: "intel:nanmu", value: true}
         - {op: adjust_resource, resource: treasury, delta: -20, reason: 报聘金国}
@@ -4549,7 +4549,7 @@
   keywords: [河北, 宣抚, 择帅, 武备]
   advisors:
     - {character: ma_kuo, stance: support, option: zhong_lead, requires: {region: bianjing}, line: 西军宿将，唯种师道老成知兵。以之宣抚河北，金人亦当知所畏。}
-    - {character: chen_dong, stance: support, option: zong, requires: {region: bianjing}, line: 宗泽刚直，忧国如家，虽在编管，天下称其忠。起之，河北之民必争附之！}
+    - {character: chen_dong, stance: support, option: zong, requires: {region: bianjing}, line: 宗泽刚直，忧国如家，天下称其忠。起之，河北之民必争附之！}
     - {character: li_bangyan, stance: oppose, option: keep, requires: {region: bianjing}, line: 无事置帅，倒像是要打仗。金人看见了，反倒多心。}
   options:
     - id: keep
@@ -4559,21 +4559,21 @@
       hint: 无增减；河北西路禁军仍无统帅
     - id: zhang
       label: 以张叔夜宣抚河北
-      memory: {character: zhang_shuye, text: 宣和七年，奉命宣抚河北}
+      memory: {character: zhang_shuye, text: "{when}，奉命宣抚河北"}
       ops:
         - {op: appoint, character: zhang_shuye, office: hebei_xuanfu, dispatch: true}
         - {op: adjust_resource, resource: wubei, delta: 1, reason: 张叔夜宣抚河北}
       hint: 张叔夜赴河北西路（行程见回执），到任即统河北西路禁军；武备 +1
     - id: zhong_lead
       label: 以种师道宣抚河北，统河北西路禁军
-      memory: {character: zhong_shidao, text: 宣和七年，奉命宣抚河北，以备金人}
+      memory: {character: zhong_shidao, text: "{when}，奉命宣抚河北，以备金人"}
       ops:
         - {op: appoint, character: zhong_shidao, office: hebei_xuanfu, dispatch: true}
         - {op: adjust_resource, resource: wubei, delta: 2, reason: 宿将宣抚河北}
       hint: 种师道启程赴河北西路（行程见回执），到任即统河北西路禁军；泾原军由副将暂摄；武备 +2
     - id: zong
       label: 起宗泽宣抚河北
-      memory: {character: zong_ze, text: 宣和七年，陛下起臣于编管之中，宣抚河北}
+      memory: {character: zong_ze, text: "{when}，陛下起臣于编管之中，宣抚河北"}
       ops:
         - {op: appoint, character: zong_ze, office: hebei_xuanfu, dispatch: true}
         - {op: adjust_resource, resource: wubei, delta: 1, reason: 起宗泽宣抚河北}
@@ -4603,11 +4603,11 @@
   advisors:
     - {character: tong_guan, stance: oppose, option: keep, line: 老奴在河北经营数年，金人若来，老奴自有方略。临敌易帅，兵家大忌！}
     - {character: ma_kuo, stance: support, option: zhong_lead, requires: {region: bianjing}, line: 西军宿将，唯种师道老成知兵。以之代童贯，金人亦当知所畏。}
-    - {character: chen_dong, stance: support, option: zong, requires: {region: bianjing}, line: 童贯，误国之臣也！伐燕丧师，讳败为功，岂可复以河北付之？}
+    - {character: chen_dong, stance: support, option: zong, requires: {region: bianjing}, line: 童贯，误国之臣也！以宦者掌兵二十年，好大喜功，岂可复以河北付之？}
   options:
     - id: zhong_lead
       label: 罢童贯宣抚，以种师道代之
-      memory: {character: zhong_shidao, text: 宣和七年，奉命代童贯宣抚河北}
+      memory: {character: zhong_shidao, text: "{when}，奉命代童贯宣抚河北"}
       ops:
         - {op: dismiss, character: tong_guan, office: hebei_xuanfu}
         - {op: appoint, character: zhong_shidao, office: hebei_xuanfu, dispatch: true}
@@ -4616,7 +4616,7 @@
       hint: 童贯罢宣抚（仍领枢密院）；种师道启程赴河北西路（行程见回执），泾原军由副将暂摄；武备 +2，佞幸 −2
     - id: zong
       label: 罢童贯宣抚，起宗泽代之
-      memory: {character: zong_ze, text: 宣和七年，陛下起臣于编管之中，代童贯宣抚河北}
+      memory: {character: zong_ze, text: "{when}，陛下起臣于编管之中，代童贯宣抚河北"}
       ops:
         - {op: dismiss, character: tong_guan, office: hebei_xuanfu}
         - {op: appoint, character: zong_ze, office: hebei_xuanfu, dispatch: true}
@@ -4631,7 +4631,7 @@
       hint: 无增减；童贯仍宣抚河北
     - id: zhang
       label: 罢童贯宣抚，以张叔夜代之
-      memory: {character: zhang_shuye, text: 宣和七年，奉命代童贯宣抚河北}
+      memory: {character: zhang_shuye, text: "{when}，奉命代童贯宣抚河北"}
       ops:
         - {op: dismiss, character: tong_guan, office: hebei_xuanfu}
         - {op: appoint, character: zhang_shuye, office: hebei_xuanfu, dispatch: true}
@@ -4669,7 +4669,7 @@
       hint: 常胜军分兵 4000 移驻京东（行程见回执），余部留原地；郭药师（风闻）怏怏，然其众不得聚而为变
     - id: favor
       label: 厚给衣粮，抚以恩信
-      memory: {character: guo_yaoshi, text: 宣和七年，朝廷厚给常胜军衣粮}
+      memory: {character: guo_yaoshi, text: "{when}，朝廷厚给常胜军衣粮"}
       ops:
         - {op: adjust_resource, resource: treasury, delta: -50, reason: 厚给常胜军衣粮}
         - {op: adjust_trait, character: guo_yaoshi, trait: loyalty, delta: 3}
@@ -4776,7 +4776,7 @@
 
 - id: t_chendong_tong
   title: 陈东论童贯
-  summary: 陈东三上书，论领枢密院事童贯：以宦者掌兵柄二十年，伐燕丧师，讳败为功，结怨于西军诸将。请夺其兵柄。
+  summary: 陈东三上书，论领枢密院事童贯：以宦者掌兵柄二十年，好大喜功，结怨于西军诸将。请夺其兵柄。
   region: bianjing
   illustration: event.chen_dong
   conditions:
@@ -5195,7 +5195,7 @@
   keywords: [守城, 宗泽, 汴京, 禁军]
   advisors:
     - {character: zong_ze, stance: support, option: zong, requires: {region: bianjing}, line: 臣老矣，愿得一城死守而已！京城百万之众，皆可为兵，何惧金人？}
-    - {character: gao_qiu, stance: oppose, option: zhaomu, requires: {office: dianshuai}, line: 禁军守城，臣自有调度。宗泽一个编管的老头儿，哪里统得了禁军？}
+    - {character: gao_qiu, stance: oppose, option: zhaomu, requires: {office: dianshuai}, line: 禁军守城，臣自有调度。宗泽一个七十老翁，哪里统得了禁军？}
     - {character: chen_dong, stance: support, option: zong, requires: {region: bianjing}, line: 宗泽忠义，天下所知。付之城守，都人必效死！}
   options:
     - id: keep
@@ -6320,10 +6320,11 @@
       hint: 国库每季 −50 共两季；成后河东、河北西路防务各 +10，武备 +2
 
 # ============================== 常设条目（全局，s_ 前缀）==============================
-# 每条处置后启动一项零费用的「勘会」工程，竣工时清除 memorial:<id>，该条于若干季后重新呈上（冷却）；冷却季数写在提示里。
+# 每条写 cooldown: N，处置满 N 季后重新呈上（冷却）；冷却季数也写在提示里。
 # 远地（川峡、闽广）两条的可见季写在 turn / expires_after 上（W10），不写 conditions。
 - id: s_huangzai
   title: 京东蝗旱
+  cooldown: 4
   summary: 京东转运司奏：齐、郓诸州旱，飞蝗蔽野，秋稼多损，民有菜色。请发常平仓赈济，或请蠲本年租赋。
   region: jingdong
   illustration: event.famine
@@ -6343,13 +6344,11 @@
         - {op: adjust_resource, resource: treasury, delta: -30, reason: 蠲京东租赋}
         - {op: adjust_region, region: jingdong, stat: prosperity, delta: 3}
         - {op: adjust_resource, resource: morale, delta: 1, reason: 蠲赋}
-        - {op: start_project, name: 京东赈务勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_huangzai", value: null}]}
       hint: 国库 −30，京东繁荣 +3，民心 +1；本条四季后再议
     - id: keep
       label: 令州县自行捕蝗
       ops:
         - {op: adjust_region, region: jingdong, stat: order, delta: -3}
-        - {op: start_project, name: 京东赈务勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_huangzai", value: null}]}
       hint: 京东治安 −3；本条四季后再议
     - id: relief
       label: 发常平仓赈济
@@ -6357,11 +6356,11 @@
         - {op: adjust_resource, resource: grain, delta: -40, reason: 赈京东蝗旱}
         - {op: adjust_region, region: jingdong, stat: order, delta: 5}
         - {op: adjust_resource, resource: morale, delta: 1, reason: 赈济}
-        - {op: start_project, name: 京东赈务勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_huangzai", value: null}]}
       hint: 粮储 −40，京东治安 +5，民心 +1；本条四季后再议
 
 - id: s_shuizai
   title: 淮南水潦
+  cooldown: 4
   summary: 淮南转运司奏：江淮霖雨，圩田多坏，楚、泗诸州漂没民居。请发粟赈恤，或请发丁修复圩岸。
   region: huainan
   illustration: event.flood
@@ -6381,7 +6380,6 @@
         - {op: adjust_resource, resource: grain, delta: -40, reason: 赈淮南水灾}
         - {op: adjust_region, region: huainan, stat: order, delta: 4}
         - {op: adjust_resource, resource: morale, delta: 1, reason: 赈恤}
-        - {op: start_project, name: 淮南水灾勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_shuizai", value: null}]}
       hint: 粮储 −40，淮南治安 +4，民心 +1；本条四季后再议
     - id: repair
       label: 发丁修复圩岸（两季）
@@ -6394,17 +6392,16 @@
           on_complete:
             - {op: adjust_region, region: huainan, stat: grain, delta: 3}
             - {op: adjust_region, region: huainan, stat: prosperity, delta: 2}
-        - {op: start_project, name: 淮南水灾勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_shuizai", value: null}]}
       hint: 国库每季 −25 共两季；成后淮南粮产 +3、繁荣 +2；本条四季后再议
     - id: keep
       label: 令州县自行赈恤
       ops:
         - {op: adjust_region, region: huainan, stat: prosperity, delta: -2}
-        - {op: start_project, name: 淮南水灾勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_shuizai", value: null}]}
       hint: 淮南繁荣 −2；本条四季后再议
 
 - id: s_hefang
   title: 河防
+  cooldown: 5
   summary: 都水监奏：黄河北流，堤埽多朽，澶、滑之间屡告险工。请发丁夫修筑堤埽，以免河决之患。
   region: hebei_dong
   illustration: event.flood
@@ -6422,14 +6419,12 @@
       label: 依旧
       ops:
         - {op: adjust_region, region: hebei_dong, stat: prosperity, delta: -1}
-        - {op: start_project, name: 河防勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_hefang", value: null}]}
       hint: 河北东路繁荣 −1（堤埽日朽）；本条五季后再议
     - id: patch
       label: 只修险工
       ops:
         - {op: adjust_resource, resource: treasury, delta: -15, reason: 修河北险工}
         - {op: adjust_region, region: hebei_dong, stat: prosperity, delta: 1}
-        - {op: start_project, name: 河防勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_hefang", value: null}]}
       hint: 国库 −15，河北东路繁荣 +1；本条五季后再议
     - id: repair
       label: 大修河北堤埽（两季）
@@ -6442,11 +6437,11 @@
           on_complete:
             - {op: adjust_region, region: hebei_dong, stat: prosperity, delta: 3}
             - {op: adjust_region, region: hebei_dong, stat: grain, delta: 2}
-        - {op: start_project, name: 河防勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_hefang", value: null}]}
       hint: 国库每季 −30 共两季；成后河北东路繁荣 +3、粮产 +2；本条五季后再议
 
 - id: s_caoyun
   title: 汴河漕运
+  cooldown: 4
   summary: 发运司奏：汴河淤浅，纲船阻滞，东南上供之米到京迟误；纲兵、篙工逃亡者众。请疏浚汴河，或增发纲船。
   region: huainan
   illustration: event.qingming
@@ -6464,7 +6459,6 @@
       label: 依旧
       ops:
         - {op: adjust_resource, resource: grain, delta: -20, reason: 纲运迟误}
-        - {op: start_project, name: 漕运勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_caoyun", value: null}]}
       hint: 粮储 −20（纲运迟误）；本条四季后再议
     - id: boats
       label: 增发纲船，严押纲之法
@@ -6472,7 +6466,6 @@
         - {op: adjust_resource, resource: treasury, delta: -30, reason: 增发纲船}
         - {op: adjust_resource, resource: grain, delta: 50, reason: 漕粮增运}
         - {op: adjust_resource, resource: corruption, delta: -1, reason: 严押纲之法}
-        - {op: start_project, name: 漕运勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_caoyun", value: null}]}
       hint: 国库 −30，粮储 +50，吏治积弊 −1；本条四季后再议
     - id: dredge
       label: 发丁疏浚汴河（两季）
@@ -6485,11 +6478,11 @@
           on_complete:
             - {op: adjust_resource, resource: grain, delta: 80, reason: 汴河通，漕粮到京}
             - {op: adjust_region, region: huainan, stat: prosperity, delta: 2}
-        - {op: start_project, name: 漕运勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_caoyun", value: null}]}
       hint: 国库每季 −30 共两季；成后粮储 +80、淮南繁荣 +2；本条四季后再议
 
 - id: s_hedi
   title: 河北和籴
+  cooldown: 4
   summary: 河北都转运司奏：沿边诸州边储不足一岁之用，请出钱和籴，以实边储；或言和籴之弊，州县抑配于民，不如折纳现钱。
   region: hebei_xi
   illustration: event.tangluo
@@ -6510,7 +6503,6 @@
         - {op: adjust_resource, resource: treasury, delta: -50, reason: 河北和籴}
         - {op: adjust_resource, resource: grain, delta: 50, reason: 河北和籴入仓}
         - {op: adjust_resource, resource: wubei, delta: 1, reason: 边储稍实}
-        - {op: start_project, name: 边储勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_hedi", value: null}]}
       hint: 国库 −50，粮储 +50，武备 +1；本条四季后再议
     - id: cash
       label: 折纳现钱，不籴
@@ -6518,7 +6510,6 @@
         - {op: adjust_resource, resource: treasury, delta: 20, reason: 边储折纳现钱}
         - {op: adjust_resource, resource: wubei, delta: -1, reason: 边储空虚}
         - {op: adjust_resource, resource: corruption, delta: 1, reason: 折纳之弊}
-        - {op: start_project, name: 边储勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_hedi", value: null}]}
       hint: 国库 +20，武备 −1，吏治积弊 +1；本条四季后再议
     - id: fair
       label: 和籴而禁抑配，遣使按察
@@ -6527,11 +6518,11 @@
         - {op: adjust_resource, resource: grain, delta: 40, reason: 河北和籴入仓}
         - {op: adjust_resource, resource: corruption, delta: -1, reason: 禁抑配}
         - {op: adjust_region, region: hebei_xi, stat: order, delta: 2}
-        - {op: start_project, name: 边储勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_hedi", value: null}]}
       hint: 国库 −55，粮储 +40，吏治积弊 −1，河北西路治安 +2；本条四季后再议
 
 - id: s_kaoke
   title: 考课守令
+  cooldown: 4
   summary: 吏部奏：诸路守令考课之法久废，以货得官者众，催科之外无治绩可言。请遣使按察诸路，或严考课以黜庸吏。
   region: bianjing
   illustration: event.court_debate
@@ -6547,7 +6538,6 @@
       label: 依旧
       ops:
         - {op: adjust_resource, resource: corruption, delta: 1, reason: 考课不行}
-        - {op: start_project, name: 考课勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_kaoke", value: null}]}
       hint: 吏治积弊 +1；本条四季后再议
     - id: strict
       label: 严考课，黜庸吏
@@ -6555,18 +6545,17 @@
         - {op: adjust_resource, resource: corruption, delta: -2, reason: 黜庸吏}
         - {op: adjust_resource, resource: ningxing, delta: -1, reason: 以货得官者被黜}
         - {op: adjust_resource, resource: authority, delta: -1, reason: 黜吏者怨}
-        - {op: start_project, name: 考课勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_kaoke", value: null}]}
       hint: 吏治积弊 −2，佞幸 −1，君威 −1；本条四季后再议
     - id: inspect
       label: 遣使按察诸路守令
       ops:
         - {op: adjust_resource, resource: treasury, delta: -15, reason: 遣使按察}
         - {op: adjust_resource, resource: corruption, delta: -3, reason: 按察守令}
-        - {op: start_project, name: 考课勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_kaoke", value: null}]}
       hint: 国库 −15，吏治积弊 −3；本条四季后再议
 
 - id: s_taixue
   title: 太学议政
+  cooldown: 5
   summary: 太学诸生聚议时政，书生上书者日众，言应奉、边事、宰执之失，辞多激切。或请许其上书、下诏求直言，或请禁太学妄议。
   region: bianjing
   illustration: event.chen_dong
@@ -6583,7 +6572,6 @@
       ops:
         - {op: adjust_resource, resource: ningxing, delta: -1, reason: 言路稍开}
         - {op: adjust_resource, resource: morale, delta: 1, reason: 士论稍平}
-        - {op: start_project, name: 言路勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_taixue", value: null}]}
       hint: 佞幸 −1，民心 +1；本条五季后再议
     - id: ban
       label: 禁太学妄议时政
@@ -6591,7 +6579,6 @@
         - {op: adjust_resource, resource: authority, delta: 1, reason: 禁太学妄议}
         - {op: adjust_resource, resource: ningxing, delta: 1, reason: 言路壅塞}
         - {op: adjust_resource, resource: morale, delta: -1, reason: 士论不平}
-        - {op: start_project, name: 言路勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_taixue", value: null}]}
       hint: 君威 +1，佞幸 +1，民心 −1；本条五季后再议
     - id: frank
       label: 下诏求直言
@@ -6599,11 +6586,11 @@
         - {op: adjust_resource, resource: ningxing, delta: -1, reason: 言路大开}
         - {op: adjust_resource, resource: corruption, delta: -1, reason: 言者纠弹}
         - {op: adjust_resource, resource: authority, delta: -1, reason: 群言纷起}
-        - {op: start_project, name: 言路勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_taixue", value: null}]}
       hint: 佞幸 −1，吏治积弊 −1，君威 −1；本条五季后再议
 
 - id: s_zhaijiao
   title: 宫观斋醮
+  cooldown: 5
   summary: 道录院奏：天下神霄玉清万寿宫岁费不赀，又请于上清宝箓宫设大斋醮，度道士、赐田产。言者谓宫观之费，夺民之食。
   region: bianjing
   illustration: event.daoist_rite
@@ -6632,7 +6619,6 @@
       ops:
         - {op: adjust_resource, resource: treasury, delta: 15, reason: 减宫观岁费}
         - {op: adjust_resource, resource: morale, delta: 1, reason: 减宫观之费}
-        - {op: start_project, name: 宫观勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_zhaijiao", value: null}]}
       hint: 国库 +15，民心 +1；本条五季后再议
     - id: approve
       label: 照准，设大斋醮
@@ -6640,11 +6626,11 @@
         - {op: adjust_resource, resource: treasury, delta: -25, reason: 斋醮赏赐}
         - {op: adjust_resource, resource: authority, delta: 1, reason: 道君临坛}
         - {op: adjust_resource, resource: ningxing, delta: 1, reason: 方士得宠}
-        - {op: start_project, name: 宫观勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_zhaijiao", value: null}]}
       hint: 国库 −25，君威 +1，佞幸 +1；本条五季后再议
 
 - id: s_genyue
   title: 艮岳修葺
+  cooldown: 5
   summary: 提举万岁山所奏：艮岳峰石多有欹侧，园中珍禽异木须时时补给，又请于东南续取奇石以增胜景。
   region: bianjing
   illustration: event.genyue
@@ -6652,6 +6638,7 @@
     all:
       - {kind: turn, operator: gte, value: 10}
       - {kind: flag, key: jin_invaded, operator: absent}
+      - {kind: flag, key: genyue_halted, operator: absent}
   proposal: approve
   keywords: [艮岳, 花石, 宫苑]
   advisors:
@@ -6665,7 +6652,6 @@
         - {op: adjust_resource, resource: treasury, delta: -40, reason: 艮岳修葺取石}
         - {op: adjust_resource, resource: dongnan, delta: 2, reason: 东南续取奇石}
         - {op: adjust_resource, resource: authority, delta: 1, reason: 御园增胜}
-        - {op: start_project, name: 艮岳勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_genyue", value: null}]}
       hint: 国库 −40，东南民怨 +2，君威 +1；本条五季后再议
     - id: halt
       label: 罢艮岳工役
@@ -6674,17 +6660,16 @@
         - {op: adjust_resource, resource: dongnan, delta: -2, reason: 罢取石之役}
         - {op: adjust_resource, resource: ningxing, delta: -1, reason: 罢不急之役}
         - {op: adjust_resource, resource: authority, delta: -1, reason: 御园荒废}
-        - {op: start_project, name: 艮岳勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_genyue", value: null}]}
       hint: 国库 +10，东南民怨 −2，佞幸 −1，君威 −1；本条五季后再议
     - id: repair
       label: 只修葺，不取石
       ops:
         - {op: adjust_resource, resource: treasury, delta: -15, reason: 艮岳修葺}
-        - {op: start_project, name: 艮岳勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_genyue", value: null}]}
       hint: 国库 −15；本条五季后再议
 
 - id: s_zongshi
   title: 宗室禄廪
+  cooldown: 6
   summary: 大宗正司奏：宗室日繁，禄廪、婚嫁、恩赏之费岁增，而疏属多贫不能自存。请或裁冗赐，或置宗学教养。
   region: bianjing
   illustration: event.court_debate
@@ -6703,25 +6688,23 @@
       ops:
         - {op: adjust_resource, resource: treasury, delta: -15, reason: 置宗学}
         - {op: adjust_resource, resource: authority, delta: 1, reason: 敦睦宗室}
-        - {op: start_project, name: 宗室勘会, region: bianjing, cost_per_turn: {}, turns: 6, on_complete: [{op: set_flag, key: "memorial:s_zongshi", value: null}]}
       hint: 国库 −15，君威 +1；本条六季后再议
     - id: trim
       label: 裁疏属冗赐，宗室禄赐定为每季七万缗
       ops:
         - {op: add_ledger, id: zongshi, name: 宗室禄赐, category: treasury, amount: -7, kind: recurring, reason: 裁冗赐后（游戏折算）, cancellable: false}
         - {op: adjust_resource, resource: authority, delta: -1, reason: 宗室怨裁}
-        - {op: start_project, name: 宗室勘会, region: bianjing, cost_per_turn: {}, turns: 6, on_complete: [{op: set_flag, key: "memorial:s_zongshi", value: null}]}
       hint: 宗室禄赐每季定为 7 万缗（原 10 万）；君威 −1；本条六季后再议
     - id: keep
       label: 依旧
       ops:
-        - {op: start_project, name: 宗室勘会, region: bianjing, cost_per_turn: {}, turns: 6, on_complete: [{op: set_flag, key: "memorial:s_zongshi", value: null}]}
       hint: 无增减；本条六季后再议
 
 - id: s_qianyin
   turn: 8
   expires_after: 19
   title: 川峡钱引
+  cooldown: 5
   summary: 成都府路转运司奏到：钱引印造日多，而本钱不足，引价日贱，蜀中物价腾踊。或请增印钱引以济边费，或请收缩钱引、以本钱称提。
   region: chuanxia
   illustration: event.court_debate
@@ -6734,7 +6717,6 @@
     - id: keep
       label: 依旧
       ops:
-        - {op: start_project, name: 钱引勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_qianyin", value: null}]}
       hint: 无增减；本条五季后再议
     - id: print
       label: 增印钱引以济边费
@@ -6742,7 +6724,6 @@
         - {op: adjust_resource, resource: treasury, delta: 80, reason: 增印钱引}
         - {op: adjust_resource, resource: corruption, delta: 2, reason: 钱引滥发}
         - {op: adjust_region, region: chuanxia, stat: prosperity, delta: -3}
-        - {op: start_project, name: 钱引勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_qianyin", value: null}]}
       hint: 国库 +80，吏治积弊 +2，川峡繁荣 −3（令达于下季）；本条五季后再议
     - id: tighten
       label: 收缩钱引，以本钱称提
@@ -6750,13 +6731,13 @@
         - {op: adjust_resource, resource: treasury, delta: -40, reason: 拨本钱称提钱引}
         - {op: adjust_region, region: chuanxia, stat: prosperity, delta: 3}
         - {op: adjust_resource, resource: corruption, delta: -1, reason: 整饬钱引}
-        - {op: start_project, name: 钱引勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_qianyin", value: null}]}
       hint: 国库 −40，川峡繁荣 +3（令达于下季），吏治积弊 −1；本条五季后再议
 
 - id: s_shibo
   turn: 6
   expires_after: 21
   title: 闽广市舶
+  cooldown: 5
   summary: 泉州、广州市舶司奏到：蕃舶岁至，抽解之物山积。或请增抽解之数以佐国用，或请宽舶商之征以广招徕。
   region: minguang
   illustration: event.qingming
@@ -6772,23 +6753,21 @@
         - {op: adjust_resource, resource: treasury, delta: -10, reason: 宽舶商之征}
         - {op: adjust_region, region: minguang, stat: prosperity, delta: 3}
         - {op: adjust_region, region: minguang, stat: tax, delta: 1}
-        - {op: start_project, name: 市舶勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_shibo", value: null}]}
       hint: 国库 −10，闽广繁荣 +3、税基 +1（令达于下季）；本条五季后再议
     - id: levy
       label: 增市舶抽解之数
       ops:
         - {op: adjust_resource, resource: treasury, delta: 40, reason: 增市舶抽解}
         - {op: adjust_region, region: minguang, stat: prosperity, delta: -2}
-        - {op: start_project, name: 市舶勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_shibo", value: null}]}
       hint: 国库 +40，闽广繁荣 −2（令达于下季）；本条五季后再议
     - id: keep
       label: 依旧
       ops:
-        - {op: start_project, name: 市舶勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_shibo", value: null}]}
       hint: 无增减；本条五季后再议
 
 - id: s_goryeo
   title: 高丽使至
+  cooldown: 6
   summary: 高丽遣使入贡，自明州登岸至京。礼部请定接伴之礼；或言高丽与女真接壤，可询其虚实。
   region: bianjing
   illustration: event.goryeo_envoy
@@ -6806,7 +6785,6 @@
       label: 依常礼接伴
       ops:
         - {op: adjust_resource, resource: treasury, delta: -10, reason: 接伴高丽使}
-        - {op: start_project, name: 礼宾勘会, region: bianjing, cost_per_turn: {}, turns: 6, on_complete: [{op: set_flag, key: "memorial:s_goryeo", value: null}]}
       hint: 国库 −10；本条六季后再议
     - id: ask
       label: 厚待其使，询女真虚实
@@ -6814,7 +6792,6 @@
         - {op: set_flag, key: "intel:jin_contempt", value: true}
         - {op: adjust_resource, resource: treasury, delta: -20, reason: 接伴高丽使}
         - {op: adjust_relation, a: song, b: goryeo, delta: 4}
-        - {op: start_project, name: 礼宾勘会, region: bianjing, cost_per_turn: {}, turns: 6, on_complete: [{op: set_flag, key: "memorial:s_goryeo", value: null}]}
       hint: 国库 −20，宋丽关系 +4；得女真虚实之报（「金人轻宋」的风闻区间减半，只减半一次、不叠加）；本条六季后再议
     - id: honor
       label: 厚礼接伴，回赐优渥
@@ -6823,11 +6800,11 @@
         - {op: adjust_relation, a: song, b: goryeo, delta: 8}
         - {op: adjust_relation, a: goryeo, b: song, delta: 8}
         - {op: adjust_resource, resource: authority, delta: 1, reason: 远人来朝}
-        - {op: start_project, name: 礼宾勘会, region: bianjing, cost_per_turn: {}, turns: 6, on_complete: [{op: set_flag, key: "memorial:s_goryeo", value: null}]}
       hint: 国库 −25，宋丽关系 +8，君威 +1；本条六季后再议
 
 - id: s_xibian
   title: 夏人扰边
+  cooldown: 5
   summary: 泾原、环庆诸路奏：夏人小队时出扰边，焚掠熟户，弓箭手多逃亡。请增修堡寨、补弓箭手，或遣使责问夏国。
   region: xibian
   illustration: event.xixia
@@ -6843,13 +6820,11 @@
       ops:
         - {op: adjust_resource, resource: treasury, delta: -30, reason: 增修西边堡寨}
         - {op: adjust_region, region: xibian, stat: defense, delta: 3}
-        - {op: start_project, name: 西边勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_xibian", value: null}]}
       hint: 国库 −30，西北边防务 +3；本条五季后再议
     - id: keep
       label: 令边将自行备御
       ops:
         - {op: adjust_region, region: xibian, stat: order, delta: -2}
-        - {op: start_project, name: 西边勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_xibian", value: null}]}
       hint: 西北边治安 −2；本条五季后再议
     - id: envoy
       label: 遣使责问夏国
@@ -6857,11 +6832,11 @@
         - {op: adjust_resource, resource: treasury, delta: -10, reason: 遣使夏国}
         - {op: adjust_relation, a: song, b: xixia, delta: -5}
         - {op: adjust_region, region: xibian, stat: order, delta: 2}
-        - {op: start_project, name: 西边勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_xibian", value: null}]}
       hint: 国库 −10，宋夏关系 −5，西北边治安 +2；本条五季后再议
 
 - id: s_junqi
   title: 军器监
+  cooldown: 5
   summary: 军器监奏：库中甲胄多朽，弓弩筋胶不堪用，而诸路所进器甲多以次充好。请拨款修造，或先汰朽器、严核诸路所进。
   region: bianjing
   illustration: event.jinjun_review
@@ -6877,23 +6852,21 @@
       ops:
         - {op: adjust_resource, resource: treasury, delta: -40, reason: 修造器甲}
         - {op: adjust_resource, resource: wubei, delta: 1, reason: 器甲修造}
-        - {op: start_project, name: 军器勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_junqi", value: null}]}
       hint: 国库 −40，武备 +1；本条五季后再议
     - id: integrity
       label: 汰朽器，严核诸路所进
       ops:
         - {op: adjust_resource, resource: treasury, delta: -10, reason: 汰朽器}
         - {op: adjust_resource, resource: corruption, delta: -1, reason: 严核器甲}
-        - {op: start_project, name: 军器勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_junqi", value: null}]}
       hint: 国库 −10，吏治积弊 −1；本条五季后再议
     - id: keep
       label: 依旧
       ops:
-        - {op: start_project, name: 军器勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_junqi", value: null}]}
       hint: 无增减；本条五季后再议
 
 - id: s_baojia
   title: 河北保甲
+  cooldown: 5
   summary: 河北诸路保甲、弓手久不教阅，名存实亡。边臣请复教阅保甲，或募弓箭手屯边，以补禁军之不足。
   region: hebei_xi
   illustration: event.military_drill
@@ -6913,12 +6886,10 @@
         - {op: adjust_army, army: hebei_army, delta: 5000, reason: 募弓箭手屯边}
         - {op: adjust_resource, resource: treasury, delta: -20, reason: 募弓箭手}
         - {op: adjust_resource, resource: wubei, delta: 1, reason: 募弓箭手}
-        - {op: start_project, name: 保甲勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_baojia", value: null}]}
       hint: 河北西路禁军 +5000（素质不变），国库 −20，武备 +1；此后养兵每季 +1.5 万缗、粮 +0.6 万石；本条五季后再议
     - id: keep
       label: 依旧
       ops:
-        - {op: start_project, name: 保甲勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_baojia", value: null}]}
       hint: 无增减；本条五季后再议
     - id: train
       label: 复教阅河北保甲
@@ -6926,11 +6897,11 @@
         - {op: adjust_resource, resource: treasury, delta: -30, reason: 教阅保甲}
         - {op: adjust_resource, resource: wubei, delta: 1, reason: 河北保甲教阅}
         - {op: adjust_resource, resource: morale, delta: -1, reason: 保甲妨农}
-        - {op: start_project, name: 保甲勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_baojia", value: null}]}
       hint: 国库 −30，武备 +1，民心 −1；本条五季后再议
 
 - id: s_jiaoyue
   title: 殿前司教阅
+  cooldown: 5
   summary: 殿前司诸班直久不教阅，营中老弱充数，将校役使兵士为之营作。言者请拨款教阅，或汰老弱以实其额。
   region: bianjing
   illustration: event.jinjun_review
@@ -6955,7 +6926,6 @@
           on_complete:
             - {op: adjust_army, army: jinjun, quality_delta: 0.04, reason: 教阅有成}
             - {op: adjust_resource, resource: wubei, delta: 1, reason: 禁军教阅有成}
-        - {op: start_project, name: 殿前司勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_jiaoyue", value: null}]}
       hint: 国库每季 −30 共两季；成后京师禁军素质 +0.04、武备 +1；本条五季后再议
     - id: integrity
       label: 汰老弱五千，责将校占役
@@ -6963,16 +6933,15 @@
         - {op: adjust_army, army: jinjun, delta: -5000, quality_delta: 0.05, reason: 汰老弱五千}
         - {op: adjust_resource, resource: wubei, delta: 1, reason: 汰禁军老弱}
         - {op: adjust_resource, resource: ningxing, delta: -1, reason: 殿前司受责}
-        - {op: start_project, name: 殿前司勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_jiaoyue", value: null}]}
       hint: 京师禁军 −5000，素质 +0.05，武备 +1，佞幸 −1；养兵每季省 1.5 万缗、0.6 万石；本条五季后再议
     - id: keep
       label: 依旧
       ops:
-        - {op: start_project, name: 殿前司勘会, region: bianjing, cost_per_turn: {}, turns: 5, on_complete: [{op: set_flag, key: "memorial:s_jiaoyue", value: null}]}
       hint: 无增减；本条五季后再议
 
 - id: s_liumin
   title: 流民入京
+  cooldown: 4
   summary: 诸路饥民流入京畿，聚于城外，日有冻馁死者；开封府请处置：或设居养院收养，或遣还本贯。
   region: bianjing
   illustration: event.famine
@@ -6993,7 +6962,6 @@
         - {op: adjust_resource, resource: grain, delta: -30, reason: 居养流民}
         - {op: adjust_resource, resource: morale, delta: 2, reason: 收养流民}
         - {op: adjust_region, region: bianjing, stat: order, delta: 3}
-        - {op: start_project, name: 居养勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_liumin", value: null}]}
       hint: 粮储 −30，民心 +2，汴京治安 +3；本条四季后再议
     - id: send_back
       label: 给路粮，遣还本贯
@@ -7001,11 +6969,9 @@
         - {op: adjust_resource, resource: grain, delta: -10, reason: 给流民路粮}
         - {op: adjust_region, region: bianjing, stat: order, delta: 2}
         - {op: adjust_resource, resource: morale, delta: -1, reason: 驱遣流民}
-        - {op: start_project, name: 居养勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_liumin", value: null}]}
       hint: 粮储 −10，汴京治安 +2，民心 −1；本条四季后再议
     - id: keep
       label: 依旧
       ops:
         - {op: adjust_region, region: bianjing, stat: order, delta: -2}
-        - {op: start_project, name: 居养勘会, region: bianjing, cost_per_turn: {}, turns: 4, on_complete: [{op: set_flag, key: "memorial:s_liumin", value: null}]}
       hint: 汴京治安 −2；本条四季后再议
