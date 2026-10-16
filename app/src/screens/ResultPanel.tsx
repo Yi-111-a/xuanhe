@@ -14,8 +14,9 @@ import { cls, deltaClass, fmtDelta, fmtNum, fmtRange, fmtValueOrRange } from '..
 import { CrisisTermRow, termMid } from './desk/Hud';
 import { groupClauses } from './EdictPanel';
 import { SOURCE_NAMES } from '../lib/court';
+import { CAPITAL } from '../lib/game';
 
-const LEDGER_ORDER = ['treasury', 'grain', 'authority', 'morale', 'corruption', 'frontier_pressure', 'fanzhen_power', 'court_strife', 'an_ambition', 'rebellion_risk'];
+const LEDGER_ORDER = ['treasury', 'grain', 'authority', 'morale', 'ningxing', 'dongnan', 'wubei', 'liao_zuo', 'corruption', 'jin_contempt', 'nanmu'];
 
 function Mark({ status }: { status: Clause['status'] }) {
   if (status === 'applied')
@@ -49,7 +50,7 @@ const RECON_STEPS = [
 ] as const;
 
 const INTERNAL_KINDS = new Set(['flag', 'counter', 'memory', 'effect_skipped']);
-const WAR = /uprising|falls|battle|defeat|revolt|rising|mutiny|raid|talas|tongguan|mawei|flees|rebel|war|反|陷|战|败|叛|乱|兵|围/;
+const WAR = /uprising|falls|battle|defeat|revolt|rising|mutiny|raid|invasion|siege|flees|rebel|war|反|陷|战|败|叛|乱|兵|围/;
 
 type FiredEvent = { id: string; title: string; text?: string; illustration?: string; importance?: number };
 type Featured = { kind: 'art' | 'season'; url: string; title: string; key: string } | { kind: 'map'; region: string; title: string } | { kind: 'none' };
@@ -169,7 +170,7 @@ export function ResultPanel() {
     else if (mapSettled && mapUrlSettled)
       shown =
         mapData && mapUrl
-          ? { kind: 'map', region: battleRegion ?? 'jingji', title: events[0]?.title ?? (battleRegion ? `${regionName(battleRegion)}·战事` : `${view.calendar_label}·四方无事`) }
+          ? { kind: 'map', region: battleRegion ?? CAPITAL, title: events[0]?.title ?? (battleRegion ? `${regionName(battleRegion)}·战事` : `${view.calendar_label}·四方无事`) }
           : { kind: 'none' };
   }
 

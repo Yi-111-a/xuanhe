@@ -7,7 +7,7 @@ type Mood = 'calm' | 'war' | 'court' | 'frontier' | 'flood';
 
 function moodOf(seed: string): Mood {
   if (/defeat|uprising|talas|battle|khitan|xier|war|败|兵/.test(seed)) return 'war';
-  if (/court|palace|huaqing|xier|li_linfu|chancellor|宫|相/.test(seed)) return 'court';
+  if (/court|palace|genyue|cai_|wangfu|neishan|chancellor|宫|相/.test(seed)) return 'court';
   if (/anxi|hexi|frontier|caravan|nanzhao/.test(seed)) return 'frontier';
   if (/canal|grain|rain|flood|漕|粮/.test(seed)) return 'flood';
   return 'calm';

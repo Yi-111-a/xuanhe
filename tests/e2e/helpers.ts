@@ -129,7 +129,8 @@ export async function openScreen(page: Page, name: ScreenName, fresh = true): Pr
       return true;
     case 'map':
       await onDesk(page);
-      await page.getByTestId('map.layer.troops').click();
+      // the layer may already be 兵力 when the screen is reopened (its tab is then disabled)
+      if (await page.getByTestId('map.layer.troops').isEnabled().catch(() => false)) await page.getByTestId('map.layer.troops').click();
       await page.getByTestId('map.region.yanshan').dispatchEvent('click');
       await expect(page.getByTestId('map.regionCard')).toBeVisible();
       await settle(page);
@@ -161,7 +162,7 @@ export async function openScreen(page: Page, name: ScreenName, fresh = true): Pr
       const newDraft = page.getByTestId('edict.newDraft');
       if (await newDraft.isVisible().catch(() => false)) await newDraft.click();
       await openBrush(page);
-      await page.getByTestId('edict.section.military').fill('命潼关增修关防，选京畿彍骑整训。');
+      await page.getByTestId('edict.section.military').fill('命河北诸州增修城池，括京师禁军阙额。');
       await settle(page, 900);
       return true;
     }
@@ -186,7 +187,7 @@ export async function openScreen(page: Page, name: ScreenName, fresh = true): Pr
       if (REAL) return false;
       await onDesk(page);
       const id = await sessionId(page);
-      await page.evaluate((sid) => window.__xuanheMock?.forceOutcome(sid, 'e1_zhongxing'), id);
+      await page.evaluate((sid) => window.__xuanheMock?.forceOutcome(sid, 'e_yanyun'), id);
       await refresh(page);
       await expect(page.getByTestId('ending.root')).toBeVisible();
       await settle(page, 1500);

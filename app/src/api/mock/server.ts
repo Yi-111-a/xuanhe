@@ -496,7 +496,7 @@ function baseMemorials(sess: Session): MemorialItem[] {
 
 function objectives(s: PublicState) {
   const risk = amount(s, crisisId());
-  const rebelled = Boolean(s.flags?.rebellion_started);
+  const rebelled = Boolean(s.flags?.jin_invaded);
   return db.objectives.map((o) => {
     if (o.id === 'peace') {
       const status = rebelled ? 'fail' : risk >= 60 ? 'fail' : risk >= 40 ? 'warn' : 'ok';
@@ -1632,7 +1632,7 @@ if (typeof window !== 'undefined') {
     },
     openChoice(sessionId) {
       const sess = sessions[sessionId];
-      const ev = db.events.find((x) => x.id === 'khitan_defeat' && x.choices?.length) ?? db.events.find((x) => x.choices?.length);
+      const ev = db.events.find((x) => x.id === 'liao_refugees' && x.choices?.length) ?? db.events.find((x) => x.choices?.length);
       if (!sess || !ev) return;
       openChoice(sess.state, ev, sess.state.turn);
       saveStore();

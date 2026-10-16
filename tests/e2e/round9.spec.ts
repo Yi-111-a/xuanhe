@@ -264,7 +264,7 @@ for (const size of [
       await page.getByTestId('edict.cardPick.int_walls').click();
       await pickFirst(page, `edict.card.1.param.region`);
       await openBrush(page);
-      await page.getByTestId('edict.section.military').fill('命潼关增修关防。');
+      await page.getByTestId('edict.section.military').fill('命河北诸州增修城池。');
       await settle(page, 700);
       await shot(page, 'edict');
       await page.getByTestId('edict.preview').click();

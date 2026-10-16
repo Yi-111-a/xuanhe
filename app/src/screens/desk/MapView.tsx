@@ -23,6 +23,7 @@ import {
 } from './geo';
 import { grow, hits, HUD_ATTR, height, inside, shift, largestFreeRect, measureHud, nudge, placeCard, rect, width, type Rect } from './safeArea';
 import { travelPath } from '../../lib/route';
+import { ENEMIES } from '../../lib/game';
 
 /** gap kept between the map content and any HUD piece, and from the screen edge (px) */
 const HUD_PAD = 8;
@@ -905,8 +906,8 @@ export function MapView({
             const p = seatOf[rid];
             if (!p) return null;
             return list.slice(0, 3).map((a, i) => {
-              const hostile = a.faction === 'yan';
-              const foreign = a.faction && a.faction !== 'tang' && !hostile;
+              const hostile = Boolean(a.faction && ENEMIES.has(a.faction));
+              const foreign = a.faction && a.faction !== PLAYER && !hostile;
               const shape = geo.shapes.find((x) => x.id === rid);
               return (
                 <g

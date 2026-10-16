@@ -2,6 +2,7 @@
 // art: an old-map vignette with a vermilion seal on the region seat instead of an empty frame.
 import { useAsset, useMapData } from '../api/assets';
 import { cls } from '../lib/util';
+import { CAPITAL } from '../lib/game';
 
 type Pt = [number, number];
 export const MAP_BASE_IDS = ['map.base', 'ui.map.base', 'map.base.default'];
@@ -9,7 +10,7 @@ export const MAP_BASE_IDS = ['map.base', 'ui.map.base', 'map.base.default'];
 export function MapCrop({ region, className, zoom = 3.2 }: { region: string; className?: string; zoom?: number }) {
   const [map] = useMapData();
   const [url] = useAsset(MAP_BASE_IDS);
-  const shape = map?.regions.find((r) => r.id === region) ?? map?.regions.find((r) => r.id === 'jingji');
+  const shape = map?.regions.find((r) => r.id === region) ?? map?.regions.find((r) => r.id === CAPITAL);
   if (!map || !url || !shape) return null;
   const seatRaw = shape.capital ?? (Array.isArray(shape.seat) ? shape.seat : shape.seat ? [shape.seat.x, shape.seat.y] : null) ?? shape.center ?? shape.label;
   const seat = (seatRaw ?? [map.width / 2, map.height / 2]) as Pt;

@@ -252,7 +252,7 @@ test('flows: choice defer → badge → choose; Esc closes panels; error toast @
 test('flows: audience streaming + highlight-to-save advice @buttons', async ({ page }) => {
   const errors = watchErrors(page);
   await openScreen(page, 'audience');
-  await page.getByTestId('audience.input').fill('卿以为范阳之兵如何？');
+  await page.getByTestId('audience.input').fill('卿以为女真之势如何？');
   await page.getByTestId('audience.send').click();
   await expect(page.getByTestId('audience.stop')).toBeVisible();
   await expect(page.getByTestId('audience.send')).toBeVisible({ timeout: 30_000 });

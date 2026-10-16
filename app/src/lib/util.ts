@@ -90,11 +90,10 @@ export function resourceValueText(r: PublicResource | undefined): string {
 /** Higher-is-worse resources; used to colour deltas by consequence rather than sign. */
 export const NEGATIVE_RESOURCES = new Set([
   'corruption',
-  'frontier_pressure',
-  'an_ambition',
-  'fanzhen_power',
-  'court_strife',
-  'rebellion_risk',
+  'ningxing',
+  'dongnan',
+  'jin_contempt',
+  'nanmu',
 ]);
 
 export function deltaClass(resource: string, delta: number): string {

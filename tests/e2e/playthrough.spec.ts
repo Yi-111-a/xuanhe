@@ -13,9 +13,9 @@ import { REAL, settle, startGame, watchErrors } from './helpers';
 
 const SHOTS = path.resolve(__dirname, '..', '..', 'playtests', 'screens', 'playthrough');
 const MAX_SEASONS = 30;
-const ID_TOKEN = /\b(tang|yan|tubo|nanzhao|khitan_xi|dashi|huihe)\b|[a-z]+_[a-z0-9_]+/;
+const ID_TOKEN = /\b(song|liao|jin|xixia|goryeo|fangla)\b|[a-z]+_[a-z0-9_]+/;
 /** cards the playthrough is willing to issue (no dismissals or arrests: it plays a steady hand) */
-const CARD_PREFS = ['int_relief', 'int_walls', 'fin_hedi', 'fin_changping', 'mil_tuanjie', 'int_remit', 'fin_tuntian', 'dip_hushi', 'int_canal'];
+const CARD_PREFS = ['int_relief', 'int_walls', 'fin_hedi', 'fin_changping', 'mil_baojia', 'int_remit', 'fin_yingtian', 'dip_quechang', 'int_canal'];
 
 test.skip(!REAL, 'needs a real engine (E2E_API_BASE)');
 test.setTimeout(60 * 60_000);

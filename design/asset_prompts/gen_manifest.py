@@ -57,6 +57,8 @@ def add(i, kind, prompt, ref=None):
 
 
 for i, j in JOBS.items():
+    if j.get("group") == "appicon":
+        continue  # desktop/icon-src/icon.png, not a scenario asset
     if i == "icon.sheet":
         for r in ICONS:
             add(f"icon.{r}", "icon", j["subject"] + " (one cell of the sprite sheet, cropped and keyed)")

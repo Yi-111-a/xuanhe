@@ -139,7 +139,7 @@ test.describe('garble / font coverage (G4)', () => {
     if (await page.getByTestId('desk.advance.confirm').isVisible().catch(() => false)) await page.getByTestId('desk.advance.confirm').click();
     await expect(page.getByTestId('result.root')).toBeVisible({ timeout: 30_000 });
     await settle(page, 900);
-    // the mock's stress battles carry bare faction ids (attacker: 'yan', defender: 'tang')
+    // the mock's stress battles carry bare faction ids (attacker: 'jin', defender: 'song')
     await expect(page.getByTestId('result.battle.0')).toContainText(/大金|大宋|方腊|大辽/);
     expect(idLeaks(await visibleText(page))).toEqual([]);
     expect(errors).toEqual([]);

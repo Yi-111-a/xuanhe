@@ -4,6 +4,7 @@ import { Paper } from '../components/Paper';
 import { PanelShell } from '../components/PanelShell';
 import { Portrait } from '../components/Portrait';
 import { useGame } from '../store/game';
+import { PLAYER_ID } from '../lib/game';
 
 const SOURCE: Record<string, string> = { audience: '召对', debate: '廷议', reply: '回奏', '书面议状': '书面议状' };
 /** 「〔书面议状·自陇右驿递〕…」 → 「自陇右驿递」 */
@@ -37,10 +38,10 @@ export function AdvicePanel() {
           {g.advice.length === 0 && <li className="muted advice-none">尚无谏言。于召对中选中臣下之语，即可存入。</li>}
           {g.advice.map((a, i) => (
             <li key={a.id ?? i} className="advice-item">
-              {a.character && a.character !== 'xuanzong' ? <Portrait id={a.character} className="portrait--chip" /> : <span className="advice-imperial t-title">御</span>}
+              {a.character && a.character !== PLAYER_ID ? <Portrait id={a.character} className="portrait--chip" /> : <span className="advice-imperial t-title">御</span>}
               <div className="advice-item-body">
                 <div className="advice-item-meta">
-                  <b className="t-title">{chars[a.character]?.name ?? a.name ?? (a.character === 'xuanzong' ? '御批' : a.character)}</b>
+                  <b className="t-title">{chars[a.character]?.name ?? a.name ?? (a.character === PLAYER_ID ? '御批' : a.character)}</b>
                   <span className={a.source === '书面议状' ? 'advice-source advice-source--written' : 'advice-source'} data-testid={`advice.source.${i}`}>
                     {SOURCE[a.source] ?? (a.source.startsWith('memorial') ? '奏疏' : a.source)}
                     {via(a.text) ? `·${via(a.text)}` : ''}

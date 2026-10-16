@@ -25,3 +25,7 @@
 
 - 见本节后续记录。
 - **ui.ribbon_cai / ui.ribbon_xingchen / ui.ribbon_neishi / ui.ribbon_qingyi（竖幅重画，4 张一次成功）**：无字；竖挂燕尾幡、青玉圆章（空白，前端压字）、紫 / 朱 / 墨 / 青四色与派系对应；抠白后边缘干净。
+
+## 第四批（桌面图标）
+
+- **icon.app**：无字；汝窑天青冰裂圆盘，银色展脚幞头剪影，墨青圆角方底；缩到 32px 仍可辨。用作 `desktop/icon-src/icon.png`，由 `tauri icon` 生成各尺寸。

@@ -356,11 +356,30 @@
   when: {turn: 9}
   gravity: 0.9
   importance: 1
-  text: 万岁山成，更名艮岳。周十余里，峰峦叠嶂，奇石林立，四方珍禽异兽、嘉木名卉聚于其中。陛下亲为之记。
-  effects:
-    - {op: adjust_resource, resource: authority, delta: 1, reason: 艮岳成}
-    - {op: adjust_resource, resource: treasury, delta: -40, reason: 艮岳收尾工役}
-    - {op: adjust_resource, resource: dongnan, delta: 2, reason: 花木石料之役}
+  text: 万岁山成，更名艮岳。周十余里，峰峦叠嶂，奇石林立，四方珍禽异兽、嘉木名卉聚于其中。有司请大宴群臣以庆其成，陛下亲为之记。逾期不决，依例赐宴。
+  choices:
+    - id: feast
+      text: 大宴群臣，赐赉有差
+      effects:
+        - {op: adjust_resource, resource: treasury, delta: -60, reason: 艮岳庆成赐宴}
+        - {op: adjust_resource, resource: authority, delta: 2, reason: 艮岳成}
+        - {op: adjust_resource, resource: ningxing, delta: 2, reason: 群臣争献颂词}
+        - {op: adjust_resource, resource: dongnan, delta: 2, reason: 花木石料之役}
+    - id: modest
+      text: 亲为之记，不设大宴
+      effects:
+        - {op: adjust_resource, resource: treasury, delta: -20, reason: 艮岳收尾工役}
+        - {op: adjust_resource, resource: authority, delta: 1, reason: 艮岳成}
+        - {op: adjust_resource, resource: dongnan, delta: 1, reason: 花木石料之役}
+    - id: halt
+      text: 罢余役，所余花石发还州县
+      effects:
+        - {op: set_flag, key: genyue_halted, value: true}
+        - {op: adjust_resource, resource: dongnan, delta: -3, reason: 罢艮岳余役}
+        - {op: adjust_resource, resource: ningxing, delta: -1, reason: 罢艮岳余役}
+        - {op: adjust_resource, resource: authority, delta: -1, reason: 御园工辍}
+  default_choice: feast
+  choice_deadline: 1
   illustration: event.genyue
 
 # ======================== 辽之崩解（与玩家外交线交织） ========================
@@ -1186,12 +1205,29 @@
   gravity: 0.1
   importance: 1
   region: hebei_dong
-  text: 黄河决于河北，漂没民田庐舍，流民南徙。
+  text: 黄河决于河北，漂没民田庐舍，流民南徙。都水监请发丁夫塞决口，或请且赈且徙、待水势稍定。逾期不决，依例赈济。
   effects:
     - {op: adjust_region, region: hebei_dong, stat: prosperity, delta: -6}
     - {op: adjust_region, region: hebei_dong, stat: grain, delta: -4}
-    - {op: adjust_resource, resource: grain, delta: -40, reason: 河决赈济}
     - {op: adjust_resource, resource: morale, delta: -1, reason: 河决}
+  choices:
+    - id: dam
+      text: 发丁夫塞决口
+      effects:
+        - {op: adjust_resource, resource: treasury, delta: -60, reason: 塞河役费}
+        - {op: adjust_region, region: hebei_dong, stat: grain, delta: 3}
+        - {op: adjust_region, region: hebei_dong, stat: order, delta: -2}
+    - id: relief
+      text: 且赈且徙，待水势稍定
+      effects:
+        - {op: adjust_resource, resource: grain, delta: -40, reason: 河决赈济}
+    - id: none
+      text: 令州县自救
+      effects:
+        - {op: adjust_resource, resource: morale, delta: -2, reason: 河决不救}
+        - {op: adjust_region, region: hebei_dong, stat: order, delta: -4}
+  default_choice: relief
+  choice_deadline: 1
   illustration: event.flood
 
 - id: capital_flood
@@ -1264,10 +1300,27 @@
   gravity: 0.25
   importance: 1
   region: hebei_dong
-  text: 辽乱，燕、蓟之民扶老携幼南奔，至雄、霸者日以千计。河北守臣请处置。
-  effects:
-    - {op: adjust_resource, resource: grain, delta: -20, reason: 赈给燕人}
-    - {op: adjust_region, region: hebei_dong, stat: order, delta: -2}
+  text: 辽乱，燕、蓟之民扶老携幼南奔，至雄、霸者日以千计。河北守臣请旨：或募其丁壮为军，或给田安置，或遣还北境。逾期不决，依例给粮安置。
+  choices:
+    - id: enlist
+      text: 募其丁壮为「义胜军」，余众给粮
+      effects:
+        - {op: adjust_resource, resource: grain, delta: -40, reason: 给燕人粮}
+        - {op: adjust_resource, resource: wubei, delta: 2, reason: 募燕人为义胜军}
+        - {op: adjust_region, region: hebei_dong, stat: order, delta: -3}
+    - id: settle
+      text: 给田河北，依例给粮安置
+      effects:
+        - {op: adjust_resource, resource: grain, delta: -30, reason: 安置燕人}
+        - {op: adjust_region, region: hebei_dong, stat: prosperity, delta: 2}
+        - {op: adjust_region, region: hebei_dong, stat: order, delta: -1}
+    - id: send_back
+      text: 闭关不纳，遣还北境
+      effects:
+        - {op: adjust_resource, resource: morale, delta: -1, reason: 燕人见拒}
+        - {op: adjust_resource, resource: authority, delta: -1, reason: 燕人见拒}
+  default_choice: settle
+  choice_deadline: 1
   illustration: event.famine
 
 - id: xixia_raid
@@ -1342,9 +1395,25 @@
   gravity: 0.15
   importance: 1
   region: bianjing
-  text: 太学诸生伏阙上书，论应奉之扰、佞幸之盛。书入，不报。
-  effects:
-    - {op: adjust_resource, resource: authority, delta: -1, reason: 诸生议论}
+  text: 太学诸生伏阙上书，论应奉之扰、佞幸之盛，请斥逐用事之臣。逾期不决，依例留中不报。
+  choices:
+    - id: receive
+      text: 召见诸生，嘉其敢言
+      effects:
+        - {op: adjust_resource, resource: authority, delta: 1, reason: 嘉纳诸生之言}
+        - {op: adjust_resource, resource: ningxing, delta: -2, reason: 言路稍开}
+    - id: ignore
+      text: 留中不报
+      effects:
+        - {op: adjust_resource, resource: authority, delta: -1, reason: 诸生议论}
+    - id: punish
+      text: 下开封府究治为首者
+      effects:
+        - {op: adjust_resource, resource: authority, delta: -2, reason: 究治诸生，士论哗然}
+        - {op: adjust_resource, resource: ningxing, delta: 2, reason: 言路杜绝}
+        - {op: adjust_resource, resource: morale, delta: -1, reason: 究治诸生}
+  default_choice: ignore
+  choice_deadline: 1
   illustration: event.chen_dong
 
 - id: border_bandits

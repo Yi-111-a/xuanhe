@@ -131,19 +131,19 @@ fn percent_encode(s: &str) -> String {
 const SPLASH_HTML: &str = r#"<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><title>宣和</title>
 <style>
-  html,body{margin:0;height:100vh;overflow:hidden;background:rgb(20,16,14);color:rgb(217,200,160);
+  html,body{margin:0;height:100vh;overflow:hidden;background:rgb(14,19,18);color:rgb(214,218,200);
     font-family:"KaiTi","STKaiti","楷体","Songti SC","SimSun","Microsoft YaHei",serif;user-select:none;cursor:default}
   body{display:flex;flex-direction:column;align-items:center;justify-content:center;
-    background:radial-gradient(ellipse at center,rgb(42,29,23),rgb(20,16,14));
-    border:1px solid rgb(107,79,39);box-sizing:border-box}
+    background:radial-gradient(ellipse at center,rgb(31,46,43),rgb(14,19,18));
+    border:1px solid rgb(96,110,96);box-sizing:border-box}
   h1{margin:0;font-size:84px;font-weight:400;letter-spacing:.35em;padding-left:.35em;
-    background:linear-gradient(180deg,rgb(243,220,155),rgb(184,137,47));-webkit-background-clip:text;background-clip:text;color:transparent;
-    text-shadow:0 0 30px rgba(212,168,74,.25)}
-  .rule{width:200px;height:1px;margin:14px 0 12px;background:linear-gradient(90deg,transparent,rgb(184,137,47),transparent)}
-  [id=msg]{font-size:17px;letter-spacing:.2em;color:rgb(205,185,138);min-height:24px;text-align:center;padding:0 24px;line-height:1.6}
+    background:linear-gradient(180deg,rgb(236,240,226),rgb(150,178,160));-webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 30px rgba(150,190,170,.25)}
+  .rule{width:200px;height:1px;margin:14px 0 12px;background:linear-gradient(90deg,transparent,rgb(183,162,113),transparent)}
+  [id=msg]{font-size:17px;letter-spacing:.2em;color:rgb(196,204,184);min-height:24px;text-align:center;padding:0 24px;line-height:1.6}
   [id=msg].err{color:rgb(224,115,95);letter-spacing:.05em;font-size:15px;white-space:pre-wrap}
-  .bar{margin-top:18px;width:180px;height:3px;background:rgb(43,33,26);overflow:hidden;border-radius:2px}
-  .bar i{display:block;width:72px;height:3px;background:linear-gradient(90deg,rgb(138,31,23),rgb(217,164,65));animation:s 1.3s ease-in-out infinite}
+  .bar{margin-top:18px;width:180px;height:3px;background:rgb(30,40,38);overflow:hidden;border-radius:2px}
+  .bar i{display:block;width:72px;height:3px;background:linear-gradient(90deg,rgb(79,138,117),rgb(183,162,113));animation:s 1.3s ease-in-out infinite}
   .bar.stop{display:none}
   @keyframes s{from{transform:translateX(-80px)}to{transform:translateX(190px)}}
 </style></head>

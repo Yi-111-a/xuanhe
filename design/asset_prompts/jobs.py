@@ -201,3 +201,11 @@ EN = {
 }
 for eid, desc in EN.items():
     add(f"ending.{eid}", "endings", LAND, "SUBJECT: Ending illustration, a single evocative scene painted on pale silk: " + desc + " Wide landscape composition.", outkind="ending")
+
+# ------------------------------------------------------------------ APP ICON (desktop/icon-src/icon.png)
+add("icon.app", "appicon", "Square 1:1 aspect ratio (1024x1024).",
+    "SUBJECT: A square desktop application icon, bold and readable at small sizes: a round celadon (Ru-ware sky blue-green) jade disc "
+    "with a subtle crackle glaze, centred on a deep ink-teal square with softly rounded corners; on the disc, a clean pale silver-gold "
+    "silhouette of a Northern Song black futou hat with its two long straight horizontal wings, seen from the front, perfectly symmetric; "
+    "a thin silver ring around the disc. Flat, elegant, minimal, no background scene.", outkind="icon")
+

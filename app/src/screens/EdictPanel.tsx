@@ -15,6 +15,7 @@ import { useToast } from '../components/Toast';
 import { useGame, type DraftCard } from '../store/game';
 import { delayKindLabel, riskClass, SOURCE_NAMES } from '../lib/court';
 import { cls, opSummary } from '../lib/util';
+import { PLAYER_ID } from '../lib/game';
 
 const STATUS: Record<string, { glyph: string; name: string; cls: string }> = {
   applied: { glyph: '行', name: '施行', cls: 'st--applied' },
@@ -107,7 +108,7 @@ export function EdictPanel() {
             <button key={a.id ?? i} className="advice-slip" data-testid={`edict.cite.${i}`} onClick={() => cite(a.character, a.text)} title="援引入御笔">
               <span className="advice-slip-string" aria-hidden="true" />
               <Paper variant="slip" seed={i + 40} amp={2}>
-                <span className="advice-slip-who t-title">{chars[a.character]?.name ?? (a.character === 'xuanzong' ? '御批' : a.character)}</span>
+                <span className="advice-slip-who t-title">{chars[a.character]?.name ?? (a.character === PLAYER_ID ? '御批' : a.character)}</span>
                 <span className="advice-slip-text">{a.text}</span>
               </Paper>
             </button>

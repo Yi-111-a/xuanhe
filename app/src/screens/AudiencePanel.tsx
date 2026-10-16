@@ -10,6 +10,7 @@ import { useGame } from '../store/game';
 import { humanize } from '../lib/names';
 import { cls } from '../lib/util';
 import { agendaCount, agendaExhausted, agendaTitle } from '../lib/court';
+import { CAPITAL, PLAYER_ID } from '../lib/game';
 
 interface Msg {
   role: 'player' | 'minister' | 'system';
@@ -28,7 +29,7 @@ export function AudiencePanel() {
   const view = g.view;
   const chars = view?.state.characters ?? {};
   const roster = useMemo(
-    () => Object.values(chars).filter((c) => c.id !== 'xuanzong' && (c.status ?? 'alive') === 'alive'),
+    () => Object.values(chars).filter((c) => c.id !== PLAYER_ID && (c.status ?? 'alive') === 'alive'),
     [chars],
   );
   const presentInfo = g.aux.present;
@@ -48,7 +49,7 @@ export function AudiencePanel() {
       capital: presentInfo.capital?.name ?? '京城',
     };
   }, [presentInfo, roster]);
-  const [who, setWho] = useState<string>(() => g.panelArg ?? roster.find((c) => c.region === 'jingji')?.id ?? roster[0]?.id ?? '');
+  const [who, setWho] = useState<string>(() => g.panelArg ?? roster.find((c) => c.region === CAPITAL)?.id ?? roster[0]?.id ?? '');
   const key = `${g.sessionId}:${who}`;
   const [msgs, setMsgs] = useState<Msg[]>(() => logs.get(key) ?? []);
   const [modes, setModes] = useState<Record<string, { label: string; note?: string }>>({});
@@ -218,7 +219,7 @@ export function AudiencePanel() {
             {msgs.map((m, i) => (
               <motion.div key={i} className={cls('msg', `msg--${m.role}`)} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }}>
                 {m.role === 'minister' && <Portrait id={who} className="portrait--mini msg-avatar" />}
-                {m.role === 'player' && <Portrait id="xuanzong" className="portrait--mini msg-avatar" />}
+                {m.role === 'player' && <Portrait id={PLAYER_ID} className="portrait--mini msg-avatar" />}
                 <div className="msg-slip">
                   {humanize(m.text)}
                   {m.streaming && <span className="brush-caret" aria-hidden="true" />}

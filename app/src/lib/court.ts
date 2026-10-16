@@ -76,7 +76,7 @@ export function qualityWord(q: number | undefined): string {
 
 /** The debate proposition as the engine writes it is for model clients: option ids in backticks, the
  *  whole option list, how to name a proposal by option_id. On the desk it reads as the memorial and
- *  the proposal only: 「就奏疏「河东节度出缺」，所议之案为「照准，并赐铁券」（奏疏所请）：赞成即主此案，反对即主他案」. */
+ *  the proposal only: 「就奏疏「海上之盟」，所议之案为「遣赵良嗣使金，约夹攻辽、宋取燕京」（奏疏所请）：赞成即主此案，反对即主他案」. */
 export function debateTopicLine(text: string): string {
   return text
     .replace(/`[^`]*`[，,]?/g, '')

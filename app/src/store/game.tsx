@@ -29,10 +29,10 @@ export interface AdoptedEntry extends AdoptedOption {
 }
 
 export const DEFAULT_CATEGORIES = [
-  { id: 'military', name: '军务', hint: '节度、禁军、关防、征伐' },
-  { id: 'interior', name: '内政', hint: '任免、财赋、漕运、赈济、吏治' },
-  { id: 'diplomacy', name: '外交', hint: '吐蕃、南诏、契丹、大食、回纥' },
-  { id: 'other', name: '其他', hint: '宫廷、礼仪、东宫、密旨' },
+  { id: 'military', name: '军务', hint: '禁军、西军、河北河东、燕山、征伐' },
+  { id: 'interior', name: '内政', hint: '任免、财赋、花石应奉、赈济、吏治' },
+  { id: 'diplomacy', name: '外交', hint: '金、辽、西夏、高丽，岁币与盟约' },
+  { id: 'other', name: '其他', hint: '宫廷、东宫、道教、礼仪' },
 ];
 
 /** A policy card in the edict draft (§7.4): parameters filled from /policy_cards options. */

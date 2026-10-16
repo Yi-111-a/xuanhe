@@ -16,7 +16,7 @@ const ORDERS: { id: Order; card: string; name: string; hint: string }[] = [
   { id: 'march', card: 'mil_march', name: '出征', hint: '开赴某地，以进攻之态接战' },
   { id: 'garrison', card: 'mil_garrison', name: '移师驻守', hint: '移驻某地，到后据守不出' },
   { id: 'detach', card: 'mil_detach', name: '分兵', hint: '分出若干兵，另以一将统领' },
-  { id: 'relieve', card: 'mil_relieve_capital', name: '回援京畿', hint: '急召回援京师，到后据守' },
+  { id: 'relieve', card: 'mil_relieve_capital', name: '入援京师', hint: '急召入援汴京，到后据守' },
   { id: 'commander', card: 'mil_commander', name: '换帅', hint: '以某人统此军，原帅罢统' },
 ];
 const POSTURES: { id: 'hold' | 'attack' | 'scorch'; name: string; card?: string; hint: string }[] = [
@@ -55,7 +55,7 @@ export function ArmyPanel() {
   }, [selected?.id]);
 
   const cardById = useMemo(() => Object.fromEntries((cards ?? []).map((c) => [c.id, c])), [cards]);
-  const faction = String((state.rules?.player_faction as string) ?? 'tang');
+  const faction = String((state.rules?.player_faction as string) ?? 'song');
   const enemies = useMemo(
     () =>
       Object.values(state.armies ?? {})

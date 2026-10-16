@@ -1,0 +1,47 @@
+# 乙批事件草稿：劫营（奏疏 t_jieying「劫营之议」设旗标 jieying）。请追加到 events.yaml 第六幕之后（jin_returns 之后即可）。
+# 同季按文件顺序判定：成功在前（gravity 0.4）；成功未发生，则失败同季必发（gravity 1.0）。二者互斥，只发其一，且一局只发一次。
+# 「得手」为本游戏的反事实；「不克而奔」为史实（靖康元年二月丁酉朔，姚平仲夜袭金营不克而奔，见 docs/FACT_CHECK_RESEARCH.md 第 16 条）。
+# 失败扣泾原军：奏疏 t_jieying 只在泾原军（≥ 15000）已入汴京时出现，故此处按固定军队 id 扣兵不会扣空。
+- id: jieying_success
+  title: 夜劫金营
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: jieying, value: true}
+      - {kind: flag, key: jieying_done, operator: absent}
+      - {kind: flag, key: jieying_failed, operator: absent}
+      - {kind: army_strength, army: jin_east, operator: gt, value: 0}
+  gravity: 0.4
+  importance: 2
+  region: bianjing
+  text: 姚平仲夜率西兵出城，衔枚直趋金人东路营垒，纵火焚其帐幕、辎重，斩获甚众。斡离不仓皇移营，金人自是不敢逼城而屯。此为本游戏的反事实情节。
+  effects:
+    - {op: set_flag, key: jieying_done, value: true}
+    - {op: adjust_army, army: jin_east, delta: -20000, reason: 夜劫金营，东路折兵}
+    - {op: adjust_resource, resource: morale, delta: 3, reason: 劫营得手}
+    - {op: adjust_resource, resource: authority, delta: 2, reason: 劫营得手}
+    - {op: adjust_resource, resource: jin_contempt, delta: -5, reason: 宋兵夜袭得手}
+    - {op: adjust_counter, key: war_merit, delta: 1}
+    - {op: remember, character: yao_pingzhong, fact: 汴京被围，末将夜劫金营，焚其辎重而还}
+  illustration: event.bianjing_siege
+
+- id: jieying_failure
+  title: 劫营不克
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: jieying, value: true}
+      - {kind: flag, key: jieying_done, operator: absent}
+      - {kind: flag, key: jieying_failed, operator: absent}
+  gravity: 1.0
+  importance: 2
+  region: bianjing
+  text: 姚平仲夜袭金营，金人先已有备，伏兵四起，西兵大溃，死伤枕藉。平仲恐获罪，单骑亡去，不知所之。城中主和之议复起。（史载靖康元年二月朔劫营不克，姚平仲出奔。）
+  effects:
+    - {op: set_flag, key: jieying_failed, value: true}
+    - {op: adjust_army, army: xijun_jingyuan, delta: -10000, reason: 劫营不克，西兵溃散}
+    - {op: set_character_status, character: yao_pingzhong, status: exiled, cause: 姚平仲劫营不克，亡命出奔}
+    - {op: adjust_resource, resource: morale, delta: -2, reason: 劫营不克}
+    - {op: adjust_resource, resource: authority, delta: -2, reason: 劫营不克}
+    - {op: adjust_resource, resource: jin_contempt, delta: 3, reason: 宋兵夜袭败绩}
+  illustration: event.bianjing_siege

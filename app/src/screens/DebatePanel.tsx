@@ -12,15 +12,16 @@ import { useGame } from '../store/game';
 import { cls } from '../lib/util';
 import { agendaCount, agendaExhausted, agendaTitle, debateTopicLine } from '../lib/court';
 import { STANCE } from './MemorialPanel';
+import { PLAYER_ID } from '../lib/game';
 
-const DEFAULT_PICK = ['li_linfu', 'yang_guozhong', 'yan_zhenqing', 'geshu_han'];
+const DEFAULT_PICK = ['wang_fu', 'tong_guan', 'cai_jing', 'li_bangyan'];
 
 export function DebatePanel() {
   const g = useGame();
   const toast = useToast();
   const view = g.view!;
   const chars = view.state.characters;
-  const roster = useMemo(() => Object.values(chars).filter((c) => c.id !== 'xuanzong' && (c.status ?? 'alive') === 'alive'), [chars]);
+  const roster = useMemo(() => Object.values(chars).filter((c) => c.id !== PLAYER_ID && (c.status ?? 'alive') === 'alive'), [chars]);
   const present = g.aux.present;
   useEffect(() => {
     void g.loadPresent();
@@ -86,7 +87,7 @@ export function DebatePanel() {
 
   const rule = async () => {
     if (!ruling.trim()) return;
-    await g.saveAdvice('xuanzong', `廷议「${topic.trim()}」裁决：${ruling.trim()}`, 'debate');
+    await g.saveAdvice(PLAYER_ID, `廷议「${topic.trim()}」裁决：${ruling.trim()}`, 'debate');
     setRuling('');
   };
 
