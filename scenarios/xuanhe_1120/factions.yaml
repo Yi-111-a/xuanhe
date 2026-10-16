@@ -2,7 +2,7 @@
 # 宋辽 +30（澶渊之盟以来通好）；辽金交战；方腊起事前与宋关系为 0（不敌对），起事时改为敌对。
 - id: song
   name: 大宋
-  relations: {liao: 30, jin: 10, xixia: -10, goryeo: 20, fangla: 0}
+  relations: {liao: 30, jin: 10, xixia: -10, goryeo: 20}
 - id: liao
   name: 大辽
   relations: {song: 30, jin: -100, xixia: 20}

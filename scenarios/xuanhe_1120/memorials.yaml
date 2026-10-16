@@ -5452,7 +5452,7 @@
   proposal: qinwang
   keywords: [勤王, 西军, 种师中, 汴京]
   advisors:
-    - {character: zhong_shizhong, stance: support, option: qinwang, requires: {region: [xibian, guanzhong, hedong]}, line: （驰表）末将不懂朝堂上那些道理。只要粮饷跟得上，末将带兵去便是。}
+    - {character: zhong_shizhong, stance: support, option: qinwang, requires: {region: [xibian, guanzhong, hedong]}, line: （自秦州驰表）末将不懂朝堂上那些道理。只要粮饷跟得上，末将带兵去便是。}
     - {character: li_gang, stance: support, option: qinwang, requires: {region: bianjing}, line: 京城之存亡，系于勤王之迟速，不可再缓！}
     - {character: li_bangyan, stance: oppose, option: keep, requires: {region: bianjing}, line: 西军一来，金人更恼了。不如留着西军，咱们这边好谈。}
   options:
