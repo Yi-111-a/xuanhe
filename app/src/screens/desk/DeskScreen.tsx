@@ -17,8 +17,8 @@ export function DeskScreen() {
   const [readTick, setReadTick] = useState(0);
   useEffect(() => {
     const on = () => setReadTick((n) => n + 1);
-    window.addEventListener('tianbao:replies-read', on);
-    return () => window.removeEventListener('tianbao:replies-read', on);
+    window.addEventListener('xuanhe:replies-read', on);
+    return () => window.removeEventListener('xuanhe:replies-read', on);
   }, []);
   if (!view) return null;
   void readTick;
@@ -165,7 +165,7 @@ function RegionCard({ id }: { id: string }) {
   const r = s.regions[id];
   const armies = Object.values(s.armies ?? {}).filter((a) => a.region === id && a.strength > 0);
   const people = Object.values(s.characters).filter((c) => c.region === id && (c.status ?? 'alive') === 'alive' && c.id !== 'xuanzong');
-  const controller = r.controller ? s.factions?.[r.controller]?.name ?? r.controller : '唐廷';
+  const controller = r.controller ? s.factions?.[r.controller]?.name ?? r.controller : '大宋';
   const office = s.offices?.[`${id}_jds`];
   const holder = office?.holder ? s.characters[office.holder]?.name : null;
   return (

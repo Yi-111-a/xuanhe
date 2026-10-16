@@ -137,9 +137,9 @@ export function useGame(): GameApi {
   return ctx;
 }
 
-const LS_SESSION = 'tianbao.session';
-const draftKey = (id: string) => `tianbao.draft.${id}`;
-const deltaKey = (id: string) => `tianbao.deltas.${id}`;
+const LS_SESSION = 'xuanhe.session';
+const draftKey = (id: string) => `xuanhe.draft.${id}`;
+const deltaKey = (id: string) => `xuanhe.deltas.${id}`;
 
 function readLS<T>(key: string, fallback: T): T {
   try {
@@ -266,8 +266,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const onRefresh = () => void refresh();
-    window.addEventListener('tianbao:refresh', onRefresh);
-    return () => window.removeEventListener('tianbao:refresh', onRefresh);
+    window.addEventListener('xuanhe:refresh', onRefresh);
+    return () => window.removeEventListener('xuanhe:refresh', onRefresh);
   }, [refresh]);
 
   const startGame = useCallback(

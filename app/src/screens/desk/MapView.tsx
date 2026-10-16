@@ -1,5 +1,5 @@
 // 舆图: full-bleed painted map with an SVG region overlay (hover, select, five layers),
-// army tokens, the canal lifeline and the historical rebel route.
+// army tokens, the 汴河 canal lifeline and the two historical Jin invasion routes.
 import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type MouseEvent, type PointerEvent, type WheelEvent } from 'react';
 import { useAsset, useMapData, type MapData } from '../../api/assets';
 import { nameOf } from '../../lib/names';
@@ -12,7 +12,7 @@ import {
   GEO_W,
   LAND_PATH,
   MOUNTAINS,
-  REBEL_PATH,
+  JIN_ROUTES,
   RIVERS,
   SEAT_NAMES,
   SEATS,
@@ -30,9 +30,23 @@ const EDGE = 10;
 /** below this map scale, glyphs (names, seats, army tags) stop shrinking with the painting */
 const GLYPH_REF = 0.64;
 
-const FOREIGN = new Set(['tubo', 'nanzhao', 'khitan_xi', 'huihe']);
-const CANAL_REGIONS = ['jiangnan', 'huainan', 'henan', 'duji', 'tongguan', 'jingji'];
-const AN_OFFICES = ['fanyang', 'pinglu', 'hedong'];
+/** regions that begin outside the realm (map.json marks them `foreign`; this is the fallback) */
+const FOREIGN = new Set(['yanshan', 'yunzhong', 'pingzhou', 'liao', 'jin', 'xixia', 'goryeo']);
+/** 东南漕运：江南运河 → 淮南 → 汴河 → 汴京 */
+const CANAL_REGIONS = ['liangzhe', 'jiangnan', 'huainan', 'bianjing'];
+/** the northern front: beacons light up here as 胡马南牧 rises */
+const FRONT = ['yanshan', 'hebei_xi', 'hebei_dong', 'hedong', 'bianjing'];
+const CAPITALS = new Set(['bianjing', 'jingxi']);
+const PLAYER = 'song';
+/** 疆域 colours by controller */
+const REALM_FILL: Record<string, { fill: string; opacity: number }> = {
+  song: { fill: '#f3ecd6', opacity: 0.08 },
+  liao: { fill: 'var(--zheshi)', opacity: 0.26 },
+  jin: { fill: 'var(--mo-soft)', opacity: 0.4 },
+  xixia: { fill: '#8a7d5a', opacity: 0.24 },
+  goryeo: { fill: '#7f9a8c', opacity: 0.2 },
+  fangla: { fill: 'var(--zhusha)', opacity: 0.45 },
+};
 
 interface Shape {
   id: string;
@@ -137,8 +151,8 @@ const SchematicBase = memo(function SchematicBase() {
       <defs>
         <radialGradient id="mb-sea" cx="30%" cy="45%" r="90%">
           <stop offset="0%" stopColor="#5f8fa6" />
-          <stop offset="60%" stopColor="#2f5d8a" />
-          <stop offset="100%" stopColor="#1d3c5c" />
+          <stop offset="60%" stopColor="#3d6b86" />
+          <stop offset="100%" stopColor="#24465c" />
         </radialGradient>
         <radialGradient id="mb-land" cx="55%" cy="50%" r="70%">
           <stop offset="0%" stopColor="#e9d6a6" />
@@ -146,8 +160,8 @@ const SchematicBase = memo(function SchematicBase() {
           <stop offset="100%" stopColor="#c4a46c" />
         </radialGradient>
         <linearGradient id="mb-peak" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#2f5d8a" />
-          <stop offset="55%" stopColor="#3e7f6b" />
+          <stop offset="0%" stopColor="#3d6b86" />
+          <stop offset="55%" stopColor="#4f8a75" />
           <stop offset="100%" stopColor="#7ea889" stopOpacity="0.4" />
         </linearGradient>
         <pattern id="mb-waves" width="46" height="18" patternUnits="userSpaceOnUse">
@@ -205,20 +219,18 @@ const SchematicBase = memo(function SchematicBase() {
 // ---------------------------------------------------------------- dynamic overlay
 function layerFill(layer: MapLayer, id: string, state: PublicState, crisis: number, armiesBy: Record<string, Army[]>): { fill: string; opacity: number } {
   const region = state.regions[id];
-  const controller = region?.controller ?? (FOREIGN.has(id) ? id : 'tang');
-  if (controller === 'yan') return { fill: 'var(--zhusha)', opacity: 0.5 };
-  if (FOREIGN.has(id)) return { fill: '#5b5148', opacity: 0.18 };
-  const anHolds = (rid: string) => {
-    if (rid === 'hedong' && state.flags?.hedong_to_an) return true;
-    const office = state.offices?.[`${rid}_jds`];
-    return office?.holder === 'an_lushan';
-  };
+  const controller = region?.controller ?? (FOREIGN.has(id) ? id : PLAYER);
+  // 陷敌：本朝故地落入金人或方腊之手，任何图层都标朱
+  if (!FOREIGN.has(id) && controller !== PLAYER) return { fill: 'var(--zhusha)', opacity: 0.5 };
+  if (FOREIGN.has(id) && layer !== 'jurisdiction') {
+    if (controller === PLAYER) return { fill: 'var(--nijin)', opacity: 0.18 };
+    return { fill: '#5b5148', opacity: 0.16 };
+  }
   switch (layer) {
     case 'jurisdiction': {
-      if (AN_OFFICES.includes(id) && anHolds(id)) return { fill: 'var(--shilv)', opacity: 0.32 + Math.min(0.25, crisis / 300) };
-      if (id === 'jingji' || id === 'duji' || id === 'tongguan') return { fill: 'var(--nijin)', opacity: 0.28 };
-      if (state.offices?.[`${id}_jds`]) return { fill: 'var(--zheshi)', opacity: 0.2 };
-      return { fill: '#f3e6c4', opacity: 0.1 };
+      if (CAPITALS.has(id)) return { fill: 'var(--nijin)', opacity: 0.3 };
+      if (FOREIGN.has(id) && controller === PLAYER) return { fill: 'var(--shilv)', opacity: 0.34 };
+      return REALM_FILL[controller] ?? { fill: '#5b5148', opacity: 0.18 };
     }
     case 'morale': {
       const order = region?.stats?.order ?? 60;
@@ -235,10 +247,10 @@ function layerFill(layer: MapLayer, id: string, state: PublicState, crisis: numb
       return { fill: 'var(--nijin)', opacity: 0.34 };
     }
     case 'beacon': {
-      const idx = REBEL_PATH.indexOf(id);
-      if (idx < 0 && id !== 'pinglu') return { fill: '#3d342b', opacity: 0.12 };
+      const idx = FRONT.indexOf(id);
+      if (idx < 0) return { fill: '#3d342b', opacity: 0.12 };
       const heat = Math.max(0, crisis - 20) / 80;
-      return { fill: 'var(--zhusha)', opacity: 0.12 + heat * (idx <= 1 || id === 'pinglu' ? 0.5 : 0.3) };
+      return { fill: 'var(--zhusha)', opacity: 0.12 + heat * (idx <= 2 ? 0.5 : 0.3) };
     }
   }
 }
@@ -271,7 +283,7 @@ export function MapView({
   const crisisValue = Array.isArray(view.crisis.value_or_estimate)
     ? (view.crisis.value_or_estimate[0] + view.crisis.value_or_estimate[1]) / 2
     : view.crisis.value_or_estimate;
-  const rebelled = Boolean(state.flags?.rebellion_started);
+  const rebelled = Boolean(state.flags?.jin_invaded);
 
   const geo = useMemo(() => geometryFrom(mapData, Boolean(baseUrl), imgSize), [mapData, baseUrl, imgSize]);
   const k = geo.scale;
@@ -625,10 +637,10 @@ export function MapView({
   const routeIds = routeTo && home ? travelPath(state.regions, home, routeTo) : null;
   const routePts: Pt[] = (routeIds ?? []).map((id) => seatOf[id]).filter(Boolean);
   const armyMode = Boolean(army?.army && etas);
-  const canalBlocked = CANAL_REGIONS.some((id) => state.regions[id]?.controller === 'yan');
+  const canalBlocked = CANAL_REGIONS.some((id) => (state.regions[id]?.controller ?? PLAYER) !== PLAYER);
   const canalPts: Pt[] = geo.mode === 'schematic' && !mapData ? CANAL : CANAL_REGIONS.slice().map((id) => seatOf[id]).filter(Boolean);
-  const rebelPts: Pt[] = REBEL_PATH.map((id) => seatOf[id]).filter(Boolean);
-  const showRebel = rebelled || crisisValue >= 40 || layer === 'beacon';
+  const jinRoutes: Pt[][] = JIN_ROUTES.map((route) => route.map((id) => seatOf[id]).filter(Boolean)).filter((pts) => pts.length > 1);
+  const showRebel = rebelled || crisisValue >= 55 || layer === 'beacon';
 
   return (
     <div
@@ -725,7 +737,7 @@ export function MapView({
               <path d="M0 0 L10 5 L0 10 z" fill="#b2321f" />
             </marker>
             <marker id="mo-route-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
-              <path d="M0 0 L10 5 L0 10 z" fill="#f2d27a" />
+              <path d="M0 0 L10 5 L0 10 z" fill="#e3d7ae" />
             </marker>
           </defs>
           <g clipPath="url(#mo-land)">
@@ -736,7 +748,7 @@ export function MapView({
                 return (
                   <g key={s.id}>
                     <path className="region-fill" d={s.d} style={{ fill, fillOpacity: geo.mode === 'schematic' ? opacity : Math.min(0.85, opacity * 1.7) }} />
-                    {FOREIGN.has(s.id) && <path d={s.d} fill="url(#mo-hatch)" pointerEvents="none" />}
+                    {(s.foreign ?? FOREIGN.has(s.id)) && (state.regions[s.id]?.controller ?? s.id) !== PLAYER && <path d={s.d} fill="url(#mo-hatch)" pointerEvents="none" />}
                   </g>
                 );
               })}
@@ -756,17 +768,21 @@ export function MapView({
             </g>
           )}
 
-          {/* rebel route */}
-          {showRebel && rebelPts.length > 1 && (
+          {/* 金军南下之路（东路宗望、西路宗翰） */}
+          {showRebel && jinRoutes.length > 0 && (
             <g className={cls('rebel-route', rebelled && 'rebel-route--live')} data-testid="map.rebelRoute">
-              <path d={smoothPath(rebelPts)} className="rebel-under" />
-              <path d={smoothPath(rebelPts)} className="rebel-line" markerEnd="url(#mo-arrow)" />
+              {jinRoutes.map((pts, i) => (
+                <g key={i}>
+                  <path d={smoothPath(pts)} className="rebel-under" />
+                  <path d={smoothPath(pts)} className="rebel-line" markerEnd="url(#mo-arrow)" />
+                </g>
+              ))}
             </g>
           )}
 
           {/* beacons (烽燧) */}
           {(layer === 'beacon' || crisisValue >= 40) &&
-            ['fanyang', 'pinglu', 'hebei', 'duji', 'tongguan'].map((id, i) => {
+            FRONT.map((id, i) => {
               const p = seatOf[id];
               if (!p) return null;
               const heat = Math.max(0.25, Math.min(1, (crisisValue - 20) / 70 - i * 0.08));
@@ -809,7 +825,7 @@ export function MapView({
           {geo.shapes.map((s) => {
             const region = state.regions[s.id];
             if (!region) return null;
-            const capital = s.id === 'jingji' || s.id === 'duji';
+            const capital = CAPITALS.has(s.id);
             const { lp, y: ly, foreign } = labelAt(s);
             const nudged = placements[s.id] ?? { dx: 0, dy: 0, hidden: false };
             return (
@@ -820,11 +836,11 @@ export function MapView({
                       {capital ? (
                         <g transform="translate(0 2)">
                           <path d="M-13 -4 L 0 -13 L 13 -4 Z" fill="#7a2a1e" />
-                          <rect x="-10" y="-4" width="20" height="9" fill="#c9a24b" stroke="#3a2210" strokeWidth="1.2" />
-                          <rect x="-3" y="0" width="6" height="5" fill="#3a2210" />
+                          <rect x="-10" y="-4" width="20" height="9" fill="#b7a271" stroke="#1f2725" strokeWidth="1.2" />
+                          <rect x="-3" y="0" width="6" height="5" fill="#1f2725" />
                         </g>
                       ) : (
-                        <rect x="-4.5" y="-4.5" width="9" height="9" transform="rotate(45)" fill="#8a2219" stroke="#f2e6c6" strokeWidth="1.4" />
+                        <rect x="-4.5" y="-4.5" width="9" height="9" transform="rotate(45)" fill="#8a2219" stroke="#f3efe1" strokeWidth="1.4" />
                       )}
                     </g>
                     {(region.seat ?? SEAT_NAMES[s.id]) && (region.seat ?? SEAT_NAMES[s.id]) !== region.name && (

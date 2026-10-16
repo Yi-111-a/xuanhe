@@ -49,7 +49,7 @@ export function EndingScreen() {
       <div className="ending-shade" aria-hidden="true" />
       <motion.div className="ending-card-wrap" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, ease: [0.22, 0.8, 0.24, 1] }}>
         <Paper variant="silk" seed={1919} className="ending-card">
-          <CuancaoBand height={16} color="rgba(138,109,44,.85)" />
+          <CuancaoBand height={16} color="rgba(125,110,72,.85)" />
           <div className="ending-inner">
             <div className="ending-kind t-title">{fail ? '败局' : '终局'}</div>
             <h1 className="ending-title t-title" data-testid="ending.title">
@@ -61,7 +61,7 @@ export function EndingScreen() {
               {outcome.text}
             </p>
           </div>
-          <CuancaoBand height={16} color="rgba(138,109,44,.85)" />
+          <CuancaoBand height={16} color="rgba(125,110,72,.85)" />
         </Paper>
       </motion.div>
       <motion.aside className="ending-chronicle" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.6, duration: 1 }}>

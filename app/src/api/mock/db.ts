@@ -66,6 +66,8 @@ export interface Db {
   objectives: { id: string; title: string; detail: string }[];
   bands: { max: number; name: string }[];
   crisisTitle: string;
+  /** scenario.yaml crisis.resource */
+  crisisResource: string;
   terms: { id: string; label: string; expr: string }[];
   drift: Record<string, string>;
   income: { resource: string; formula: string }[];
@@ -87,7 +89,7 @@ const FALLBACK_CARDS: Record<string, unknown>[] = [
   { id: 'mil_march', category: '军务', title: '出征', summary: '命某军开赴某地，以进攻之态接战。', cost_hint: '不另费钱粮。行程按路线计季。', params: [{ name: 'army', kind: 'army', filter: { idle: true } }, { name: 'to', kind: 'region' }], ops: [{ op: 'march', army: '{army}', to_region: '{to}', with_commander: true }, { op: 'set_army_posture', army: '{army}', posture: 'attack' }] },
   { id: 'mil_hold', category: '军务', title: '坚守本地', summary: '命某军就地固守，不得浪战。', cost_hint: '不费钱粮。守方战力 +20%。', params: [{ name: 'army', kind: 'army' }], ops: [{ op: 'set_army_posture', army: '{army}', posture: 'hold' }] },
   { id: 'int_relief', category: '内政', title: '赈济', summary: '开某道仓廪，赈给贫乏。', cost_hint: '太仓 −50 万石、国库 −10，一季。冷却 2 季。', cooldown: 2, params: [{ name: 'region', kind: 'region', filter: { controller: 'own' } }], ops: [{ op: 'start_project', name: '赈济饥乏', region: '{region}', turns: 1, cost_per_turn: { grain: 50, treasury: 10 }, on_complete: [{ op: 'adjust_region', region: '{region}', stat: 'order', delta: 4 }] }] },
-  { id: 'per_recall', category: '人事', title: '召还京师', summary: '诏某人还京。', cost_hint: '不费钱粮。行程按路线计季。', params: [{ name: 'character', kind: 'character', filter: { present: false } }], ops: [{ op: 'move_character', character: '{character}', to_region: 'jingji' }] },
+  { id: 'per_recall', category: '人事', title: '召还京师', summary: '诏某人还京。', cost_hint: '不费钱粮。行程按路线计季。', params: [{ name: 'character', kind: 'character', filter: { present: false } }], ops: [{ op: 'move_character', character: '{character}', to_region: 'bianjing' }] },
   { id: 'dip_hushi', category: '外交', title: '开边市互市', summary: '于某边道开互市。', cost_hint: '国库每季 −25，两季。冷却 4 季。', cooldown: 4, params: [{ name: 'region', kind: 'region', filter: { ids: ['longyou', 'hexi', 'shuofang'] } }], ops: [{ op: 'start_project', name: '互市', region: '{region}', turns: 2, cost_per_turn: { treasury: 25 } }] },
   { id: 'fin_hedi', category: '财计', title: '和籴实边', summary: '出钱于某边道和籴，充实军储。', cost_hint: '国库 −40，一季。冷却 3 季。', cooldown: 3, params: [{ name: 'region', kind: 'region', filter: { ids: ['hedong', 'longyou', 'hexi', 'shuofang'] } }], ops: [{ op: 'start_project', name: '和籴', region: '{region}', turns: 1, cost_per_turn: { treasury: 40 } }] },
 ];
@@ -126,17 +128,17 @@ function fixture(): Db {
       illustration: e.illustration,
     })),
     endings: [
-      { ...ENDINGS[6], priority: 1, conditions: { kind: 'region_controller', region: 'jingji', faction: 'yan' } },
+      { ...ENDINGS[6], priority: 1, conditions: { kind: 'region_controller', region: 'bianjing', faction: 'jin' } },
       { ...ENDINGS[7], priority: 2, conditions: { kind: 'counter', key: 'bankrupt_streak', operator: 'gte', value: 2 } },
       { ...ENDINGS[3], priority: 3, conditions: { all: [fl('tongguan_lost'), { kind: 'turn', operator: 'gte', value: 23 }] } },
-      { ...ENDINGS[2], priority: 4, conditions: { all: [fl('rebellion_started'), { kind: 'turn', operator: 'gte', value: 23 }] } },
+      { ...ENDINGS[2], priority: 4, conditions: { all: [fl('jin_invaded'), { kind: 'turn', operator: 'gte', value: 23 }] } },
       {
         ...ENDINGS[0],
         priority: 5,
         conditions: {
           all: [
             { kind: 'turn', operator: 'gte', value: 20 },
-            not(fl('rebellion_started')),
+            not(fl('jin_invaded')),
             { kind: 'resource', id: 'rebellion_risk', operator: 'lt', value: 60 },
             { kind: 'resource', id: 'authority', operator: 'gte', value: 50 },
           ],
@@ -148,7 +150,8 @@ function fixture(): Db {
     ],
     objectives: OBJECTIVES,
     bands: CRISIS_BANDS,
-    crisisTitle: '渔阳鼙鼓',
+    crisisTitle: '胡马南牧',
+    crisisResource: 'nanmu',
     terms: [
       { id: 'an', label: '禄山异志', expr: '0.08*(an_ambition-40)' },
       { id: 'fanzhen', label: '外重内轻', expr: '0.05*(fanzhen_power-55)' },
@@ -173,13 +176,13 @@ function fixture(): Db {
       { id: 'l_capital', name: '京师廪食', category: 'court', amount: -40, kind: 'recurring', reason: '百官俸禄与京师', resource: 'grain' },
     ],
     lastTurn: 19,
-    overtimeFlag: 'rebellion_started',
+    overtimeFlag: 'jin_invaded',
     overtimeLastTurn: 23,
-    fallbackEnding: 'open_storm',
-    rebelRoute: ['fanyang', 'hebei', 'duji', 'tongguan', 'jingji'],
+    fallbackEnding: 'e_open',
+    rebelRoute: ['fanyang', 'hebei', 'duji', 'tongguan', 'bianjing'],
     policyCards: FALLBACK_CARDS,
     tutorial: [],
-    settings: { agenda: { audience_per_season: 3, debate_per_season: 1 }, capital_region: 'jingji', courier: { late_threshold_days: 45 } },
+    settings: { agenda: { audience_per_season: 3, debate_per_season: 1 }, capital_region: 'bianjing', courier: { late_threshold_days: 45 } },
   };
 }
 
@@ -235,7 +238,7 @@ function overlay(base: Db, b: NonNullable<Awaited<ReturnType<typeof loadScenario
         id: str(r.id),
         name: str(r.name),
         seat: r.seat ? str(r.seat) : undefined,
-        controller: str(r.controller, 'tang'),
+        controller: str(r.controller, 'song'),
         stats: (r.stats as Record<string, number>) ?? {},
         adjacency: adj,
         courier_days: r.courier_days == null ? undefined : Number(r.courier_days),
@@ -247,11 +250,11 @@ function overlay(base: Db, b: NonNullable<Awaited<ReturnType<typeof loadScenario
       id: str(c.id),
       name: str(c.name),
       title: str(c.title),
-      faction: str(c.faction, 'tang'),
+      faction: str(c.faction, 'song'),
       office: c.office ? str(c.office) : null,
       offices: Array.isArray(c.offices) ? (c.offices as string[]) : c.office ? [str(c.office)] : [],
       bloc: c.bloc ? str(c.bloc) : null,
-      region: str(c.region, 'jingji'),
+      region: str(c.region, 'bianjing'),
       traits: (c.traits as Record<string, number>) ?? {},
       persona: str(c.persona),
       speech_style: str(c.speech_style),
@@ -263,7 +266,7 @@ function overlay(base: Db, b: NonNullable<Awaited<ReturnType<typeof loadScenario
     out.armies = arr(b.armies).map((a) => ({
       id: str(a.id),
       name: str(a.name),
-      faction: str(a.faction, 'tang'),
+      faction: str(a.faction, 'song'),
       region: str(a.region),
       strength: Number(a.strength ?? 0),
       commander: a.commander ? str(a.commander) : null,
@@ -328,6 +331,7 @@ function overlay(base: Db, b: NonNullable<Awaited<ReturnType<typeof loadScenario
   const crisis = (sc.crisis ?? {}) as Obj;
   if (arr(crisis.bands).length) out.bands = arr(crisis.bands).map((x) => ({ max: Number(x.max), name: str(x.name) }));
   if (crisis.title) out.crisisTitle = str(crisis.title);
+  if (crisis.resource) out.crisisResource = str(crisis.resource);
   if (arr(crisis.terms).length) out.terms = arr(crisis.terms).map((t) => ({ id: str(t.id), label: str(t.label), expr: str(t.expr, '0') }));
   const formulas = (sc.formulas ?? {}) as Obj;
   if (formulas.drift && typeof formulas.drift === 'object') out.drift = formulas.drift as Record<string, string>;
@@ -342,7 +346,7 @@ function overlay(base: Db, b: NonNullable<Awaited<ReturnType<typeof loadScenario
   if (arr(b.policy_cards).length) out.policyCards = arr(b.policy_cards);
   out.tutorial = arr(sc.tutorial).map((t) => ({ turn: Number(t.turn ?? 0), step: Number(t.step ?? 0), title: str(t.title), text: str(t.text), target: str(t.target) }));
   if (sc.settings && typeof sc.settings === 'object') out.settings = sc.settings as Obj;
-  const route = arr(sc.ai_routes).find((r) => r.faction === 'yan');
+  const route = arr(sc.ai_routes).find((r) => r.faction === 'jin');
   if (route && Array.isArray(route.route)) out.rebelRoute = route.route as string[];
   return out;
 }

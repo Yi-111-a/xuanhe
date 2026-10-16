@@ -75,7 +75,7 @@ async function snapshot(page: Page) {
     return {
       dom: `${html.length}:${h}`,
       values,
-      api: window.__tianbaoApiLog?.length ?? 0,
+      api: window.__xuanheApiLog?.length ?? 0,
       active: document.activeElement?.getAttribute('data-testid') ?? '',
     };
   });
@@ -238,8 +238,8 @@ test('flows: choice defer → badge → choose; Esc closes panels; error toast @
   }
   // an API error surfaces as a styled toast carrying the engine's {detail:{code,message}}
   await page.evaluate(() => {
-    window.__tianbaoMock?.reset();
-    window.dispatchEvent(new Event('tianbao:refresh'));
+    window.__xuanheMock?.reset();
+    window.dispatchEvent(new Event('xuanhe:refresh'));
   });
   const toast = page.getByTestId('toast.item').filter({ hasText: '存档不存在' });
   await expect(toast).toBeVisible();

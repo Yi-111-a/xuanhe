@@ -190,17 +190,18 @@ entries:
   used_by: ui:ribbon_cai
   path: assets/ui/ui.ribbon_cai.webp
   size:
-  - 1100
-  - 247
+  - 1024
+  - 1536
   format: webp
-  prompt: 'SUBJECT: Faction ribbon for the Cai faction (the old chief minister''s clique): deep purple silk with a pale silver cloud-scroll pattern. UI element: a long horizontal silk banner ribbon with
-    softly fluttering ends, spanning nearly the full width of the image, gentle wave, fine woven pattern; at the left end a round empty medallion (blank, for a glyph to be added later); flat frontal view.
-    Isolated on a plain flat pure white background (#FFFFFF) with generous empty margin around, soft contact shadow only. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions
+  prompt: 'SUBJECT: UI element: a single vertical hanging silk banner ribbon filling the whole image, straight frontal view, deep muted purple silk with a pale silver cloud-scroll pattern (the old chief
+    minister''s clique). A thin silver-grey woven border down both long edges, a round empty celadon-jade medallion disc in the upper third (blank, no glyph), a restrained woven pattern below it, and a
+    swallow-tail (V-notched) bottom hem with a short silk tassel at the tip; the top has a slim dark lacquered wooden hanging bar with celadon jade end caps. Northern Song taste: elegant, muted, not gaudy,
+    no gold leaf. The silk fills the frame edge to edge on a plain flat pure white background in the narrow gaps only. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions
     anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: e09fda9f6d19663e42aadf5ad4e38f40c4bccd726dd99e0a4c3198bc87d42fd4
+  sha256: 08b5309acec9096d9a892cbb4352d9037fdbacf8c0db04380738396c370bad86
   status: generated
   version: 1
 - id: ui.ribbon_xingchen
@@ -208,17 +209,17 @@ entries:
   used_by: ui:ribbon_xingchen
   path: assets/ui/ui.ribbon_xingchen.webp
   size:
-  - 1100
-  - 336
+  - 649
+  - 1535
   format: webp
-  prompt: 'SUBJECT: Faction ribbon for the imperial favourites: rich crimson-vermilion silk with a peony pattern in pale gold-ochre. UI element: a long horizontal silk banner ribbon with softly fluttering
-    ends, spanning nearly the full width of the image, gentle wave, fine woven pattern; at the left end a round empty medallion (blank, for a glyph to be added later); flat frontal view. Isolated on a plain
-    flat pure white background (#FFFFFF) with generous empty margin around, soft contact shadow only. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the
-    image.'
+  prompt: 'SUBJECT: UI element: a single vertical hanging silk banner ribbon filling the whole image, straight frontal view, muted crimson-vermilion silk with a pale ochre peony pattern (the imperial favourites).
+    A thin silver-grey woven border down both long edges, a round empty celadon-jade medallion disc in the upper third (blank, no glyph), a restrained woven pattern below it, and a swallow-tail (V-notched)
+    bottom hem with a short silk tassel at the tip; the top has a slim dark lacquered wooden hanging bar with celadon jade end caps. Northern Song taste: elegant, muted, not gaudy, no gold leaf. The silk
+    fills the frame edge to edge on a plain flat pure white background in the narrow gaps only. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: a2c543f755c371c9a96151bfa90fdaba238a9a178b0bfb1a097c4082a428b4f2
+  sha256: a157b20636c959c5fd9ccc40898a23e1a8dc2424663a0a4132a4202b5909eaa7
   status: generated
   version: 1
 - id: ui.ribbon_neishi
@@ -226,17 +227,17 @@ entries:
   used_by: ui:ribbon_neishi
   path: assets/ui/ui.ribbon_neishi.webp
   size:
-  - 1100
-  - 294
+  - 783
+  - 1536
   format: webp
-  prompt: 'SUBJECT: Faction ribbon for the palace eunuchs: dark ink-grey silk with a faint palace-lattice pattern in silver-grey. UI element: a long horizontal silk banner ribbon with softly fluttering
-    ends, spanning nearly the full width of the image, gentle wave, fine woven pattern; at the left end a round empty medallion (blank, for a glyph to be added later); flat frontal view. Isolated on a plain
-    flat pure white background (#FFFFFF) with generous empty margin around, soft contact shadow only. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the
-    image.'
+  prompt: 'SUBJECT: UI element: a single vertical hanging silk banner ribbon filling the whole image, straight frontal view, dark ink-grey silk with a faint silver palace-lattice pattern (the palace eunuchs).
+    A thin silver-grey woven border down both long edges, a round empty celadon-jade medallion disc in the upper third (blank, no glyph), a restrained woven pattern below it, and a swallow-tail (V-notched)
+    bottom hem with a short silk tassel at the tip; the top has a slim dark lacquered wooden hanging bar with celadon jade end caps. Northern Song taste: elegant, muted, not gaudy, no gold leaf. The silk
+    fills the frame edge to edge on a plain flat pure white background in the narrow gaps only. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: 749f2521fa94b9de1466f360356d2956b00c05284c4342f6912433fbc49b722b
+  sha256: b6ea074723868cce338cdb62d6c106aa12afa79183c6021b534f4d32669f329b
   status: generated
   version: 1
 - id: ui.ribbon_qingyi
@@ -244,17 +245,18 @@ entries:
   used_by: ui:ribbon_qingyi
   path: assets/ui/ui.ribbon_qingyi.webp
   size:
-  - 1100
-  - 308
+  - 892
+  - 1536
   format: webp
-  prompt: 'SUBJECT: Faction ribbon for the upright remonstrating officials: celadon green silk with a bamboo-leaf pattern in pale jade. UI element: a long horizontal silk banner ribbon with softly fluttering
-    ends, spanning nearly the full width of the image, gentle wave, fine woven pattern; at the left end a round empty medallion (blank, for a glyph to be added later); flat frontal view. Isolated on a plain
-    flat pure white background (#FFFFFF) with generous empty margin around, soft contact shadow only. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the
-    image.'
+  prompt: 'SUBJECT: UI element: a single vertical hanging silk banner ribbon filling the whole image, straight frontal view, celadon green silk with a pale jade bamboo-leaf pattern (the upright remonstrating
+    officials). A thin silver-grey woven border down both long edges, a round empty celadon-jade medallion disc in the upper third (blank, no glyph), a restrained woven pattern below it, and a swallow-tail
+    (V-notched) bottom hem with a short silk tassel at the tip; the top has a slim dark lacquered wooden hanging bar with celadon jade end caps. Northern Song taste: elegant, muted, not gaudy, no gold leaf.
+    The silk fills the frame edge to edge on a plain flat pure white background in the narrow gaps only. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in
+    the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: 5dff8b8f6027cc46e2598a0c4293f31e1ff630fe11649125eddfd26d9e11efda
+  sha256: 4bed4a8e7881e7c04a305353493a7cd1b974fb99e87acd83e73e2160d594e1dd
   status: generated
   version: 1
 - id: ui.season.spring
@@ -1129,7 +1131,7 @@ entries:
   kind: portrait
   used_by: character:zhao_ji:portrait:daoist
   path: assets/portrait/portrait.zhao_ji.daoist.webp
-  size: &id001
+  size:
   - 768
   - 1152
   format: webp
@@ -1141,15 +1143,17 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: ad220fd0e68dbe11f5719c0177b183237bba768ab71bffa7f7f5fafc52c41a33
+  status: generated
   version: 1
   reference_image: portrait.zhao_ji.default
 - id: portrait.zhong_shidao.armor
   kind: portrait
   used_by: character:zhong_shidao:portrait:armor
   path: assets/portrait/portrait.zhong_shidao.armor.webp
-  size: *id001
+  size:
+  - 768
+  - 1152
   format: webp
   prompt: 'SUBJECT: Keep the face, age and identity of the attached reference portrait exactly. Half-length vertical portrait of a single person, centred, from head to mid-thigh, facing three-quarter view,
     painted on pale silk in Northern Song academy gongbi style with fine ink outlines and delicate colours, background a softly misted blue-green landscape or interior fading to the edges. Face clearly
@@ -1159,15 +1163,17 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 8f88ad0f461e6d9a31c71b358e18befcd70eca41dfc7aaf2555c8d11dde6b7e3
+  status: generated
   version: 1
   reference_image: portrait.zhong_shidao.default
 - id: portrait.yao_pingzhong.armor
   kind: portrait
   used_by: character:yao_pingzhong:portrait:armor
   path: assets/portrait/portrait.yao_pingzhong.armor.webp
-  size: *id001
+  size:
+  - 768
+  - 1152
   format: webp
   prompt: 'SUBJECT: Keep the face, age and identity of the attached reference portrait exactly. Half-length vertical portrait of a single person, centred, from head to mid-thigh, facing three-quarter view,
     painted on pale silk in Northern Song academy gongbi style with fine ink outlines and delicate colours, background a softly misted blue-green landscape or interior fading to the edges. Face clearly
@@ -1176,15 +1182,17 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 6c4e1fa75e28ee4ef2b494871ca91397f0c43b9f26b7a0bba57fd5951d83193d
+  status: generated
   version: 1
   reference_image: portrait.yao_pingzhong.default
 - id: portrait.tong_guan.armor
   kind: portrait
   used_by: character:tong_guan:portrait:armor
   path: assets/portrait/portrait.tong_guan.armor.webp
-  size: *id001
+  size:
+  - 768
+  - 1152
   format: webp
   prompt: 'SUBJECT: Keep the face, age and identity of the attached reference portrait exactly. Half-length vertical portrait of a single person, centred, from head to mid-thigh, facing three-quarter view,
     painted on pale silk in Northern Song academy gongbi style with fine ink outlines and delicate colours, background a softly misted blue-green landscape or interior fading to the edges. Face clearly
@@ -1193,15 +1201,17 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 84d01330d518352b2ffd6b530f6ae3aa1260642ad5b8c7e050cdcecd58d11f98
+  status: generated
   version: 1
   reference_image: portrait.tong_guan.default
 - id: portrait.li_gang.armor
   kind: portrait
   used_by: character:li_gang:portrait:armor
   path: assets/portrait/portrait.li_gang.armor.webp
-  size: *id001
+  size:
+  - 768
+  - 1152
   format: webp
   prompt: 'SUBJECT: Keep the face, age and identity of the attached reference portrait exactly. Half-length vertical portrait of a single person, centred, from head to mid-thigh, facing three-quarter view,
     painted on pale silk in Northern Song academy gongbi style with fine ink outlines and delicate colours, background a softly misted blue-green landscape or interior fading to the edges. Face clearly
@@ -1210,15 +1220,17 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 886008a1cabd500a1ed55e21650ea58dbac226ff062b052640e5a1015046fb01
+  status: generated
   version: 1
   reference_image: portrait.li_gang.default
 - id: portrait.guo_yaoshi.armor
   kind: portrait
   used_by: character:guo_yaoshi:portrait:armor
   path: assets/portrait/portrait.guo_yaoshi.armor.webp
-  size: *id001
+  size:
+  - 768
+  - 1152
   format: webp
   prompt: 'SUBJECT: Keep the face, age and identity of the attached reference portrait exactly. Half-length vertical portrait of a single person, centred, from head to mid-thigh, facing three-quarter view,
     painted on pale silk in Northern Song academy gongbi style with fine ink outlines and delicate colours, background a softly misted blue-green landscape or interior fading to the edges. Face clearly
@@ -1227,15 +1239,17 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 9231f744560e99dc126789a2b6d6f963f4bdc6f6d8594252f8812b1fcdfcae5f
+  status: generated
   version: 1
   reference_image: portrait.guo_yaoshi.default
 - id: portrait.wanyan_zonghan.armor
   kind: portrait
   used_by: character:wanyan_zonghan:portrait:armor
   path: assets/portrait/portrait.wanyan_zonghan.armor.webp
-  size: *id001
+  size:
+  - 768
+  - 1152
   format: webp
   prompt: 'SUBJECT: Keep the face, age and identity of the attached reference portrait exactly. Half-length vertical portrait of a single person, centred, from head to mid-thigh, facing three-quarter view,
     painted on pale silk in Northern Song academy gongbi style with fine ink outlines and delicate colours, background a softly misted blue-green landscape or interior fading to the edges. Face clearly
@@ -1244,15 +1258,17 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: d2f90d999735a592c8eb037fd057dc7e701f4074d50b1ade7e91a861663ebd1f
+  status: generated
   version: 1
   reference_image: portrait.wanyan_zonghan.default
 - id: portrait.wanyan_zongwang.armor
   kind: portrait
   used_by: character:wanyan_zongwang:portrait:armor
   path: assets/portrait/portrait.wanyan_zongwang.armor.webp
-  size: *id001
+  size:
+  - 768
+  - 1152
   format: webp
   prompt: 'SUBJECT: Keep the face, age and identity of the attached reference portrait exactly. Half-length vertical portrait of a single person, centred, from head to mid-thigh, facing three-quarter view,
     painted on pale silk in Northern Song academy gongbi style with fine ink outlines and delicate colours, background a softly misted blue-green landscape or interior fading to the edges. Face clearly
@@ -1261,15 +1277,15 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 562de229ede89b5d1f8907d71771bade1bad1395fb3ca1b94309b5f4bb697cc7
+  status: generated
   version: 1
   reference_image: portrait.wanyan_zongwang.default
 - id: event.haishang
   kind: event
   used_by: event:haishang:illustration
   path: assets/event/event.haishang.webp
-  size: &id002
+  size:
   - 1344
   - 896
   format: webp
@@ -1279,14 +1295,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: bb6975332753794fbe005bb5c94a46c5ae91b2471eab1b850298b86968f4ee92
+  status: generated
   version: 1
 - id: event.huashi
   kind: event
   used_by: event:huashi:illustration
   path: assets/event/event.huashi.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A huge strange perforated Taihu garden rock lashed onto a great barge on the Grand Canal, hauled by long lines of exhausted
     labourers on the towpath, a broken bridge and a demolished house wall behind; officials in crimson robes supervising from a pavilion. Wide landscape composition with clear focal point. Absolutely no
@@ -1294,14 +1312,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 46fa6d3247ac01c339481843cf379cc229d6acd2b7fc632d8f3f46b8f1f0270b
+  status: generated
   version: 1
 - id: event.genyue
   kind: event
   used_by: event:genyue:illustration
   path: assets/event/event.genyue.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: The imperial artificial mountain garden Genyue in Bianjing: towering strange rocks, pavilions, cranes, rare trees and
     waterfalls, a few courtiers strolling, lavish and dreamlike blue-green landscape. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals,
@@ -1309,14 +1329,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 583a8eef34ce9dd4741f8aad6d1c975efea9c6352cb2dac217faec47e62726e3
+  status: generated
   version: 1
 - id: event.cai_retire
   kind: event
   used_by: event:cai_retire:illustration
   path: assets/event/event.cai_retire.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: An aged chief minister in a purple robe bowing as he leaves a palace hall through a vermilion gate, younger officials
     watching, autumn leaves falling, mood of transition. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere
@@ -1324,14 +1346,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 86cee3c016190511557074bb89bd4d8c389dbe8f6d977e9fff1bda349748eeb4
+  status: generated
   version: 1
 - id: event.shangjing_falls
   kind: event
   used_by: event:shangjing_falls:illustration
   path: assets/event/event.shangjing_falls.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: Jurchen cavalry with braided queues storming the gates of a northern steppe walled capital, smoke rising over Khitan
     felt-roofed halls, banners plain, restrained no gore. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere
@@ -1339,14 +1363,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 6e30f2bff9c09537fd6ff95c850502e95364164004133aa2a30444ebd7581379
+  status: generated
   version: 1
 - id: event.fangla_rising
   kind: event
   used_by: event:fangla_rising:illustration
   path: assets/event/event.fangla_rising.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A peasant uprising in the misty Zhejiang hills: crowds of villagers with red head cloths, farm blades and torches pouring
     out of a lacquer-tree valley, a burning tribute-bureau warehouse in the distance. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals,
@@ -1354,14 +1380,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 9cecb36ada16dbe8f99d95705fe3bc67d811c9e6a7bb419b3f7832bc333dbe3e
+  status: generated
   version: 1
 - id: event.nanzheng
   kind: event
   used_by: event:nanzheng:illustration
   path: assets/event/event.nanzheng.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: The Northwestern Song army marching south in long columns along a river road under willows, cavalry and infantry with
     plain banners, boats on the canal, heading into green southern hills. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions
@@ -1369,14 +1397,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: fee160d00990e78cd20d01e500b9049cf49bb1c738a0872f3f95f8a4cc194bb2
+  status: generated
   version: 1
 - id: event.songjiang
   kind: event
   used_by: event:songjiang:illustration
   path: assets/event/event.songjiang.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: Outlaws of the Liangshan marshes surrendering on a misty lakeshore: rough men in boats lay down their weapons before
     a Song prefect in a crimson robe, burning boats behind them. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere
@@ -1384,28 +1414,32 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: d783d07a7f98e28044672cd0670660cce6075177dff8624a7f61554c87f00a22
+  status: generated
   version: 1
 - id: event.zhongjing_falls
   kind: event
   used_by: event:zhongjing_falls:illustration
   path: assets/event/event.zhongjing_falls.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: Liao''s Central Capital in winter falling to Jurchen horsemen, a Khitan emperor''s hunting party fleeing west across
     snowy steppe in the foreground. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: c91a2df896cd31304cdbbaacf5f3b7f0d494cde493f875cd8b5a2a76d6d30b33
+  status: generated
   version: 1
 - id: event.beifa
   kind: event
   used_by: event:beifa:illustration
   path: assets/event/event.beifa.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A Song army camp on the Baigou river at the northern frontier at dawn: lines of tents, plain banners, generals in a
     tent studying a map, cavalry fording the shallow river. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere
@@ -1413,14 +1447,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: da77e9abe04b0d2b060d30fd904808114eedaf9856cd7f4e60310832f2936b17
+  status: generated
   version: 1
 - id: event.baigou_defeat
   kind: event
   used_by: event:baigou_defeat:illustration
   path: assets/event/event.baigou_defeat.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A Song army in disorder retreating across a muddy river under rain, Khitan cavalry with temple locks pursuing on the
     far bank, abandoned carts, restrained no gore. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the
@@ -1428,14 +1464,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: d99cc15f1ae3af2b97cd6ae6e1f48f7957c483c51097cf65e61ea90afb08c18c
+  status: generated
   version: 1
 - id: event.guo_surrender
   kind: event
   used_by: event:guo_surrender:illustration
   path: assets/event/event.guo_surrender.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: The Ever-Victorious Army leader and his cavalry dismounting before a Song commander''s tent, offering a blank tally
     token, plain banners, northern plain at autumn. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the
@@ -1443,28 +1481,32 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 09248200fcaaaea5233a8f4e6ac200df54da5103129fade9471f5b4bfc753cf6
+  status: generated
   version: 1
 - id: event.yanjing_taken
   kind: event
   used_by: event:yanjing_taken:illustration
   path: assets/event/event.yanjing_taken.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: Jurchen cavalry entering the great walled city of Yanjing in the snow through an open gate, Khitan officials kneeling
     at the roadside. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: fad19deb827873074b24d37976adef7c7ddf7be995af4b9170e58340105b3f99
+  status: generated
   version: 1
 - id: event.yanjing_returned
   kind: event
   used_by: event:yanjing_returned:illustration
   path: assets/event/event.yanjing_returned.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: An emptied city of Yanjing handed over: Song officials and a small army enter through a gate into deserted streets,
     abandoned houses, a few old people, long lines of deported families leaving in the distance under Jurchen escort. Wide landscape composition with clear focal point. Absolutely no text, no characters,
@@ -1472,28 +1514,32 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 3c628533721a38e5f0921098c1cdf01e63c824f5a5be8af1726b652784a56d57
+  status: generated
   version: 1
 - id: event.zhangjue
   kind: event
   used_by: event:zhangjue:illustration
   path: assets/event/event.zhangjue.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A coastal northern fortress town at Pingzhou, a Han commander in a crimson robe raising a plain Song-red flag on the
     gate tower while soldiers watch uncertainly. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 93d92c8f29e4b5424a72292f8a976e6c74fcd9065a1d90b052522a7e0db91514
+  status: generated
   version: 1
 - id: event.aguda_death
   kind: event
   used_by: event:aguda_death:illustration
   path: assets/event/event.aguda_death.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A Jurchen funeral in a snowy forest: mourners with braided queues and fur cloaks kneeling around a wooden bier draped
     with furs, horses standing, smoke from a fire, solemn. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere
@@ -1501,14 +1547,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 834fb240409b245940df121e8eaffbc56502021375a493b697737a2d31cf754b
+  status: generated
   version: 1
 - id: event.zhangjue_executed
   kind: event
   used_by: event:zhangjue_executed:illustration
   path: assets/event/event.zhangjue_executed.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A grim night scene in a Song frontier office: a closed lacquered wooden box on a table between a Song official and a
     Jurchen envoy in fur, guards watching, a single lamp, restrained, nothing gory shown. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no
@@ -1516,56 +1564,64 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: d8f1becf54aab1df7405cc37e10640a880f953211cb45a688462bc3ee3732d19
+  status: generated
   version: 1
 - id: event.famine
   kind: event
   used_by: event:famine:illustration
   path: assets/event/event.famine.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: Famine on the North China plain: dry cracked fields, gaunt villagers with bundles walking along a road, a small charity
     porridge kitchen by a temple, grey sky. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 40ef04f00bdb8313a9d0caee1d3a7f9f4bf2b329a8c267264e04d853181065a4
+  status: generated
   version: 1
 - id: event.mianfu
   kind: event
   used_by: event:mianfu:illustration
   path: assets/event/event.mianfu.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: Tax collectors in a county town square registering villagers and taking strings of cash coins at a table, anxious crowd,
     a notice board (blank), late autumn. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 042f668bcffd8b8ad5189cd4d744844167e3eadb63a1913eaf455d31ecc44021
+  status: generated
   version: 1
 - id: event.tianzuo_captured
   kind: event
   used_by: event:tianzuo_captured:illustration
   path: assets/event/event.tianzuo_captured.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: The last Liao emperor, a Khitan man in a blue hunting robe, captured by Jurchen horsemen in a snowy mountain valley,
     his small escort scattered. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 3bffe3250fd726df1319592915a85cef2ee797e910c4460609d73233c732a5df
+  status: generated
   version: 1
 - id: event.jin_envoy
   kind: event
   used_by: event:jin_envoy:illustration
   path: assets/event/event.jin_envoy.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: An arrogant Jurchen envoy in fur and braids standing unbowed in a Song palace audience hall with vermilion pillars,
     Song officials in long-winged hats murmuring uneasily. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere
@@ -1573,14 +1629,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 3e102d07bf05b7f311926f2d56d75fb817e6731b60fe2bc625c3ab0ae15da75b
+  status: generated
   version: 1
 - id: event.chen_dong
   kind: event
   used_by: event:chen_dong:illustration
   path: assets/event/event.chen_dong.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: Students of the Imperial University in white robes kneeling in the snow before the palace gate Xuande Gate, holding
     up blank memorial scrolls, crowds of townspeople behind them. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions
@@ -1588,14 +1646,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 3a8172ac165fe12843ee3f68442c8d3b2d24d261bac6dc62fa5977e0d9806bdd
+  status: generated
   version: 1
 - id: event.jin_invasion
   kind: event
   used_by: event:jin_invasion:illustration
   path: assets/event/event.jin_invasion.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: Jurchen cavalry in iron armour with braided queues crossing the frozen Yellow River in winter in long columns, banners
     plain, a Song riverside town burning faintly on the far bank, cold blue-grey dawn. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals,
@@ -1603,14 +1663,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 4564b3d9dd7221d4de7e890238e0b8732c62f5d9a4b75ee6d55fd3dc41f479df
+  status: generated
   version: 1
 - id: event.taiyuan_siege
   kind: event
   used_by: event:taiyuan_siege:illustration
   path: assets/event/event.taiyuan_siege.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: The massive walls of Taiyuan under siege in snow, Jurchen siege towers and catapults below, Song defenders with crossbows
     on the battlements, smoke and arrows, restrained. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in
@@ -1618,14 +1680,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 85930444b2944c82c1c826dfd9b308fcab4dd4b8c2b49498292a2657dd07625d
+  status: generated
   version: 1
 - id: event.bianjing_siege
   kind: event
   used_by: event:bianjing_siege:illustration
   path: assets/event/event.bianjing_siege.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: The great outer walls of Bianjing in winter, defenders on the ramparts with crossbows and siege engines, a vast Jurchen
     camp spread across the snowy plain outside, the Bian canal frozen. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions
@@ -1633,14 +1697,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: ad7411997a290190ad0be4296125a286bf88d418014205aec5801d7329ebbc26
+  status: generated
   version: 1
 - id: event.ligang_defense
   kind: event
   used_by: event:ligang_defense:illustration
   path: assets/event/event.ligang_defense.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A resolute Song official in a cuirass over his robe directing soldiers and townspeople carrying stones and arrows up
     a city wall staircase in the snow, torches, determined faces. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions
@@ -1648,14 +1714,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: fcf12ee72ba55f547d017f46879d9213ef29f671766d4809d10fbe5d1c3b499c
+  status: generated
   version: 1
 - id: event.qinwang
   kind: event
   used_by: event:qinwang:illustration
   path: assets/event/event.qinwang.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: The Northwestern army arriving to relieve the capital, long columns of veteran cavalry with red cloaks under a white-bearded
     general on horseback, approaching a city across a snowy plain at dawn. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions
@@ -1663,14 +1731,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: c0578a9d6e8b9615967f9bd1d0475729cf66412db9efdd8243f3b8cbebe9cb60
+  status: generated
   version: 1
 - id: event.neishan
   kind: event
   used_by: event:neishan:illustration
   path: assets/event/event.neishan.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A dim palace hall at night: an elegant emperor in a pale yellow robe sits slumped, a long memorial scroll written in
     red (abstract strokes, no legible characters) unrolled on the floor before him, an official kneeling, the young crown prince standing aside in shock. Wide landscape composition with clear focal point.
@@ -1678,28 +1748,32 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: c941926366104c68c8f2d58bb831354e228816eac8f524aecb3df97d032d1c45
+  status: generated
   version: 1
 - id: event.nanxing
   kind: event
   used_by: event:nanxing:illustration
   path: assets/event/event.nanxing.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: An imperial barge fleet with plain yellow canopies sailing down the Grand Canal at dusk away from the north, courtiers
     on deck looking back, winter willows. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 03191ec6c3c801af4c09d17308406c730ae9e11746508d1dfa3c12fd8ced7e75
+  status: generated
   version: 1
 - id: event.qingming
   kind: event
   used_by: event:qingming:illustration
   path: assets/event/event.qingming.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A lively scene of Bianjing in the manner of Along the River During the Qingming Festival: the arched Rainbow Bridge
     crowded with people, boats on the Bian canal, shops, camels, carts, festive spring day. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers,
@@ -1707,14 +1781,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: ee41be40b96dec1eca85659fa4af1a04b27ee6ed781bd247b517fd08ae9eb2db
+  status: generated
   version: 1
 - id: event.flood
   kind: event
   used_by: event:flood:illustration
   path: assets/event/event.flood.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: The Yellow River bursting its dikes on the North China plain, muddy water flooding villages and fields, people on rooftops,
     officials and labourers carrying straw bundles to the breach. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions
@@ -1722,14 +1798,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 14dd20ffb44aa64987fb8e70e86831ac99a70b0e046ae2ce7b2b78b10f738ee2
+  status: generated
   version: 1
 - id: event.daoist_rite
   kind: event
   used_by: event:daoist_rite:illustration
   path: assets/event/event.daoist_rite.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A grand Daoist ritual in a palace courtyard: Daoist priests in blue and white robes around an altar with incense, cranes
     flying overhead, the emperor watching from a pavilion. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere
@@ -1737,28 +1815,32 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 4f9f9500aa5b36418730fb197569ae0ee94b4d0177f0d917848edadc1a42f0dd
+  status: generated
   version: 1
 - id: event.xixia
   kind: event
   used_by: event:xixia:illustration
   path: assets/event/event.xixia.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: Western Xia cavalry and envoys on the Helan mountain foothills, Tangut men with shaved crowns and fringes, felt cloaks,
     a Song border fort in the distance. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: f4823608d63fe8411b003c880315a700ad1e9e7011a71560ab61bd3ecd886f92
+  status: generated
   version: 1
 - id: event.tangluo
   kind: event
   used_by: event:tangluo:illustration
   path: assets/event/event.tangluo.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: The water-defence lines of Hebei: a vast network of ponds, dikes and willow-lined channels with small watch-towers,
     labourers deepening a channel, soldiers patrolling on a dike, autumn reeds. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no
@@ -1766,14 +1848,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 735f679c1496152284cfc13fc3442b1fd43518f96c9982c49c6d7f0435680d78
+  status: generated
   version: 1
 - id: event.jinjun_review
   kind: event
   used_by: event:jinjun_review:illustration
   path: assets/event/event.jinjun_review.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A review of the palace guard army on a drill ground in Bianjing: ranks of soldiers in lamellar armour, many gaps in
     the ranks, old men and boys among them, officers in purple robes on a reviewing stand. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no
@@ -1781,56 +1865,64 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: b6e76e689d71faf6af065b19d62b2b5da06e1220fb8c81fba1a77654485d67e5
+  status: generated
   version: 1
 - id: event.goryeo_envoy
   kind: event
   used_by: event:goryeo_envoy:illustration
   path: assets/event/event.goryeo_envoy.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A Song embassy ship with plain sails arriving at a Goryeo harbour, Korean officials in robes greeting Song envoys on
     a wooden pier, green hills. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 29293fe3964a16b4925c871732d1001358cede174267a774d4019f17e0854b32
+  status: generated
   version: 1
 - id: event.liao_envoy
   kind: event
   used_by: event:liao_envoy:illustration
   path: assets/event/event.liao_envoy.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A Khitan envoy with temple locks in a blue round-collar robe bowing in a Song palace hall, presenting a blank letter,
     Song officials watching thoughtfully. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 74f3ba1ac9cc3b9030c93cfa1f926849cb17fc22b724209b24ca31b7a6d2781d
+  status: generated
   version: 1
 - id: event.military_drill
   kind: event
   used_by: event:military_drill:illustration
   path: assets/event/event.military_drill.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: Song soldiers training with crossbows and spears on a frontier drill field, a veteran general watching, new conscripts
     in rows, banners plain, crisp autumn day. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 4bcc1e35c8ce7877f379621a141105a0a3d4ed47a4422326680c5f01e1acb577
+  status: generated
   version: 1
 - id: event.court_debate
   kind: event
   used_by: event:court_debate:illustration
   path: assets/event/event.court_debate.webp
-  size: *id002
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A Song court audience in the Chuigong Hall: officials in purple, crimson and green robes with long-winged hats arguing
     before the emperor on a dais, ivory tablets raised. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in
@@ -1838,14 +1930,14 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: c76faad677322286bb84c240604926bce6a07866b103f524b87090ae00cf98b4
+  status: generated
   version: 1
 - id: ending.f_bankrupt
   kind: ending
   used_by: ending:f_bankrupt:illustration
   path: assets/ending/ending.f_bankrupt.webp
-  size: &id003
+  size:
   - 1344
   - 896
   format: webp
@@ -1854,14 +1946,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: fcba5d04142cafe874782c6593f100d227c971fd7c031ae361bf7ae89154634e
+  status: generated
   version: 1
 - id: ending.f_dongnan
   kind: ending
   used_by: ending:f_dongnan:illustration
   path: assets/ending/ending.f_dongnan.webp
-  size: *id003
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Ending illustration, a single evocative scene painted on pale silk: The whole Jiangnan region in flames seen from a hill: rebel crowds with red head cloths holding the city of Hangzhou
     by the West Lake, smoke over the canals, Song officials fleeing by boat. Wide landscape composition. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in
@@ -1869,28 +1963,32 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 38401c9a83e5a335ee7ff20db757c04e7a14bf544be187957d8ce6c01c005a4d
+  status: generated
   version: 1
 - id: ending.f_minbian
   kind: ending
   used_by: ending:f_minbian:illustration
   path: assets/ending/ending.f_minbian.webp
-  size: *id003
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Ending illustration, a single evocative scene painted on pale silk: Bandit bands and starving villagers swarming over a burnt countryside of the North China plain, a county town gate
     broken, smoke rising from many places. Wide landscape composition. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: e190dcd3dea57f963cbc5d4fad4ea09fd422fb697b9efdf10a4d48fa43f64480
+  status: generated
   version: 1
 - id: ending.e_neishan
   kind: ending
   used_by: ending:e_neishan:illustration
   path: assets/ending/ending.e_neishan.webp
-  size: *id003
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Ending illustration, a single evocative scene painted on pale silk: An abdication scene: the elegant emperor in pale yellow hands an imperial seal (blank) to the young crown prince in
     a palace hall, officials bowing deeply, snow falling outside the open doors. Wide landscape composition. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere
@@ -1898,14 +1996,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 24547cd8a84e1a1b3795ff2ad151aa1ba185eb18ffb2a56bebb4a784ef00fbf2
+  status: generated
   version: 1
 - id: ending.e_jingkang
   kind: ending
   used_by: ending:e_jingkang:illustration
   path: assets/ending/ending.e_jingkang.webp
-  size: *id003
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Ending illustration, a single evocative scene painted on pale silk: Winter, the fall of Bianjing: long lines of captives including an emperor and princes in plain robes being led north
     across a snowy plain by Jurchen horsemen with braided queues, the burning city in the distance, deeply sorrowful, restrained, no gore. Wide landscape composition. Absolutely no text, no characters,
@@ -1913,28 +2013,32 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 3e9c50ceca0f0fc241831408152d51194ff10ece337c97a43211d05c82d49d47
+  status: generated
   version: 1
 - id: ending.e_nandu
   kind: ending
   used_by: ending:e_nandu:illustration
   path: assets/ending/ending.e_nandu.webp
-  size: *id003
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Ending illustration, a single evocative scene painted on pale silk: The court crossing the Yangtze southward: crowded boats on the broad river at dusk, officials and families looking
     back north to a smoky horizon, green southern hills ahead. Wide landscape composition. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 5a6434c35afddb83c69b8e564aefe9f6f5fdea64bd3d6105fc9969e8006b9907
+  status: generated
   version: 1
 - id: ending.e_quedi
   kind: ending
   used_by: ending:e_quedi:illustration
   path: assets/ending/ending.e_quedi.webp
-  size: *id003
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Ending illustration, a single evocative scene painted on pale silk: Victory on the Yellow River in early spring: Song armies with red cloaks on the riverbank watching Jurchen cavalry
     retreat north across the breaking ice, a veteran general and an upright official side by side, sunlight breaking through clouds. Wide landscape composition. Absolutely no text, no characters, no letters,
@@ -1942,14 +2046,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 6b76e38b89be054267ebe3299edd0972dee887bf4cf4a9de337e7e91994fce3b
+  status: generated
   version: 1
 - id: ending.e_chengxia
   kind: ending
   used_by: ending:e_chengxia:illustration
   path: assets/ending/ending.e_chengxia.webp
-  size: *id003
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Ending illustration, a single evocative scene painted on pale silk: A humiliating peace outside the walls of Bianjing: Song officials kneeling before a Jurchen prince''s tent offering
     boxes and maps (blank), long carts of silk and silver lined up, grey winter sky. Wide landscape composition. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere
@@ -1957,28 +2063,32 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 32564e237adc832218cc69d86ab545695265b9741f829730c65af69faecc9219
+  status: generated
   version: 1
 - id: ending.e_huahe
   kind: ending
   used_by: ending:e_huahe:illustration
   path: assets/ending/ending.e_huahe.webp
-  size: *id003
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Ending illustration, a single evocative scene painted on pale silk: The Yellow River as a frontier: Song soldiers on the southern bank fortifying earthworks, on the far northern bank
     Jurchen banners (plain) and smoke over lost towns, cold wind. Wide landscape composition. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 304b29a89da2fdb98a28a1109d63f83c534ca9e8f5f88c2ba1fb3e395879a1b3
+  status: generated
   version: 1
 - id: ending.e_yanyun
   kind: ending
   used_by: ending:e_yanyun:illustration
   path: assets/ending/ending.e_yanyun.webp
-  size: *id003
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Ending illustration, a single evocative scene painted on pale silk: Triumphant peace at the northern frontier: Song soldiers manning the walls of Yanjing and the Juyong pass in spring,
     farmers ploughing below, the Yan mountains green, a calm confident mood. Wide landscape composition. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in
@@ -1986,14 +2096,16 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: c1422ce175a6816068e0228b02eb03afc16be84ff65eea612401f774c1bd1c56
+  status: generated
   version: 1
 - id: ending.e_baojing
   kind: ending
   used_by: ending:e_baojing:illustration
   path: assets/ending/ending.e_baojing.webp
-  size: *id003
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Ending illustration, a single evocative scene painted on pale silk: Peace and prosperity in Bianjing: a festive Lantern Festival night along the Bian canal, lanterns on the Rainbow Bridge,
     crowds, the palace in the distance, calm frontier implied by soldiers relaxed at a gate. Wide landscape composition. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions
@@ -2001,28 +2113,32 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 265d3403ee22a09b213b4f184eb701616c431f71e1e6ec30c177fbfc287632bb
+  status: generated
   version: 1
 - id: ending.e_chunchi
   kind: ending
   used_by: ending:e_chunchi:illustration
   path: assets/ending/ending.e_chunchi.webp
-  size: *id003
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Ending illustration, a single evocative scene painted on pale silk: Song and Khitan envoys exchanging gifts at a border river crossing under willows in spring, Khitan horsemen and Song
     officials on either bank, wary peace. Wide landscape composition. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 50f75ddc82b237d57a9980d5b8a0f850edfbc5f476432538c94d833afa224681
+  status: generated
   version: 1
 - id: ending.e_liuzei
   kind: ending
   used_by: ending:e_liuzei:illustration
   path: assets/ending/ending.e_liuzei.webp
-  size: *id003
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Ending illustration, a single evocative scene painted on pale silk: A gloomy palace: the emperor absorbed in painting a bird-and-flower picture in a quiet studio, while in the shadowed
     corridor behind him favourites in purple robes whisper and pass sealed documents, a melancholic dusk. Wide landscape composition. Absolutely no text, no characters, no letters, no numbers, no seals,
@@ -2030,20 +2146,22 @@ entries:
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 47918d11b7f51ab6704da20fe4bb41b92cfe10d0dd99e00a8936da809bdf4566
+  status: generated
   version: 1
 - id: ending.e_open
   kind: ending
   used_by: ending:e_open:illustration
   path: assets/ending/ending.e_open.webp
-  size: *id003
+  size:
+  - 1344
+  - 896
   format: webp
   prompt: 'SUBJECT: Ending illustration, a single evocative scene painted on pale silk: A lone watchtower on the northern frontier at dusk, the Song guard looking north into a gathering dark grey storm
     over the steppe, uncertain mood. Wide landscape composition. Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.'
   negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
   style_ref: design/asset_prompts/_style_block.txt
   model: codex-image
-  sha256: null
-  status: missing
+  sha256: 4b50100873a01ad7d80b718486ffaa5fcfcab9d14b9c03a3a12a4530d6ad01ff
+  status: generated
   version: 1

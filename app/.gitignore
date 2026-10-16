@@ -3,3 +3,4 @@ dist/
 .font-cache/
 test-results/
 playwright-report/
+*.local

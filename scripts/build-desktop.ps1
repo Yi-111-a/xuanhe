@@ -29,7 +29,7 @@ $Snap = $null
 try {
     if ($Snapshot -and -not $Placeholder) {
         $sha = (git -C $Root rev-parse --short HEAD).Trim()
-        $Snap = Join-Path ([IO.Path]::GetTempPath()) "tianbao-snapshot-$sha"
+        $Snap = Join-Path ([IO.Path]::GetTempPath()) "xuanhe-snapshot-$sha"
         if (Test-Path -LiteralPath $Snap) {
             Remove-Junction (Join-Path $Snap 'app\node_modules'); Remove-Junction (Join-Path $Snap 'tests\node_modules')
             git -C $Root worktree remove --force $Snap 2>$null | Out-Null

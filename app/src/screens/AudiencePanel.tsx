@@ -20,7 +20,7 @@ interface Msg {
 // Conversations survive closing the panel (per session, per character).
 const logs = new Map<string, Msg[]>();
 
-const OPENERS = ['卿以为范阳之兵如何？', '朝中近来有何风声？', '此季当以何事为先？'];
+const OPENERS = ['卿以为女真之势如何？', '朝中近来有何风声？', '此季当以何事为先？'];
 
 export function AudiencePanel() {
   const g = useGame();

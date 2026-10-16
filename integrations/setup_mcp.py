@@ -1,11 +1,11 @@
-"""天宝：把游戏的 MCP 服务注册给 Codex / Claude Code（setup_mcp.ps1 的 Python 版，只用标准库）。
+"""宣和：把游戏的 MCP 服务注册给 Codex / Claude Code（setup_mcp.ps1 的 Python 版，只用标准库）。
 
     python setup_mcp.py                       # 只检测并打印命令，不改任何配置
     python setup_mcp.py --codex --claude      # 执行注册（各自的 `mcp add`）
     python setup_mcp.py --codex --dry-run     # 只打印
 
-选项：--server-exe PATH  指定安装版 tianbao-server.exe；--source  用源码目录（.venv + engine/backend）；
-      --sim-home DIR  存档目录（默认 %APPDATA%/tianbao，与桌面版相同）；--claude-scope user|local|project；--name tianbao
+选项：--server-exe PATH  指定安装版 xuanhe-server.exe；--source  用源码目录（.venv + engine/backend）；
+      --sim-home DIR  存档目录（默认 %APPDATA%/xuanhe，与桌面版相同）；--claude-scope user|local|project；--name xuanhe
 不带 --codex / --claude 时绝不修改用户配置。
 """
 from __future__ import annotations
@@ -19,7 +19,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-PRODUCT = "天宝"
+PRODUCT = "宣和"
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent
 SAFE = re.compile(r"^[A-Za-z0-9_\-.:/\\=@+,]+$")
@@ -31,14 +31,14 @@ def quote(s: str) -> str:
 
 def default_home() -> Path:
     appdata = os.environ.get("APPDATA")
-    return Path(appdata) / "tianbao" if appdata else Path.home() / ".tianbao"
+    return Path(appdata) / "xuanhe" if appdata else Path.home() / ".xuanhe"
 
 
 def find_installed_exe() -> Path | None:
     cands: list[Path] = []
-    if os.environ.get("TIANBAO_SERVER_EXE"):
-        cands.append(Path(os.environ["TIANBAO_SERVER_EXE"]))
-    cands.append(REPO / "server" / "tianbao-server.exe")  # script shipped inside the install
+    if os.environ.get("XUANHE_SERVER_EXE"):
+        cands.append(Path(os.environ["XUANHE_SERVER_EXE"]))
+    cands.append(REPO / "server" / "xuanhe-server.exe")  # script shipped inside the install
     if sys.platform == "win32":
         import winreg
 
@@ -46,11 +46,11 @@ def find_installed_exe() -> Path | None:
             try:
                 with winreg.OpenKey(hive, rf"Software\Microsoft\Windows\CurrentVersion\Uninstall\{PRODUCT}") as key:
                     loc = str(winreg.QueryValueEx(key, "InstallLocation")[0]).strip('"')
-                    cands.append(Path(loc) / "server" / "tianbao-server.exe")
+                    cands.append(Path(loc) / "server" / "xuanhe-server.exe")
             except OSError:
                 pass
     if os.environ.get("LOCALAPPDATA"):
-        cands.append(Path(os.environ["LOCALAPPDATA"]) / PRODUCT / "server" / "tianbao-server.exe")
+        cands.append(Path(os.environ["LOCALAPPDATA"]) / PRODUCT / "server" / "xuanhe-server.exe")
     return next((c.resolve() for c in cands if c.is_file()), None)
 
 
@@ -104,10 +104,10 @@ def ensure_codex_approval(name: str) -> None:
             lines[i] = f"startup_timeout_sec = {want['startup_timeout_sec']}"
             added.append("startup_timeout_sec（调高）")
     if added:
-        shutil.copyfile(cfg, cfg.with_name("config.toml.bak-tianbao"))
+        shutil.copyfile(cfg, cfg.with_name("config.toml.bak-xuanhe"))
         lines[start + 1:start + 1] = [f"{k} = {want[k]}" for k in added if k in want]
         cfg.write_text("\n".join(lines) + "\n", encoding="utf-8")
-        print(f"已在 {cfg} 的 [mcp_servers.{name}] 中补上：{', '.join(added)}（备份：config.toml.bak-tianbao）")
+        print(f"已在 {cfg} 的 [mcp_servers.{name}] 中补上：{', '.join(added)}（备份：config.toml.bak-xuanhe）")
 
 
 def main() -> int:
@@ -118,7 +118,7 @@ def main() -> int:
     ap.add_argument("--source", action="store_true")
     ap.add_argument("--sim-home", type=Path)
     ap.add_argument("--claude-scope", choices=["user", "local", "project"], default="user")
-    ap.add_argument("--name", default="tianbao")
+    ap.add_argument("--name", default="xuanhe")
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args()
     for stream in (sys.stdout, sys.stderr):
@@ -142,7 +142,7 @@ def main() -> int:
     else:
         launch = source_launch(home)
         if not launch:
-            sys.exit(f"没有找到已安装的《{PRODUCT}》，也不在含 .venv 的源码目录里。请先安装，或用 --server-exe 指定 tianbao-server.exe。")
+            sys.exit(f"没有找到已安装的《{PRODUCT}》，也不在含 .venv 的源码目录里。请先安装，或用 --server-exe 指定 xuanhe-server.exe。")
         mode = "source"
         command, args, env = launch
 

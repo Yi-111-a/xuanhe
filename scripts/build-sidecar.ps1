@@ -1,5 +1,5 @@
 # Freeze the Python engine (engine/backend) into an onedir PyInstaller bundle and stage it for Tauri:
-#   desktop/src-tauri/resources/server/tianbao-server.exe (+ _internal/...)
+#   desktop/src-tauri/resources/server/xuanhe-server.exe (+ _internal/...)
 # Usage: pwsh scripts/build-sidecar.ps1 [-Clean]
 param([switch]$Clean)
 $ErrorActionPreference = 'Continue'  # native tools write progress to stderr; we check $LASTEXITCODE explicitly
@@ -22,12 +22,12 @@ try {
     & $Python -m PyInstaller --noconfirm --clean `
         --distpath (Join-Path $Build 'sidecar-dist') `
         --workpath (Join-Path $Build 'sidecar-work') `
-        tianbao_server.spec
+        xuanhe_server.spec
     if ($LASTEXITCODE -ne 0) { throw "PyInstaller failed ($LASTEXITCODE)" }
 } finally { Pop-Location }
 
-$Out = Join-Path $Build 'sidecar-dist\tianbao-server'
-if (-not (Test-Path (Join-Path $Out 'tianbao-server.exe'))) { throw "tianbao-server.exe missing in $Out" }
+$Out = Join-Path $Build 'sidecar-dist\xuanhe-server'
+if (-not (Test-Path (Join-Path $Out 'xuanhe-server.exe'))) { throw "xuanhe-server.exe missing in $Out" }
 
 New-Item -ItemType Directory -Force $Stage | Out-Null
 robocopy $Out $Stage /MIR /NFL /NDL /NJH /NJS /NP | Out-Null

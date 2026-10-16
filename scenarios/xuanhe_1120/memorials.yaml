@@ -283,7 +283,6 @@
   region: bianjing
   illustration: event.haishang
   conditions: {kind: flag, key: "memorial:t0_haishang", value: spy}
-  variant_of: t0_haishang
   proposal: ally
   keywords: [海上之盟, 联金, 夹攻]
   advisors:
@@ -437,7 +436,7 @@
       - {kind: office_holder, office: shaozai, character: wang_fu}
       - {kind: office_holder, office: yushi, character: li_gang}
       - {kind: character_region, character: li_gang, region: bianjing}
-      - {kind: flag, key: "memorial:t2_zaixiang_noli", operator: absent}
+      - {not: {kind: flag, key: "memorial:t2_zaixiang_noli", operator: exists}}
   proposal: wang
   keywords: [太宰, 宰相, 王黼]
   advisors:
@@ -489,7 +488,7 @@
       - any:
           - {not: {kind: office_holder, office: yushi, character: li_gang}}
           - {not: {kind: character_region, character: li_gang, region: bianjing}}
-      - {kind: flag, key: "memorial:t2_zaixiang", operator: absent}
+      - {not: {kind: flag, key: "memorial:t2_zaixiang", operator: exists}}
   proposal: wang
   keywords: [太宰, 宰相, 王黼]
   advisors:
@@ -705,7 +704,7 @@
         - {op: set_army_posture, army: nanzheng, posture: attack}
         - {op: move_character, character: tong_guan, to_region: huainan}
         - {op: adjust_resource, resource: treasury, delta: -80, reason: 南讨军费}
-      hint: 泾原军 −30000、秦凤熙河军 −20000、京师禁军 −10000，合为南讨诸军 60000，自淮南进讨两浙；国库 −80；西军北伐之备因之而缓
+      hint: 泾原军 −30000、秦凤熙河军 −20000、京师禁军 −10000，合为南讨诸军 60000，自淮南进讨两浙（总兵额不变，养兵照旧）；国库 −80；西军北伐之备因之而缓
     - id: zhong
       label: 以种师中统西军五万南讨，童贯留枢密
       memory: {character: zhong_shizhong, text: 宣和二年冬，奉命统西军南讨方腊}
@@ -719,7 +718,7 @@
         - {op: set_army_posture, army: nanzheng, posture: attack}
         - {op: adjust_resource, resource: treasury, delta: -70, reason: 南讨军费}
         - {op: adjust_resource, resource: ningxing, delta: -1, reason: 宦官不预兵事}
-      hint: 泾原军 −30000、秦凤熙河军 −20000，合为南讨诸军 50000，种师中统之（赴军中）；国库 −70，佞幸 −1
+      hint: 泾原军 −30000、秦凤熙河军 −20000，合为南讨诸军 50000，种师中统之（赴军中；总兵额不变，养兵照旧）；国库 −70，佞幸 −1
     - id: local
       label: 令东南诸军就近讨捕，不动西军
       ops:
@@ -824,6 +823,7 @@
       - {kind: flag, key: fangla_quelled, operator: absent}
       - {kind: flag, key: huashi_abolished, operator: absent}
       - {kind: flag, key: huashi_halved, operator: absent}
+      - {not: {kind: flag, key: "memorial:t4_huashi_ba_halved", operator: exists}}
   proposal: abolish
   keywords: [花石, 应奉, 方腊, 东南]
   advisors:
@@ -862,7 +862,7 @@
       - {kind: flag, key: fangla_quelled, operator: absent}
       - {kind: flag, key: huashi_abolished, operator: absent}
       - {kind: flag, key: huashi_halved, value: true}
-      - {kind: flag, key: "memorial:t4_huashi_ba", operator: absent}
+      - {not: {kind: flag, key: "memorial:t4_huashi_ba", operator: exists}}
   proposal: abolish
   keywords: [花石, 应奉, 方腊, 东南]
   advisors:
@@ -911,7 +911,7 @@
         - {op: adjust_army, army: jinjun, delta: -15000, reason: 抽禁旅一万五千赴东南}
         - {op: adjust_army, army: nanzheng, delta: 15000, reason: 禁旅一万五千来援}
         - {op: adjust_resource, resource: treasury, delta: -40, reason: 增兵军费}
-      hint: 京师禁军 −15000、南讨诸军 +15000（并入南讨诸军，所在即其所在）；国库 −40
+      hint: 京师禁军 −15000、南讨诸军 +15000（总兵额不变，养兵照旧）；国库 −40
     - id: pardon
       label: 下诏赦胁从，专讨首恶
       ops:

@@ -95,13 +95,13 @@ export function DebatePanel() {
 
   return (
     <PanelShell screen="debate" onClose={g.closePanel}>
-      <div className="debate" style={bg ? { backgroundImage: `linear-gradient(rgba(20,12,8,.35),rgba(20,12,8,.6)),url(${bg})` } : undefined}>
+      <div className="debate" style={bg ? { backgroundImage: `linear-gradient(rgba(14,18,17,.35),rgba(14,18,17,.6)),url(${bg})` } : undefined}>
         <div className="debate-banner">
           <span className="debate-banner-rod" />
           <div className="debate-banner-cloth">
-            <CuancaoBand height={12} color="rgba(201,162,75,.9)" />
+            <CuancaoBand height={12} color="rgba(183,162,113,.9)" />
             <h2 className="panel-title debate-title">廷议</h2>
-            <CuancaoBand height={12} color="rgba(201,162,75,.9)" />
+            <CuancaoBand height={12} color="rgba(183,162,113,.9)" />
           </div>
         </div>
 
@@ -109,7 +109,7 @@ export function DebatePanel() {
           <Paper variant="paper" seed={17} className="debate-setup">
             <div className="debate-setup-scroll">
             <div className="section-label">议题</div>
-            <input className="field" data-testid="debate.topic" placeholder="如：可否夺安禄山河东之兵？" value={topic} onChange={(e) => setTopic(e.target.value)} />
+            <input className="field" data-testid="debate.topic" placeholder="如：可否与女真约夹攻辽、取燕京？" value={topic} onChange={(e) => setTopic(e.target.value)} />
             {topics.length > 0 && (
               <div className="debate-topics">
                 {topics.map((t, i) => (

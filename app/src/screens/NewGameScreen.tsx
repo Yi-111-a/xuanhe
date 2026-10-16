@@ -7,43 +7,43 @@ import { Portrait } from '../components/Portrait';
 import { useGame } from '../store/game';
 
 const OBJECTIVES = [
-  { t: '弭兵', d: '让「渔阳鼙鼓」不变红；若已起兵，守住潼关与长安。' },
-  { t: '足食足兵', d: '国库与太仓粮储全程不枯竭。' },
-  { t: '皇权在握', d: '终局时君威不低于五十，未内禅，未有马嵬之变。' },
+  { t: '北门锁钥', d: '让「胡马南牧」不到铁骑之数；金兵若已南下，守住汴京。' },
+  { t: '府库不竭', d: '国库与粮储全程不枯竭。' },
+  { t: '社稷安固', d: '终局时君威不低于五十，未内禅，东南不失于方腊。' },
 ];
 
-const CAST = ['li_linfu', 'yang_guozhong', 'an_lushan', 'gao_lishi', 'yan_zhenqing', 'geshu_han'];
+const CAST = ['cai_jing', 'wang_fu', 'tong_guan', 'li_gang', 'zhong_shidao', 'zhao_liangsi'];
 const CAST_NAMES: Record<string, string> = {
-  li_linfu: '李林甫',
-  yang_guozhong: '杨国忠',
-  an_lushan: '安禄山',
-  gao_lishi: '高力士',
-  yan_zhenqing: '颜真卿',
-  geshu_han: '哥舒翰',
+  cai_jing: '蔡京',
+  wang_fu: '王黼',
+  tong_guan: '童贯',
+  li_gang: '李纲',
+  zhong_shidao: '种师道',
+  zhao_liangsi: '赵良嗣',
 };
 
 export function NewGameScreen() {
   const g = useGame();
-  const [seed, setSeed] = useState(() => 751);
+  const [seed, setSeed] = useState(() => 1120);
   const [bg] = useAsset(['ui.desk']);
   const scenario = g.scenario;
   return (
-    <div className="newgame" data-screen="newgame" data-testid="newgame.root" style={bg ? { backgroundImage: `linear-gradient(rgba(20,12,8,.72),rgba(20,12,8,.72)),url(${bg})` } : undefined}>
+    <div className="newgame" data-screen="newgame" data-testid="newgame.root" style={bg ? { backgroundImage: `linear-gradient(rgba(14,18,17,.72),rgba(14,18,17,.72)),url(${bg})` } : undefined}>
       <motion.div className="newgame-scroll" initial={{ clipPath: 'inset(0 48% 0 48%)' }} animate={{ clipPath: 'inset(0 0% 0 0%)' }} transition={{ duration: 0.9, ease: [0.22, 0.8, 0.24, 1] }}>
         <Roller orientation="vertical" length="100%" thickness={30} />
-        <Paper variant="silk" seed={751} className="newgame-paper" sides="tb">
-          <CuancaoBand height={20} color="rgba(138,109,44,.8)" />
+        <Paper variant="silk" seed={1120} className="newgame-paper" sides="tb">
+          <CuancaoBand height={20} color="rgba(125,110,72,.8)" />
           <div className="newgame-inner">
             <header className="newgame-head">
               <Baoxiang size={44} />
               <div>
-                <h2 className="panel-title newgame-title">{scenario?.title ?? '天宝十载'}</h2>
-                <p className="newgame-era t-title">{scenario?.era ?? '盛唐'} · 一季一回合 · 标准局二十季</p>
+                <h2 className="panel-title newgame-title">{scenario?.title ?? '宣和二年'}</h2>
+                <p className="newgame-era t-title">{scenario?.era ?? '北宋'} · 一季一回合 · 标准局二十四季（金兵南下则加时一年）</p>
               </div>
               <Baoxiang size={44} />
             </header>
             <p className="newgame-hook selectable">
-              {scenario?.summary ?? '盛世只剩最后四年。你是唐玄宗，你能阻止安史之乱吗？'}
+              {scenario?.summary ?? '繁华只剩最后六年。你是宋徽宗，你能避免靖康之耻吗？'}
               群臣由大模型扮演，国库、兵马、人心由确定性引擎结算；每一道诏令都有执行回执。
             </p>
             <div className="newgame-cols">
@@ -74,9 +74,9 @@ export function NewGameScreen() {
             <section className="newgame-situation">
               <div className="section-label">天下大势</div>
               <ul>
-                <li>安禄山身兼平卢、范阳二镇，今又请兼河东，北边之兵几半天下。</li>
-                <li>右相李林甫执政近二十年；杨国忠以度支得宠，与禄山相忌。</li>
-                <li>南诏陷姚州，高仙芝献俘西域，四方边将皆欲立功。</li>
+                <li>女真阿骨打连破辽之东京、上京；赵良嗣请浮海使金，约夹攻辽、宋取燕京。</li>
+                <li>太师蔡京总治三省，少宰王黼骤贵；童贯领枢密，梁师成掌御笔。</li>
+                <li>朱勔主苏杭应奉局，花石纲扰东南二十年，两浙怨声日甚。</li>
               </ul>
             </section>
             <div className="newgame-seed">
@@ -105,7 +105,7 @@ export function NewGameScreen() {
                 {g.busy.start ? '登基中…' : '御极临朝'}
               </button>
           </div>
-          <CuancaoBand height={20} color="rgba(138,109,44,.8)" />
+          <CuancaoBand height={20} color="rgba(125,110,72,.8)" />
         </Paper>
         <Roller orientation="vertical" length="100%" thickness={30} />
       </motion.div>

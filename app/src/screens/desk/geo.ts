@@ -92,12 +92,16 @@ export const MOUNTAINS: { at: Pt; n: number; spread: Pt; scale: number }[] = [
 
 /** Seat (治所) names, used when the engine's region records omit them. */
 export const SEAT_NAMES: Record<string, string> = {
-  jingji: '长安', tongguan: '潼关', duji: '洛阳', hedong: '太原', fanyang: '幽州', pinglu: '营州', hebei: '魏州',
-  henan: '汴州', huainan: '扬州', jiangnan: '润州', shannan: '襄阳', jiannan: '成都', longyou: '鄯州', hexi: '凉州',
-  shuofang: '灵州', anxi: '龟兹', beiting: '庭州', lingnan: '广州',
+  bianjing: '开封', jingdong: '青州', jingxi: '洛阳', hebei_xi: '真定', hebei_dong: '河间', hedong: '太原', guanzhong: '京兆',
+  xibian: '渭州', huainan: '扬州', liangzhe: '杭州', jiangnan: '江宁', jinghu: '江陵', chuanxia: '成都', minguang: '福州',
+  yanshan: '析津', yunzhong: '大同', pingzhou: '平州', liao: '大定', jin: '会宁', xixia: '兴庆', goryeo: '开京',
 };
 
-export const REBEL_PATH = ['fanyang', 'hebei', 'duji', 'tongguan', 'jingji'];
+/** 金军南下的两路（与 scenario.yaml 的 ai_routes 一致）：东路宗望、西路宗翰 */
+export const JIN_ROUTES = [
+  ['pingzhou', 'yanshan', 'hebei_xi', 'bianjing'],
+  ['yunzhong', 'hedong', 'jingxi', 'bianjing'],
+];
 
 // ---------------------------------------------------------------- Voronoi by half-plane clipping
 function clipHalfPlane(poly: Pt[], a: Pt, b: Pt): Pt[] {

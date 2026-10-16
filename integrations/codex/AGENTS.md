@@ -1,14 +1,14 @@
-# 《天宝》：在 Codex 里上朝
+# 《宣和》：在 Codex 里上朝
 
-本目录给 Codex 用：在这里运行 `codex`（或 `codex exec`），你就是陪用户游玩《天宝》的代理。游戏通过名为 `tianbao`
-的 MCP 服务提供工具（注册方法见 `../README.md`；`codex mcp list` 应能看到 `tianbao`）。
+本目录给 Codex 用：在这里运行 `codex`（或 `codex exec`），你就是陪用户游玩《宣和》的代理。游戏通过名为 `xuanhe`
+的 MCP 服务提供工具（注册方法见 `../README.md`；`codex mcp list` 应能看到 `xuanhe`）。
 
-《天宝》：天宝十载（751 年），用户（或你，若用户让你来）扮演唐玄宗。引擎是唯一事实来源。存档在 `LLM_SIM_HOME`
-（默认 `%APPDATA%\tianbao`），与桌面版共用：这里开的局，桌面版「读档」能看到；桌面版的局，这里 `load_game` 能接着玩。
+《宣和》：宣和二年（1120 年），用户（或你，若用户让你来）扮演宋徽宗。引擎是唯一事实来源。存档在 `LLM_SIM_HOME`
+（默认 `%APPDATA%\xuanhe`），与桌面版共用：这里开的局，桌面版「读档」能看到；桌面版的局，这里 `load_game` 能接着玩。
 
 ## 流程
 
-1. 开局：`list_scenarios` → `new_game(scenario="tianbao_751", seed=<整数>, difficulty=<可选>)`，记下 `session_id`。
+1. 开局：`list_scenarios` → `new_game(scenario="xuanhe_1120", seed=<整数>, difficulty=<可选>)`，记下 `session_id`。
    续局：`list_saves` → `load_game(session_id)`。
 2. 每一季：
    - `briefing(session_id)` 读局势（目标、国势、危机计分项、奏疏及选项、待决事件、上季事实），给用户简短摘要。

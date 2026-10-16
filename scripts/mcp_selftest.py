@@ -1,6 +1,6 @@
-"""Play one season through the tianbao MCP server with the official `mcp` client SDK.
+"""Play one season through the xuanhe MCP server with the official `mcp` client SDK.
 
-    python scripts/mcp_selftest.py --exe "<install>/server/tianbao-server.exe" [--home DIR]
+    python scripts/mcp_selftest.py --exe "<install>/server/xuanhe-server.exe" [--home DIR]
     python scripts/mcp_selftest.py --source [--home DIR]          # desktop/sidecar/entry.py mcp from this checkout
 
 Calls list_scenarios -> new_game -> briefing -> end_turn -> list_saves, checks the Chinese text comes back
@@ -32,7 +32,7 @@ def _is_error(result: Any) -> bool:
     return bool(getattr(result, "isError", False) or getattr(result, "is_error", False))
 
 
-async def play_one_season(command: str, args: list[str], env: dict[str, str] | None = None, scenario: str = "tianbao_751",
+async def play_one_season(command: str, args: list[str], env: dict[str, str] | None = None, scenario: str = "xuanhe_1120",
                           seed: int = 1, cwd: str | None = None, load_session: str | None = None) -> dict[str, Any]:
     from mcp import ClientSession, StdioServerParameters
     from mcp.client.stdio import stdio_client
@@ -74,7 +74,7 @@ async def play_one_season(command: str, args: list[str], env: dict[str, str] | N
                 loaded = await session.call_tool("load_game", {"session_id": load_session})
                 out["steps"]["load_other_save"] = not _is_error(loaded) and len(_text(loaded)) > 200
             all_text = "\n".join([_text(listed), text, btext, etext])
-            out["steps"]["chinese_intact"] = ("天宝" in all_text or "天寶" in all_text) and not MOJIBAKE.search(all_text)
+            out["steps"]["chinese_intact"] = ("宣和" in all_text or "天寶" in all_text) and not MOJIBAKE.search(all_text)
     out["seconds"] = round(time.time() - t0, 2)
     out["ok"] = all(out["steps"].values())
     return out
@@ -83,10 +83,10 @@ async def play_one_season(command: str, args: list[str], env: dict[str, str] | N
 def main() -> int:
     ap = argparse.ArgumentParser()
     g = ap.add_mutually_exclusive_group(required=True)
-    g.add_argument("--exe", type=Path, help="installed tianbao-server.exe")
+    g.add_argument("--exe", type=Path, help="installed xuanhe-server.exe")
     g.add_argument("--source", action="store_true", help="run desktop/sidecar/entry.py mcp with the repo venv")
-    ap.add_argument("--home", type=Path, help="LLM_SIM_HOME (default: the app default %%APPDATA%%/tianbao)")
-    ap.add_argument("--scenario", default="tianbao_751")
+    ap.add_argument("--home", type=Path, help="LLM_SIM_HOME (default: the app default %%APPDATA%%/xuanhe)")
+    ap.add_argument("--scenario", default="xuanhe_1120")
     ap.add_argument("--seed", type=int, default=1)
     a = ap.parse_args()
     env = {"LLM_SIM_HOME": str(a.home)} if a.home else {}

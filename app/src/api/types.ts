@@ -1,4 +1,4 @@
-// Types for the 《天宝》 REST API — docs/CONTRACT.md §1–§2.
+// Types for the 《宣和》 REST API — docs/CONTRACT.md §1–§2.
 // Fields the contract leaves open are typed as optional so the UI degrades gracefully
 // while the engine is still being built.
 

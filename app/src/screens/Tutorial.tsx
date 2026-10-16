@@ -105,7 +105,7 @@ export function Tutorial() {
   const g = useGame();
   const tut = g.view?.tutorial;
   const steps = tut?.enabled && g.screen === 'desk' ? tut.steps : [];
-  const key = `tianbao.tutorial.${g.seasonKey}`;
+  const key = `xuanhe.tutorial.${g.seasonKey}`;
   const [idx, setIdx] = useState(() => readIdx(key));
   const [target, setTarget] = useState<Aim | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);

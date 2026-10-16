@@ -1,4 +1,4 @@
-"""Call one tool on the tianbao MCP server over stdio and print the result.
+"""Call one tool on the xuanhe MCP server over stdio and print the result.
 
 Usage:
     python tools/mcp_call.py <tool> ['<json args>']
@@ -31,7 +31,7 @@ def server_params() -> StdioServerParameters:
         "SIM_SCENARIOS_DIR": str(ROOT / "scenarios"),
         "LLM_SIM_HOME": os.environ.get("LLM_SIM_HOME", str(ROOT / "playtests" / "home")),
         "SIM_MCP_MODE": os.environ.get("SIM_MCP_MODE", "client"),
-        "SIM_MCP_NAME": "tianbao",
+        "SIM_MCP_NAME": "xuanhe",
     }
     return StdioServerParameters(
         command=str(PYTHON),

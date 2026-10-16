@@ -1,5 +1,6 @@
-/* 《天宝》 design tokens — the single place to swap palette/typography.
-   Values follow design/STYLE_GUIDE.md §1–§4 (Dunhuang mineral palette). */
+/* 《宣和》 design tokens — the single place to swap palette/typography.
+   Northern Song palette (design/STYLE_GUIDE.md): celadon and Ru-ware blue-green, azurite, malachite, soft ochre,
+   ink, small vermilion accents, muted silver-gold instead of Tang gold leaf. Variable names keep the pigment names. */
 
 @font-face {
   font-family: 'TB WenKai';
@@ -25,46 +26,46 @@
 
 :root {
   /* mineral palette */
-  --shiqing: #2f5d8a;
-  --shiqing-deep: #1d3c5c;
-  --shiqing-light: #5d89b0;
-  --shilv: #3e7f6b;
-  --shilv-deep: #285647;
-  --shilv-light: #6fa891;
-  --zheshi: #a5642e;
-  --zheshi-light: #c98a4e;
-  --zhusha: #c0392b;
-  --zhusha-deep: #8a2219;
-  --zhusha-light: #e0604f;
-  --nijin: #c9a24b;
-  --nijin-bright: #ecd08a;
-  --nijin-dim: #8a6d2c;
-  --huangma: #e6d3a3;
-  --huangma-light: #f2e6c6;
-  --huangma-deep: #cdb37a;
-  --silk: #d9c08a;
-  --mo: #1e1b18;
-  --mo-soft: #3d342b;
-  --mo-faded: #6b5b48;
-  --zise: #5b3a6b;
-  --zise-light: #8a6699;
-  --lacquer: #17110e;
-  --lacquer-2: #2a1c14;
-  --lacquer-3: #3b281c;
-  --wood: #4a2f1f;
-  --wood-dark: #24160e;
+  --shiqing: #3d6b86;
+  --shiqing-deep: #24465c;
+  --shiqing-light: #6a93ab;
+  --shilv: #4f8a75;
+  --shilv-deep: #2f5e4e;
+  --shilv-light: #86b5a1;
+  --zheshi: #a37446;
+  --zheshi-light: #c4996a;
+  --zhusha: #b8412f;
+  --zhusha-deep: #83281c;
+  --zhusha-light: #d96a56;
+  --nijin: #b7a271;
+  --nijin-bright: #e3d7ae;
+  --nijin-dim: #7d6e48;
+  --huangma: #e6e0cb;
+  --huangma-light: #f3efe1;
+  --huangma-deep: #cdc4a4;
+  --silk: #d6cfb3;
+  --mo: #1b1d1b;
+  --mo-soft: #363b38;
+  --mo-faded: #656d66;
+  --zise: #594a72;
+  --zise-light: #8a7ba3;
+  --lacquer: #111615;
+  --lacquer-2: #1b2321;
+  --lacquer-3: #27322f;
+  --wood: #3a3529;
+  --wood-dark: #1a1915;
 
   /* crisis bands */
-  --crisis-calm: #3e7f6b;
-  --crisis-rumor: #c9a24b;
-  --crisis-storm: #d2742f;
-  --crisis-fire: #c0392b;
+  --crisis-calm: #4f8a75;
+  --crisis-rumor: #b7a271;
+  --crisis-storm: #c47a3a;
+  --crisis-fire: #b8412f;
 
   /* semantics */
-  --ink-text: #241a12;
-  --ink-muted: #54412d;
-  --on-lacquer: #efe0bb;
-  --on-lacquer-muted: #b59d6c;
+  --ink-text: #1f2220;
+  --ink-muted: #4c524b;
+  --on-lacquer: #e8e6d6;
+  --on-lacquer-muted: #a8a891;
   --good: #2f7a5f;
   --bad: #b2321f;
   --good-on-dark: #8fd0ad;
@@ -84,9 +85,9 @@
   --ls-title: 0.08em;
 
   /* depth */
-  --shadow-paper: 0 22px 60px rgba(12, 7, 3, 0.55), 0 3px 10px rgba(30, 20, 10, 0.35);
-  --shadow-soft: 0 6px 18px rgba(30, 20, 10, 0.35);
-  --shadow-object: 0 14px 28px rgba(8, 4, 2, 0.6), 0 2px 4px rgba(8, 4, 2, 0.5);
+  --shadow-paper: 0 22px 60px rgba(9, 11, 10, 0.55), 0 3px 10px rgba(22, 26, 24, 0.35);
+  --shadow-soft: 0 6px 18px rgba(22, 26, 24, 0.35);
+  --shadow-object: 0 14px 28px rgba(6, 8, 7, 0.6), 0 2px 4px rgba(6, 8, 7, 0.5);
   --radius-paper: 2px;
   --radius-button: 3px;
 

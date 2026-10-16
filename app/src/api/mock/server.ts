@@ -1,5 +1,5 @@
 // In-process mock of the engine API (VITE_MOCK=1). Implements docs/CONTRACT.md §2 with a
-// small deterministic simulation of the Tianbao scenario so every screen can be developed
+// small deterministic simulation of the Xuanhe scenario so every screen can be developed
 // and tested without the Python engine. Answers with real `Response` objects so the typed
 // client's parsing (JSON, SSE, `{detail:{code,message}}` errors) is exercised end to end.
 import type {
@@ -76,10 +76,11 @@ function cnYear(n: number): string {
 }
 const SEASONS = ['春', '夏', '秋', '冬'];
 export function calendarLabel(turn: number): string {
-  const year = 10 + Math.floor(turn / 4);
-  const era = year >= 15 && turn >= 22 ? `至德${cnYear(year - 14)}载` : `天宝${cnYear(year)}载`;
-  return `${era}${SEASONS[turn % 4]}`;
+  const year = 2 + Math.floor(turn / 4);
+  return `宣和${cnYear(year)}年${SEASONS[turn % 4]}`;
 }
+/** the crisis gauge's resource id (scenario.yaml crisis.resource) */
+const crisisId = () => db.crisisResource || 'nanmu';
 
 
 // ---------------------------------------------------------------- session model
@@ -126,9 +127,9 @@ function initialState(): PublicState {
   const armies: Record<string, Army> = {};
   for (const a of db.armies) armies[a.id] = clone(a);
   return {
-    scenario_id: 'tianbao_751',
+    scenario_id: 'xuanhe_1120',
     turn: 0,
-    calendar: { year: 751, season: '春', label: calendarLabel(0) },
+    calendar: { year: 1120, season: '春', label: calendarLabel(0) },
     resources,
     regions,
     characters,
@@ -149,7 +150,7 @@ function initialState(): PublicState {
 }
 
 // ---------------------------------------------------------------- persistence
-const STORE_KEY = 'tianbao.mock.sessions.v1';
+const STORE_KEY = 'xuanhe.mock.sessions.v1';
 let sessions: Record<string, Session> = {};
 function loadStore() {
   try {
@@ -252,7 +253,7 @@ function applyOp(s: PublicState, op: Op, facts: Fact[]): string | null {
       const p: Project & { on_complete?: Op[] } = {
         id: `p_${uid()}`,
         name: String(op.name),
-        region: String(op.region ?? 'jingji'),
+        region: String(op.region ?? 'bianjing'),
         turns: Number(op.turns ?? 3),
         progress: 0,
         cost_per_turn: (op.cost_per_turn as Record<string, number>) ?? {},
@@ -479,7 +480,7 @@ function baseMemorials(sess: Session): MemorialItem[] {
       void _c;
       void _e;
       if (sess.stress) rest.summary = [rest.summary, rest.summary, rest.summary].join('');
-      const region = rest.region ?? 'jingji';
+      const region = rest.region ?? 'bianjing';
       const days = courierDays(s, region);
       const late = days > lateThreshold() && s.turn > 0;
       return {
@@ -494,12 +495,12 @@ function baseMemorials(sess: Session): MemorialItem[] {
 }
 
 function objectives(s: PublicState) {
-  const risk = amount(s, 'rebellion_risk');
+  const risk = amount(s, crisisId());
   const rebelled = Boolean(s.flags?.rebellion_started);
   return db.objectives.map((o) => {
     if (o.id === 'peace') {
       const status = rebelled ? 'fail' : risk >= 60 ? 'fail' : risk >= 40 ? 'warn' : 'ok';
-      return { ...o, status, detail: `${o.detail}。当前鼙鼓 ${Math.round(risk)}。` };
+      return { ...o, status, detail: `${o.detail}。当前${db.crisisTitle}约 ${Math.round(risk)}。` };
     }
     if (o.id === 'supply') {
       const t = amount(s, 'treasury');
@@ -513,7 +514,7 @@ function objectives(s: PublicState) {
 }
 
 function view(sess: Session): ViewResponse {
-  const risk = amount(sess.state, 'rebellion_risk');
+  const risk = amount(sess.state, crisisId());
   return {
     state: publicView(sess),
     calendar_label: calendarLabel(sess.state.turn),
@@ -579,7 +580,7 @@ function agendaView(sess: Session) {
 function commandTable(s: PublicState) {
   const offices = (s.offices ?? {}) as Record<string, { name: string }>;
   const rows = Object.values(s.characters)
-    .filter((c) => c.id !== 'xuanzong' && (c.faction ?? 'tang') === 'tang' && (c.status ?? 'alive') === 'alive')
+    .filter((c) => c.id !== 'zhao_ji' && (c.faction ?? 'song') === 'song' && (c.status ?? 'alive') === 'alive')
     .map((c) => {
       const commands = Object.values(s.armies ?? {})
         .filter((a) => a.commander === c.id)
@@ -596,7 +597,7 @@ function commandTable(s: PublicState) {
       };
     })
     .filter((r) => r.offices.length || r.commands.length);
-  const leaderless = Object.values(s.armies ?? {}).filter((a) => (a.faction ?? 'tang') === 'tang' && !a.commander && a.strength > 0);
+  const leaderless = Object.values(s.armies ?? {}).filter((a) => (a.faction ?? 'song') === 'song' && !a.commander && a.strength > 0);
   const alerts = [
     ...rows.flatMap((r) => r.commands.filter((c) => c.status === 'remote').map((c) => `${r.name}遥领${c.name}，不在营中`)),
     ...leaderless.map((a) => `${a.name}无统帅，副将暂摄`),
@@ -654,19 +655,19 @@ interface Rule {
 const r = (resource: string, delta: number, reason: string): Op => ({ op: 'adjust_resource', resource, delta, reason });
 const RULES: Rule[] = [
   { re: /诛|斩|赐死|族灭/, reject: '诛戮大臣须经三司推按，诏令不能径行。' },
-  { re: /(调|发|遣).{0,8}(兵|军|师)/, ops: [r('fanzhen_power', -2, '调兵入援')], delay: '兵部调发需时，次季方能抵达。' },
+  { re: /(调|发|遣).{0,8}(兵|军|师)/, ops: [r('wubei', 1, '调兵设防')], delay: '枢密院调发需时，次季方能抵达。' },
   { re: /赈|蠲|减赋|免.{0,4}(租|赋|税)/, ops: [r('morale', 3, '赈济蠲免'), r('grain', -80, '赈济开仓')] },
   { re: /御史|巡察|按察|肃贪|弹劾|吏治/, ops: [r('corruption', -2, '御史出巡')] },
-  { re: /禁军|宿卫|彍骑|整训|练兵/, ops: [{ op: 'start_project', name: '禁军整训', region: 'jingji', turns: 4, cost_per_turn: { treasury: 40 } }] },
-  { re: /潼关|关防|守关/, ops: [{ op: 'adjust_region', region: 'tongguan', stat: 'defense', delta: 5 }] },
-  { re: /(召|宣).{0,6}禄山|禄山.{0,6}入朝/, ops: [{ op: 'set_flag', key: 'an_summoned', value: true }, r('an_ambition', 2, '疑惧')] },
+  { re: /禁军|宿卫|彍骑|整训|练兵/, ops: [{ op: 'start_project', name: '禁军整训', region: 'bianjing', turns: 4, cost_per_turn: { treasury: 40 } }] },
+  { re: /河北|塘泺|城防|守城/, ops: [{ op: 'adjust_region', region: 'hebei_dong', stat: 'defense', delta: 5 }] },
+  { re: /(召|宣).{0,6}李纲|李纲.{0,6}还朝/, ops: [{ op: 'set_flag', key: 'ligang_recalled', value: true }, r('ningxing', -2, '召还直臣')] },
   { re: /漕|汴渠|运河/, ops: [{ op: 'start_project', name: '疏浚汴渠', region: 'henan', turns: 3, cost_per_turn: { treasury: 50 } }] },
   { re: /和籴|籴/, ops: [r('treasury', -80, '和籴'), r('grain', 120, '和籴入仓')] },
   { re: /赏|赐|金帛/, ops: [r('treasury', -50, '赏赐'), r('authority', 1, '恩威并施')] },
   { re: /郭子仪|李光弼/, ops: [{ op: 'set_flag', key: 'shuofang_reliable', value: true }] },
-  { re: /约束.{0,4}杨国忠|杨国忠.{0,6}(不得|勿|毋)/, ops: [{ op: 'set_flag', key: 'guozhong_restrained', value: true }, r('court_strife', 2, '杨氏不悦')] },
-  { re: /吐蕃|南诏|契丹|大食|回纥|遣使|和亲/, ops: [r('frontier_pressure', -2, '遣使修好')] },
-  { re: /东宫|太子/, ops: [r('court_strife', -1, '庇护东宫')] },
+  { re: /罢.{0,4}(王黼|童贯|朱勔|梁师成)/, ops: [{ op: 'set_flag', key: 'mock_dismissal', value: true }, r('ningxing', -3, '罢黜佞幸')] },
+  { re: /金|辽|西夏|高丽|遣使|岁币/, ops: [r('jin_contempt', -1, '遣使修好')] },
+  { re: /东宫|太子/, ops: [r('ningxing', -1, '庇护东宫')] },
 ];
 
 /** Engine-style one-line summary of an op for receipts (the real engine sends `summary`). */
@@ -768,7 +769,7 @@ function resolveTurn(sess: Session): TurnReport {
   const eventsFired: TurnReport['events_fired'] = [];
   const choicesOpened: PendingChoice[] = [];
   const next = s.turn + 1;
-  const riskBefore = amount(s, 'rebellion_risk');
+  const riskBefore = amount(s, crisisId());
   const opening = Object.fromEntries(db.resources.filter((d) => !d.hidden).map((d) => [d.id, amount(s, d.id)]));
 
   // 1. expired choices → default option
@@ -798,7 +799,7 @@ function resolveTurn(sess: Session): TurnReport {
   s.ledger = (s.ledger ?? []).filter((l) => l.kind === 'recurring');
 
   // 5. income per region
-  const tangRegions = Object.values(s.regions).filter((rg) => (rg.controller ?? 'tang') === 'tang' && rg.stats && Object.keys(rg.stats).length);
+  const tangRegions = Object.values(s.regions).filter((rg) => (rg.controller ?? 'song') === 'song' && rg.stats && Object.keys(rg.stats).length);
   for (const inc of db.income) {
     let total = 0;
     for (const rg of tangRegions) total += evalExpr(inc.formula, (n) => (n === 'held' ? rg.stats?.held ?? 1 : rg.stats?.[n] ?? 0));
@@ -819,7 +820,7 @@ function resolveTurn(sess: Session): TurnReport {
       facts.push({ kind: 'project', text: `${p.name}告成。` });
       for (const op of p.on_complete ?? []) applyOp(s, op, facts);
       if (!p.on_complete?.length && p.name.includes('禁军')) {
-        applyOp(s, { op: 'adjust_region', region: 'jingji', stat: 'defense', delta: 10 }, facts);
+        applyOp(s, { op: 'adjust_region', region: 'bianjing', stat: 'defense', delta: 10 }, facts);
         applyOp(s, { op: 'adjust_army', army: 'jinjun', delta: 10000, reason: '整训告成' }, facts);
       }
     }
@@ -844,12 +845,12 @@ function resolveTurn(sess: Session): TurnReport {
   }
 
   // 7–8. rebel march and battles
-  for (const army of Object.values(s.armies ?? {}).filter((a) => a.faction === 'yan' && a.strength > 0)) {
+  for (const army of Object.values(s.armies ?? {}).filter((a) => a.faction === 'jin' && a.strength > 0)) {
     const idx = db.rebelRoute.indexOf(army.region);
     if (idx < 0 || idx >= db.rebelRoute.length - 1) continue;
     const target = db.rebelRoute[idx + 1];
     if (!s.regions[target]) continue;
-    const defenders = Object.values(s.armies ?? {}).filter((a) => a.region === target && a.faction === 'tang' && a.strength > 0);
+    const defenders = Object.values(s.armies ?? {}).filter((a) => a.region === target && a.faction === 'song' && a.strength > 0);
     const defStrength = defenders.reduce((a, d) => a + d.strength * (d.quality ?? 1), 0);
     const defense = s.regions[target]?.stats?.defense ?? 0;
     const atk = army.strength * (army.quality ?? 1) * (0.85 + (hash(`${sess.seed}:${next}:${army.id}`) % 300) / 1000);
@@ -860,7 +861,7 @@ function resolveTurn(sess: Session): TurnReport {
       army.strength -= lossA;
       for (const d of defenders) d.strength = Math.round(d.strength * 0.7);
       army.region = target;
-      s.regions[target].controller = 'yan';
+      s.regions[target].controller = 'jin';
       battles.push({ region: target, attacker: army.name, defender: defenders.map((d) => d.name).join('、') || '无守军', winner: army.name, attacker_loss: lossA, defender_loss: Math.round(defStrength * 0.3), text: `${army.name}破${s.regions[target].name}。` });
       s.flags![`${target}_lost`] = true;
     } else {
@@ -874,7 +875,7 @@ function resolveTurn(sess: Session): TurnReport {
   const terms = crisisTerms(s);
   const snapshot = clone(s.resources);
   const v = (n: string) => snapshot[n]?.amount ?? 0;
-  for (const [id, expr] of Object.entries(db.drift)) adjustResource(s, id, evalExpr(expr, v), id === 'rebellion_risk' ? facts : [], '时势漂移');
+  for (const [id, expr] of Object.entries(db.drift)) adjustResource(s, id, evalExpr(expr, v), id === crisisId() ? facts : [], '时势漂移');
 
   // 10. events
   s.turn = next;
@@ -913,12 +914,12 @@ function resolveTurn(sess: Session): TurnReport {
     const fb = db.endings.find((e) => e.id === db.fallbackEnding);
     outcome = fb
       ? { kind: fb.kind, id: fb.id, title: fb.title, text: fb.text, turn: next }
-      : { kind: 'ending', id: 'open_storm', title: '山雨欲来', text: '鼙鼓未动，而山雨满楼。天下事尚未可知。', turn: next };
+      : { kind: 'ending', id: 'e_open', title: '北风未息', text: '金兵未至，而北风日紧；后事如何，史书尚未写下。', turn: next };
   }
   if (outcome) s.outcome = outcome;
 
   // 13. calendar
-  s.calendar = { year: 751 + Math.floor(next / 4), season: SEASONS[next % 4], label: calendarLabel(next) };
+  s.calendar = { year: 1120 + Math.floor(next / 4), season: SEASONS[next % 4], label: calendarLabel(next) };
 
   // 回奏 and 书面议状 sent last season arrive with the settlement (§7.1–7.2)
   sess.replies = (sess.pendingReplies ?? []).map((r) => ({ ...r, turn: next }));
@@ -935,7 +936,7 @@ function resolveTurn(sess: Session): TurnReport {
       const events = round1(closing - opening[d.id] - regular);
       return { resource: d.id, name: d.name, unit: d.unit, opening: round1(opening[d.id]), edicts: 0, delayed: 0, regular, events, closing };
     });
-  const riskAfter = amount(s, 'rebellion_risk');
+  const riskAfter = amount(s, crisisId());
   return {
     turn: next,
     facts,
@@ -971,12 +972,12 @@ function stressReport(sess: Session, facts: Fact[], ledger: LedgerLine[], battle
     facts.push({ kind: i % 3 ? 'region' : 'army', text: `${rg.name}奏报第${i + 1}事：仓廪、城防、户口诸项有所变动，州县官吏奉诏施行，百姓颇有议论。` });
   }
   facts.push({ kind: 'flag', text: '旗标改变：stress_internal', internal: true });
-  for (const res of ['treasury', 'grain', 'authority', 'morale', 'corruption', 'frontier_pressure']) {
+  for (const res of ['treasury', 'grain', 'authority', 'morale', 'corruption', 'ningxing']) {
     for (let i = 0; i < 5; i++) ledger.push({ name: `杂项支用${i + 1}`, amount: -(i + 1) * 3, kind: 'event', resource: res, reason: '诸司杂支' });
   }
   for (let i = 0; i < 8; i++) {
     const rg = regions[(i * 3) % regions.length];
-    battles.push({ region: rg.id, attacker: 'yan', defender: 'tang', winner: i % 2 ? 'tang' : 'yan', attacker_loss: 1200 + i * 100, defender_loss: 900 + i * 50 });
+    battles.push({ region: rg.id, attacker: 'jin', defender: 'song', winner: i % 2 ? 'song' : 'jin', attacker_loss: 1200 + i * 100, defender_loss: 900 + i * 50 });
   }
   const evs = db.events.filter((e) => e.kind !== 'system').slice(0, 14);
   for (const ev of evs) eventsFired.push({ id: ev.id, title: ev.title, text: ev.text, illustration: ev.illustration });
@@ -999,9 +1000,9 @@ function narrate(report: TurnReport, label: string): string {
 
 // ---------------------------------------------------------------- debate
 const TOPIC_STANCE: { re: RegExp; stance: Record<string, 'support' | 'oppose' | 'neutral'> }[] = [
-  { re: /禄山|范阳|削藩|节度|河东|平卢/, stance: { fanyang: 'oppose', yang: 'support', qingliu: 'support', xiang: 'oppose', xibei: 'support', neiting: 'neutral', donggong: 'neutral' } },
-  { re: /南诏|吐蕃|征|讨/, stance: { yang: 'support', xibei: 'oppose', qingliu: 'oppose', xiang: 'neutral', fanyang: 'support', neiting: 'neutral', donggong: 'neutral' } },
-  { re: /东宫|太子/, stance: { xiang: 'oppose', donggong: 'support', neiting: 'support', qingliu: 'support', yang: 'neutral', fanyang: 'neutral', xibei: 'neutral' } },
+  { re: /金|辽|燕京|燕云|夹攻|伐燕/, stance: { neishi: 'support', xingchen: 'support', guiming: 'support', cai: 'neutral', qingyi: 'oppose', xijun: 'oppose', bianchen: 'neutral' } },
+  { re: /方腊|东南|花石|应奉/, stance: { xingchen: 'support', neishi: 'support', cai: 'support', qingyi: 'oppose', xijun: 'neutral', donggong: 'neutral' } },
+  { re: /东宫|太子|郓王/, stance: { donggong: 'support', qingyi: 'support', yunwang: 'oppose', xingchen: 'oppose', neishi: 'neutral', cai: 'neutral' } },
 ];
 
 // ---------------------------------------------------------------- router
@@ -1013,14 +1014,14 @@ function getSession(id: string): Session | null {
 const notFound = () => fail(404, 'SESSION_NOT_FOUND', '存档不存在或已删除。');
 
 const routes: [string, RegExp, Handler][] = [
-  ['GET', /^\/api\/health$/, async () => json({ ok: true, version: 'mock-0.1.0', scenarios: ['tianbao_751'] })],
+  ['GET', /^\/api\/health$/, async () => json({ ok: true, version: 'mock-0.1.0', scenarios: ['xuanhe_1120'] })],
   [
     'GET',
     /^\/api\/scenarios$/,
     async () =>
       json([
         {
-          id: 'tianbao_751',
+          id: 'xuanhe_1120',
           title: db.title,
           era: '盛唐',
           version: '0.1.0',
@@ -1037,7 +1038,7 @@ const routes: [string, RegExp, Handler][] = [
       json(
         Object.values(sessions)
           .sort((a, b) => b.updated.localeCompare(a.updated))
-          .map((x) => ({ id: x.id, scenario: 'tianbao_751', turn: x.state.turn, label: calendarLabel(x.state.turn), updated: x.updated })),
+          .map((x) => ({ id: x.id, scenario: 'xuanhe_1120', turn: x.state.turn, label: calendarLabel(x.state.turn), updated: x.updated })),
       ),
   ],
   [
@@ -1045,9 +1046,9 @@ const routes: [string, RegExp, Handler][] = [
     /^\/api\/sessions$/,
     async (_m, body, signal) => {
       await sleep(350, signal);
-      if (body.scenario !== 'tianbao_751') return fail(404, 'SCENARIO_NOT_FOUND', '场景不存在。');
+      if (body.scenario !== 'xuanhe_1120') return fail(404, 'SCENARIO_NOT_FOUND', '场景不存在。');
       const sess = newSession(Number(body.seed ?? 0) || 0);
-      return json({ id: sess.id, scenario: 'tianbao_751', state: publicView(sess) });
+      return json({ id: sess.id, scenario: 'xuanhe_1120', state: publicView(sess) });
     },
   ],
   [
@@ -1391,7 +1392,7 @@ const routes: [string, RegExp, Handler][] = [
     async (m) => {
       const sess = getSession(m[1]);
       if (!sess) return notFound();
-      return json({ session_id: sess.id, scenario: 'tianbao_751', seed: sess.seed, turn: sess.state.turn, calendar_label: calendarLabel(sess.state.turn), outcome: sess.state.outcome ?? null, seasons: sess.entries.map(({ snapshot: _s, ...e }) => e) });
+      return json({ session_id: sess.id, scenario: 'xuanhe_1120', seed: sess.seed, turn: sess.state.turn, calendar_label: calendarLabel(sess.state.turn), outcome: sess.state.outcome ?? null, seasons: sess.entries.map(({ snapshot: _s, ...e }) => e) });
     },
   ],
   [
@@ -1470,7 +1471,7 @@ const routes: [string, RegExp, Handler][] = [
         saveStore();
         const lines = CHAT_LINES[c.id] ?? ['臣谨遵圣谕。'];
         const pickLine = lines[hash(userText + sess.state.turn) % lines.length];
-        content = userText.includes('禄山') && c.id !== 'an_lushan' && lines.length > 1 ? lines[0] : pickLine;
+        content = pickLine;
       }
       await sleep(350, signal);
       trackUsage('character_chat', sess.state.turn, 1500, Math.round(content.length * 1.4));
@@ -1612,7 +1613,7 @@ export async function mockFetch(input: string, init?: RequestInit): Promise<Resp
 // ---------------------------------------------------------------- dev hooks (tests)
 declare global {
   interface Window {
-    __tianbaoMock?: {
+    __xuanheMock?: {
       forceOutcome: (sessionId: string, endingId: string) => void;
       openChoice: (sessionId: string) => void;
       reset: () => void;
@@ -1621,7 +1622,7 @@ declare global {
   }
 }
 if (typeof window !== 'undefined') {
-  window.__tianbaoMock = {
+  window.__xuanheMock = {
     forceOutcome(sessionId, endingId) {
       const sess = sessions[sessionId];
       const e = db.endings.find((x) => x.id === endingId) ?? db.endings.find((x) => x.kind === 'ending') ?? db.endings[0];

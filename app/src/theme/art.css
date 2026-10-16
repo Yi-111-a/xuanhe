@@ -77,7 +77,7 @@
 }
 .art-inkbtn .btn-ink:not(.btn-ink--red):not(:disabled):hover {
   box-shadow: none;
-  filter: drop-shadow(0 0 10px rgba(236, 208, 138, 0.45)) drop-shadow(0 6px 8px rgba(0, 0, 0, 0.45)) brightness(1.12);
+  filter: drop-shadow(0 0 10px rgba(227, 215, 174, 0.45)) drop-shadow(0 6px 8px rgba(0, 0, 0, 0.45)) brightness(1.12);
 }
 .art-inkbtn .plaque-btn:not(.plaque-btn--primary),
 .art-inkbtn .choice-option {
@@ -107,7 +107,7 @@
   border-width: 11px 30px;
   border-image: var(--art-lacquer) 46 120 / 11px 30px round;
   padding: 0 4px;
-  box-shadow: 0 14px 28px rgba(8, 4, 2, 0.6);
+  box-shadow: 0 14px 28px rgba(6, 8, 7, 0.6);
   background-clip: padding-box;
 }
 .art-lacquer .resbar-corner {
@@ -115,10 +115,10 @@
 }
 
 /* faction ribbons ---------------------------------------------------------- */
-.art-ribbon-xiang .ribbon--zise .ribbon-cloth,
-.art-ribbon-yang .ribbon--zhusha .ribbon-cloth,
-.art-ribbon-fanyang .ribbon--shilv .ribbon-cloth,
-.art-ribbon-neiting .ribbon--shiqing .ribbon-cloth {
+.art-ribbon-cai .ribbon--zise .ribbon-cloth,
+.art-ribbon-xingchen .ribbon--zhusha .ribbon-cloth,
+.art-ribbon-qingyi .ribbon--shilv .ribbon-cloth,
+.art-ribbon-neishi .ribbon--shiqing .ribbon-cloth {
   width: 66px;
   height: max(var(--len, 120px), 100px);
   margin-top: 0;
@@ -131,28 +131,28 @@
   border-image-width: 50px 0 30px 0;
   border-image-repeat: stretch;
 }
-.art-ribbon-xiang .ribbon--zise .ribbon-cloth {
-  border-image-source: var(--art-ribbon-xiang);
+.art-ribbon-cai .ribbon--zise .ribbon-cloth {
+  border-image-source: var(--art-ribbon-cai);
 }
-.art-ribbon-yang .ribbon--zhusha .ribbon-cloth {
-  border-image-source: var(--art-ribbon-yang);
+.art-ribbon-xingchen .ribbon--zhusha .ribbon-cloth {
+  border-image-source: var(--art-ribbon-xingchen);
 }
-.art-ribbon-fanyang .ribbon--shilv .ribbon-cloth {
-  border-image-source: var(--art-ribbon-fanyang);
+.art-ribbon-qingyi .ribbon--shilv .ribbon-cloth {
+  border-image-source: var(--art-ribbon-qingyi);
 }
-.art-ribbon-neiting .ribbon--shiqing .ribbon-cloth {
-  border-image-source: var(--art-ribbon-neiting);
+.art-ribbon-neishi .ribbon--shiqing .ribbon-cloth {
+  border-image-source: var(--art-ribbon-neishi);
 }
-.art-ribbon-xiang .ribbon--zise .ribbon-pearls,
-.art-ribbon-yang .ribbon--zhusha .ribbon-pearls,
-.art-ribbon-fanyang .ribbon--shilv .ribbon-pearls,
-.art-ribbon-neiting .ribbon--shiqing .ribbon-pearls {
+.art-ribbon-cai .ribbon--zise .ribbon-pearls,
+.art-ribbon-xingchen .ribbon--zhusha .ribbon-pearls,
+.art-ribbon-qingyi .ribbon--shilv .ribbon-pearls,
+.art-ribbon-neishi .ribbon--shiqing .ribbon-pearls {
   display: none;
 }
-.art-ribbon-xiang .ribbon--zise .ribbon-seal,
-.art-ribbon-yang .ribbon--zhusha .ribbon-seal,
-.art-ribbon-fanyang .ribbon--shilv .ribbon-seal,
-.art-ribbon-neiting .ribbon--shiqing .ribbon-seal {
+.art-ribbon-cai .ribbon--zise .ribbon-seal,
+.art-ribbon-xingchen .ribbon--zhusha .ribbon-seal,
+.art-ribbon-qingyi .ribbon--shilv .ribbon-seal,
+.art-ribbon-neishi .ribbon--shiqing .ribbon-seal {
   top: -42px;
   width: 26px;
   height: 26px;
@@ -160,25 +160,25 @@
   background: none;
   box-shadow: none;
   color: #3a1d08;
-  text-shadow: 0 1px 0 rgba(255, 240, 200, 0.6);
+  text-shadow: 0 1px 0 rgba(244, 242, 228, 0.6);
 }
-.art-ribbon-xiang .ribbon-rod {
+.art-ribbon-cai .ribbon-rod {
   display: none;
 }
-.art-ribbon-xiang .ribbons {
+.art-ribbon-cai .ribbons {
   margin-top: -14px;
 }
 
 @media (max-width: 1600px) {
-  .art-ribbon-xiang .ribbon--zise .ribbon-cloth,
-  .art-ribbon-yang .ribbon--zhusha .ribbon-cloth,
-  .art-ribbon-fanyang .ribbon--shilv .ribbon-cloth,
-  .art-ribbon-neiting .ribbon--shiqing .ribbon-cloth {
+  .art-ribbon-cai .ribbon--zise .ribbon-cloth,
+  .art-ribbon-xingchen .ribbon--zhusha .ribbon-cloth,
+  .art-ribbon-qingyi .ribbon--shilv .ribbon-cloth,
+  .art-ribbon-neishi .ribbon--shiqing .ribbon-cloth {
     width: 56px;
     border-width: 42px 0 26px 0;
     border-image-width: 42px 0 26px 0;
   }
-  .art-ribbon-xiang .ribbon .ribbon-seal {
+  .art-ribbon-cai .ribbon .ribbon-seal {
     top: -36px;
     width: 22px;
     height: 22px;

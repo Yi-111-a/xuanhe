@@ -54,11 +54,15 @@ add("ui.seal", "ui", LAND,
 add("ui.crisis_beacon", "ui", LAND,
     "SUBJECT: UI element: a Northern Song frontier beacon tower (a rammed-earth signal platform with a brazier on top) on a small rocky mound, with a tall plume rising from the brazier; the plume is painted as four stacked bands from bottom to top: pale celadon mist, pale ochre smoke, grey smoke, and dark ink-black smoke with a vermilion glow at the top, like a four-stage threat gauge. Clean game-icon rendering, centred." + WHITE)
 
-RIB = (" UI element: a long horizontal silk banner ribbon with softly fluttering ends, spanning nearly the full width of the image, gentle wave, fine woven pattern; at the left end a round empty medallion (blank, for a glyph to be added later); flat frontal view." + WHITE)
-add("ui.ribbon_cai", "ui", LAND, "SUBJECT: Faction ribbon for the Cai faction (the old chief minister's clique): deep purple silk with a pale silver cloud-scroll pattern." + RIB)
-add("ui.ribbon_xingchen", "ui", LAND, "SUBJECT: Faction ribbon for the imperial favourites: rich crimson-vermilion silk with a peony pattern in pale gold-ochre." + RIB)
-add("ui.ribbon_neishi", "ui", LAND, "SUBJECT: Faction ribbon for the palace eunuchs: dark ink-grey silk with a faint palace-lattice pattern in silver-grey." + RIB)
-add("ui.ribbon_qingyi", "ui", LAND, "SUBJECT: Faction ribbon for the upright remonstrating officials: celadon green silk with a bamboo-leaf pattern in pale jade." + RIB)
+RIB = ("SUBJECT: UI element: a single vertical hanging silk banner ribbon filling the whole image, straight frontal view, {desc}. "
+       "A thin silver-grey woven border down both long edges, a round empty celadon-jade medallion disc in the upper third (blank, no glyph), "
+       "a restrained woven pattern below it, and a swallow-tail (V-notched) bottom hem with a short silk tassel at the tip; the top has a slim dark "
+       "lacquered wooden hanging bar with celadon jade end caps. Northern Song taste: elegant, muted, not gaudy, no gold leaf. The silk fills the frame "
+       "edge to edge on a plain flat pure white background in the narrow gaps only.")
+add("ui.ribbon_cai", "ribbons", PORT, RIB.format(desc="deep muted purple silk with a pale silver cloud-scroll pattern (the old chief minister's clique)"), outkind="ui")
+add("ui.ribbon_xingchen", "ribbons", PORT, RIB.format(desc="muted crimson-vermilion silk with a pale ochre peony pattern (the imperial favourites)"), outkind="ui")
+add("ui.ribbon_neishi", "ribbons", PORT, RIB.format(desc="dark ink-grey silk with a faint silver palace-lattice pattern (the palace eunuchs)"), outkind="ui")
+add("ui.ribbon_qingyi", "ribbons", PORT, RIB.format(desc="celadon green silk with a pale jade bamboo-leaf pattern (the upright remonstrating officials)"), outkind="ui")
 
 SEASON = {
     "spring": "early spring: a sprig of plum blossom and a few fallen petals lie at one corner, cool pale morning light",

@@ -1,4 +1,4 @@
-declare module 'virtual:tianbao-meta' {
+declare module 'virtual:xuanhe-meta' {
   const meta: {
     names: Record<string, string>;
     kinds: Record<string, string>;

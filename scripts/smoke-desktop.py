@@ -1,19 +1,19 @@
-"""Smoke test for the built 天宝 desktop app (Tauri shell + PyInstaller sidecar).
+"""Smoke test for the built 宣和 desktop app (Tauri shell + PyInstaller sidecar).
 
 Default flow (no args):
   1. silently install the newest NSIS installer into a throw-away dir (per-user, no admin),
   2. launch the installed exe with WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9229,
   3. attach Playwright over CDP; assert splash text, title screen, window title, API base, /api/health,
      CORS, no console errors, no mojibake (DOM + server.log), session file lands in LLM_SIM_HOME/sessions,
-  4. close the window gracefully (WM_CLOSE) and assert no tianbao-server process remains,
+  4. close the window gracefully (WM_CLOSE) and assert no xuanhe-server process remains,
   5. launch again, kill the shell hard (taskkill /F) and assert the sidecar dies too (job object),
   6. uninstall.
 
 Usage:
   python scripts/smoke-desktop.py [--installer PATH | --exe PATH] [--keep] [--no-crash-test] [--real-home]
 
---exe skips the installer; NOTE a bare target/release/tianbao.exe has no bundled resources, so use the
-installed exe (or the installer flow). --real-home uses the real %APPDATA%/tianbao instead of a temp home.
+--exe skips the installer; NOTE a bare target/release/xuanhe.exe has no bundled resources, so use the
+installed exe (or the installer flow). --real-home uses the real %APPDATA%/xuanhe instead of a temp home.
 """
 from __future__ import annotations
 
@@ -113,9 +113,9 @@ def install(installer: Path, target: Path) -> Path:
     t0 = time.time()
     # NSIS: /S silent, /D= must be the last argument and unquoted
     subprocess.run([str(installer), "/S", f"/D={target}"], check=True, timeout=300)
-    exe = target / "tianbao.exe"
+    exe = target / "xuanhe.exe"
     check("installer ran silently", exe.is_file(), f"{time.time() - t0:.1f}s -> {exe}")
-    server = target / "server" / "tianbao-server.exe"
+    server = target / "server" / "xuanhe-server.exe"
     check("sidecar installed", server.is_file(), str(server))
     check("scenarios dir installed", (target / "scenarios").is_dir())
     return exe
@@ -148,7 +148,7 @@ def wait_cdp(proc: subprocess.Popen, seconds: float = 40) -> bool:
 def run_main_checks(exe: Path, home: Path, scen_env: dict[str, str]) -> None:
     from playwright.sync_api import sync_playwright
 
-    for img in ("tianbao-server.exe",):
+    for img in ("xuanhe-server.exe",):
         stale = tasklist(img)
         if stale:
             sys.exit(f"stale {img} processes already running: {stale}")
@@ -187,15 +187,15 @@ def run_main_checks(exe: Path, home: Path, scen_env: dict[str, str]) -> None:
             check("main window shown (splash closed)", splash_gone_at is not None, f"cold start {splash_gone_at:.2f}s" if splash_gone_at else "timeout")
             print(f"   COLD_START_SECONDS={splash_gone_at}")
             if splash_h1 is not None:
-                check("splash text", splash_h1.strip() == "天宝" and "正在启动" in (splash_text or ""), f"{splash_h1!r} / {splash_text!r}")
+                check("splash text", splash_h1.strip() == "宣和" and "正在启动" in (splash_text or ""), f"{splash_h1!r} / {splash_text!r}")
             else:
                 print("   (splash was gone before CDP could attach; text not sampled)")
             if page is None:
                 return
 
             # ---- window title / size via Win32
-            wins = [w for w in windows_of(proc.pid) if w[1] == "天宝" and w[2]]
-            check("native window title is 天宝", bool(wins), str([(w[1], w[3]) for w in windows_of(proc.pid) if w[1]]))
+            wins = [w for w in windows_of(proc.pid) if w[1] == "宣和" and w[2]]
+            check("native window title is 宣和", bool(wins), str([(w[1], w[3]) for w in windows_of(proc.pid) if w[1]]))
 
             # ---- console errors: collect across a reload
             errors: list[str] = []
@@ -213,13 +213,13 @@ def run_main_checks(exe: Path, home: Path, scen_env: dict[str, str]) -> None:
             check("no console errors", not errors, "; ".join(errors)[:400])
             body = page.inner_text("body")
             check("no mojibake in DOM", not MOJIBAKE.search(body))
-            check("DOM contains 天宝", "天宝" in body)
+            check("DOM contains 宣和", "宣和" in body)
 
             # ---- API base + health from inside the page (also proves CORS + CSP connect-src)
             base = page.evaluate("window.__TAURI_INTERNALS__.invoke('get_api_base')")
             check("get_api_base", bool(re.fullmatch(r"http://127\.0\.0\.1:\d+", base or "")), str(base))
-            injected = page.evaluate("window.__TIANBAO_API_BASE__")
-            check("window.__TIANBAO_API_BASE__ injected", injected == base, str(injected))
+            injected = page.evaluate("window.__XUANHE_API_BASE__")
+            check("window.__XUANHE_API_BASE__ injected", injected == base, str(injected))
             res = page.evaluate(
                 """async (base) => {
                     const out = {};
@@ -247,7 +247,7 @@ def run_main_checks(exe: Path, home: Path, scen_env: dict[str, str]) -> None:
                     [base, ids[0]],
                 )
                 check("create session via API", created[0] in (200, 201), f"{ids[0]} -> {created}")
-                sess_dir = (home or Path(os.environ["APPDATA"]) / "tianbao") / "sessions"
+                sess_dir = (home or Path(os.environ["APPDATA"]) / "xuanhe") / "sessions"
                 time.sleep(0.3)
                 check("session file in <home>/sessions", any(sess_dir.glob(f"{created[1]}*")), str(sess_dir))
             else:
@@ -261,11 +261,11 @@ def run_main_checks(exe: Path, home: Path, scen_env: dict[str, str]) -> None:
                 page.get_by_test_id("newgame.start").click()
                 t_ng = time.time()
                 page.get_by_test_id("desk.root").wait_for(state="visible", timeout=60000)
-                ui_session = page.evaluate("JSON.parse(localStorage.getItem('tianbao.session') ?? 'null')")
+                ui_session = page.evaluate("JSON.parse(localStorage.getItem('xuanhe.session') ?? 'null')")
                 check("UI new game: title -> newgame -> desk", bool(ui_session), f"{time.time() - t_ng:.1f}s, session {ui_session}")
             except Exception as e:  # noqa: BLE001
                 check("UI new game: title -> newgame -> desk", False, str(e)[:300])
-            sess_dir = (home or Path(os.environ["APPDATA"]) / "tianbao") / "sessions"
+            sess_dir = (home or Path(os.environ["APPDATA"]) / "xuanhe") / "sessions"
             if ui_session:
                 time.sleep(0.3)
                 check("UI save file in <home>/sessions", any(sess_dir.glob(f"{ui_session}*")), str(sess_dir))
@@ -273,16 +273,16 @@ def run_main_checks(exe: Path, home: Path, scen_env: dict[str, str]) -> None:
 
             # ---- /api/integration: exact MCP commands for this install
             integ = page.evaluate("b => fetch(b + '/api/integration').then(async r => [r.status, await r.json()])", base)
-            server_exe = (exe.parent / "server" / "tianbao-server.exe").resolve()
+            server_exe = (exe.parent / "server" / "xuanhe-server.exe").resolve()
             info = integ[1] if integ[0] == 200 else {}
             srv = info.get("server", {})
             same_exe = bool(srv.get("command")) and os.path.normcase(str(Path(srv["command"]).resolve())) == os.path.normcase(str(server_exe))
-            check("GET /api/integration", integ[0] == 200 and info.get("mode") == "installed" and info.get("name") == "tianbao" and same_exe,
+            check("GET /api/integration", integ[0] == 200 and info.get("mode") == "installed" and info.get("name") == "xuanhe" and same_exe,
                   f"{integ[0]} mode={info.get('mode')} command={srv.get('command')}")
             add = info.get("codex", {}).get("add", "")
-            check("integration: codex/claude commands", add.startswith("codex mcp add tianbao ") and add.endswith(f' -- "{srv.get("command")}" mcp')
+            check("integration: codex/claude commands", add.startswith("codex mcp add xuanhe ") and add.endswith(f' -- "{srv.get("command")}" mcp')
                   and (not home or f"LLM_SIM_HOME={home}" in add)
-                  and info.get("claude", {}).get("add_user", "").startswith("claude mcp add tianbao --scope user")
+                  and info.get("claude", {}).get("add_user", "").startswith("claude mcp add xuanhe --scope user")
                   and 'default_tools_approval_mode = "approve"' in info.get("codex", {}).get("toml", ""), info.get("codex", {}).get("add", "")[:200])
             if home:
                 check("integration: home is the app's LLM_SIM_HOME", srv.get("env", {}).get("LLM_SIM_HOME") == str(home), str(srv.get("env")))
@@ -308,7 +308,7 @@ def run_main_checks(exe: Path, home: Path, scen_env: dict[str, str]) -> None:
                 print("   MCP_RESULT=" + json.dumps(mcp_res, ensure_ascii=False))
                 for step, ok in mcp_res.get("steps", {}).items():
                     check(f"MCP {step}", ok)
-                check("MCP: new_game -> briefing -> end_turn via tianbao-server.exe mcp", mcp_res.get("ok", False),
+                check("MCP: new_game -> briefing -> end_turn via xuanhe-server.exe mcp", mcp_res.get("ok", False),
                       f"startup {mcp_res.get('startup_s')}s, total {mcp_res.get('seconds')}s {mcp_res.get('error', '')}")
                 if mcp_res.get("session_id"):
                     listed = page.evaluate("b => fetch(b + '/api/sessions').then(r => r.json())", base)
@@ -320,11 +320,11 @@ def run_main_checks(exe: Path, home: Path, scen_env: dict[str, str]) -> None:
                     check("shared saves: app sees the MCP game after end_turn", turn == 1, f"turn={turn} {cal}")
 
             # ---- sidecar facts
-            sidecars = tasklist("tianbao-server.exe")
+            sidecars = tasklist("xuanhe-server.exe")
             check("sidecar process running", len(sidecars) >= 1, str(sidecars))
             browser.close()
 
-        log = (home or Path(os.environ["APPDATA"]) / "tianbao") / "logs" / "server.log"
+        log = (home or Path(os.environ["APPDATA"]) / "xuanhe") / "logs" / "server.log"
         check("server.log written", log.is_file(), str(log))
         if log.is_file():
             txt = log.read_text(encoding="utf-8", errors="strict")
@@ -333,7 +333,7 @@ def run_main_checks(exe: Path, home: Path, scen_env: dict[str, str]) -> None:
 
         # ---- graceful close
         for hwnd, title, vis, _ in windows_of(proc.pid):
-            if title == "天宝" and vis:
+            if title == "宣和" and vis:
                 user32.PostMessageW(hwnd, 0x0010, 0, 0)  # WM_CLOSE
         try:
             proc.wait(timeout=15)
@@ -341,11 +341,11 @@ def run_main_checks(exe: Path, home: Path, scen_env: dict[str, str]) -> None:
         except subprocess.TimeoutExpired:
             exited = False
         check("shell exits on window close", exited)
-        check("no tianbao-server left after close", wait_gone("tianbao-server.exe", 8), str(tasklist("tianbao-server.exe")))
+        check("no xuanhe-server left after close", wait_gone("xuanhe-server.exe", 8), str(tasklist("xuanhe-server.exe")))
     finally:
         if proc.poll() is None:
             proc.kill()
-        subprocess.run(["taskkill", "/F", "/IM", "tianbao-server.exe"], capture_output=True)
+        subprocess.run(["taskkill", "/F", "/IM", "xuanhe-server.exe"], capture_output=True)
 
 
 def find_claude() -> str | None:
@@ -357,10 +357,10 @@ def find_claude() -> str | None:
 
 
 def run_plugin_check(target: Path, home: Path | None, tmp: Path) -> None:
-    """The Claude Code plugin's .mcp.json points at ${LOCALAPPDATA}/天宝/server/tianbao-server.exe (default install)."""
+    """The Claude Code plugin's .mcp.json points at ${LOCALAPPDATA}/宣和/server/xuanhe-server.exe (default install)."""
     claude = find_claude()
     plugin = target / "integrations" / "claude-code"
-    if not claude or target.name != "天宝":
+    if not claude or target.name != "宣和":
         print("   (Claude Code CLI not found or non-default install dir name; plugin check skipped)")
         return
     check("plugin bundled in install", (plugin / ".claude-plugin" / "plugin.json").is_file(), str(plugin))
@@ -370,9 +370,9 @@ def run_plugin_check(target: Path, home: Path | None, tmp: Path) -> None:
         env["LLM_SIM_HOME"] = str(home)
     out = subprocess.run([claude, "--plugin-dir", str(plugin), "mcp", "list"], env=env, capture_output=True, timeout=120)
     text = out.stdout.decode("utf-8", errors="replace") + out.stderr.decode("utf-8", errors="replace")
-    line = next((ln for ln in text.splitlines() if "plugin:tianbao" in ln), text.strip()[-200:])
-    check("Claude Code plugin MCP server connects", "plugin:tianbao:tianbao" in text and "Connected" in line, line.strip()[:240])
-    subprocess.run(["taskkill", "/F", "/IM", "tianbao-server.exe"], capture_output=True)
+    line = next((ln for ln in text.splitlines() if "plugin:xuanhe" in ln), text.strip()[-200:])
+    check("Claude Code plugin MCP server connects", "plugin:xuanhe:xuanhe" in text and "Connected" in line, line.strip()[:240])
+    subprocess.run(["taskkill", "/F", "/IM", "xuanhe-server.exe"], capture_output=True)
 
 
 def run_crash_test(exe: Path, home: Path, scen_env: dict[str, str]) -> None:
@@ -381,16 +381,16 @@ def run_crash_test(exe: Path, home: Path, scen_env: dict[str, str]) -> None:
     proc = launch(exe, env)
     try:
         end = time.time() + 40
-        while time.time() < end and not tasklist("tianbao-server.exe"):
+        while time.time() < end and not tasklist("xuanhe-server.exe"):
             time.sleep(0.1)
-        check("crash test: sidecar started", bool(tasklist("tianbao-server.exe")))
+        check("crash test: sidecar started", bool(tasklist("xuanhe-server.exe")))
         subprocess.run(["taskkill", "/F", "/PID", str(proc.pid)], capture_output=True)  # hard kill the shell
-        check("crash test: sidecar dies with shell (job object)", wait_gone("tianbao-server.exe", 10), str(tasklist("tianbao-server.exe")))
+        check("crash test: sidecar dies with shell (job object)", wait_gone("xuanhe-server.exe", 10), str(tasklist("xuanhe-server.exe")))
     finally:
         if proc.poll() is None:
             proc.kill()
-        subprocess.run(["taskkill", "/F", "/IM", "tianbao-server.exe"], capture_output=True)
-        subprocess.run(["taskkill", "/F", "/IM", "tianbao.exe"], capture_output=True)
+        subprocess.run(["taskkill", "/F", "/IM", "xuanhe-server.exe"], capture_output=True)
+        subprocess.run(["taskkill", "/F", "/IM", "xuanhe.exe"], capture_output=True)
 
 
 def main() -> int:
@@ -399,13 +399,13 @@ def main() -> int:
     ap.add_argument("--exe", type=Path)
     ap.add_argument("--keep", action="store_true", help="keep the throw-away install dir")
     ap.add_argument("--no-crash-test", action="store_true")
-    ap.add_argument("--real-home", action="store_true", help="use the real %%APPDATA%%/tianbao")
+    ap.add_argument("--real-home", action="store_true", help="use the real %%APPDATA%%/xuanhe")
     ap.add_argument("--scenarios-dir", type=Path, help="override SIM_SCENARIOS_DIR (use when the bundle has no scenarios yet)")
     args = ap.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")  # type: ignore[attr-defined]
 
-    tmp = Path(tempfile.mkdtemp(prefix="tianbao-smoke-"))
-    target = tmp / "天宝"  # same leaf name as the default %LOCALAPPDATA%\天宝 (plugin check relies on it)
+    tmp = Path(tempfile.mkdtemp(prefix="xuanhe-smoke-"))
+    target = tmp / "宣和"  # same leaf name as the default %LOCALAPPDATA%\宣和 (plugin check relies on it)
     home = None if args.real_home else tmp / "home"
     scen_env: dict[str, str] = {}
     if args.scenarios_dir:

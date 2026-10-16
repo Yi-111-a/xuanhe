@@ -1,10 +1,10 @@
-//! 天宝 desktop shell.
+//! 宣和 desktop shell.
 //!
-//! * picks a free localhost port and spawns the frozen Python engine (`tianbao-server`)
+//! * picks a free localhost port and spawns the frozen Python engine (`xuanhe-server`)
 //! * shows a splash window (inline HTML, no IPC) while polling `/api/health`
 //! * exposes `get_api_base` to the webview (waits until the engine is ready)
 //! * guarantees the sidecar dies with the app: Windows Job Object (KILL_ON_JOB_CLOSE) + explicit kill on exit
-//! * sidecar stdout/stderr -> `<APPDATA>/tianbao/logs/server.log` (UTF-8)
+//! * sidecar stdout/stderr -> `<APPDATA>/xuanhe/logs/server.log` (UTF-8)
 
 use std::{
     fs::{self, OpenOptions},
@@ -129,7 +129,7 @@ fn percent_encode(s: &str) -> String {
 // NOTE: keep '#' and '%' out of this document: it is passed as a data: URL, where '#' starts a fragment
 // and truncates the page.
 const SPLASH_HTML: &str = r#"<!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><title>天宝</title>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>宣和</title>
 <style>
   html,body{margin:0;height:100vh;overflow:hidden;background:rgb(20,16,14);color:rgb(217,200,160);
     font-family:"KaiTi","STKaiti","楷体","Songti SC","SimSun","Microsoft YaHei",serif;user-select:none;cursor:default}
@@ -147,7 +147,7 @@ const SPLASH_HTML: &str = r#"<!doctype html>
   .bar.stop{display:none}
   @keyframes s{from{transform:translateX(-80px)}to{transform:translateX(190px)}}
 </style></head>
-<body><h1>天宝</h1><div class="rule"></div>
+<body><h1>宣和</h1><div class="rule"></div>
 <div id="msg">正在启动…</div><div class="bar" id="bar"><i></i></div>
 <script>
   window.setStatus=function(t,err){var m=document.getElementById('msg');m.textContent=t;m.className=err?'err':'';
@@ -217,10 +217,10 @@ struct Launch {
 
 fn resolve_launch(app: &AppHandle, port: u16) -> Result<Launch, String> {
     let res_dir = strip_verbatim(app.path().resource_dir().map_err(|e| format!("无法定位资源目录：{e}"))?);
-    let exe_name = if cfg!(windows) { "tianbao-server.exe" } else { "tianbao-server" };
+    let exe_name = if cfg!(windows) { "xuanhe-server.exe" } else { "xuanhe-server" };
     let serve_args = vec!["serve".to_string(), "--host".into(), "127.0.0.1".into(), "--port".into(), port.to_string()];
 
-    if let Ok(over) = std::env::var("TIANBAO_SERVER_EXE") {
+    if let Ok(over) = std::env::var("XUANHE_SERVER_EXE") {
         let p = PathBuf::from(over);
         return Ok(Launch {
             scenarios: std::env::var("SIM_SCENARIOS_DIR").map(PathBuf::from).unwrap_or_else(|_| res_dir.join("scenarios")),
@@ -292,7 +292,7 @@ fn spawn_sidecar(app: &AppHandle, port: u16, home: &Path, log_path: &Path) -> Re
         .map_err(|e| format!("无法打开日志 {}：{e}", log_path.display()))?;
     let _ = writeln!(
         log,
-        "\n=== tianbao-shell start ts={} port={} program={} ===",
+        "\n=== xuanhe-shell start ts={} port={} program={} ===",
         unix_ts(),
         port,
         launch.program.display()
@@ -383,9 +383,9 @@ fn run_startup(app: AppHandle, port: u16) {
     match outcome {
         Ok(()) => {
             let _ = state.tx.send(Status::Ready(format!("http://127.0.0.1:{port}")));
-            if let Ok(line) = std::env::var("TIANBAO_LOG_STARTUP") {
+            if let Ok(line) = std::env::var("XUANHE_LOG_STARTUP") {
                 let _ = line;
-                eprintln!("[tianbao] engine ready in {} ms", started.elapsed().as_millis());
+                eprintln!("[xuanhe] engine ready in {} ms", started.elapsed().as_millis());
             }
             if let Some(main) = app.get_webview_window("main") {
                 fit_to_monitor(&main);
@@ -412,7 +412,7 @@ pub fn run() {
         .setup(|app| {
             let handle = app.handle().clone();
             let data_dir = handle.path().data_dir().map_err(|e| format!("无法定位 APPDATA：{e}"))?;
-            let home = std::env::var("LLM_SIM_HOME").map(PathBuf::from).unwrap_or_else(|_| data_dir.join("tianbao"));
+            let home = std::env::var("LLM_SIM_HOME").map(PathBuf::from).unwrap_or_else(|_| data_dir.join("xuanhe"));
             let log_path = home.join("logs").join("server.log");
             let (tx, rx) = watch::channel(Status::Starting);
             let state = Arc::new(AppState {
@@ -426,7 +426,7 @@ pub fn run() {
 
             // splash first, so the user sees something immediately
             let splash = WebviewWindowBuilder::new(app, "splash", WebviewUrl::External(splash_url()))
-                .title("天宝")
+                .title("宣和")
                 .inner_size(520.0, 320.0)
                 .resizable(false)
                 .decorations(false)
@@ -450,13 +450,13 @@ pub fn run() {
 
             // main window: hidden until the engine is ready; loads the frontend in parallel
             WebviewWindowBuilder::new(app, "main", WebviewUrl::default())
-                .title("天宝")
+                .title("宣和")
                 .inner_size(1600.0, 900.0)
                 .min_inner_size(1280.0, 720.0)
                 .resizable(true)
                 .center()
                 .visible(false)
-                .initialization_script(format!("window.__TIANBAO_API_BASE__ = {};", js_string(&api_base)))
+                .initialization_script(format!("window.__XUANHE_API_BASE__ = {};", js_string(&api_base)))
                 .build()?;
 
             match spawn_sidecar(&handle, port, &home, &log_path) {

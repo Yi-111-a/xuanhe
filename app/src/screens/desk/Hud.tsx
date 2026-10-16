@@ -1,5 +1,5 @@
 // Desk HUD: lacquer resource bar, calendar slip + turn dots + objectives, faction ribbons,
-// the 渔阳鼙鼓 crisis drum, ink medallion column, memorial book, edict scroll, layer switcher.
+// the 胡马南牧 crisis beacon, ink medallion column, memorial book, edict scroll, layer switcher.
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import type { CrisisTerm, CrisisView, PublicState, ViewResponse } from '../../api/types';
@@ -9,13 +9,18 @@ import type { MapLayer } from '../../store/game';
 import { cls, deltaClass, fmtDelta, fmtRange, fmtValueOrRange, resourceValueText } from '../../lib/util';
 
 // ---------------------------------------------------------------- resource bar
-const BAR_RESOURCES = ['treasury', 'grain', 'authority', 'morale', 'corruption', 'frontier_pressure', 'fanzhen_power', 'court_strife'];
+const BAR_RESOURCES = ['treasury', 'grain', 'authority', 'morale', 'ningxing', 'dongnan', 'wubei', 'liao_zuo', 'corruption'];
 
 const DRIFT_NOTES: Record<string, string> = {
-  authority: '倦政：每季自减 0.3；朝堂倾轧逾六十则更甚。',
-  morale: '吏治积弊逾四十五、边患逾六十，民心逐季流失。',
-  an_ambition: '外重内轻、朝堂倾轧推高之；君威可抑之。',
-  rebellion_risk: '由禄山异志、外重内轻、朝堂倾轧、君威四项合成。',
+  authority: '倦政：每季自减 0.25；佞幸用事逾六十则更甚。',
+  morale: '吏治积弊逾五十五、东南民怨逾七十，民心逐季流失；太平无事则稍复。',
+  corruption: '佞幸用事逾六十，吏治逐季更坏；稽迟之诏与风闻之谬皆由此。',
+  ningxing: '蔡、王、童、梁、朱、高诸人用事之势。罢黜之、起用正人则降；它推高金人轻宋与胡马南牧。',
+  dongnan: '花石纲、应奉、免夫钱之苦逐季累积；逾六十六，方腊之变将起。',
+  wubei: '禁军阙额、河北边防、器甲。不修则逐季废弛；武备愈高，金人愈不敢轻宋。',
+  liao_zuo: '辽的残余国力，宋之北方屏障。辽祚尚在，金人西顾，南侵之势折减；辽亡则宋与金直接为邻。',
+  jin_contempt: '金人对宋的轻视：伐燕不克、赎燕、纳叛而又杀之、失信、武备废弛都会推高它。只知风闻区间。',
+  nanmu: '由金势日张、金人轻宋、武备、佞幸误国、君威、朝野戒备六项合成。',
 };
 
 export function ResourceBar({ view, deltas }: { view: ViewResponse; deltas: Record<string, number> }) {
@@ -137,10 +142,12 @@ function ResourceBreakdown({ id, view, delta, pinned, onClose }: { id: string; v
 }
 
 // ---------------------------------------------------------------- calendar, turn dots, objectives
-const TOTAL_TURNS = 20;
+const TOTAL_TURNS = 24;
+/** 宣和七年冬：史载金兵南下、徽宗内禅之季（常规时限的最后一季） */
+const FATE_TURN = 23;
 export function CalendarSlip({ view }: { view: ViewResponse }) {
   const turn = view.state.turn;
-  const year = 751 + Math.floor(turn / 4);
+  const year = 1120 + Math.floor(turn / 4);
   return (
     <div className="calendar-slip" data-testid="desk.calendar" data-hud="calendar">
       <div className="calendar-paper">
@@ -151,8 +158,8 @@ export function CalendarSlip({ view }: { view: ViewResponse }) {
         {Array.from({ length: Math.max(TOTAL_TURNS, turn + 1) }, (_, i) => (
           <span
             key={i}
-            className={cls('turn-dot', i < turn && 'is-past', i === turn && 'is-now', i === 19 && 'is-fate', i % 4 === 0 && 'is-year')}
-            title={i === 19 ? '天宝十四载冬：史载渔阳起兵之季' : undefined}
+            className={cls('turn-dot', i < turn && 'is-past', i === turn && 'is-now', i === FATE_TURN && 'is-fate', i % 4 === 0 && 'is-year')}
+            title={i === FATE_TURN ? '宣和七年冬：史载金兵南下、徽宗内禅之季' : i >= TOTAL_TURNS ? '金兵南下之后的加时（宣和八年）' : undefined}
           />
         ))}
       </div>
@@ -210,10 +217,10 @@ const alive = (s: PublicState, id: string) => (s.characters[id]?.status ?? 'aliv
 const nOffices = (s: PublicState, id: string) => s.characters[id]?.offices?.length ?? (s.characters[id]?.office ? 1 : 0);
 
 const RIBBONS: RibbonDef[] = [
-  { id: 'xiang', glyph: '李', name: '相党', leader: 'li_linfu', color: 'zise', note: '右相李林甫执政近二十年，百官畏之。', influence: (s) => (alive(s, 'li_linfu') ? 38 + nOffices(s, 'li_linfu') * 12 + amt(s, 'court_strife') * 0.3 : 4) },
-  { id: 'yang', glyph: '杨', name: '杨氏外戚', leader: 'yang_guozhong', color: 'zhusha', note: '贵妃之宠，国忠之权，日盛一日。', influence: (s) => 30 + nOffices(s, 'yang_guozhong') * 14 + amt(s, 'corruption') * 0.35 },
-  { id: 'fanyang', glyph: '安', name: '范阳系', leader: 'an_lushan', color: 'shilv', note: '三镇之兵，北边之半。', influence: (s) => amt(s, 'fanzhen_power') * 0.9 + nOffices(s, 'an_lushan') * 6 },
-  { id: 'neiting', glyph: '高', name: '内廷', leader: 'gao_lishi', color: 'shiqing', note: '高力士侍奉陛下四十年，章奏多先经其手。', influence: (s) => amt(s, 'authority') * 0.8 },
+  { id: 'cai', glyph: '蔡', name: '蔡党', leader: 'cai_jing', color: 'zise', note: '公相四度入相，门生故吏遍天下。', influence: (s) => (alive(s, 'cai_jing') ? 26 + nOffices(s, 'cai_jing') * 18 + amt(s, 'ningxing') * 0.3 : 6 + amt(s, 'ningxing') * 0.15) },
+  { id: 'xingchen', glyph: '王', name: '幸臣', leader: 'wang_fu', color: 'zhusha', note: '王黼骤贵，应奉之求、取燕之议皆出其门。', influence: (s) => (alive(s, 'wang_fu') ? 18 + nOffices(s, 'wang_fu') * 16 + amt(s, 'ningxing') * 0.45 : 6 + amt(s, 'ningxing') * 0.2) },
+  { id: 'neishi', glyph: '童', name: '内侍', leader: 'tong_guan', color: 'shiqing', note: '童贯掌兵柄，梁师成掌御笔，号「媪相」「隐相」。', influence: (s) => 14 + nOffices(s, 'tong_guan') * 14 + nOffices(s, 'liang_shicheng') * 12 + amt(s, 'ningxing') * 0.25 },
+  { id: 'qingyi', glyph: '李', name: '清议', leader: 'li_gang', color: 'shilv', note: '李纲、宗泽、张叔夜与太学诸生，主修武备、远小人。', influence: (s) => 10 + nOffices(s, 'li_gang') * 16 + (100 - amt(s, 'ningxing')) * 0.45 + amt(s, 'authority') * 0.1 },
 ];
 
 export function FactionRibbons({ view, onSummon }: { view: ViewResponse; onSummon: (characterId: string) => void }) {
@@ -263,7 +270,7 @@ export function FactionRibbons({ view, onSummon }: { view: ViewResponse; onSummo
 export function bandColor(band: string, bands?: CrisisView['bands']): string {
   const names = (bands ?? []).map((b) => b.name);
   const idx = names.indexOf(band);
-  const i = idx >= 0 ? idx : ['承平', '风闻', '山雨欲来', '鼙鼓动地'].indexOf(band);
+  const i = idx >= 0 ? idx : ['承平', '边声', '山雨', '铁骑'].indexOf(band);
   return ['var(--crisis-calm)', 'var(--crisis-rumor)', 'var(--crisis-storm)', 'var(--crisis-fire)'][Math.max(0, i)] ?? 'var(--crisis-calm)';
 }
 
@@ -275,7 +282,7 @@ export function CrisisDrum({ view }: { view: ViewResponse }) {
   const label = Array.isArray(c.value_or_estimate)
     ? fmtRange(Math.round(c.value_or_estimate[0]), Math.round(c.value_or_estimate[1]), false, false)
     : `${Math.round(value)}`;
-  const bands = c.bands?.length ? c.bands : [{ max: 39, name: '承平' }, { max: 59, name: '风闻' }, { max: 79, name: '山雨欲来' }, { max: 100, name: '鼙鼓动地' }];
+  const bands = c.bands?.length ? c.bands : [{ max: 39, name: '承平' }, { max: 54, name: '边声' }, { max: 69, name: '山雨' }, { max: 100, name: '铁骑' }];
   const color = bandColor(c.band, bands);
   const R = 48;
   const arc = (from: number, to: number) => {
@@ -288,35 +295,42 @@ export function CrisisDrum({ view }: { view: ViewResponse }) {
   const severity = bands.findIndex((b) => b.name === c.band);
   const maxTerm = Math.max(1, ...c.terms.map((t) => Math.abs(termMid(t.value))));
   const show = hover || pinned;
-  const an = view.state.resources.an_ambition;
+  const hidden = view.state.resources.jin_contempt;
   return (
     <div className="crisis" data-hud="crisis" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-      <button className={cls('crisis-drum', severity >= 2 && 'is-alarm', severity >= 3 && 'is-fire')} data-testid="desk.crisis" onClick={() => setPinned((p) => !p)} aria-label={`${c.title ?? '渔阳鼙鼓'} ${label} ${c.band}`} style={{ ['--band' as string]: color }}>
+      <button className={cls('crisis-drum', severity >= 2 && 'is-alarm', severity >= 3 && 'is-fire')} data-testid="desk.crisis" onClick={() => setPinned((p) => !p)} aria-label={`${c.title ?? '胡马南牧'} ${label} ${c.band}`} style={{ ['--band' as string]: color }}>
         <svg viewBox="-70 -70 140 140" width="132" height="132" aria-hidden="true">
           <defs>
+            {/* 青瓷盘面：汝窑天青，冰裂淡纹 */}
             <radialGradient id="drumskin" cx="45%" cy="40%" r="65%">
-              <stop offset="0%" stopColor="#f3e3bd" />
-              <stop offset="70%" stopColor="#d9bd86" />
-              <stop offset="100%" stopColor="#a8854c" />
+              <stop offset="0%" stopColor="#eef1e4" />
+              <stop offset="70%" stopColor="#cdd8c6" />
+              <stop offset="100%" stopColor="#97ab9d" />
             </radialGradient>
           </defs>
-          <circle r="66" fill="#3a1f14" stroke="#c9a24b" strokeWidth="2" />
-          <circle r="60" fill="#7a2a1e" />
-          {Array.from({ length: 20 }, (_, i) => (
-            <circle key={i} cx={63 * Math.cos((i / 20) * Math.PI * 2)} cy={63 * Math.sin((i / 20) * Math.PI * 2)} r="2.3" fill="#e4c277" stroke="#5a3b12" strokeWidth="0.6" />
+          <circle r="66" fill="#141b19" stroke="#b7a271" strokeWidth="2" />
+          <circle r="60" fill="#2c4540" />
+          {Array.from({ length: 24 }, (_, i) => (
+            <path
+              key={i}
+              d={`M${57 * Math.cos((i / 24) * Math.PI * 2)} ${57 * Math.sin((i / 24) * Math.PI * 2)} L ${(i % 6 === 0 ? 64 : 61) * Math.cos((i / 24) * Math.PI * 2)} ${(i % 6 === 0 ? 64 : 61) * Math.sin((i / 24) * Math.PI * 2)}`}
+              stroke="#d9cfa6"
+              strokeOpacity={i % 6 === 0 ? 0.9 : 0.5}
+              strokeWidth={i % 6 === 0 ? 1.6 : 0.9}
+            />
           ))}
           <circle r="56" fill="url(#drumskin)" />
           {bands.map((b, i) => (
             <path key={b.name} d={arc(i === 0 ? 0 : bands[i - 1].max + 1, b.max)} stroke={bandColor(b.name, bands)} strokeWidth="8" fill="none" opacity={i === severity ? 1 : 0.45} strokeLinecap="butt" />
           ))}
           <g transform={`rotate(${(needle * 180) / Math.PI})`}>
-            <path d="M37 0 L 27 -6 L 27 6 Z" fill="#1e1b18" stroke="#f6e7c1" strokeWidth="1" />
-            <circle cx="49" cy="0" r="6.5" fill={color} stroke="#1e1b18" strokeWidth="1.6" />
+            <path d="M37 0 L 27 -6 L 27 6 Z" fill="#1b1d1b" stroke="#eef1e4" strokeWidth="1" />
+            <circle cx="49" cy="0" r="6.5" fill={color} stroke="#1b1d1b" strokeWidth="1.6" />
           </g>
         </svg>
         <span className={cls('crisis-value t-num', Array.isArray(c.value_or_estimate) && 'crisis-value--range')}>{label}</span>
         <span className="crisis-band t-title">{c.band}</span>
-        <span className="crisis-title t-title">{c.title ?? '渔阳鼙鼓'}</span>
+        <span className="crisis-title t-title">{c.title ?? '胡马南牧'}</span>
       </button>
       <AnimatePresence>
         {show && (
@@ -327,16 +341,16 @@ export function CrisisDrum({ view }: { view: ViewResponse }) {
               </button>
             )}
             <h4>
-              {c.title ?? '渔阳鼙鼓'}·{c.band}
+              {c.title ?? '胡马南牧'}·{c.band}
             </h4>
-            <p className="res-pop-note">危机计逐季由下列四项推动。正值推高，负值压低。</p>
+            <p className="res-pop-note">金人南侵之势逐季由下列各项推动，正值推高，负值压低。至「铁骑」（七十）以上而辽已亡，金兵随时可能南下。</p>
             {c.terms.map((t) => (
               <CrisisTermRow key={t.id ?? t.label} term={t} max={maxTerm} />
             ))}
-            {an?.hidden && an.estimate && (
+            {hidden?.hidden && hidden.estimate && (
               <div className="res-pop-row">
-                <span>禄山异志（风闻）</span>
-                <b className="t-num">{fmtRange(Math.round(an.estimate[0]), Math.round(an.estimate[1]))}</b>
+                <span>金人轻宋（风闻）</span>
+                <b className="t-num">{fmtRange(Math.round(hidden.estimate[0]), Math.round(hidden.estimate[1]))}</b>
               </div>
             )}
             <div className="crisis-bands">
@@ -438,7 +452,7 @@ export function MemorialBook({ count, onOpen }: { count: number; onOpen: () => v
         <span className="book-stitch" />
         <span className="book-slip t-title">奏疏</span>
         <span className="book-flower">
-          <Baoxiang size={54} color="rgba(201,162,75,.55)" inner="rgba(201,162,75,.25)" />
+          <Baoxiang size={54} color="rgba(183,162,113,.55)" inner="rgba(183,162,113,.25)" />
         </span>
       </span>
       {count > 0 && <span className="object-badge t-num">{count}</span>}
@@ -463,19 +477,20 @@ export function EdictScroll({ count, onOpen }: { count: number; onOpen: () => vo
 
 // ---------------------------------------------------------------- layer switcher
 export const LAYERS: { id: MapLayer; name: string }[] = [
-  { id: 'jurisdiction', name: '节度辖区' },
-  { id: 'morale', name: '民心' },
+  { id: 'jurisdiction', name: '疆域' },
+  { id: 'morale', name: '治安' },
   { id: 'troops', name: '兵力' },
   { id: 'canal', name: '漕运' },
-  { id: 'beacon', name: '危机烽燧' },
+  { id: 'beacon', name: '北边烽燧' },
 ];
 
 const LEGENDS: Record<MapLayer, { c: string; t: string }[]> = {
   jurisdiction: [
-    { c: 'var(--shilv)', t: '安禄山所领' },
-    { c: 'var(--zheshi)', t: '他镇节度' },
-    { c: 'var(--nijin)', t: '两京畿辅' },
-    { c: 'var(--zhusha)', t: '叛军所据' },
+    { c: 'var(--nijin)', t: '东京、西京' },
+    { c: 'var(--shilv)', t: '新复之地' },
+    { c: 'var(--zheshi)', t: '辽' },
+    { c: 'var(--mo-soft)', t: '金' },
+    { c: 'var(--zhusha)', t: '陷敌之地' },
   ],
   morale: [
     { c: 'var(--shilv)', t: '安堵' },
@@ -484,10 +499,10 @@ const LEGENDS: Record<MapLayer, { c: string; t: string }[]> = {
   ],
   troops: [{ c: 'var(--shiqing)', t: '色愈深，兵愈众' }],
   canal: [
-    { c: 'var(--nijin)', t: '漕运所经' },
+    { c: 'var(--nijin)', t: '东南漕运（江南运河、汴河）' },
     { c: 'var(--zhusha)', t: '漕路受阻' },
   ],
-  beacon: [{ c: 'var(--zhusha)', t: '烽燧：鼙鼓愈急，火愈盛' }],
+  beacon: [{ c: 'var(--zhusha)', t: '烽燧：胡马南牧愈急，火愈盛' }],
 };
 
 export function LayerSwitcher({ layer, onChange }: { layer: MapLayer; onChange: (l: MapLayer) => void }) {

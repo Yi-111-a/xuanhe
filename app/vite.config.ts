@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import yaml from 'js-yaml';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const scenarioDir = path.resolve(here, '../scenarios/tianbao_751');
+const scenarioDir = path.resolve(here, '../scenarios/xuanhe_1120');
 const assetsDir = path.join(scenarioDir, 'assets');
 const IMAGE_EXT = new Set(['.webp', '.png', '.jpg', '.jpeg', '.svg']);
 const MIME: Record<string, string> = {
@@ -30,7 +30,7 @@ function walk(dir: string, out: string[] = []): string[] {
 
 /**
  * Dev-only: lets mock mode load the art agent's generated images straight from
- * scenarios/tianbao_751/assets without the engine. Builds an id → url index from
+ * scenarios/xuanhe_1120/assets without the engine. Builds an id → url index from
  * assets.yaml (if present) plus the file layout (portrait/li_linfu.default.webp →
  * portrait.li_linfu.default). Never answers 404 for ids — the app asks the index first.
  */
@@ -67,7 +67,7 @@ function scenarioAssets(): Plugin {
     return index;
   };
   return {
-    name: 'tianbao-scenario-assets',
+    name: 'xuanhe-scenario-assets',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         const url = decodeURIComponent((req.url ?? '').split('?')[0]);
@@ -130,7 +130,7 @@ function scenarioAssets(): Plugin {
 }
 
 /**
- * `virtual:tianbao-meta`: display names for every entity id in the scenario and a small event
+ * `virtual:xuanhe-meta`: display names for every entity id in the scenario and a small event
  * index (kind, title, choices, illustration). The UI uses it to (a) never show a raw id — engine
  * text that still carries one is rewritten with the display name — and (b) decide which events
  * are player-facing and may be featured on the result scroll. Built from the YAML at dev/build
@@ -203,9 +203,9 @@ export function buildScenarioMeta(dir = scenarioDir) {
 }
 
 function scenarioMeta(): Plugin {
-  const ID = 'virtual:tianbao-meta';
+  const ID = 'virtual:xuanhe-meta';
   return {
-    name: 'tianbao-scenario-meta',
+    name: 'xuanhe-scenario-meta',
     resolveId: (id) => (id === ID ? ` ${ID}` : null),
     load: (id) => (id === ` ${ID}` ? `export default ${JSON.stringify(buildScenarioMeta())};` : null),
   };

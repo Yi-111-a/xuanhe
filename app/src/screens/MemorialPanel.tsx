@@ -29,13 +29,13 @@ export function MemorialPanel() {
       <div className="hanging-scroll">
         <Roller orientation="horizontal" thickness={28} />
         <div className="hanging-body">
-          <CuancaoColumn width={24} color="rgba(201,162,75,.9)" bg="#2b4b5e" className="hanging-border" />
+          <CuancaoColumn width={24} color="rgba(183,162,113,.9)" bg="#2b4b5e" className="hanging-border" />
           <Paper variant="silk" seed={4} amp={2} sides="lr" className="memorial-paper">
             <header className="memorial-head">
               <Baoxiang size={34} />
-              <CuancaoBand height={16} color="rgba(138,109,44,.8)" className="memorial-band" />
+              <CuancaoBand height={16} color="rgba(125,110,72,.8)" className="memorial-band" />
               <h2 className="panel-title memorial-title">奏疏</h2>
-              <CuancaoBand height={16} color="rgba(138,109,44,.8)" className="memorial-band" />
+              <CuancaoBand height={16} color="rgba(125,110,72,.8)" className="memorial-band" />
               <Baoxiang size={34} />
             </header>
             <div className="memorial-meta t-title">
@@ -155,7 +155,7 @@ export function MemorialPanel() {
               </button>
             </footer>
           </Paper>
-          <CuancaoColumn width={24} color="rgba(201,162,75,.9)" bg="#2b4b5e" className="hanging-border" />
+          <CuancaoColumn width={24} color="rgba(183,162,113,.9)" bg="#2b4b5e" className="hanging-border" />
         </div>
         <Roller orientation="horizontal" thickness={28} />
       </div>

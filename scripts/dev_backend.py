@@ -21,7 +21,7 @@ def main() -> None:
     os.environ.setdefault("SIM_SCENARIOS_DIR", str(ROOT / "scenarios"))
     os.environ["LLM_SIM_HOME"] = args.home
     os.environ.setdefault("PYTHONUTF8", "1")
-    os.environ.setdefault("SIM_MCP_NAME", "tianbao")  # GET /api/integration names the MCP server like the app
+    os.environ.setdefault("SIM_MCP_NAME", "xuanhe")  # GET /api/integration names the MCP server like the app
     os.chdir(ROOT / "engine" / "backend")
     sys.path.insert(0, str(ROOT / "engine" / "backend"))
     import uvicorn

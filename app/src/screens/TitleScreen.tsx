@@ -88,11 +88,11 @@ function TitleArt() {
         {Array.from({ length: 12 }, (_, i) => (
           <g key={i}>
             <rect x={520 + i * 125} y={890} width={18} height={140} fill="#6a1e14" />
-            <circle cx={529 + i * 125} cy={884} r={12} fill="#c9a24b" />
+            <circle cx={529 + i * 125} cy={884} r={12} fill="#b7a271" />
           </g>
         ))}
         {Array.from({ length: 11 }, (_, i) => (
-          <rect key={`p${i}`} x={548 + i * 125} y={930} width={88} height={52} fill="none" stroke="#c9a24b" strokeOpacity="0.55" strokeWidth="2" />
+          <rect key={`p${i}`} x={548 + i * 125} y={930} width={88} height={52} fill="none" stroke="#b7a271" strokeOpacity="0.55" strokeWidth="2" />
         ))}
       </g>
       {/* peonies */}
@@ -171,15 +171,15 @@ export function TitleScreen() {
       <motion.div className="title-left" initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.1, ease: [0.22, 0.8, 0.24, 1] }}>
         <div className="title-splash" aria-hidden="true" />
         <h1 className="title-logo t-title">
-          <span>天</span>
-          <span>宝</span>
+          <span>宣</span>
+          <span>和</span>
         </h1>
         <div className="title-seal t-title" aria-hidden="true">
-          盛
+          北
           <br />
-          唐
+          宋
         </div>
-        <p className="title-sub t-title">天宝十载 · 公元七五一年</p>
+        <p className="title-sub t-title">宣和二年 · 公元一一二〇年</p>
         <Xiangyun width={150} className="title-cloud" />
         <nav className="title-menu">
           {items.map((it, i) => (
@@ -199,7 +199,7 @@ export function TitleScreen() {
         </nav>
       </motion.div>
       <motion.p className="title-hook t-title" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 1 }}>
-        盛世只剩最后四年。你能阻止安史之乱吗？
+        繁华只剩最后六年。你能避免靖康之耻吗？
       </motion.p>
       <div className="title-status" data-testid="title.health">
         <i className={`status-dot status-dot--${health}`} />

@@ -1,13 +1,13 @@
 [package]
-name = "tianbao"
+name = "xuanhe"
 version = "0.1.1"
-description = "天宝 desktop shell"
+description = "宣和 desktop shell"
 authors = ["yi111a"]
 edition = "2021"
 rust-version = "1.77"
 
 [lib]
-name = "tianbao_lib"
+name = "xuanhe_lib"
 crate-type = ["rlib"]
 
 [build-dependencies]

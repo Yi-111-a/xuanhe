@@ -22,7 +22,7 @@ function subset(): { body: Set<string>; title: Set<string> } {
 /** Every entity id of the scenario (factions, regions, characters, armies, offices, resources,
  *  events, endings, blocs): none of them may ever be shown to the player as text. */
 function scenarioIds(): Set<string> {
-  const dir = path.join(ROOT, 'scenarios', 'tianbao_751');
+  const dir = path.join(ROOT, 'scenarios', 'xuanhe_1120');
   const load = (f: string) => yaml.load(fs.readFileSync(path.join(dir, f), 'utf-8')) as unknown;
   const ids = new Set<string>();
   const add = (rows: unknown) => {
@@ -84,7 +84,7 @@ test.describe('garble / font coverage (G4)', () => {
     const files = [
       ...walk(path.join(ROOT, 'app', 'src'), ['.ts', '.tsx', '.css', '.html']).filter((f) => !f.endsWith('subset-chars.json')),
       path.join(ROOT, 'app', 'index.html'),
-      ...walk(path.join(ROOT, 'scenarios', 'tianbao_751'), ['.yaml', '.yml', '.md', '.json', '.txt']),
+      ...walk(path.join(ROOT, 'scenarios', 'xuanhe_1120'), ['.yaml', '.yml', '.md', '.json', '.txt']),
     ];
     expect(files.length).toBeGreaterThan(10);
     const missing = new Map<string, string>();
@@ -115,8 +115,8 @@ test.describe('garble / font coverage (G4)', () => {
       const fonts = await page.evaluate(async () => {
         await document.fonts.ready;
         return {
-          serif: document.fonts.check('16px "TB Serif"', '天宝'),
-          title: document.fonts.check('16px "TB WenKai"', '天宝'),
+          serif: document.fonts.check('16px "TB Serif"', '宣和'),
+          title: document.fonts.check('16px "TB WenKai"', '宣和'),
           loaded: [...document.fonts].filter((f) => f.status === 'loaded').map((f) => f.family),
         };
       });
@@ -132,15 +132,15 @@ test.describe('garble / font coverage (G4)', () => {
     const errors = watchErrors(page);
     await startGame(page);
     await page.evaluate(() => {
-      const id = JSON.parse(localStorage.getItem('tianbao.session') ?? 'null') as string;
-      window.__tianbaoMock?.stress(id, true);
+      const id = JSON.parse(localStorage.getItem('xuanhe.session') ?? 'null') as string;
+      window.__xuanheMock?.stress(id, true);
     });
     await page.getByTestId('desk.advance').click();
     if (await page.getByTestId('desk.advance.confirm').isVisible().catch(() => false)) await page.getByTestId('desk.advance.confirm').click();
     await expect(page.getByTestId('result.root')).toBeVisible({ timeout: 30_000 });
     await settle(page, 900);
     // the mock's stress battles carry bare faction ids (attacker: 'yan', defender: 'tang')
-    await expect(page.getByTestId('result.battle.0')).toContainText(/大燕|唐廷/);
+    await expect(page.getByTestId('result.battle.0')).toContainText(/大金|大宋|方腊|大辽/);
     expect(idLeaks(await visibleText(page))).toEqual([]);
     expect(errors).toEqual([]);
   });

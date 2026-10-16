@@ -1,8 +1,8 @@
 {
   "mcpServers": {
-    "tianbao": {
+    "xuanhe": {
       "type": "stdio",
-      "command": "${LOCALAPPDATA}/天宝/server/tianbao-server.exe",
+      "command": "${LOCALAPPDATA}/宣和/server/xuanhe-server.exe",
       "args": ["mcp"]
     }
   }

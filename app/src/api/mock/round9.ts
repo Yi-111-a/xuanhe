@@ -9,9 +9,9 @@ import { evalCond, evalExpr } from './scenario';
 type Obj = Record<string, unknown>;
 const arr = (v: unknown): Obj[] => (Array.isArray(v) ? (v as Obj[]) : []);
 
-export const PLAYER = 'xuanzong';
-export const playerFaction = (s: PublicState) => String((s.rules?.player_faction as string) ?? 'tang');
-export const capitalOf = () => String((db.settings.capital_region as string) ?? 'jingji');
+export const PLAYER = 'zhao_ji';
+export const playerFaction = (s: PublicState) => String((s.rules?.player_faction as string) ?? 'song');
+export const capitalOf = () => String((db.settings.capital_region as string) ?? 'bianjing');
 const regionName = (s: PublicState, id: string | null | undefined) => (id ? s.regions[id]?.name ?? id : '');
 
 export function agendaLimits(): { audience: number | null; debate: number | null } {

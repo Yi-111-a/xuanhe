@@ -12,7 +12,7 @@ export function Baoxiang({ size = 40, color = 'var(--nijin)', inner = 'var(--zhu
           d="M0 -12 C 10 -18, 16 -34, 0 -47 C -16 -34, -10 -18, 0 -12 Z"
           fill={color}
           opacity={0.92}
-          stroke="rgba(60,30,10,.55)"
+          stroke="rgba(36,40,34,.55)"
           strokeWidth={1.2}
         />
       ))}
@@ -27,10 +27,10 @@ export function Baoxiang({ size = 40, color = 'var(--nijin)', inner = 'var(--zhu
           strokeWidth={1}
         />
       ))}
-      <circle r={11} fill={color} stroke="rgba(60,30,10,.6)" strokeWidth={1.4} />
+      <circle r={11} fill={color} stroke="rgba(36,40,34,.6)" strokeWidth={1.4} />
       <circle r={5} fill={inner} />
       {petals.map((a) => (
-        <circle key={`d${a}`} transform={`rotate(${a}) translate(0 -8)`} r={1.6} fill="rgba(60,30,10,.6)" />
+        <circle key={`d${a}`} transform={`rotate(${a}) translate(0 -8)`} r={1.6} fill="rgba(36,40,34,.6)" />
       ))}
     </svg>
   );

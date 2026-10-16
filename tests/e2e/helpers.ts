@@ -1,5 +1,5 @@
-// Shared helpers for the 《天宝》 E2E suites (Playwright). Screens are reached through the UI
-// itself; in mock mode a few states (pending choice, ending) are forced via window.__tianbaoMock.
+// Shared helpers for the 《宣和》 E2E suites (Playwright). Screens are reached through the UI
+// itself; in mock mode a few states (pending choice, ending) are forced via window.__xuanheMock.
 import { expect, type Page } from '@playwright/test';
 
 export const REAL = Boolean(process.env.E2E_API_BASE);
@@ -41,7 +41,7 @@ export async function freshTitle(page: Page) {
   await page.goto('/');
   await page.evaluate(() => {
     localStorage.clear();
-    window.__tianbaoMock?.reset();
+    window.__xuanheMock?.reset();
   });
   await page.goto('/');
   await expect(page.getByTestId('title.root')).toBeVisible();
@@ -81,11 +81,11 @@ export async function openBrush(page: Page) {
 }
 
 async function sessionId(page: Page): Promise<string> {
-  return page.evaluate(() => JSON.parse(localStorage.getItem('tianbao.session') ?? 'null') as string);
+  return page.evaluate(() => JSON.parse(localStorage.getItem('xuanhe.session') ?? 'null') as string);
 }
 
 async function refresh(page: Page) {
-  await page.evaluate(() => window.dispatchEvent(new Event('tianbao:refresh')));
+  await page.evaluate(() => window.dispatchEvent(new Event('xuanhe:refresh')));
 }
 
 async function onDesk(page: Page) {
@@ -130,7 +130,7 @@ export async function openScreen(page: Page, name: ScreenName, fresh = true): Pr
     case 'map':
       await onDesk(page);
       await page.getByTestId('map.layer.troops').click();
-      await page.getByTestId('map.region.fanyang').dispatchEvent('click');
+      await page.getByTestId('map.region.yanshan').dispatchEvent('click');
       await expect(page.getByTestId('map.regionCard')).toBeVisible();
       await settle(page);
       return true;
@@ -176,7 +176,7 @@ export async function openScreen(page: Page, name: ScreenName, fresh = true): Pr
       if (REAL) return false;
       await onDesk(page);
       const id = await sessionId(page);
-      await page.evaluate((sid) => window.__tianbaoMock?.openChoice(sid), id);
+      await page.evaluate((sid) => window.__xuanheMock?.openChoice(sid), id);
       await refresh(page);
       await expect(page.getByTestId('choice.root')).toBeVisible();
       await settle(page, 700);
@@ -186,7 +186,7 @@ export async function openScreen(page: Page, name: ScreenName, fresh = true): Pr
       if (REAL) return false;
       await onDesk(page);
       const id = await sessionId(page);
-      await page.evaluate((sid) => window.__tianbaoMock?.forceOutcome(sid, 'e1_zhongxing'), id);
+      await page.evaluate((sid) => window.__xuanheMock?.forceOutcome(sid, 'e1_zhongxing'), id);
       await refresh(page);
       await expect(page.getByTestId('ending.root')).toBeVisible();
       await settle(page, 1500);
@@ -253,7 +253,7 @@ export async function collectText(page: Page): Promise<string> {
 
 declare global {
   interface Window {
-    __tianbaoMock?: { forceOutcome: (s: string, e: string) => void; openChoice: (s: string) => void; reset: () => void; stress: (s: string, on?: boolean) => void };
-    __tianbaoApiLog?: { method: string; path: string; at: number }[];
+    __xuanheMock?: { forceOutcome: (s: string, e: string) => void; openChoice: (s: string) => void; reset: () => void; stress: (s: string, on?: boolean) => void };
+    __xuanheApiLog?: { method: string; path: string; at: number }[];
   }
 }

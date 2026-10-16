@@ -1,13 +1,13 @@
-﻿# 天宝：把游戏的 MCP 服务注册给 Codex / Claude Code，让外部模型与桌面版共用存档。
+﻿# 宣和：把游戏的 MCP 服务注册给 Codex / Claude Code，让外部模型与桌面版共用存档。
 #
 #   powershell -NoProfile -ExecutionPolicy Bypass -File setup_mcp.ps1                 # 只检测并打印命令，不改任何配置
 #   powershell -NoProfile -ExecutionPolicy Bypass -File setup_mcp.ps1 -Codex          # 注册到 Codex（~/.codex/config.toml）
 #   powershell -NoProfile -ExecutionPolicy Bypass -File setup_mcp.ps1 -Claude         # 注册到 Claude Code（用户级）
 #   ... -Codex -Claude -DryRun                                                          # 只打印将要执行的命令
 #
-# 选项：-ServerExe <tianbao-server.exe>  指定安装版；-Source  用源码目录（.venv + engine/backend）；
-#       -SimHome <目录>  存档目录（默认 %APPDATA%\tianbao，与桌面版相同）；-ClaudeScope user|local|project；
-#       -Name <服务名>（默认 tianbao）。不带 -Codex / -Claude 时绝不修改用户配置。
+# 选项：-ServerExe <xuanhe-server.exe>  指定安装版；-Source  用源码目录（.venv + engine/backend）；
+#       -SimHome <目录>  存档目录（默认 %APPDATA%\xuanhe，与桌面版相同）；-ClaudeScope user|local|project；
+#       -Name <服务名>（默认 xuanhe）。不带 -Codex / -Claude 时绝不修改用户配置。
 param(
     [switch]$Codex,
     [switch]$Claude,
@@ -15,26 +15,26 @@ param(
     [switch]$Source,
     [string]$SimHome = '',
     [ValidateSet('user', 'local', 'project')][string]$ClaudeScope = 'user',
-    [string]$Name = 'tianbao',
+    [string]$Name = 'xuanhe',
     [switch]$DryRun
 )
 $ErrorActionPreference = 'Stop'
 try { [Console]::OutputEncoding = [Text.UTF8Encoding]::new($false) } catch {}
 $Utf8NoBom = New-Object Text.UTF8Encoding $false
-$Product = '天宝'
+$Product = '宣和'
 
 function Find-InstalledExe {
     $candidates = @()
-    if ($env:TIANBAO_SERVER_EXE) { $candidates += $env:TIANBAO_SERVER_EXE }
+    if ($env:XUANHE_SERVER_EXE) { $candidates += $env:XUANHE_SERVER_EXE }
     # this script shipped inside the install: <install>\integrations\setup_mcp.ps1
-    $candidates += (Join-Path (Split-Path -Parent $PSScriptRoot) 'server\tianbao-server.exe')
+    $candidates += (Join-Path (Split-Path -Parent $PSScriptRoot) 'server\xuanhe-server.exe')
     foreach ($hive in 'HKCU:', 'HKLM:') {
         try {
             $loc = (Get-ItemProperty -Path "$hive\Software\Microsoft\Windows\CurrentVersion\Uninstall\$Product" -ErrorAction Stop).InstallLocation
-            if ($loc) { $candidates += (Join-Path $loc.Trim('"') 'server\tianbao-server.exe') }
+            if ($loc) { $candidates += (Join-Path $loc.Trim('"') 'server\xuanhe-server.exe') }
         } catch {}
     }
-    if ($env:LOCALAPPDATA) { $candidates += (Join-Path $env:LOCALAPPDATA "$Product\server\tianbao-server.exe") }
+    if ($env:LOCALAPPDATA) { $candidates += (Join-Path $env:LOCALAPPDATA "$Product\server\xuanhe-server.exe") }
     foreach ($c in $candidates) { if ($c -and (Test-Path -LiteralPath $c -PathType Leaf)) { return (Resolve-Path -LiteralPath $c).Path } }
     return $null
 }
@@ -49,7 +49,7 @@ function Find-SourceCheckout {
     return $null
 }
 
-$defaultHome = if ($env:APPDATA) { Join-Path $env:APPDATA 'tianbao' } else { Join-Path $HOME '.tianbao' }
+$defaultHome = if ($env:APPDATA) { Join-Path $env:APPDATA 'xuanhe' } else { Join-Path $HOME '.xuanhe' }
 $serverEnv = [ordered]@{}
 if ($ServerExe) {
     if (-not (Test-Path -LiteralPath $ServerExe -PathType Leaf)) { throw "找不到 $ServerExe" }
@@ -65,7 +65,7 @@ if ($exe) {
 } else {
     $src = Find-SourceCheckout
     if (-not $src) {
-        throw "没有找到已安装的《$Product》（$env:LOCALAPPDATA\$Product\server\tianbao-server.exe），也不在含 .venv 的源码目录里。请先安装，或用 -ServerExe 指定 tianbao-server.exe。"
+        throw "没有找到已安装的《$Product》（$env:LOCALAPPDATA\$Product\server\xuanhe-server.exe），也不在含 .venv 的源码目录里。请先安装，或用 -ServerExe 指定 xuanhe-server.exe。"
     }
     $mode = 'source'
     $command = $src.Python
@@ -96,7 +96,7 @@ Write-Host ''
 function Invoke-Codex([string[]]$a) {
     $js = if ($env:APPDATA) { Join-Path $env:APPDATA 'npm\node_modules\@openai\codex\bin\codex.js' } else { '' }
     $node = Get-Command node -ErrorAction SilentlyContinue
-    # the npm .cmd shim goes through cmd.exe, which can mangle non-ASCII (e.g. 天宝) arguments: call codex.js via node
+    # the npm .cmd shim goes through cmd.exe, which can mangle non-ASCII (e.g. 宣和) arguments: call codex.js via node
     $cx = Get-Command codex -ErrorAction SilentlyContinue
     if (-not ($js -and (Test-Path -LiteralPath $js) -and $node) -and -not $cx) { throw '找不到 codex（npm i -g @openai/codex）。' }
     $ErrorActionPreference = 'Continue'  # native tools write progress to stderr
@@ -130,9 +130,9 @@ function Set-CodexApproval {
         }
     }
     if ($added.Count) {
-        Copy-Item -LiteralPath $cfg -Destination "$cfg.bak-tianbao" -Force
+        Copy-Item -LiteralPath $cfg -Destination "$cfg.bak-xuanhe" -Force
         [IO.File]::WriteAllText($cfg, (($lines -join "`n") + "`n"), $Utf8NoBom)
-        Write-Host "已在 $cfg 的 $header 中补上：$($added -join ', ')（备份：config.toml.bak-tianbao）"
+        Write-Host "已在 $cfg 的 $header 中补上：$($added -join ', ')（备份：config.toml.bak-xuanhe）"
     }
 }
 

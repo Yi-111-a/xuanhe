@@ -51,7 +51,7 @@ export function riskClass(level: string | null | undefined): string {
   return level === '高' ? 'risk--high' : level === '中' ? 'risk--mid' : 'risk--low';
 }
 
-const readKey = (season: string) => `tianbao.repliesRead.${season}`;
+const readKey = (season: string) => `xuanhe.repliesRead.${season}`;
 export function repliesRead(season: string): number {
   try {
     return Number(localStorage.getItem(readKey(season)) ?? 0) || 0;
@@ -65,7 +65,7 @@ export function markRepliesRead(season: string, count: number) {
   } catch {
     /* storage blocked: the badge just stays */
   }
-  window.dispatchEvent(new CustomEvent('tianbao:replies-read'));
+  window.dispatchEvent(new CustomEvent('xuanhe:replies-read'));
 }
 
 /** Army quality as a word (兵质 multiplier around 1.0). */

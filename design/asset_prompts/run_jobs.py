@@ -30,7 +30,7 @@ def run(job, force=False):
         log(f"SKIP {jid}")
         return jid, True
     full = STYLE + " " + job["subject"]
-    open(os.path.join(PROMPTS, jid + ".txt"), "w", encoding="utf8").write(full + "\n\n" + job["aspect"] + "\n")
+    open(os.path.join(PROMPTS, jid + ".txt"), "w", encoding="utf8", newline=chr(10)).write(full + "\n\n" + job["aspect"] + "\n")
     prompt = " ".join(full.split())
     cmdtext = (f"Use your image generation tool to create ONE image: {prompt} {job['aspect']} "
                f"After generating, copy the resulting PNG into the current working directory as {jid}.png "

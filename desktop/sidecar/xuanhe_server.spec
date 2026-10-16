@@ -1,10 +1,10 @@
 # -*- mode: python ; coding: utf-8 -*-
-# Build:  python -m PyInstaller --noconfirm --clean tianbao_server.spec   (see scripts/build-sidecar.ps1)
+# Build:  python -m PyInstaller --noconfirm --clean xuanhe_server.spec   (see scripts/build-sidecar.ps1)
 from pathlib import Path
 
 from PyInstaller.utils.hooks import collect_all, collect_submodules
 
-SPEC_DIR = Path(SPECPATH).resolve()          # tianbao/desktop/sidecar
+SPEC_DIR = Path(SPECPATH).resolve()          # xuanhe/desktop/sidecar
 BACKEND = SPEC_DIR.parents[1] / "engine" / "backend"
 
 # --- data files: replicate pyproject package-data (simcore: llm/presets.yaml, prompts/*.md) and,
@@ -53,7 +53,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name="tianbao-server",
+    name="xuanhe-server",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -61,4 +61,4 @@ exe = EXE(
     console=True,
     icon=str(SPEC_DIR.parent / "src-tauri" / "icons" / "icon.ico"),
 )
-coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=False, name="tianbao-server")
+coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=False, name="xuanhe-server")

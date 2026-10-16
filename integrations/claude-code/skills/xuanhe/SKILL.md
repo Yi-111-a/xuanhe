@@ -1,20 +1,20 @@
 ---
-name: tianbao
-description: 「上朝」——通过 tianbao MCP 服务游玩《天宝》（天宝十载 751 年，你扮演唐玄宗），与桌面版共用存档。用户说「上朝」「玩天宝」「开一局天宝」「继续我在桌面版的那局」或要求用 tianbao 工具下诏、召对、廷议、结算一季时使用。
+name: xuanhe
+description: 「上朝」——通过 xuanhe MCP 服务游玩《宣和》（宣和二年 1120 年，你扮演宋徽宗），与桌面版共用存档。用户说「上朝」「玩宣和」「开一局宣和」「继续我在桌面版的那局」或要求用 xuanhe 工具下诏、召对、廷议、结算一季时使用。
 ---
 
-# 上朝：用 MCP 玩《天宝》
+# 上朝：用 MCP 玩《宣和》
 
-《天宝》的引擎是唯一事实来源；你扮演君主（玩家），并在召对、廷议中替大臣说话。存档放在 `LLM_SIM_HOME`
-（默认 `%APPDATA%\tianbao`），和桌面版是同一份：你开的局在桌面版「读档」里能看到，桌面版的局你也能用 `load_game` 接着玩。
+《宣和》的引擎是唯一事实来源；你扮演君主（玩家），并在召对、廷议中替大臣说话。存档放在 `LLM_SIM_HOME`
+（默认 `%APPDATA%\xuanhe`），和桌面版是同一份：你开的局在桌面版「读档」里能看到，桌面版的局你也能用 `load_game` 接着玩。
 
-工具来自名为 `tianbao` 的 MCP 服务（插件版的工具名形如 `mcp__plugin_tianbao_tianbao__briefing`，手工注册的形如
-`mcp__tianbao__briefing`，用法相同）。看不到这些工具时，请用户运行 `integrations/setup_mcp.ps1 -Claude`
+工具来自名为 `xuanhe` 的 MCP 服务（插件版的工具名形如 `mcp__plugin_xuanhe_xuanhe__briefing`，手工注册的形如
+`mcp__xuanhe__briefing`，用法相同）。看不到这些工具时，请用户运行 `integrations/setup_mcp.ps1 -Claude`
 或在 Claude Code 里 `/mcp` 检查连接。
 
 ## 开局或续局
 
-- 新局：`list_scenarios` → `new_game(scenario="tianbao_751", seed=<整数>, difficulty=<可选，见 list_scenarios>)`，记下返回的 `session_id`。
+- 新局：`list_scenarios` → `new_game(scenario="xuanhe_1120", seed=<整数>, difficulty=<可选，见 list_scenarios>)`，记下返回的 `session_id`。
 - 续局：`list_saves` 列出全部存档（含桌面版开的），选一个 `load_game(session_id)`。
 - 用户没指定时，先问一句「开新局还是续桌面版的存档」，不要擅自删档或回滚。
 

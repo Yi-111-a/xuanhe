@@ -77,9 +77,9 @@ async function panelSettled(page: Page) {
 
 async function stress(page: Page) {
   await page.evaluate(() => {
-    const id = JSON.parse(localStorage.getItem('tianbao.session') ?? 'null') as string;
-    window.__tianbaoMock?.stress(id, true);
-    window.dispatchEvent(new Event('tianbao:refresh'));
+    const id = JSON.parse(localStorage.getItem('xuanhe.session') ?? 'null') as string;
+    window.__xuanheMock?.stress(id, true);
+    window.dispatchEvent(new Event('xuanhe:refresh'));
   });
   await settle(page, 400);
 }
@@ -141,9 +141,9 @@ for (const size of SIZES) {
       // pending choice (may already be open from the season's events)
       if (!(await page.getByTestId('choice.root').isVisible())) {
         await page.evaluate(() => {
-          const id = JSON.parse(localStorage.getItem('tianbao.session') ?? 'null') as string;
-          window.__tianbaoMock?.openChoice(id);
-          window.dispatchEvent(new Event('tianbao:refresh'));
+          const id = JSON.parse(localStorage.getItem('xuanhe.session') ?? 'null') as string;
+          window.__xuanheMock?.openChoice(id);
+          window.dispatchEvent(new Event('xuanhe:refresh'));
         });
       }
       await expect(page.getByTestId('choice.root')).toBeVisible();
@@ -186,9 +186,9 @@ for (const size of SIZES) {
 
       // ending screen with a long chronicle
       await page.evaluate(() => {
-        const id = JSON.parse(localStorage.getItem('tianbao.session') ?? 'null') as string;
-        window.__tianbaoMock?.forceOutcome(id, 'e1_zhongxing');
-        window.dispatchEvent(new Event('tianbao:refresh'));
+        const id = JSON.parse(localStorage.getItem('xuanhe.session') ?? 'null') as string;
+        window.__xuanheMock?.forceOutcome(id, 'e1_zhongxing');
+        window.dispatchEvent(new Event('xuanhe:refresh'));
       });
       await expect(page.getByTestId('ending.root')).toBeVisible();
       await settle(page, 1500);

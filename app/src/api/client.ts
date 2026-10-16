@@ -1,4 +1,4 @@
-// Typed client for the 《天宝》 engine API (docs/CONTRACT.md §2).
+// Typed client for the 《宣和》 engine API (docs/CONTRACT.md §2).
 // The same code path serves the real engine and the in-process mock: in mock mode
 // `fetchImpl` is swapped for the mock router, which answers with real Response objects.
 import type {
@@ -26,7 +26,7 @@ import type {
 } from './types';
 import { humanizeDeep, registerStateNames } from '../lib/names';
 
-export const SCENARIO_ID = 'tianbao_751';
+export const SCENARIO_ID = 'xuanhe_1120';
 export const IS_MOCK = import.meta.env.VITE_MOCK === '1' || import.meta.env.MODE === 'mock';
 
 type FetchLike = (input: string, init?: RequestInit) => Promise<Response>;
@@ -44,7 +44,7 @@ export class ApiError extends Error {
 declare global {
   interface Window {
     __TAURI_INTERNALS__?: { invoke?: (cmd: string, args?: unknown) => Promise<unknown> };
-    __tianbaoApiLog?: { method: string; path: string; at: number }[];
+    __xuanheApiLog?: { method: string; path: string; at: number }[];
   }
 }
 
@@ -85,8 +85,8 @@ async function getFetch(): Promise<FetchLike> {
 
 function logCall(method: string, path: string) {
   if (typeof window === 'undefined') return;
-  (window.__tianbaoApiLog ??= []).push({ method, path, at: Date.now() });
-  window.dispatchEvent(new CustomEvent('tianbao:api', { detail: { method, path } }));
+  (window.__xuanheApiLog ??= []).push({ method, path, at: Date.now() });
+  window.dispatchEvent(new CustomEvent('xuanhe:api', { detail: { method, path } }));
 }
 
 async function parseError(res: Response): Promise<ApiError> {

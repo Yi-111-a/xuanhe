@@ -11,11 +11,11 @@ const ART: { key: string; ids: string[] }[] = [
   { key: 'inkbtn', ids: ['ui.ink_button'] },
   { key: 'lacquer', ids: ['ui.lacquer_bar'] },
   { key: 'seal', ids: ['ui.seal'] },
-  { key: 'drum', ids: ['ui.crisis_drum'] },
-  { key: 'ribbon-xiang', ids: ['ui.ribbon_xiang'] },
-  { key: 'ribbon-yang', ids: ['ui.ribbon_yang'] },
-  { key: 'ribbon-fanyang', ids: ['ui.ribbon_fanyang'] },
-  { key: 'ribbon-neiting', ids: ['ui.ribbon_neiting'] },
+  { key: 'drum', ids: ['ui.crisis_beacon'] },
+  { key: 'ribbon-cai', ids: ['ui.ribbon_cai'] },
+  { key: 'ribbon-xingchen', ids: ['ui.ribbon_xingchen'] },
+  { key: 'ribbon-neishi', ids: ['ui.ribbon_neishi'] },
+  { key: 'ribbon-qingyi', ids: ['ui.ribbon_qingyi'] },
 ];
 
 /** Crop rectangles as fractions of the source (the edict scroll is painted on a desk). */

@@ -1,4 +1,4 @@
-// Mock-mode helpers that read the real scenario (scenarios/tianbao_751/*.yaml, served as JSON
+// Mock-mode helpers that read the real scenario (scenarios/xuanhe_1120/*.yaml, served as JSON
 // by the dev-server plugin) so the mock shows the actual memorials, characters and events.
 // Includes a tiny formula evaluator and a subset of the CONTRACT §1.4 condition DSL.
 import type { PublicState } from '../types';
@@ -159,7 +159,7 @@ export function evalCond(cond: unknown, s: PublicState): boolean {
     case 'region_stat':
       return cmp(s.regions[String(c.region)]?.stats?.[String(c.stat)] ?? 0, op, c.value);
     case 'region_controller':
-      return cmp(s.regions[String(c.region)]?.controller ?? 'tang', op ?? 'eq', c.faction);
+      return cmp(s.regions[String(c.region)]?.controller ?? 'song', op ?? 'eq', c.faction);
     case 'character_status':
       return cmp(s.characters[String(c.character)]?.status ?? 'alive', op ?? 'eq', c.value);
     case 'character_trait':

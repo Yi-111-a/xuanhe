@@ -247,7 +247,7 @@ export function ResultPanel() {
         <div className="result-scroll">
           <Roller orientation="horizontal" thickness={24} />
           <div className="result-scroll-body">
-            <CuancaoColumn width={18} color="rgba(201,162,75,.85)" bg="#30505f" />
+            <CuancaoColumn width={18} color="rgba(183,162,113,.85)" bg="#30505f" />
             <Paper variant="paper" seed={88} amp={2} sides="lr" className="result-paper">
               <h2 className="result-title t-title">
                 <span>推演结果</span>
@@ -322,7 +322,7 @@ export function ResultPanel() {
                 {!report && <p className="muted">尚无推演记录。</p>}
               </div>
             </Paper>
-            <CuancaoColumn width={18} color="rgba(201,162,75,.85)" bg="#30505f" />
+            <CuancaoColumn width={18} color="rgba(183,162,113,.85)" bg="#30505f" />
           </div>
           <Roller orientation="horizontal" thickness={24} />
         </div>
@@ -374,7 +374,7 @@ export function ResultPanel() {
             {((crisis.terms?.length ?? 0) > 0 || (change?.items?.length ?? 0) > 0) && (
               <div className="ledger-crisis" data-testid="result.crisis">
                 <div className="ledger-title t-title">
-                  <span>{view.crisis?.title ?? '渔阳鼙鼓'}</span>
+                  <span>{view.crisis?.title ?? '胡马南牧'}</span>
                   {crisisText && <span className="t-num ledger-crisis-value">{crisisText}</span>}
                   {crisis.band && <em>{crisis.band}</em>}
                 </div>

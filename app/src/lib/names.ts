@@ -1,7 +1,7 @@
 // Display names for entity ids, and the defence that keeps raw ids out of the UI.
 // The engine is meant to send self-contained display text, but any string that still carries a
 // known id token ("tang攻yan，胜。") is rewritten with the display name before it reaches a screen.
-import meta from 'virtual:tianbao-meta';
+import meta from 'virtual:xuanhe-meta';
 import type { PublicState } from '../api/types';
 
 export interface ScenarioEventMeta {
@@ -39,7 +39,7 @@ export function nameOf(id: string | null | undefined): string | null {
   return live[id] ?? SCENARIO_META.names[id] ?? null;
 }
 
-/** All ids the UI knows (scenario + runtime). Used by tests through window.__tianbaoIds. */
+/** All ids the UI knows (scenario + runtime). Used by tests through window.__xuanheIds. */
 export function knownIds(): string[] {
   return [...new Set([...Object.keys(SCENARIO_META.names), ...Object.keys(live)])];
 }
@@ -119,7 +119,7 @@ export function humanizeDeep<T>(value: T, key = ''): T {
 
 declare global {
   interface Window {
-    __tianbaoIds?: () => string[];
+    __xuanheIds?: () => string[];
   }
 }
-if (typeof window !== 'undefined') window.__tianbaoIds = knownIds;
+if (typeof window !== 'undefined') window.__xuanheIds = knownIds;

@@ -28,7 +28,7 @@ export function ChoiceModal({ choice }: { choice: PendingChoice }) {
             <EventArt ids={[choice.illustration, `event.${choice.event_id}`]} seed={choice.event_id} className="choice-art" />
             <div className="choice-urgent t-title">急</div>
           </div>
-          <CuancaoBand height={14} color="rgba(138,109,44,.85)" />
+          <CuancaoBand height={14} color="rgba(125,110,72,.85)" />
           <div className="choice-body">
             <h2 className="choice-title t-title">{choice.title}</h2>
             <p className="choice-text selectable">{choice.text}</p>

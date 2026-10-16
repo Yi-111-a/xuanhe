@@ -1,4 +1,4 @@
-// Fixture data for mock mode, transcribed from docs/TIANBAO_751_OUTLINE.md.
+// Fixture data for mock mode, transcribed from docs/XUANHE_751_OUTLINE.md.
 // Numbers marked 【虚】 in the outline are game values, not history.
 import type { Army, Character, Faction, MemorialItem, Office, Op, Region } from '../types';
 

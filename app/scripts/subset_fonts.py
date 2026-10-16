@@ -1,7 +1,7 @@
-"""Subset the bundled fonts for 《天宝》 (contract §4, gate G4).
+"""Subset the bundled fonts for 《宣和》 (contract §4, gate G4).
 
 Character set = GB2312 (symbol rows + level 1 + level 2, generated from the codec)
-              + every character in scenarios/tianbao_751/**/*.{yaml,yml,md,json,txt}
+              + every character in scenarios/xuanhe_1120/**/*.{yaml,yml,md,json,txt}
               + every character in app/src/**/*.{ts,tsx,css,html,json} and app/index.html
               + ASCII and the punctuation / arrows / shapes the UI uses.
 
@@ -27,7 +27,7 @@ APP = Path(__file__).resolve().parents[1]
 ROOT = APP.parent
 CACHE = APP / ".font-cache"
 OUT = APP / "src" / "assets" / "fonts"
-SCENARIO = ROOT / "scenarios" / "tianbao_751"
+SCENARIO = ROOT / "scenarios" / "xuanhe_1120"
 
 FONTS = [
     # (output name, cache file, url, role)

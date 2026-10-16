@@ -1,12 +1,12 @@
-"""Frozen / dev entry point for the tianbao-server sidecar.
+"""Frozen / dev entry point for the xuanhe-server sidecar.
 
-`tianbao-server serve --host H --port P`  -> run the FastAPI engine directly (no string import,
+`xuanhe-server serve --host H --port P`  -> run the FastAPI engine directly (no string import,
 so PyInstaller can see every module) and make sure CORS allows the desktop webview origins.
-`tianbao-server mcp [--mode client|server]` -> stdio MCP server for Codex / Claude Code, sharing the
+`xuanhe-server mcp [--mode client|server]` -> stdio MCP server for Codex / Claude Code, sharing the
 app's saves. Anything else (`validate`, ...) is delegated to the engine CLI (`cli.main:app`).
 
 Both modes get the same defaults as the desktop app unless the caller sets them:
-  LLM_SIM_HOME      = %APPDATA%/tianbao
+  LLM_SIM_HOME      = %APPDATA%/xuanhe
   SIM_SCENARIOS_DIR = <install>/scenarios   (frozen: next to server/; dev: <repo>/scenarios)
   SIM_GAME_ROOT     = <install>             (frozen)                 dev: <repo>
 """
@@ -19,7 +19,7 @@ import sys
 from pathlib import Path
 
 FROZEN = bool(getattr(sys, "frozen", False))
-MCP_NAME = "tianbao"
+MCP_NAME = "xuanhe"
 
 os.environ.setdefault("PYTHONUTF8", "1")
 os.environ.setdefault("PYTHONIOENCODING", "utf-8")
@@ -30,7 +30,7 @@ for _stream in (sys.stdout, sys.stderr, sys.stdin):
         pass
 
 if not FROZEN:
-    # dev mode: run straight from the repo (tianbao/desktop/sidecar/entry.py -> tianbao/engine/backend)
+    # dev mode: run straight from the repo (xuanhe/desktop/sidecar/entry.py -> xuanhe/engine/backend)
     _backend = Path(__file__).resolve().parents[2] / "engine" / "backend"
     if str(_backend) not in sys.path:
         sys.path.insert(0, str(_backend))
@@ -69,11 +69,11 @@ def roaming_appdata() -> Path | None:
 def default_env() -> dict[str, str]:
     """The environment the desktop shell would give the engine for this install."""
     if FROZEN:
-        game_root = Path(sys.executable).resolve().parent.parent  # <install>/server/tianbao-server.exe
+        game_root = Path(sys.executable).resolve().parent.parent  # <install>/server/xuanhe-server.exe
     else:
         game_root = Path(__file__).resolve().parents[2]  # repo root
     appdata = roaming_appdata()
-    home = appdata / "tianbao" if appdata else Path.home() / ".tianbao"
+    home = appdata / "xuanhe" if appdata else Path.home() / ".xuanhe"
     return {
         "LLM_SIM_HOME": str(home),
         "SIM_SCENARIOS_DIR": str(game_root / "scenarios"),

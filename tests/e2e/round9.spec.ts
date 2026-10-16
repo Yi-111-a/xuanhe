@@ -204,14 +204,14 @@ test('tutorial: ring on the target, 下一步 / 跳过引导, settings switch @t
   await shot(page, 'tutorial-desk');
   // clicking the highlighted control moves on; inside the panel the ring finds the memorial
   await page.getByTestId('desk.memorialBook').click();
-  await expect(root).toHaveAttribute('data-target', 'memorial.item.t0_hedong');
-  await expect.poll(() => ringAround('memorial.item.t0_hedong'), { timeout: 10_000 }).toBe(true);
+  await expect(root).toHaveAttribute('data-target', 'memorial.item.t0_haishang');
+  await expect.poll(() => ringAround('memorial.item.t0_haishang'), { timeout: 10_000 }).toBe(true);
   await settle(page, 900);
   await shot(page, 'tutorial-memorial');
   await page.getByTestId('tutorial.next').click();
-  await expect(root).toHaveAttribute('data-target', 'memorial.option.t0_hedong.*');
+  await expect(root).toHaveAttribute('data-target', 'memorial.option.t0_haishang.*');
   // the note never blocks the page: the highlighted option is still clickable
-  const option = page.locator('[data-testid^="memorial.option.t0_hedong."]').first();
+  const option = page.locator('[data-testid^="memorial.option.t0_haishang."]').first();
   await option.click();
   await expect(root).toHaveAttribute('data-target', 'desk.edictScroll');
   await expect(page.locator('.tut-hint')).toContainText('收起');

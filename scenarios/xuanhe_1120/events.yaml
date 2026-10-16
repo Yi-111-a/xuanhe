@@ -65,6 +65,7 @@
     all:
       - {kind: flag, key: "memorial:t1_cai", operator: absent}
       - {kind: office_holder, office: taishi, character: cai_jing}
+      - {kind: office_holder, office: shaozai, character: wang_fu}
   gravity: 1.0
   importance: 2
   text: 太师蔡京累上章乞骸骨，陛下未批，三省依例奉行：诏蔡京致仕，仍朝朔望。公相去位，中书之事渐归少宰王黼。
@@ -353,7 +354,6 @@
   title: 艮岳成
   kind: scheduled
   when: {turn: 9}
-  conditions: {not: {kind: flag, key: genyue_halted, value: true}}
   gravity: 0.9
   importance: 1
   text: 万岁山成，更名艮岳。周十余里，峰峦叠嶂，奇石林立，四方珍禽异兽、嘉木名卉聚于其中。陛下亲为之记。
@@ -694,7 +694,7 @@
   gravity: 0.9
   importance: 2
   region: pingzhou
-  text: 金将宗望击破平州，张觉兵败，只身奔燕山，匿于常胜军中。金人移文燕山宣抚司，索张觉甚急。
+  text: 金将宗望击破平州，张觉兵败，只身奔燕山，匿于宋军营中。金人移文燕山宣抚司，索张觉甚急。
   effects:
     - {op: set_flag, key: pingzhou_crushed, value: true}
     - {op: move_character, character: zhang_jue, to_region: yanshan}

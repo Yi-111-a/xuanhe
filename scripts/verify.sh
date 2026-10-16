@@ -7,6 +7,6 @@ export PYTHONIOENCODING=utf-8
 PY=.venv/Scripts/python
 (cd engine/backend && ../../$PY -m pytest -q -p no:cacheprovider 2>&1 | tail -1)
 (cd engine/backend && ../../.venv/Scripts/ruff check . && ../../.venv/Scripts/mypy simcore api cli | tail -1)
-.venv/Scripts/sim validate scenarios/tianbao_751 | head -1
+.venv/Scripts/sim validate scenarios/xuanhe_1120 | head -1
 $PY tools/content_lint.py | tail -1
 echo "verify: OK"

@@ -1,0 +1,347 @@
+# 政令卡：拟诏时选卡、填参数，展开为诏令条款（回执 source: card）。
+# 设计原则（同《天宝》）：
+# - 只用玩家层操作（引擎校验）；卡片不直接改国势（君威、民心、佞幸、武备、金人轻宋……），国势的起落以奏疏批答为主。
+# - 钱粮类卡片都是 start_project：先花钱粮，竣工后加本地区指标；每点指标至少花 10 万缗（引擎上限），且设冷却，不能刷。
+# - 军务卡受「将领自主」影响：统帅忠诚低、野心大者或拒命，轻躁者守令或改作出战；预览显示风险等级。
+# - 作用于川峡、闽广的条款，驿程过远，令达于下季。
+# 字段：id, category（军务|内政|人事|外交|财计）, title, summary, params, ops, cost_hint, requires?, cooldown?（季）。
+
+# ============================== 军务 ==============================
+- id: mil_march
+  category: 军务
+  title: 出征
+  summary: 命某军开赴某地，以进攻之态接战。统帅与军同驻者随军同行。
+  params:
+    - {name: army, kind: army, filter: {idle: true, min_strength: 2000}}
+    - {name: to, kind: region}
+  ops:
+    - {op: march, army: "{army}", to_region: "{to}", with_commander: true}
+    - {op: set_army_posture, army: "{army}", posture: attack}
+  cost_hint: 不另费钱粮（养兵照常）。行程按路线计季，在途不能再调。进攻之态：攻方战力 +10%，败则多损。统帅忠诚低、野心大者或拒命延宕。
+
+- id: mil_garrison
+  category: 军务
+  title: 移屯驻守
+  summary: 命某军移屯某地，到后据守不出。
+  params:
+    - {name: army, kind: army, filter: {idle: true, min_strength: 2000}}
+    - {name: to, kind: region, filter: {controller: own}}
+  ops:
+    - {op: march, army: "{army}", to_region: "{to}", with_commander: true}
+    - {op: set_army_posture, army: "{army}", posture: hold}
+  cost_hint: 不另费钱粮。行程按路线计季。守御之态：守方战力 +20%，胜亦不追击。轻躁之将或擅自出战。
+
+- id: mil_hold
+  category: 军务
+  title: 坚守本地
+  summary: 命某军就地固守，不得浪战。
+  params:
+    - {name: army, kind: army, filter: {faction: own}}
+  ops:
+    - {op: set_army_posture, army: "{army}", posture: hold}
+  cost_hint: 不费钱粮，当季生效（驿程过远者令达于下季）。守方战力 +20%，不追击。轻躁之将或擅自出战（预览显示风险）。
+
+- id: mil_detach
+  category: 军务
+  title: 分兵
+  summary: 自某军分出若干兵，以某人统领，开赴某地（同地则就地分屯）。
+  params:
+    - {name: army, kind: army, filter: {idle: true, min_strength: 4000}}
+    - {name: strength, kind: amount, min: 1000, max: 60000}
+    - {name: to, kind: region}
+    - {name: commander, kind: character, filter: {idle: true, min_trait: {ability: 5}}}
+  ops:
+    - {op: detach, army: "{army}", strength: "{strength}", to_region: "{to}", commander: "{commander}"}
+  cost_hint: 总兵额不变，养兵不变。分兵数须少于原军现有兵力；新军同其素质。统将不在原军驻地者须启程赴任，到任前副将暂摄。
+
+- id: mil_relieve_capital
+  category: 军务
+  title: 入援京师
+  summary: 急召某军入援汴京，到后据守。
+  requires: {kind: flag, key: jin_invaded, value: true}
+  params:
+    - {name: army, kind: army, filter: {idle: true, min_strength: 2000}}
+  ops:
+    - {op: march, army: "{army}", to_region: bianjing, with_commander: true}
+    - {op: set_army_posture, army: "{army}", posture: hold}
+  cost_hint: 金兵南下之后可用。不另费钱粮；所去之地防务随之空虚。行程按路线计季（关中一季，西北边两季）。
+
+- id: mil_commander
+  category: 军务
+  title: 易帅
+  summary: 以某人统某军；原帅罢统。
+  params:
+    - {name: army, kind: army, filter: {faction: own}}
+    - {name: commander, kind: character, filter: {idle: true, min_trait: {ability: 5}}}
+  ops:
+    - {op: set_army_commander, army: "{army}", character: "{commander}", dispatch: true}
+  cost_hint: 新帅不在军中则启程赴任，到任前副将暂摄。只换统帅，不改官职；经略、宣抚之任免用「授官」「罢免」。统帅之才干影响战力（才干每高于五一点，战力约 +4%）。
+
+- id: mil_scorch
+  category: 军务
+  title: 坚壁清野
+  summary: 命某军尽收本地粮草入城，余皆焚毁，使来犯之敌无所掠。
+  requires: {kind: flag, key: jin_invaded, value: true}
+  params:
+    - {name: army, kind: army, filter: {faction: own}}
+  ops:
+    - {op: set_army_posture, army: "{army}", posture: scorch}
+  cost_hint: 金兵南下之后可用。所驻地区粮产、繁荣下降；来犯之敌补给受损。只宜于将陷之地，不宜于腹心财赋之区。将多不忍毁其地，拒命之险稍高（预览显示风险）。
+
+- id: mil_baojia
+  category: 军务
+  title: 教阅保甲
+  summary: 令某路州县点集保丁，农隙教阅弓弩，守城护乡。
+  cooldown: 2
+  params:
+    - {name: region, kind: region, filter: {controller: own}}
+  ops:
+    - {op: start_project, name: 保甲教阅, region: "{region}", cost_per_turn: {treasury: 35}, turns: 2,
+       on_complete: [{op: adjust_region, region: "{region}", stat: defense, delta: 5}, {op: adjust_region, region: "{region}", stat: order, delta: 2}]}
+  cost_hint: 国库每季 −35，两季（共 70 万缗）；竣工后本路防务 +5、治安 +2。保丁在籍不在营，不入官军兵额，故无养兵之费；官军募兵、整训须经奏疏。冷却 2 季。
+
+- id: mil_shoubei
+  category: 军务
+  title: 缮治守具
+  summary: 补造汴京城上弩床、炮座、楼橹，修缮城门、壕堑。
+  cooldown: 4
+  params: []
+  ops:
+    - {op: start_project, name: 缮治京城守具, region: bianjing, cost_per_turn: {treasury: 45}, turns: 2,
+       on_complete: [{op: adjust_region, region: bianjing, stat: defense, delta: 6}, {op: adjust_region, region: bianjing, stat: order, delta: 3}]}
+  cost_hint: 国库每季 −45，两季（共 90 万缗）；竣工后汴京防务 +6、治安 +3。不增兵额，不改禁军素质（禁军之整训见奏疏）。冷却 4 季。
+
+# ============================== 内政 ==============================
+- id: int_relief
+  category: 内政
+  title: 赈济
+  summary: 开某路常平仓廪，赈给饥乏，并遣官存问。
+  cooldown: 2
+  params:
+    - {name: region, kind: region, filter: {controller: own}}
+  ops:
+    - {op: start_project, name: 赈济饥乏, region: "{region}", cost_per_turn: {grain: 50, treasury: 10}, turns: 1,
+       on_complete: [{op: adjust_region, region: "{region}", stat: order, delta: 4}, {op: adjust_region, region: "{region}", stat: prosperity, delta: 2}]}
+  cost_hint: 粮储 −50 万石、国库 −10，一季；本路治安 +4、繁荣 +2。只济一路，不改天下民心（民心之起落看奏疏与事件）。冷却 2 季。
+
+- id: int_remit
+  category: 内政
+  title: 蠲免税赋
+  summary: 免某路今岁两税之半，以苏民力。
+  cooldown: 3
+  params:
+    - {name: region, kind: region, filter: {controller: own}}
+  ops:
+    - {op: start_project, name: 蠲免税赋, region: "{region}", cost_per_turn: {treasury: 40}, turns: 2,
+       on_complete: [{op: adjust_region, region: "{region}", stat: prosperity, delta: 5}, {op: adjust_region, region: "{region}", stat: order, delta: 3}]}
+  cost_hint: 所免之数折为国库每季 −40，两季（共 80 万缗）；期满后本路繁荣 +5、治安 +3。冷却 3 季。
+
+- id: int_canal
+  category: 内政
+  title: 疏浚汴河漕渠
+  summary: 发丁夫疏浚汴河与江淮运河、修治闸堰，使东南漕粮北输无阻。
+  cooldown: 4
+  params:
+    - {name: region, kind: region, filter: {controller: own, ids: [bianjing, jingxi, jingdong, huainan, liangzhe, jiangnan]}}
+  ops:
+    - {op: start_project, name: 疏浚漕渠, region: "{region}", cost_per_turn: {treasury: 30}, turns: 3,
+       on_complete: [{op: adjust_region, region: "{region}", stat: tax, delta: 4}, {op: adjust_region, region: "{region}", stat: prosperity, delta: 3}]}
+  cost_hint: 国库每季 −30，三季（共 90 万缗）；竣工后本路税基 +4（每季税入约 +3.6 万缗）、繁荣 +3。二十余季方能回本。冷却 4 季。
+
+- id: int_walls
+  category: 内政
+  title: 增修城池
+  summary: 增修某路州城、关隘，补缮守具。
+  cooldown: 2
+  params:
+    - {name: region, kind: region, filter: {controller: own}}
+  ops:
+    - {op: start_project, name: 增修城池, region: "{region}", cost_per_turn: {treasury: 30}, turns: 2,
+       on_complete: [{op: adjust_region, region: "{region}", stat: defense, delta: 6}]}
+  cost_hint: 国库每季 −30，两季（共 60 万缗）；竣工后本路防务 +6（防务 ≥ 80 者为坚城，攻方须两倍之力）。冷却 2 季。
+
+- id: int_chafang
+  category: 内政
+  title: 遣使察访
+  summary: 遣在京之臣持节察访某路，按察吏治、问疾苦、括隐漏。
+  cooldown: 3
+  params:
+    - {name: censor, kind: character, filter: {present: true, min_trait: {ability: 5}}}
+    - {name: region, kind: region, filter: {controller: own, not_capital: true}}
+  ops:
+    - {op: move_character, character: "{censor}", to_region: "{region}"}
+    - {op: start_project, name: 遣使察访, region: "{region}", cost_per_turn: {treasury: 20}, turns: 2,
+       on_complete: [{op: adjust_region, region: "{region}", stat: order, delta: 2}, {op: adjust_region, region: "{region}", stat: tax, delta: 2}]}
+  cost_hint: 国库每季 −20，两季（共 40 万缗）；期满后本路治安 +2、税基 +2。察访之臣离京，往返按行程计，其间不能当廷议、只能遣使问对。冷却 3 季。
+
+- id: int_cut_officials
+  category: 内政
+  title: 省并冗官
+  summary: 省京司闲局、员外冗员，清检冒滥请给。
+  cooldown: 6
+  params: []
+  ops:
+    - {op: start_project, name: 省并冗官, region: bianjing, cost_per_turn: {treasury: 25}, turns: 1,
+       on_complete: [{op: adjust_region, region: bianjing, stat: tax, delta: 1}, {op: adjust_region, region: bianjing, stat: order, delta: 1}]}
+  cost_hint: 遣散、考核之费国库 −25，一季；汴京税基 +1、治安 +1。吏治积弊之消长仍看奏疏（言路、考课诸条）。冷却 6 季。
+
+- id: int_shibo
+  category: 内政
+  title: 整顿市舶
+  summary: 整顿某路市舶司，抽解蕃货，禁私贩。
+  cooldown: 4
+  params:
+    - {name: region, kind: region, filter: {controller: own, ids: [liangzhe, minguang, jingdong]}}
+  ops:
+    - {op: start_project, name: 整顿市舶, region: "{region}", cost_per_turn: {treasury: 25}, turns: 2,
+       on_complete: [{op: adjust_region, region: "{region}", stat: tax, delta: 3}, {op: adjust_region, region: "{region}", stat: prosperity, delta: 2}]}
+  cost_hint: 国库每季 −25，两季（共 50 万缗）；竣工后本路税基 +3、繁荣 +2。驿程过远之地令达于下季。冷却 4 季。
+
+# ============================== 人事 ==============================
+- id: per_appoint
+  category: 人事
+  title: 授官
+  summary: 以某人为某官。有任所、统军之官即启程赴任。
+  params:
+    - {name: character, kind: character, filter: {idle: true, can_hold_office: true}}
+    - {name: office, kind: office, filter: {vacant: true}}
+  ops:
+    - {op: appoint, character: "{character}", office: "{office}", dispatch: true}
+  cost_hint: 不费钱粮。官须出缺（先罢免原任者）；一人兼官以三职为限；才干须合其官。经略、宣抚兼统本军，不在任所者启程赴任，到任前副将暂摄。
+
+- id: per_dismiss
+  category: 人事
+  title: 罢免
+  summary: 罢某人某官。
+  params:
+    - {name: character, kind: character, filter: {holds_office: true}}
+    - {name: office, kind: office, filter: {vacant: false}}
+  ops:
+    - {op: dismiss, character: "{character}", office: "{office}"}
+  cost_hint: 不费钱粮。罢统军之职即罢其统帅；官缺须另授。罢黜佞幸之于朝局的影响（佞幸、君威）见奏疏，此卡只改官职。
+
+- id: per_recall
+  category: 人事
+  title: 召还京师
+  summary: 诏某人还京。
+  params:
+    - {name: character, kind: character, filter: {idle: true, present: false}}
+  ops:
+    - {op: move_character, character: "{character}", to_region: bianjing}
+  cost_hint: 不费钱粮。行程按路线计季（关中、闽广约一季，西北边约两季）。统兵在外者离军，其军由副将暂摄。
+
+- id: per_dispatch
+  category: 人事
+  title: 遣赴某地
+  summary: 遣某人赴某地（出使、监军或待命）。
+  params:
+    - {name: character, kind: character, filter: {idle: true}}
+    - {name: to, kind: region, filter: {controller: own}}
+  ops:
+    - {op: move_character, character: "{character}", to_region: "{to}"}
+  cost_hint: 不费钱粮。行程按路线计季；人不在京，则不能当廷议、只能遣使问对。只移其人，不改官职。
+
+- id: per_retire
+  category: 人事
+  title: 令其致仕
+  summary: 优诏某人致仕归第。
+  params:
+    - {name: character, kind: character, filter: {holds_office: true}}
+  ops:
+    - {op: set_character_status, character: "{character}", status: retired}
+  cost_hint: 不费钱粮。解其全部官职与兵柄；本人记其事。须为本朝臣属、身在本朝之地；敌对之人不可。
+
+- id: per_exile
+  category: 人事
+  title: 贬窜远州
+  summary: 责某人为远州安置，即日出京。
+  params:
+    - {name: character, kind: character}
+  ops:
+    - {op: set_character_status, character: "{character}", status: exiled}
+  cost_hint: 不费钱粮。解其全部官职与兵柄；本人记其事。不能贬敌对之人与陛下本人。
+
+- id: per_imprison
+  category: 人事
+  title: 付大理寺推勘
+  summary: 收某人付大理寺推勘。
+  params:
+    - {name: character, kind: character}
+  ops:
+    - {op: set_character_status, character: "{character}", status: imprisoned}
+  cost_hint: 不费钱粮。须其人身在本朝控制之地，且当地无敌军护卫；统兵在外而拥兵者不可拘。赐死、赦免须经奏疏或事件。
+
+# ============================== 外交 ==============================
+- id: dip_xuanyu
+  category: 外交
+  title: 遣使宣谕
+  summary: 遣在京之臣持节宣谕某边路将士、蕃部，赐以金帛。
+  cooldown: 2
+  params:
+    - {name: envoy, kind: character, filter: {present: true}}
+    - {name: region, kind: region, filter: {controller: own, ids: [hebei_xi, hebei_dong, hedong, xibian, guanzhong, yanshan, jingdong]}}
+  ops:
+    - {op: move_character, character: "{envoy}", to_region: "{region}"}
+    - {op: start_project, name: 宣谕赐物, region: "{region}", cost_per_turn: {treasury: 25}, turns: 1,
+       on_complete: [{op: adjust_region, region: "{region}", stat: order, delta: 2}]}
+  cost_hint: 国库 −25，一季；本路治安 +2。使者离京，往返按行程计。与金、辽、西夏的盟约、岁币、和战不在此卡：须经奏疏。冷却 2 季。
+
+- id: dip_quechang
+  category: 外交
+  title: 开榷场互市
+  summary: 于某边路开榷场，与北人、夏人互市茶、帛、马匹。
+  cooldown: 4
+  params:
+    - {name: region, kind: region, filter: {controller: own, ids: [hebei_dong, hedong, xibian, yanshan]}}
+  ops:
+    - {op: start_project, name: 开榷场互市, region: "{region}", cost_per_turn: {treasury: 25}, turns: 2,
+       on_complete: [{op: adjust_region, region: "{region}", stat: prosperity, delta: 3}, {op: adjust_region, region: "{region}", stat: tax, delta: 2}]}
+  cost_hint: 国库每季 −25，两季（共 50 万缗）；竣工后本路繁荣 +3、税基 +2。不改与诸国的关系。冷却 4 季。
+
+# ============================== 财计 ==============================
+- id: fin_hedi
+  category: 财计
+  title: 和籴实边
+  summary: 出钱于某边路和籴，充实边储。
+  cooldown: 3
+  params:
+    - {name: region, kind: region, filter: {controller: own, ids: [hebei_xi, hebei_dong, hedong, xibian, guanzhong, yanshan]}}
+  ops:
+    - {op: start_project, name: 和籴实边, region: "{region}", cost_per_turn: {treasury: 40}, turns: 1,
+       on_complete: [{op: adjust_region, region: "{region}", stat: grain, delta: 3}, {op: adjust_region, region: "{region}", stat: order, delta: 1}]}
+  cost_hint: 国库 −40，一季；本路粮产 +3（每季租米约 +2.7 万石）、治安 +1。钱多而粮少，非为生息。冷却 3 季。
+
+- id: fin_changping
+  category: 财计
+  title: 广常平仓
+  summary: 于某路增置常平仓，谷贱则籴、谷贵则粜。
+  cooldown: 4
+  params:
+    - {name: region, kind: region, filter: {controller: own}}
+  ops:
+    - {op: start_project, name: 广常平仓, region: "{region}", cost_per_turn: {treasury: 30, grain: 20}, turns: 2,
+       on_complete: [{op: adjust_region, region: "{region}", stat: grain, delta: 3}, {op: adjust_region, region: "{region}", stat: order, delta: 3}, {op: adjust_region, region: "{region}", stat: prosperity, delta: 2}]}
+  cost_hint: 国库每季 −30、粮储每季 −20，两季；竣工后本路粮产 +3、治安 +3、繁荣 +2。冷却 4 季。
+
+- id: fin_yingtian
+  category: 财计
+  title: 营田弓箭手
+  summary: 于某边路募弓箭手营田，岁收充军食，有警则为兵。
+  cooldown: 4
+  params:
+    - {name: region, kind: region, filter: {controller: own, ids: [xibian, hedong, hebei_xi, hebei_dong, guanzhong, yanshan]}}
+  ops:
+    - {op: start_project, name: 营田弓箭手, region: "{region}", cost_per_turn: {treasury: 30}, turns: 3,
+       on_complete: [{op: adjust_region, region: "{region}", stat: grain, delta: 6}, {op: adjust_region, region: "{region}", stat: defense, delta: 2}]}
+  cost_hint: 国库每季 −30，三季（共 90 万缗）；竣工后本路粮产 +6（每季租米约 +5.4 万石）、防务 +2。冷却 4 季。
+
+- id: fin_qianyin
+  category: 财计
+  title: 称提钱引
+  summary: 出现钱称提川峡钱引，收回滥发之引，以平物价。
+  cooldown: 6
+  params: []
+  ops:
+    - {op: start_project, name: 称提钱引, region: chuanxia, cost_per_turn: {treasury: 30}, turns: 2,
+       on_complete: [{op: adjust_region, region: chuanxia, stat: prosperity, delta: 4}, {op: adjust_region, region: chuanxia, stat: order, delta: 2}]}
+  cost_hint: 国库每季 −30，两季（共 60 万缗）；竣工后川峡繁荣 +4、治安 +2。川峡驿程过远，令达于下季。冷却 6 季。

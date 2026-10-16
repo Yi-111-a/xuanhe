@@ -23,8 +23,8 @@ export function MapCrop({ region, className, zoom = 3.2 }: { region: string; cla
     <svg className={cls('map-crop', className)} viewBox={`${x} ${y} ${w} ${h}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true" data-art="map">
       <defs>
         <radialGradient id="mapcrop-vignette" cx="50%" cy="50%" r="70%">
-          <stop offset="55%" stopColor="#2a160c" stopOpacity="0" />
-          <stop offset="100%" stopColor="#2a160c" stopOpacity="0.55" />
+          <stop offset="55%" stopColor="#18201e" stopOpacity="0" />
+          <stop offset="100%" stopColor="#18201e" stopOpacity="0.55" />
         </radialGradient>
       </defs>
       <image href={url} x={0} y={0} width={map.width} height={map.height} preserveAspectRatio="none" />

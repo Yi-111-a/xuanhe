@@ -120,7 +120,7 @@ export function useAsset(candidates: string[] | string | null | undefined): [str
 }
 
 // map.json bundled at build time when the art agent has produced it.
-const bundledMaps = import.meta.glob('../../../scenarios/tianbao_751/map.json', {
+const bundledMaps = import.meta.glob('../../../scenarios/xuanhe_1120/map.json', {
   eager: true,
   import: 'default',
 }) as Record<string, unknown>;

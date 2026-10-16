@@ -39,24 +39,24 @@ export function InkScene({ seed, className }: { seed: string; className?: string
       <rect width="400" height="300" fill={`url(#s${uid})`} />
       <circle cx={80 + r() * 240} cy={60 + r() * 30} r={mood === 'war' ? 26 : 18} fill={mood === 'war' ? '#c0392b' : '#e9c46a'} opacity={0.7} />
       <g filter={`url(#w${uid})`}>
-        <path d={ridges[0]} fill="#2f5d8a" opacity="0.45" />
-        <path d={ridges[1]} fill="#3e7f6b" opacity="0.6" />
+        <path d={ridges[0]} fill="#3d6b86" opacity="0.45" />
+        <path d={ridges[1]} fill="#4f8a75" opacity="0.6" />
         <path d={ridges[2]} fill="#1e3b33" opacity="0.75" />
       </g>
       {mood === 'flood' && <path d="M0 250 Q 100 235 200 250 T 400 250 V 300 H 0 Z" fill="#5d89b0" opacity="0.5" />}
       {mood === 'court' && (
         <g transform="translate(200 205)" fill="#5a1d14">
-          <path d="M-90 0 q 90 -30 180 0 l -10 8 h -160 z" fill="#1e1b18" />
+          <path d="M-90 0 q 90 -30 180 0 l -10 8 h -160 z" fill="#1b1d1b" />
           <rect x="-70" y="8" width="140" height="34" />
           {[-50, -20, 10, 40].map((x) => (
-            <rect key={x} x={x} y="12" width="8" height="30" fill="#c9a24b" opacity="0.6" />
+            <rect key={x} x={x} y="12" width="8" height="30" fill="#b7a271" opacity="0.6" />
           ))}
         </g>
       )}
       {mood === 'war' &&
         Array.from({ length: 7 }, (_, i) => (
           <g key={i} transform={`translate(${60 + i * 45 + r() * 10} ${215 + r() * 20})`}>
-            <line x1="0" y1="0" x2="0" y2="-60" stroke="#1e1b18" strokeWidth="2" />
+            <line x1="0" y1="0" x2="0" y2="-60" stroke="#1b1d1b" strokeWidth="2" />
             <path d="M0 -60 l 26 6 l -26 8 z" fill="#b2321f" />
           </g>
         ))}

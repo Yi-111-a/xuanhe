@@ -1,9 +1,9 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "天宝",
-  "mainBinaryName": "tianbao",
+  "productName": "宣和",
+  "mainBinaryName": "xuanhe",
   "version": "0.1.1",
-  "identifier": "io.github.yi111a.tianbao",
+  "identifier": "io.github.yi111a.xuanhe",
   "build": {
     "frontendDist": "../../app/dist",
     "devUrl": "http://127.0.0.1:5173",
@@ -48,7 +48,7 @@
       "../../scenarios": "scenarios",
       "../../integrations": "integrations"
     },
-    "shortDescription": "天宝：盛唐天宝十载的施政推演",
+    "shortDescription": "宣和：北宋宣和年间的施政推演",
     "windows": {
       "nsis": {
         "installMode": "currentUser",

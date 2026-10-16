@@ -10,8 +10,8 @@ import { cls } from '../lib/util';
 
 const GLYPH: Record<string, string> = { start: '始', edict: '诏', choice: '择', turn: '季', op: '令', pending: '缓', rewind: '溯', message: '言' };
 const SEASON = ['春', '夏', '秋', '冬'];
-const CN = ['十', '十一', '十二', '十三', '十四', '十五', '十六'];
-const turnLabel = (t: number) => `天宝${CN[Math.floor(t / 4)] ?? ''}载${SEASON[t % 4]}`;
+const CN = ['二', '三', '四', '五', '六', '七', '八', '九'];
+const turnLabel = (t: number) => `宣和${CN[Math.floor(t / 4)] ?? ''}年${SEASON[t % 4]}`;
 
 export function TimelinePanel() {
   const g = useGame();
@@ -77,7 +77,7 @@ export function TimelinePanel() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `天宝史册-${g.view?.calendar_label ?? g.sessionId}.json`;
+      a.download = `宣和史册-${g.view?.calendar_label ?? g.sessionId}.json`;
       document.body.appendChild(a);
       a.click();
       a.remove();

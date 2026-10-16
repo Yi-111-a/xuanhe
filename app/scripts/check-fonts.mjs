@@ -1,4 +1,4 @@
-// Fast pre-build check: every CJK character in app/src and scenarios/tianbao_751 must be in the
+// Fast pre-build check: every CJK character in app/src and scenarios/xuanhe_1120 must be in the
 // bundled font subset. If not (scenario text changed), regenerate the subset automatically.
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -28,7 +28,7 @@ function missing() {
   const files = [
     ...walk(path.join(app, 'src'), ['.ts', '.tsx', '.css', '.html', '.json']),
     path.join(app, 'index.html'),
-    ...walk(path.join(root, 'scenarios', 'tianbao_751'), ['.yaml', '.yml', '.md', '.json', '.txt']),
+    ...walk(path.join(root, 'scenarios', 'xuanhe_1120'), ['.yaml', '.yml', '.md', '.json', '.txt']),
   ];
   const out = new Set();
   for (const f of files) for (const ch of fs.readFileSync(f, 'utf-8').match(CJK) ?? []) if (!body.has(ch)) out.add(ch);

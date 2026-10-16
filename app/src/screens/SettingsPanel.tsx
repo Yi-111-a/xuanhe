@@ -34,11 +34,11 @@ const LOCAL_CLI_NOTES: Record<string, { login: string; who: string }> = {
   codex_cli: { who: 'Codex', login: 'codex login' },
 };
 
-const CLAUDE_CMD = `claude mcp add tianbao --env SIM_MCP_MODE=client --env LLM_SIM_HOME="%APPDATA%\\tianbao" -- sim mcp`;
-const CODEX_TOML = `[mcp_servers.tianbao]
+const CLAUDE_CMD = `claude mcp add xuanhe --env SIM_MCP_MODE=client --env LLM_SIM_HOME="%APPDATA%\\xuanhe" -- sim mcp`;
+const CODEX_TOML = `[mcp_servers.xuanhe]
 command = "sim"
 args = ["mcp"]
-env = { SIM_MCP_MODE = "client", LLM_SIM_HOME = "C:\\\\Users\\\\<用户名>\\\\AppData\\\\Roaming\\\\tianbao" }`;
+env = { SIM_MCP_MODE = "client", LLM_SIM_HOME = "C:\\\\Users\\\\<用户名>\\\\AppData\\\\Roaming\\\\xuanhe" }`;
 
 type Tab = 'models' | 'mcp' | 'usage' | 'game';
 
@@ -376,7 +376,7 @@ export function SettingsPanel() {
         {tab === 'mcp' && (
           <div className="settings-body selectable" data-testid="settings.mcp">
             <p>
-              《天宝》可作为 MCP 服务接入 Claude Code 或 Codex：由你所用的模型扮演群臣、解释诏令，引擎照常结算。存档与桌面版共用（<code>%APPDATA%\tianbao</code>）。
+              《宣和》可作为 MCP 服务接入 Claude Code 或 Codex：由你所用的模型扮演群臣、解释诏令，引擎照常结算。存档与桌面版共用（<code>%APPDATA%\xuanhe</code>）。
             </p>
             {integration && integration.length > 0 ? (
               integration.map((b) => (
@@ -408,7 +408,7 @@ export function SettingsPanel() {
             </>
             )}
             <p className="muted">
-              模式：<code>SIM_MCP_MODE=client</code>（默认）由调用方模型扮演；改为 <code>server</code> 则使用本页配置的模型服务。接入后对模型说「开一局天宝，先看简报」即可。<code>sim</code> 需在 PATH 中（引擎 backend 安装后提供）。
+              模式：<code>SIM_MCP_MODE=client</code>（默认）由调用方模型扮演；改为 <code>server</code> 则使用本页配置的模型服务。接入后对模型说「开一局宣和，先看简报」即可。<code>sim</code> 需在 PATH 中（引擎 backend 安装后提供）。
             </p>
           </div>
         )}
