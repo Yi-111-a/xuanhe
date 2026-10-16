@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "tianbao": {
+      "type": "stdio",
+      "command": "${LOCALAPPDATA}/天宝/server/tianbao-server.exe",
+      "args": ["mcp"]
+    }
+  }
+}

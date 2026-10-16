@@ -1,0 +1,109 @@
+/* 《天宝》 design tokens — the single place to swap palette/typography.
+   Values follow design/STYLE_GUIDE.md §1–§4 (Dunhuang mineral palette). */
+
+@font-face {
+  font-family: 'TB WenKai';
+  src: url('../assets/fonts/wenkai-medium.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'TB Serif';
+  src: url('../assets/fonts/serif-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'TB Serif';
+  src: url('../assets/fonts/serif-bold.woff2') format('woff2');
+  font-weight: 600 800;
+  font-style: normal;
+  font-display: block;
+}
+
+:root {
+  /* mineral palette */
+  --shiqing: #2f5d8a;
+  --shiqing-deep: #1d3c5c;
+  --shiqing-light: #5d89b0;
+  --shilv: #3e7f6b;
+  --shilv-deep: #285647;
+  --shilv-light: #6fa891;
+  --zheshi: #a5642e;
+  --zheshi-light: #c98a4e;
+  --zhusha: #c0392b;
+  --zhusha-deep: #8a2219;
+  --zhusha-light: #e0604f;
+  --nijin: #c9a24b;
+  --nijin-bright: #ecd08a;
+  --nijin-dim: #8a6d2c;
+  --huangma: #e6d3a3;
+  --huangma-light: #f2e6c6;
+  --huangma-deep: #cdb37a;
+  --silk: #d9c08a;
+  --mo: #1e1b18;
+  --mo-soft: #3d342b;
+  --mo-faded: #6b5b48;
+  --zise: #5b3a6b;
+  --zise-light: #8a6699;
+  --lacquer: #17110e;
+  --lacquer-2: #2a1c14;
+  --lacquer-3: #3b281c;
+  --wood: #4a2f1f;
+  --wood-dark: #24160e;
+
+  /* crisis bands */
+  --crisis-calm: #3e7f6b;
+  --crisis-rumor: #c9a24b;
+  --crisis-storm: #d2742f;
+  --crisis-fire: #c0392b;
+
+  /* semantics */
+  --ink-text: #241a12;
+  --ink-muted: #54412d;
+  --on-lacquer: #efe0bb;
+  --on-lacquer-muted: #b59d6c;
+  --good: #2f7a5f;
+  --bad: #b2321f;
+  --good-on-dark: #8fd0ad;
+  --good-ink: #164a36;
+  --bad-ink: #7c1e12;
+  --bad-on-dark: #f08a74;
+
+  /* typography */
+  --font-fallback: 'Microsoft YaHei', 'PingFang SC', 'Noto Sans CJK SC', serif;
+  --font-title: 'TB WenKai', 'LXGW WenKai', var(--font-fallback);
+  --font-body: 'TB Serif', 'Noto Serif SC', 'Source Han Serif SC', var(--font-fallback);
+  /* reading sizes on paper (≥16px at 1080p, ≥14px at 768p — see tests/e2e/readability.spec.ts) */
+  --fs-body: 17px;
+  --fs-small: 16px;
+  --fs-label: 15px;
+  --lh-body: 1.75;
+  --ls-title: 0.08em;
+
+  /* depth */
+  --shadow-paper: 0 22px 60px rgba(12, 7, 3, 0.55), 0 3px 10px rgba(30, 20, 10, 0.35);
+  --shadow-soft: 0 6px 18px rgba(30, 20, 10, 0.35);
+  --shadow-object: 0 14px 28px rgba(8, 4, 2, 0.6), 0 2px 4px rgba(8, 4, 2, 0.5);
+  --radius-paper: 2px;
+  --radius-button: 3px;
+
+  /* motion */
+  --ease-ink: cubic-bezier(0.22, 0.8, 0.24, 1);
+
+  /* textures (procedural, swap for ui.paper etc. when art exists) */
+  --tex-paper: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .32  0 0 0 0 .15  0 0 0 .22 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  --tex-fiber: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.012 .18' numOctaves='2' seed='7' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .36  0 0 0 0 .18  0 0 0 .16 0'/></filter><rect width='400' height='400' filter='url(%23f)'/></svg>");
+  --tex-wood: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='300'><filter id='w'><feTurbulence type='fractalNoise' baseFrequency='.004 .09' numOctaves='3' seed='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .2  0 0 0 0 .1  0 0 0 0 .05  0 0 0 .55 0'/></filter><rect width='600' height='300' filter='url(%23w)'/></svg>");
+  --tex-lacquer: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='120'><filter id='l'><feTurbulence type='fractalNoise' baseFrequency='.02 .4' numOctaves='2' seed='11' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .2  0 0 0 0 .1  0 0 0 .25 0'/></filter><rect width='300' height='120' filter='url(%23l)'/></svg>");
+}
+
+@media (max-height: 860px) {
+  :root {
+    --fs-body: 15px;
+    --fs-small: 14px;
+    --fs-label: 13px;
+  }
+}

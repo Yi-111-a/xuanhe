@@ -1,0 +1,62 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "天宝",
+  "mainBinaryName": "tianbao",
+  "version": "0.1.1",
+  "identifier": "io.github.yi111a.tianbao",
+  "build": {
+    "frontendDist": "../../app/dist",
+    "devUrl": "http://127.0.0.1:5173",
+    "beforeDevCommand": "npm --prefix ../app run dev -- --host 127.0.0.1 --port 5173 --strictPort"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [],
+    "security": {
+      "csp": {
+        "default-src": "'self'",
+        "connect-src": "'self' ipc: http://ipc.localhost http://127.0.0.1:* ws://127.0.0.1:* http://tauri.localhost",
+        "img-src": "'self' data: blob: asset: http://asset.localhost http://127.0.0.1:*",
+        "media-src": "'self' data: blob: http://127.0.0.1:*",
+        "font-src": "'self' data:",
+        "style-src": "'self' 'unsafe-inline'",
+        "script-src": "'self'"
+      },
+      "devCsp": {
+        "default-src": "'self'",
+        "connect-src": "'self' ipc: http://ipc.localhost http://127.0.0.1:* ws://127.0.0.1:* http://localhost:*",
+        "img-src": "'self' data: blob: http://127.0.0.1:*",
+        "media-src": "'self' data: blob: http://127.0.0.1:*",
+        "font-src": "'self' data:",
+        "style-src": "'self' 'unsafe-inline'",
+        "script-src": "'self' 'unsafe-inline' 'unsafe-eval'"
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "resources": {
+      "resources/server": "server",
+      "../../scenarios": "scenarios",
+      "../../integrations": "integrations"
+    },
+    "shortDescription": "天宝：盛唐天宝十载的施政推演",
+    "windows": {
+      "nsis": {
+        "installMode": "currentUser",
+        "languages": ["SimpChinese"],
+        "displayLanguageSelector": false,
+        "compression": "lzma",
+        "installerIcon": "icons/icon.ico"
+      }
+    }
+  }
+}

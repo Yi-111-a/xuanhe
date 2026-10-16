@@ -1,0 +1,281 @@
+/* Opt-in rules that swap procedural materials for the art agent's textures when present.
+   Each `.art-*` class is set on <html> by useUiArt() only after the image resolved. */
+
+/* paper ------------------------------------------------------------------- */
+.art-paper .paper {
+  background-image: radial-gradient(ellipse at 50% 45%, rgba(255, 248, 225, 0.35), rgba(255, 248, 225, 0) 70%), var(--art-paper);
+  background-size: 100% 100%, 108% 112%;
+  background-position: center, center;
+}
+.art-paper .paper.paper--silk {
+  background-image: linear-gradient(rgba(240, 214, 150, 0.22), rgba(240, 214, 150, 0.22)), var(--art-paper);
+  background-size: 100% 100%, 108% 112%;
+}
+/* the ledger holds small figures: a lighter veil keeps them ≥ 4.5:1 against the silk */
+.art-paper .ledger-paper .paper.paper--silk {
+  background-image: linear-gradient(rgba(255, 246, 222, 0.32), rgba(255, 246, 222, 0.32)), var(--art-paper);
+  background-size: 100% 100%, 108% 112%;
+}
+.art-paper .paper.paper--slip,
+.art-paper .calendar-paper,
+.art-paper .book-slip,
+.art-paper .scroll-tag,
+.art-paper .audience-plaque,
+.art-paper .toast {
+  background-image: var(--art-paper);
+  background-size: 300% 300%;
+  background-position: center;
+}
+
+/* desk -------------------------------------------------------------------- */
+.art-desk .desk-wood {
+  background-image: linear-gradient(rgba(10, 5, 2, 0.35), rgba(10, 5, 2, 0.35)), var(--art-desk);
+  background-size: cover;
+  background-position: center;
+}
+.art-desk .newgame {
+  background-image: radial-gradient(ellipse at 50% 45%, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.55) 85%), var(--art-desk) !important;
+  background-size: cover !important;
+}
+
+/* silk brocade borders ----------------------------------------------------- */
+.art-silk .hanging-body,
+.art-silk .result-scroll-body,
+.art-silk .debate-banner-cloth {
+  background-image: linear-gradient(rgba(30, 50, 70, 0.35), rgba(30, 50, 70, 0.35)), var(--art-silk);
+  background-size: auto, 360px auto;
+}
+.art-silk .hanging-border,
+.art-silk .result-scroll-body > svg {
+  opacity: 0;
+}
+.art-silk .desk-map-frame {
+  background-image: var(--art-silk);
+  background-size: 420px auto;
+}
+.art-silk .result-frame {
+  background-image: var(--art-silk);
+  background-size: 300px auto;
+}
+
+/* ink-block buttons -------------------------------------------------------- */
+.art-inkbtn .btn-ink:not(.btn-ink--red) {
+  background: none;
+  clip-path: none;
+  box-shadow: none;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 6px 26px;
+  border-image: var(--art-inkbtn) 34 230 fill / 6px 26px stretch;
+  padding: 0 0.7em;
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.45));
+}
+.art-inkbtn .btn-ink.btn-small:not(.btn-ink--red) {
+  border-width: 4px 16px;
+  border-image-width: 4px 16px;
+  padding: 0 0.4em;
+}
+.art-inkbtn .btn-ink:not(.btn-ink--red):not(:disabled):hover {
+  box-shadow: none;
+  filter: drop-shadow(0 0 10px rgba(236, 208, 138, 0.45)) drop-shadow(0 6px 8px rgba(0, 0, 0, 0.45)) brightness(1.12);
+}
+.art-inkbtn .plaque-btn:not(.plaque-btn--primary),
+.art-inkbtn .choice-option {
+  background: none;
+  clip-path: none;
+  box-shadow: none;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 8px 34px;
+  border-image: var(--art-inkbtn) 34 230 fill / 8px 34px stretch;
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.5));
+}
+.art-inkbtn .choice-option {
+  border-width: 8px 40px;
+  border-image-width: 8px 40px;
+  padding: 10px 6px;
+}
+.art-inkbtn .plaque-btn {
+  font-size: 23px;
+}
+
+/* lacquer resource bar ---------------------------------------------------- */
+.art-lacquer .resbar {
+  border: 0;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 11px 30px;
+  border-image: var(--art-lacquer) 46 120 / 11px 30px round;
+  padding: 0 4px;
+  box-shadow: 0 14px 28px rgba(8, 4, 2, 0.6);
+  background-clip: padding-box;
+}
+.art-lacquer .resbar-corner {
+  display: none;
+}
+
+/* faction ribbons ---------------------------------------------------------- */
+.art-ribbon-xiang .ribbon--zise .ribbon-cloth,
+.art-ribbon-yang .ribbon--zhusha .ribbon-cloth,
+.art-ribbon-fanyang .ribbon--shilv .ribbon-cloth,
+.art-ribbon-neiting .ribbon--shiqing .ribbon-cloth {
+  width: 66px;
+  height: max(var(--len, 120px), 100px);
+  margin-top: 0;
+  background: none;
+  clip-path: none;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 50px 0 30px 0;
+  border-image-slice: 46% 0 27% 0 fill;
+  border-image-width: 50px 0 30px 0;
+  border-image-repeat: stretch;
+}
+.art-ribbon-xiang .ribbon--zise .ribbon-cloth {
+  border-image-source: var(--art-ribbon-xiang);
+}
+.art-ribbon-yang .ribbon--zhusha .ribbon-cloth {
+  border-image-source: var(--art-ribbon-yang);
+}
+.art-ribbon-fanyang .ribbon--shilv .ribbon-cloth {
+  border-image-source: var(--art-ribbon-fanyang);
+}
+.art-ribbon-neiting .ribbon--shiqing .ribbon-cloth {
+  border-image-source: var(--art-ribbon-neiting);
+}
+.art-ribbon-xiang .ribbon--zise .ribbon-pearls,
+.art-ribbon-yang .ribbon--zhusha .ribbon-pearls,
+.art-ribbon-fanyang .ribbon--shilv .ribbon-pearls,
+.art-ribbon-neiting .ribbon--shiqing .ribbon-pearls {
+  display: none;
+}
+.art-ribbon-xiang .ribbon--zise .ribbon-seal,
+.art-ribbon-yang .ribbon--zhusha .ribbon-seal,
+.art-ribbon-fanyang .ribbon--shilv .ribbon-seal,
+.art-ribbon-neiting .ribbon--shiqing .ribbon-seal {
+  top: -42px;
+  width: 26px;
+  height: 26px;
+  font-size: 18px;
+  background: none;
+  box-shadow: none;
+  color: #3a1d08;
+  text-shadow: 0 1px 0 rgba(255, 240, 200, 0.6);
+}
+.art-ribbon-xiang .ribbon-rod {
+  display: none;
+}
+.art-ribbon-xiang .ribbons {
+  margin-top: -14px;
+}
+
+@media (max-width: 1600px) {
+  .art-ribbon-xiang .ribbon--zise .ribbon-cloth,
+  .art-ribbon-yang .ribbon--zhusha .ribbon-cloth,
+  .art-ribbon-fanyang .ribbon--shilv .ribbon-cloth,
+  .art-ribbon-neiting .ribbon--shiqing .ribbon-cloth {
+    width: 56px;
+    border-width: 42px 0 26px 0;
+    border-image-width: 42px 0 26px 0;
+  }
+  .art-ribbon-xiang .ribbon .ribbon-seal {
+    top: -36px;
+    width: 22px;
+    height: 22px;
+    font-size: 15px;
+  }
+}
+
+/* resource icons from art: the painted coin already has a rim */
+.res-icon:has(img) {
+  background: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+.res-icon img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.ledger-icon:has(img) {
+  background: none;
+  box-shadow: none;
+}
+
+/* portraits: crop the painted half-length figures to faces for chips */
+.portrait--chip > img,
+.portrait--mini > img {
+  transform: scale(2.15);
+  transform-origin: 52% 17%;
+}
+.portrait--card > img {
+  object-position: 50% 8%;
+  transform: scale(1.12);
+  transform-origin: 50% 0%;
+}
+
+/* edict scroll (ui.edict_paper, cropped to the scroll by useUiArt) ------------ */
+.art-edict .edict-scroll-wrap {
+  padding: 0;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 96px 64px 104px 64px;
+  border-image: var(--art-edict) 165 112 180 111 fill / 96px 64px 104px 64px stretch;
+  filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.6));
+  height: auto;
+  align-self: stretch;
+  /* hide the painted desk above/below the brocade bands, keep the rollers */
+  -webkit-mask-image: linear-gradient(#000, #000), linear-gradient(#000, #000), linear-gradient(#000, #000);
+  mask-image: linear-gradient(#000, #000), linear-gradient(#000, #000), linear-gradient(#000, #000);
+  -webkit-mask-size: 64px 100%, 64px 100%, 100% calc(100% - 107px);
+  mask-size: 64px 100%, 64px 100%, 100% calc(100% - 107px);
+  -webkit-mask-position: left top, right top, 0 52px;
+  mask-position: left top, right top, 0 52px;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+.art-edict .edict-scroll-wrap > .roller {
+  display: none;
+}
+.art-edict .edict-paper {
+  filter: none;
+}
+.art-edict .edict-paper > .paper {
+  background: none;
+  box-shadow: none;
+  clip-path: none !important;
+  padding: 0 4px;
+}
+.art-edict .edict-border {
+  box-shadow: none;
+  background: none;
+  padding: 0;
+}
+.art-edict .edict-title {
+  font-size: 40px;
+}
+.art-edict .edict-head {
+  margin: 2px 0 4px;
+}
+.art-silk .advice-slips {
+  background-image: linear-gradient(rgba(24, 14, 8, 0.86), rgba(24, 14, 8, 0.86)), var(--art-silk);
+  background-size: auto, 300px auto;
+}
+.art-edict .edict-section {
+  background: rgba(255, 250, 225, 0.55);
+}
+.art-edict .adopted-strip {
+  background: rgba(255, 250, 225, 0.5);
+}
+@media (max-height: 860px) {
+  .art-edict .edict-scroll-wrap {
+    border-width: 76px 50px 82px 50px;
+    border-image-width: 76px 50px 82px 50px;
+    -webkit-mask-size: 50px 100%, 50px 100%, 100% calc(100% - 84px);
+    mask-size: 50px 100%, 50px 100%, 100% calc(100% - 84px);
+    -webkit-mask-position: left top, right top, 0 41px;
+    mask-position: left top, right top, 0 41px;
+  }
+  .art-edict .edict-title {
+    font-size: 32px;
+  }
+}

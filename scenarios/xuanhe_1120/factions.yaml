@@ -1,0 +1,20 @@
+# 势力。朝内派系不建 faction，见 characters.yaml 的 bloc 字段。关系值为【设】。
+# 宋辽 +30（澶渊之盟以来通好）；辽金交战；方腊起事前与宋关系为 0（不敌对），起事时改为敌对。
+- id: song
+  name: 大宋
+  relations: {liao: 30, jin: 10, xixia: -10, goryeo: 20, fangla: 0}
+- id: liao
+  name: 大辽
+  relations: {song: 30, jin: -100, xixia: 20}
+- id: jin
+  name: 大金
+  relations: {song: 10, liao: -100, goryeo: 0}
+- id: xixia
+  name: 西夏
+  relations: {song: -10, liao: 20}
+- id: goryeo
+  name: 高丽
+  relations: {song: 20, jin: 0}
+- id: fangla
+  name: 方腊  # 起事后启用；起事前无军队与疆土
+  relations: {song: 0}

@@ -1,0 +1,511 @@
+# 《宣和》剧本：宣和二年（1120）
+# 依据 docs/XUANHE_OUTLINE.md；史实核对见 docs/FACT_CHECK.md。
+# 所有数值、概率与反事实分支均为本游戏设定（【设】/【反】）。
+id: xuanhe_1120
+manifest_version: 1
+version: "0.1.0"
+requires_engine: ">=0.3.0"
+title: 宣和二年
+era: 北宋
+summary: 繁华只剩最后六年。你是宋徽宗，你能避免靖康之耻吗？
+start_date: "1120-01-01"
+turn_unit: season
+currency: 缗
+calendar:
+  # 玩家是徽宗：不内禅就不会改元靖康，故 1126 年在本游戏中记作「宣和八年」（结局文字点明）。
+  eras:
+    - {from_turn: 0, name: 宣和, start_year: 2}
+  seasons: [春, 夏, 秋, 冬]
+  turn_format: "{era}{year}年{season}"
+  number_system: chinese
+  pre_game_turns: 0
+
+resources:
+  - {id: treasury, name: 国库, initial: 2400, min: 0, unit: 万缗}
+  - {id: grain, name: 粮储, initial: 1800, min: 0, unit: 万石}
+  - {id: authority, name: 君威, initial: 58, min: 0, max: 100, unit: 点}
+  - {id: morale, name: 民心, initial: 52, min: 0, max: 100, unit: 点}
+  - {id: corruption, name: 吏治积弊, initial: 62, min: 0, max: 100, unit: 点}
+  # 佞幸用事：蔡、王、童、梁、朱、高诸人用事之势。罢黜之、起用正人则降。
+  - {id: ningxing, name: 佞幸用事, initial: 72, min: 0, max: 100, unit: 点}
+  # 东南民怨：花石纲、应奉局、免夫钱之苦；≥ 66 方腊之变将起。
+  - {id: dongnan, name: 东南民怨, initial: 56, min: 0, max: 100, unit: 点}
+  # 武备：禁军实额、河北边防、器甲。
+  - {id: wubei, name: 武备, initial: 34, min: 0, max: 100, unit: 点}
+  # 辽祚：辽的残余国力，即宋的北方屏障。上京、中京、燕京之陷各有冲击；天祚被擒归零。
+  - {id: liao_zuo, name: 辽祚, initial: 50, min: 0, max: 100, unit: 点}
+  # 金人轻宋：隐藏。半宽 8 ×（1 + 积弊/100）；遣使觇金（旗标 intel:jin_contempt）减半一次，不叠加。
+  - {id: jin_contempt, name: 金人轻宋, initial: 30, min: 0, max: 100, unit: 点, hidden: true, estimate_width: 8}
+  # 胡马南牧：危机计，本身也隐藏（窄区间），免得玩家用「本季增量 − 公开分项」反推金人轻宋。
+  - {id: nanmu, name: 胡马南牧, initial: 15, min: 0, max: 100, unit: 点, hidden: true, estimate_width: 3}
+
+stats:
+  - {id: prosperity, name: 繁荣, range: [0, 100]}
+  - {id: order, name: 治安, range: [0, 100]}
+  - {id: defense, name: 防务, range: [0, 100]}
+  - {id: tax, name: 税基, range: [0, 100]}
+  - {id: grain, name: 粮产, range: [0, 100]}
+
+offices:
+  - {id: emperor, name: 皇帝}
+  - {id: crown_prince, name: 皇太子}
+  - {id: taishi, name: 太师·总治三省, requires: {ability: 5}}
+  - {id: taizai, name: 太宰, requires: {ability: 4}}
+  - {id: shaozai, name: 少宰, requires: {ability: 4}}
+  - {id: youcheng, name: 尚书右丞, requires: {ability: 3}}
+  - {id: hanlin, name: 翰林学士承旨, requires: {ability: 3}}
+  - {id: yushi, name: 御史中丞, requires: {ability: 3}}
+  - {id: shumi, name: 领枢密院事, requires: {ability: 3}}
+  - {id: yubi, name: 主管传宣御笔}
+  - {id: dianshuai, name: 殿前都指挥使, requires: {ability: 3}, army: jinjun}
+  - {id: yingfeng, name: 提举苏杭应奉局, seat: liangzhe}
+  - {id: huangcheng, name: 提举皇城司}
+  - {id: jingyuan, name: 泾原路经略安抚使, requires: {ability: 5}, army: xijun_jingyuan}
+  - {id: qinfeng, name: 秦凤路经略安抚使, requires: {ability: 5}, army: xijun_qinfeng}
+  - {id: taiyuan, name: 知太原府, requires: {ability: 4}, army: hedong_army}
+  - {id: hebei_xuanfu, name: 河北河东宣抚使, requires: {ability: 4}, army: hebei_army}
+  - {id: haizhou, name: 知海州, requires: {ability: 3}, seat: jingdong}
+  - {id: yanshan_xuanfu, name: 燕山府路宣抚使, requires: {ability: 4}, army: yanshan_army}
+  - {id: changsheng_tong, name: 常胜军都统制, army: changsheng}
+
+edict_categories:
+  - {id: military, name: 军务, hint: 禁军、西军、河北河东、燕山、征伐}
+  - {id: interior, name: 内政, hint: 任免、财赋、花石应奉、赈济、吏治}
+  - {id: diplomacy, name: 外交, hint: 金、辽、西夏、高丽，岁币与盟约}
+  - {id: other, name: 其他, hint: 宫廷、东宫、道教、礼仪}
+
+formulas:
+  income:
+    tax: {resource: treasury, formula: "tax * 0.9", per_region: true, controlled_only: true, label: 诸路税入}
+    grain: {resource: grain, formula: "grain * 0.9", per_region: true, controlled_only: true, label: 诸路租米}
+  # 养兵：宋军按现有兵额逐季计费（每万兵 3 万缗、1.2 万石），自首季起入经常收支；分调总兵额不变则养兵不变。
+  upkeep:
+    - {resource: treasury, per: 10000, amount: 3, label: 诸军衣赐, factions: [song]}
+    - {resource: grain, per: 10000, amount: 1.2, label: 诸军粮料, factions: [song]}
+  drift:
+    nanmu: "(0.25 + 0.05*max(0, turn-6))*(1 - 0.012*min(60, liao_zuo)) + 0.06*min(20, max(0, jin_contempt-30)) - 0.04*(wubei-40) + 0.025*max(0, ningxing-50) - 0.02*(authority-55) - 0.2*max(0, nanmu-75)"
+    jin_contempt: "0.4 + 0.02*(ningxing-60) - 0.03*(wubei-40) - 0.02*(authority-55)"
+    authority: "-0.25 - 0.02*max(0, ningxing-60)"
+    morale: "0.15 - 0.02*max(0, corruption-55) - 0.03*max(0, dongnan-70)"
+    corruption: "0.03*(ningxing-60)"
+    dongnan: "0.35 + 0.02*(ningxing-60)"
+    wubei: "-0.3 - 0.01*max(0, ningxing-60)"
+    liao_zuo: "-1.0"
+  execution:
+    authority_resource: authority
+    corruption_resource: corruption
+    base_delay: 0.05
+    authority_factor: 0.0005
+    corruption_factor: 0.001
+
+# 开局即有的经常账目（T0→T1 结算即计入）。数目为游戏折算（【设】）。剧本定额不可由政令卡撤销，花石纲与岁币由奏疏处置。
+ledger:
+  - {id: gongting, name: 宫廷用度, category: treasury, amount: -22, reason: 禁中供奉、斋醮与宴赏（游戏折算）}
+  - {id: yingfeng_huashi, name: 应奉花石, category: treasury, amount: -18, reason: 苏杭应奉局与花石纲运（游戏折算）}
+  - {id: suibi_liao, name: 岁币（辽）, category: treasury, amount: -12, reason: 澶渊、庆历以来输辽银绢（游戏折算）}
+  - {id: zongshi, name: 宗室禄赐, category: treasury, amount: -10, reason: 宗室、恩赏（游戏折算）}
+  - {id: jingshi_lumi, name: 京师禄米, category: grain, amount: -45, reason: 百官禄米（诸军口粮另按兵额计入「诸军粮料」）（游戏折算）}
+
+# 危机计：terms 与 drift.nanmu 的六个分项一一对应（各项之和 = 每季漂移）。
+# 压力项只计超出部分并封顶（金人轻宋 20 封顶），示好不能把危机「存」成负数；「朝野戒备」在 75 以上抑制增势。
+crisis:
+  resource: nanmu
+  title: 胡马南牧
+  bands:
+    - {max: 39, name: 承平}
+    - {max: 54, name: 边声}
+    - {max: 69, name: 山雨}
+    - {max: 100, name: 铁骑}
+  terms:
+    - {id: rise, label: 金势日张, expr: "(0.25 + 0.05*max(0, turn-6))*(1 - 0.012*min(60, liao_zuo))"}
+    - {id: contempt, label: 金人轻宋, expr: "0.06*min(20, max(0, jin_contempt-30))"}
+    - {id: wubei, label: 武备, expr: "-0.04*(wubei-40)"}
+    - {id: ningxing, label: 佞幸误国, expr: "0.025*max(0, ningxing-50)"}
+    - {id: authority, label: 君威, expr: "-0.02*(authority-55)"}
+    - {id: watch, label: 朝野戒备, expr: "-0.2*max(0, nanmu-75)"}
+
+difficulties:
+  - id: yanyi
+    label: 演义
+    description: 宽和之局。金人增势较慢，府库稍丰，诏令少有稽迟。适合初识宣和局势。
+    drift_scale: {nanmu: 0.85, jin_contempt: 0.8}
+    start: {treasury: 2800}
+    delay_scale: 0.5
+  - id: shishi
+    label: 史实
+    description: 依史事设定的常例。明君善处可保北门，然金人日强，须时时经营。
+  - id: diyu
+    label: 地狱
+    description: 多事之秋。金人增势更急、更轻宋，君威易损，府库开局即紧，方腊、群盗更易起，诏令多有稽迟。
+    drift_scale: {nanmu: 1.15, jin_contempt: 1.2, authority: 1.3}
+    gravity_scale: {fangla_rising: 1.3, bandits_rise: 1.3}
+    start: {treasury: 2000, nanmu: 18}
+    delay_scale: 1.5
+default_difficulty: shishi
+
+counters:
+  - id: bankrupt_streak
+    mode: streak
+    conditions:
+      all:
+        - {kind: resource, id: treasury, operator: lte, value: 0}
+        - {kind: resource, id: grain, operator: lte, value: 200}
+  - id: fangla_hold            # 方腊同据两浙、江南
+    mode: streak
+    conditions:
+      all:
+        - {kind: region_controller, region: liangzhe, faction: fangla}
+        - {kind: region_controller, region: jiangnan, faction: fangla}
+  - id: minbian_streak         # 民心 ≤ 12
+    mode: streak
+    conditions: {kind: resource, id: morale, operator: lte, value: 12}
+  - id: nanmu_high             # 胡马南牧 ≥ 60 的累计季数
+    mode: count
+    conditions: {kind: resource, id: nanmu, operator: gte, value: 60}
+
+wars:
+  - {a: liao, b: jin}
+
+ai_routes:
+  - faction: jin
+    armies: [jin_west]
+    route: [yunzhong, hedong, jingxi, bianjing]
+    hold_if_outnumbered: true
+    conditions:
+      all:
+        - {kind: flag, key: jin_invaded, value: true}
+        - {not: {kind: flag, key: jin_withdrawn, value: true}}
+  - faction: jin
+    armies: [jin_east]
+    route: [pingzhou, yanshan, hebei_xi, bianjing]
+    hold_if_outnumbered: true
+    conditions:
+      all:
+        - {kind: flag, key: jin_invaded, value: true}
+        - {not: {kind: flag, key: jin_withdrawn, value: true}}
+  - faction: fangla
+    armies: [fangla_army]
+    route: [liangzhe, jiangnan]
+    hold_if_outnumbered: true
+    conditions:
+      all:
+        - {kind: flag, key: fangla_risen, value: true}
+        - {not: {kind: flag, key: fangla_quelled, value: true}}
+
+objectives:
+  - id: beimen
+    title: 北门锁钥
+    detail: >-
+      未南下：至宣和七年冬（宣和七年秋结算之后即终局）金兵未南下，且胡马南牧 < 55。
+      金兵若已南下，时限延至宣和八年冬，底线是汴京不失；可提前终局：金军两路败退满两季，汴京、太原、河北两路俱在，即「却敌河上」。
+      胡马南牧 ≥ 70 且辽祚 ≤ 15（或胡马南牧 ≥ 85）时，金兵随时可能南下。
+    conditions:
+      any:
+        - all:
+            - {not: {kind: flag, key: jin_invaded, value: true}}
+            - {kind: resource, id: nanmu, operator: lt, value: 55}
+        - all:
+            - {kind: flag, key: jin_invaded, value: true}
+            - {not: {kind: region_controller, region: bianjing, faction: jin}}
+    fail_conditions: {kind: region_controller, region: bianjing, faction: jin}
+  - id: fuku
+    title: 府库不竭
+    detail: 国库 > 0、粮储 > 300；二者同枯（国库见底且粮储 ≤ 200）连续两季即败。
+    conditions:
+      all:
+        - {kind: resource, id: treasury, operator: gt, value: 0}
+        - {kind: resource, id: grain, operator: gt, value: 300}
+    fail_conditions: {kind: counter, key: bankrupt_streak, operator: gte, value: 2}
+  - id: sheji
+    title: 社稷安固
+    detail: 终局君威 ≥ 50；未内禅；东南两浙、江南不同陷于方腊。
+    conditions: {kind: resource, id: authority, operator: gte, value: 50}
+    fail_conditions:
+      any:
+        - {kind: flag, key: neishan, value: true}
+        - {kind: counter, key: fangla_hold, operator: gte, value: 1}
+
+debate_topics:
+  - {id: haishang, keywords: [海上之盟, 联金, 夹攻, 金使, 女真], stances: {neishi: support, xingchen: support, guiming: support, cai: neutral, qingyi: oppose, xijun: oppose, bianchen: neutral}}
+  - {id: yanjing, keywords: [燕京, 燕云, 伐燕, 北伐, 燕山], stances: {neishi: support, xingchen: support, guiming: support, cai: neutral, xijun: oppose, qingyi: oppose, bianchen: neutral}}
+  - {id: lianliao, keywords: [联辽, 存辽, 辽使, 唇齿], stances: {qingyi: support, xijun: support, neishi: oppose, guiming: oppose, xingchen: oppose, cai: neutral}}
+  - {id: huashi, keywords: [花石, 应奉, 朱勔, 艮岳], stances: {xingchen: support, neishi: support, cai: support, qingyi: oppose, donggong: neutral}}
+  - {id: fangla, keywords: [方腊, 东南, 两浙, 睦州], stances: {neishi: support, xijun: neutral, qingyi: neutral, xingchen: neutral}}
+  - {id: donggong, keywords: [东宫, 太子, 郓王, 储位, 易储], stances: {donggong: support, qingyi: support, yunwang: oppose, xingchen: oppose, neishi: neutral, cai: neutral}}
+  - {id: zhangjue, keywords: [张觉, 平州, 纳叛], stances: {guiming: support, neishi: support, xingchen: support, qingyi: oppose, bianchen: oppose, cai: neutral}}
+  - {id: wubei, keywords: [禁军, 阙额, 武备, 西军, 河北, 城防, 练兵], stances: {xijun: support, bianchen: support, qingyi: support, xingchen: oppose, neishi: neutral}}
+  - {id: hehe, keywords: [议和, 割地, 三镇, 岁币, 增币], stances: {xingchen: support, cai: support, neishi: neutral, qingyi: oppose, xijun: oppose, bianchen: oppose}}
+  - {id: nanxing, keywords: [南幸, 南迁, 幸江南, 东南巡幸], stances: {xingchen: support, cai: support, neishi: support, qingyi: oppose, xijun: oppose, donggong: neutral}}
+
+game_length:
+  last_turn: 23
+  overtime_flag: jin_invaded
+  overtime_last_turn: 27
+  fallback_ending: e_open
+
+endings:
+  # ---- 失败（速败） ----
+  - id: f_bankrupt
+    kind: fail
+    priority: 1
+    title: 帑竭兵变
+    illustration: ending.f_bankrupt
+    conditions: {kind: counter, key: bankrupt_streak, operator: gte, value: 2}
+    text: 左藏空虚，粮储见底，连续两季禄廪不继。禁卫鼓噪索赐，诸军散处州县，朝廷号令出不得宫门。此为本游戏虚构的失败结局。【达成条件】国库见底且粮储 ≤ 200，连续两季。
+  - id: f_dongnan
+    kind: fail
+    priority: 2
+    title: 东南板荡
+    illustration: ending.f_dongnan
+    conditions: {kind: counter, key: fangla_hold, operator: gte, value: 2}
+    text: 方腊之众据两浙、江南，漕运断绝，东南财赋不复北输。汴京仰给于东南，仓廪立见空竭；朝廷虽在，半壁已非宋有。此为本游戏的失败结局，非史实（史载方腊起事半年而败）。【达成条件】方腊同据两浙、江南，连续两季。
+  - id: f_minbian
+    kind: fail
+    priority: 3
+    title: 群盗蜂起
+    illustration: ending.f_minbian
+    conditions: {kind: counter, key: minbian_streak, operator: gte, value: 2}
+    text: 民心离散，河北、京东之盗啸聚千百为群，州县不能制；饥民从之者日众，朝廷之令不出近畿。此为本游戏虚构的失败结局。【达成条件】民心 ≤ 12，连续两季。
+  # ---- 结局 ----
+  - id: e_neishan
+    kind: ending
+    priority: 4
+    title: 内禅东宫
+    illustration: ending.e_neishan
+    conditions: {kind: flag, key: neishan, value: true}
+    text: 陛下下诏传位于皇太子，自称道君太上皇帝，退居龙德宫。新君受命于危难之际，此后的战和存亡，由他与群臣收拾。史载徽宗于宣和七年十二月内禅，次年改元靖康。【达成条件】下诏内禅。
+  - id: e_jingkang
+    kind: ending
+    priority: 5
+    title: 靖康之耻
+    illustration: ending.e_jingkang
+    conditions:
+      all:
+        - {kind: region_controller, region: bianjing, faction: jin}
+        - {not: {kind: flag, key: court_south, value: true}}
+    text: 汴京城陷，金人入城。府库、宗室、百官、图籍、礼器尽为所掠，陛下与皇族北迁，宫阙一空。史书上，这一年本该叫作靖康元年——史载靖康元年闰十一月汴京陷，次年四月徽、钦二帝北狩，北宋亡。【达成条件】汴京为金所据，而车驾未曾南幸。
+  - id: e_nandu
+    kind: ending
+    priority: 6
+    title: 衣冠南渡
+    illustration: ending.e_nandu
+    conditions:
+      all:
+        - {kind: flag, key: court_south, value: true}
+        - any:
+            - {kind: region_controller, region: bianjing, faction: jin}
+            - all:
+                - {kind: turn, operator: gte, value: 27}
+                - any:
+                    - {kind: region_controller, region: hedong, faction: jin}
+                    - {kind: region_controller, region: hebei_xi, faction: jin}
+    text: 车驾南幸，渡江而守东南。中原之地或陷于金，或兵连不解；衣冠士族随驾南渡，宋祚得以延于江左。这是一条提早到来的南渡之路——史载南宋建炎之后方有此局。此为本游戏的反事实结局。【达成条件】车驾已南幸；汴京陷落，或至宣和八年冬河东、河北西路已有一路陷于金。
+  - id: e_quedi
+    kind: ending
+    priority: 7
+    title: 宣和中兴·却敌河上
+    illustration: ending.e_quedi
+    conditions:
+      all:
+        - {kind: flag, key: jin_invaded, value: true}
+        - {not: {kind: flag, key: sanzhen_ceded, value: true}}
+        - {not: {kind: region_controller, region: bianjing, faction: jin}}
+        - {not: {kind: region_controller, region: hedong, faction: jin}}
+        - {not: {kind: region_controller, region: hebei_xi, faction: jin}}
+        - {not: {kind: region_controller, region: hebei_dong, faction: jin}}
+        - any:
+            - {kind: flag_age, key: jin_repulsed, operator: gte, value: 2}
+            - all:
+                - {kind: turn, operator: gte, value: 27}
+                - {kind: army_strength, army: jin_west, operator: lte, value: 20000}
+                - {kind: army_strength, army: jin_east, operator: lte, value: 20000}
+    text: 金兵两路南下，而太原坚守、河北不失，汴京城下官军力战，金人师老而退。胡马虽一度临河，宋室终未动摇。此为本游戏的反事实结局。【达成条件】金兵已南下；未许割三镇；汴京、太原（河东）、河北两路皆在宋手；金军败退满两季，或至宣和八年冬金东西两路各余不足两万。
+  - id: e_chengxia
+    kind: ending
+    priority: 8
+    title: 城下之盟
+    illustration: ending.e_chengxia
+    conditions:
+      all:
+        - {kind: flag, key: sanzhen_ceded, value: true}
+        - {kind: turn, operator: gte, value: 27}
+        - {not: {kind: region_controller, region: bianjing, faction: jin}}
+    text: 汴京城下，许割太原、中山、河间三镇，输金帛以求金人退兵。城得以全，而北门洞开，金人随时可以再来。史载靖康元年正月宋许割三镇，旋又悔约，金人以此为由再度南下。此为本游戏的反事实结局。【达成条件】已许割三镇；至宣和八年冬汴京未失。
+  - id: e_huahe
+    kind: ending
+    priority: 9
+    title: 划河而守
+    illustration: ending.e_huahe
+    conditions:
+      all:
+        - {kind: flag, key: jin_invaded, value: true}
+        - {kind: turn, operator: gte, value: 27}
+        - {not: {kind: region_controller, region: bianjing, faction: jin}}
+        - any:
+            - {kind: region_controller, region: hedong, faction: jin}
+            - {kind: region_controller, region: hebei_xi, faction: jin}
+            - {kind: region_controller, region: hebei_dong, faction: jin}
+    text: 宣和八年冬，汴京未失，而河东、河北已有州县陷于金人。两军隔河相持，黄河成了宋金之界；朝廷守得住京城，却守不住北方。此为本游戏的反事实结局。【达成条件】金兵已南下；至宣和八年冬汴京未失；河东、河北西路、河北东路至少一路陷于金；未许割三镇（许割者为「城下之盟」）。
+  - id: e_yanyun
+    kind: ending
+    priority: 10
+    title: 宣和中兴·燕云在握
+    illustration: ending.e_yanyun
+    conditions:
+      all:
+        - {kind: turn, operator: gte, value: 23}
+        - {not: {kind: flag, key: jin_invaded, value: true}}
+        - {kind: resource, id: nanmu, operator: lt, value: 55}
+        - {kind: region_controller, region: yanshan, faction: song}
+        - {kind: resource, id: wubei, operator: gte, value: 55}
+        - {kind: resource, id: authority, operator: gte, value: 50}
+        - {kind: resource, id: treasury, operator: gt, value: 0}
+        - {kind: resource, id: ningxing, operator: lt, value: 50}
+    text: 宣和七年冬，燕京城头飘着宋人的旗帜，居庸、古北诸关有兵把守；河北边备一新，金人遣使往来而不敢窥伺。佞幸既黜，朝政渐清，五代以来失陷的燕地终归中国。此为本游戏的反事实结局。【达成条件】至宣和七年冬金兵未南下；胡马南牧 < 55；燕京在宋手；武备 ≥ 55；君威 ≥ 50；国库有余；佞幸用事 < 50。
+  - id: e_baojing
+    kind: ending
+    priority: 11
+    title: 宣和中兴·保境安民
+    illustration: ending.e_baojing
+    conditions:
+      all:
+        - {kind: turn, operator: gte, value: 23}
+        - {not: {kind: flag, key: jin_invaded, value: true}}
+        - {kind: resource, id: nanmu, operator: lt, value: 55}
+        - {kind: resource, id: wubei, operator: gte, value: 50}
+        - {kind: resource, id: authority, operator: gte, value: 50}
+        - {kind: resource, id: treasury, operator: gt, value: 0}
+        - {kind: resource, id: ningxing, operator: lt, value: 50}
+    text: 宣和七年冬，金兵未南下，边声渐息。河北边备整饬，汴京灯火如旧；佞幸既黜，朝政渐清。燕云虽未尽归，北门已有锁钥。此为本游戏的反事实结局。【达成条件】至宣和七年冬金兵未南下；胡马南牧 < 55；武备 ≥ 50；君威 ≥ 50；国库有余；佞幸用事 < 50（燕京在宋手且武备 ≥ 55 者为「燕云在握」）。
+  - id: e_chunchi
+    kind: ending
+    priority: 12
+    title: 唇齿相依
+    illustration: ending.e_chunchi
+    conditions:
+      all:
+        - {kind: turn, operator: gte, value: 23}
+        - {not: {kind: flag, key: jin_invaded, value: true}}
+        - {kind: resource, id: liao_zuo, operator: gte, value: 20}
+        - {kind: resource, id: nanmu, operator: lt, value: 60}
+    text: 宣和七年冬，辽虽残破，犹据一隅，与金相持于塞外。宋守澶渊旧好，以财粮助辽，金人西顾不暇，南侵之议未起。辽为宋之屏障，唇亡则齿寒——这一回，唇还在。此为本游戏的反事实结局。【达成条件】至宣和七年冬金兵未南下；辽祚 ≥ 20（辽未亡）；胡马南牧 < 60。
+  - id: e_liuzei
+    kind: ending
+    priority: 13
+    title: 佞幸专国
+    illustration: ending.e_liuzei
+    conditions:
+      all:
+        - {kind: turn, operator: gte, value: 23}
+        - {not: {kind: flag, key: jin_invaded, value: true}}
+        - {kind: resource, id: ningxing, operator: gte, value: 85}
+        - {kind: resource, id: authority, operator: lte, value: 30}
+    text: 宣和七年冬，金兵尚未南下，而朝政尽出私门：宰执以应奉固宠，内侍掌御笔、兵柄，言路杜绝。陛下深居禁中，书画自娱，诏敕多非出于上意。此为本游戏虚构的结局。【达成条件】至宣和七年冬金兵未南下；佞幸用事 ≥ 85；君威 ≤ 30。
+  - id: e_open
+    kind: ending
+    priority: 99
+    title: 北风未息
+    illustration: ending.e_open
+    conditions: {kind: turn, operator: gte, value: 999}   # 仅作 fallback_ending
+    text: 宣和七年岁暮，金兵未至，而北风日紧；中兴之业未竟，隐忧未除。后事如何，史书尚未写下。（开放结局。）【达成条件】至期限仍未满足其他任何结局（例如金兵未南下而胡马南牧 ≥ 55，或武备、君威、国库、佞幸未达中兴之数）。
+
+asset_requirements:
+  character: "portrait.{id}.default"
+  region: null
+  ui: [map.base, title.scroll, ui.desk, ui.paper, ui.edict_paper, ui.lacquer_bar]
+
+settings:
+  afterlife_chat: false
+  max_concurrent_offices: 3
+  ruler_title: 陛下
+  bloc_names: {cai: 蔡党, xingchen: 幸臣, neishi: 内侍, qingyi: 清议, xijun: 西军, bianchen: 边臣, donggong: 东宫, yunwang: 郓邸, guiming: 归明}
+  player_faction: song
+  player_character: zhao_ji
+  hidden_traits: [ambition, fear, loyalty]
+  trait_names: {rashness: 轻躁}
+  agenda: {audience_per_season: 3, debate_per_season: 1}
+  capital_region: bianjing
+  # 驿程超过 15 日（川峡 16、闽广 18）的地区：奏疏与军报晚一季到，诏令晚一季到达（本游戏设定）。
+  courier: {late_threshold_days: 15}
+  # 将才（模板 settings.battle.commander_factor）：统帅亲在军中时，战力 ×（1 + 0.04 ×（才干 − 5））。种师道 8 → +12%；童贯 4 → −4%。
+  battle: {commander_factor: "1 + 0.04*(ability - 5)"}
+  # 将领自主：与《天宝》同式（忠诚低、野心大者拒命；轻躁者擅动）。
+  autonomy:
+    formula: "min(0.6, 1.0 * (0.06 * max(0, 6 - loyalty) + 0.04 * max(0, ambition - 6)) + 0.5 * 0.04 * max(0, rashness - 5))"
+    by_order:
+      march: "min(0.6, 1.0 * (0.06 * max(0, 6 - loyalty) + 0.04 * max(0, ambition - 6)) + 0.5 * 0.04 * max(0, rashness - 5))"
+      move: "min(0.6, 0.8 * (0.06 * max(0, 6 - loyalty) + 0.04 * max(0, ambition - 6)) + 0.3 * 0.04 * max(0, rashness - 5))"
+      detach: "min(0.6, 0.9 * (0.06 * max(0, 6 - loyalty) + 0.04 * max(0, ambition - 6)) + 0.5 * 0.04 * max(0, rashness - 5))"
+      hold: "min(0.6, 0.6 * (0.06 * max(0, 6 - loyalty) + 0.04 * max(0, ambition - 6)) + 1.5 * 0.04 * max(0, rashness - 5))"
+      attack: "min(0.6, 1.2 * (0.06 * max(0, 6 - loyalty) + 0.04 * max(0, ambition - 6)))"
+      scorch: "min(0.6, 1.3 * (0.06 * max(0, 6 - loyalty) + 0.04 * max(0, ambition - 6)) + 1.0 * 0.04 * max(0, rashness - 5))"
+    outcomes: {delay: 0.5, alter: 0.25, sortie: 0.25}
+    levels: [0.08, 0.2]
+  corruption_resource: corruption
+  flag_labels:
+    haishang_ally: 海上之盟已定
+    haishang_refused: 谢绝金使
+    lian_liao: 联辽抗金
+    liao_fallen: 辽亡
+    beifa_won: 伐燕得胜
+    beifa_lost: 伐燕失利
+    yanjing_song: 燕京归宋
+    yanjing_bought: 赎燕
+    zhangjue_accepted: 纳张觉
+    zhangjue_executed: 斩张觉
+    huashi_abolished: 罢花石纲
+    fangla_risen: 方腊起事
+    fangla_quelled: 方腊已平
+    jin_invaded: 金兵南下
+    jin_repulsed: 金军败退
+    jin_withdrawn: 金军退兵
+    sanzhen_ceded: 许割三镇
+    court_south: 车驾南幸
+    neishan: 内禅
+    qinwang: 西军勤王
+    ligang_defense: 李纲守京城
+    donggong_secure: 东宫已安
+    yichu: 易储
+  counter_labels:
+    bankrupt_streak: 府库枯竭连续季数
+    fangla_hold: 方腊同据两浙江南连续季数
+    minbian_streak: 民心离散连续季数
+    nanmu_high: 胡马南牧山雨以上季数
+    war_merit: 官军战功
+
+# 新手引导：前三季（T0–T2）。target 为前端 data-testid。
+tutorial:
+  - {turn: 0, step: 1, title: 案上奏疏, target: desk.memorialBook,
+     text: 每季中书、枢密院呈上若干奏疏，是朝政的主线。先打开奏疏册。}
+  - {turn: 0, step: 2, title: 读奏疏, target: memorial.item.t0_haishang,
+     text: 「海上之盟」：先看摘要，再看群臣谏言。谏言各有立场与私心，所言未必尽实。}
+  - {turn: 0, step: 3, title: 批答, target: memorial.option.t0_haishang.*,
+     text: 选一项批答，即加入诏书草案。各项下的提示写明代价与后果；不批者留待后议；少数奏疏写明不处置即照例施行，须留意。}
+  - {turn: 0, step: 4, title: 诏书草案, target: desk.edictScroll,
+     text: 批过的奏疏都汇入诏书草案。可以再批几道，也可以留待下季。}
+  - {turn: 0, step: 5, title: 预览, target: edict.preview,
+     text: 颁布之前先预览回执：每一条将如何执行、要花多少钱粮、有司是否可能稽迟，都会列出。}
+  - {turn: 0, step: 6, title: 颁布, target: edict.promulgate,
+     text: 确认无误即颁布。诏书一经颁布，本季不能收回。}
+  - {turn: 0, step: 7, title: 推演, target: desk.advance,
+     text: 颁布后推演一季：钱粮出入、行军、事件依次结算，下季的奏疏随之呈上。}
+  - {turn: 1, step: 1, title: 政令卡, target: edict.cards,
+     text: 奏疏之外，朝廷日常之事可用政令卡：任免、召还、出征、驻守、赈济、修城等。卡上写明花费与冷却。}
+  - {turn: 1, step: 2, title: 填参数、加入草案, target: edict.cardAdd,
+     text: 选卡后填写人物、官职、军队或地区，加入草案。卡片不直接增减君威、民心等国势，国势的起落仍看奏疏批答。}
+  - {turn: 1, step: 3, title: 召对, target: desk.medallion.audience,
+     text: 召对可当面问计于群臣。每季只有三次：面见、书面奏对、遣使问对都算一次，用前想清楚问谁、问什么。}
+  - {turn: 1, step: 4, title: 择人召对, target: audience.pick.*,
+     text: 在京者可当面召见；不在京者只能遣使问对，回奏于下季送达。}
+  - {turn: 1, step: 5, title: 颁布与推演, target: edict.promulgate,
+     text: 批答、政令卡都在同一道诏书里。预览无误后颁布，再推演一季。}
+  - {turn: 2, step: 1, title: 廷议, target: desk.medallion.debate,
+     text: 大事可付廷议，听各派当廷争论后再裁断。每季只有一次。}
+  - {turn: 2, step: 2, title: 只有在京者能当廷议, target: debate.pick.*,
+     text: 只有身在汴京、不在途中的大臣能当廷议；出守在外者只能递书面议状，其立场下季送达，记入谏言库。}
+  - {turn: 2, step: 3, title: 开议, target: debate.start,
+     text: 定好议题与与议之人，即可开议。廷议只供参考，裁断仍在陛下。}
+  - {turn: 2, step: 4, title: 兵部, target: army.root,
+     text: 兵部图上列出各军兵力、统帅是否在营、驻地与行程、可下的军令。统帅忠诚低、野心大或性情轻躁者，军令或被延宕、擅改，预览会标出风险高低。}
+  - {turn: 2, step: 5, title: 驿程与危机计, target: desk.advance,
+     text: 远方之事有驿程之迟：川峡、闽广奏报晚一季才到，诏令也晚一季才达。顶上的「胡马南牧」是金人南侵之势，只能看到风闻区间。推演吧。}

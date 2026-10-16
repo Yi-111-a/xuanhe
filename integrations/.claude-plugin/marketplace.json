@@ -1,0 +1,12 @@
+{
+  "name": "tianbao",
+  "owner": { "name": "tianbao" },
+  "metadata": { "description": "《天宝》桌面策略游戏的 Claude Code 插件" },
+  "plugins": [
+    {
+      "name": "tianbao",
+      "source": "./claude-code",
+      "description": "「上朝」：经 MCP 与桌面版《天宝》共用存档，扮演唐玄宗理政。"
+    }
+  ]
+}

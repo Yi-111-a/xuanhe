@@ -1,0 +1,1366 @@
+# 事件。语义：带 when 的事件只在该回合（结算进入的目标回合）掷一次 gravity；不带 when 的条件事件每季重掷，直到触发
+# （repeatable 事件按 cooldown 再次触发）。同季事件按文件顺序判定，前面事件的效果会影响后面事件的条件。
+# 史实时点见 docs/FACT_CHECK.md；数值、概率与反事实分支为本游戏设定（【设】/【反】）。
+# 约定：
+# - 「照例施行」事件（*_default）：奏疏写明「若不处置，下季照例施行」者，玩家未批答时于下季按史事执行，
+#   使「什么都不做」的一局沿史实走向靖康。条件一律读 memorial:<id> absent。
+# - kind: system 为记账 / 控制权事件，不弹窗、不配图。
+
+# ======================== 第一幕 宣和二年：盟与乱之始 ========================
+- id: haishang_default
+  title: 赵良嗣使金
+  kind: conditional
+  when: {turn: 1}
+  conditions:
+    all:
+      - {kind: flag, key: "memorial:t0_haishang", operator: absent}
+      - {kind: flag, key: haishang_ally, operator: absent}
+  gravity: 1.0
+  importance: 3
+  text: 海上之议，陛下未有明诏，枢密院与少宰照前议行事：遣右文殿修撰赵良嗣自登州浮海使金，约夹攻辽，金取中京，宋取燕京，旧输辽之岁币转输于金。
+  effects:
+    - {op: set_flag, key: haishang_ally, value: true}
+    - {op: adjust_resource, resource: liao_zuo, delta: -3, reason: 宋金夹攻之约}
+    - {op: adjust_resource, resource: jin_contempt, delta: -1, reason: 宋使浮海来聘}
+    - {op: remember, character: zhao_liangsi, fact: 宣和二年春，奉命浮海使金，约夹攻辽}
+  illustration: event.haishang
+
+- id: shangjing_falls
+  title: 金破辽上京
+  kind: scheduled
+  when: {turn: 1}
+  gravity: 1.0
+  importance: 2
+  region: liao
+  text: 金主阿骨打亲攻辽上京临潢府，一日而下。辽之宗庙所在，尽为女真所有；天祚帝犹畋猎于外，不能救。
+  effects:
+    - {op: set_flag, key: shangjing_fallen, value: true}
+    - {op: adjust_resource, resource: liao_zuo, delta: -6, reason: 辽上京陷}
+    - {op: adjust_army, army: liao_main, delta: -8000, reason: 上京之败，辽主力折损}
+  illustration: event.shangjing_falls
+
+- id: huashi_shenyun
+  title: 神运昭功石
+  kind: scheduled
+  when: {turn: 1}
+  conditions:
+    all:
+      - {not: {kind: flag, key: huashi_abolished, value: true}}
+      - {not: {kind: flag, key: huashi_halved, value: true}}
+  gravity: 0.9
+  importance: 1
+  region: liangzhe
+  text: 应奉局自太湖得巨石，高数丈，以巨舰载之，役夫数千，所过州县拆水门、毁桥梁以通，号「神运昭功石」。东南为之骚然。
+  effects:
+    - {op: adjust_resource, resource: dongnan, delta: 5, reason: 神运石北输，所过骚然}
+    - {op: adjust_resource, resource: authority, delta: 1, reason: 奇石入御园}
+    - {op: adjust_region, region: liangzhe, stat: order, delta: -4}
+  illustration: event.huashi
+
+- id: cai_retire_default
+  title: 蔡京致仕
+  kind: conditional
+  when: {turn: 2}
+  conditions:
+    all:
+      - {kind: flag, key: "memorial:t1_cai", operator: absent}
+      - {kind: office_holder, office: taishi, character: cai_jing}
+  gravity: 1.0
+  importance: 2
+  text: 太师蔡京累上章乞骸骨，陛下未批，三省依例奉行：诏蔡京致仕，仍朝朔望。公相去位，中书之事渐归少宰王黼。
+  effects:
+    - {op: dismiss, character: cai_jing, office: taishi}
+    - {op: set_character_status, character: cai_jing, status: retired, cause: 致仕，仍朝朔望}
+    - {op: set_flag, key: cai_retired, value: true}
+    - {op: adjust_resource, resource: ningxing, delta: -3, reason: 公相去位}
+  illustration: event.cai_retire
+
+- id: wangfu_taizai
+  title: 王黼进太宰
+  kind: conditional
+  when: {turn: 3}
+  conditions:
+    all:
+      - {kind: flag, key: cai_retired, value: true}
+      - {kind: flag, key: "memorial:t2_zaixiang", operator: absent}
+      - {kind: flag, key: "memorial:t2_zaixiang_noli", operator: absent}
+      - {kind: office_holder, office: shaozai, character: wang_fu}
+      - {kind: office_holder, office: taizai, character: yu_shen}
+  gravity: 0.95
+  importance: 2
+  text: 太宰余深罢，以少宰王黼为少保、太宰兼门下侍郎。王黼骤贵，中外大权尽归之，四方奇货、应奉之事皆由其门。
+  effects:
+    - {op: dismiss, character: yu_shen, office: taizai}
+    - {op: set_character_status, character: yu_shen, status: retired, cause: 罢太宰}
+    - {op: dismiss, character: wang_fu, office: shaozai}
+    - {op: appoint, character: wang_fu, office: taizai}
+    - {op: adjust_resource, resource: ningxing, delta: 3, reason: 王黼秉政}
+    - {op: adjust_resource, resource: dongnan, delta: 2, reason: 应奉之求愈急}
+  illustration: event.court_debate
+
+- id: zhexi_drought
+  title: 两浙旱蝗
+  kind: random
+  conditions:
+    all:
+      - {kind: turn, operator: gte, value: 1}
+      - {kind: turn, operator: lte, value: 3}
+      - {kind: resource, id: dongnan, operator: gte, value: 55}
+  gravity: 0.45
+  importance: 1
+  region: liangzhe
+  text: 两浙旱，蝗起于睦、歙山间。应奉之役不减，州县催科如故，乡民或聚或散。
+  effects:
+    - {op: adjust_resource, resource: dongnan, delta: 3, reason: 旱蝗而征敛不减}
+    - {op: adjust_region, region: liangzhe, stat: grain, delta: -3}
+    - {op: adjust_region, region: liangzhe, stat: prosperity, delta: -2}
+  illustration: event.famine
+
+# 方腊：东南民怨 ≥ 66 即可能起事；史实宣和二年十月（本游戏宣和二年冬，T3）。起事即据两浙。
+- id: fangla_rising
+  title: 方腊起事
+  kind: conditional
+  conditions:
+    all:
+      - {kind: turn, operator: gte, value: 3}
+      - {kind: turn, operator: lte, value: 18}
+      - {kind: resource, id: dongnan, operator: gte, value: 66}
+      - {kind: flag, key: fangla_risen, operator: absent}
+  gravity: 0.9
+  importance: 3
+  region: liangzhe
+  text: 睦州青溪漆园主方腊，聚苦于征敛之民起事，旬日之间众至数万，连陷睦、歙，进逼杭州。两浙州县望风而溃，东南漕运为之不通。
+  effects:
+    - {op: set_flag, key: fangla_risen, value: true}
+    - {op: adjust_relation, a: song, b: fangla, delta: -100}
+    - {op: adjust_relation, a: fangla, b: song, delta: -100}
+    - {op: adjust_army, army: fangla_army, delta: 100000, reason: 方腊聚众}
+    - {op: set_region_controller, region: liangzhe, faction: fangla}
+    - {op: adjust_resource, resource: morale, delta: -3, reason: 东南乱起}
+    - {op: adjust_resource, resource: authority, delta: -2, reason: 东南乱起}
+    - {op: adjust_region, region: liangzhe, stat: prosperity, delta: -8}
+  illustration: event.fangla_rising
+
+# 奏疏 t3_fangla「睦州告变」未批：下季枢密院照例遣童贯统禁旅与陕西兵南讨（史实）。
+- id: nanzheng_default
+  title: 童贯南讨
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: fangla_risen, value: true}
+      - {kind: flag, key: fangla_quelled, operator: absent}
+      - {kind: flag, key: nanzheng_sent, operator: absent}
+      - {kind: flag, key: fangla_amnesty, operator: absent}
+      - {kind: flag_age, key: fangla_risen, operator: gte, value: 1}
+      - {kind: flag, key: "memorial:t3_fangla", operator: absent}
+  gravity: 1.0
+  importance: 2
+  text: 东南告急之奏日至，枢密院照例行事：以童贯为江淮荆浙宣抚使，抽泾原、秦凤之兵五万与禁旅一万，合六万南下讨方腊。北伐之议因之暂缓。
+  effects:
+    - {op: set_flag, key: nanzheng_sent, value: true}
+    - {op: adjust_army, army: xijun_jingyuan, delta: -30000, reason: 抽泾原兵三万南讨}
+    - {op: adjust_army, army: xijun_qinfeng, delta: -20000, reason: 抽秦凤兵二万南讨}
+    - {op: adjust_army, army: jinjun, delta: -10000, reason: 抽禁旅一万南讨}
+    - {op: adjust_army, army: nanzheng, delta: 60000, reason: 南讨诸军合兵六万}
+    - {op: march, army: nanzheng, to_region: liangzhe, with_commander: false}
+    - {op: set_army_posture, army: nanzheng, posture: attack}
+    - {op: move_character, character: tong_guan, to_region: huainan}
+    - {op: adjust_resource, resource: treasury, delta: -80, reason: 南讨军费}
+  illustration: event.nanzheng
+
+# 官军追讨：南讨诸军（或东南诸军）不在途、与方腊军不在一地时，向方腊军所在进讨（方腊只在两浙、江南、淮南之间）。
+- id: pursue_fangla_jiangnan
+  title: 官军追讨方腊
+  kind: system
+  repeatable: true
+  cooldown: 2
+  conditions:
+    all:
+      - {kind: flag, key: fangla_risen, value: true}
+      - {kind: flag, key: fangla_quelled, operator: absent}
+      - {kind: army_region, army: fangla_army, region: jiangnan}
+      - {kind: army_strength, army: nanzheng, operator: gt, value: 0}
+      - {kind: army_region, army: nanzheng, operator: ne, region: jiangnan}
+  gravity: 1.0
+  text: 南讨诸军追讨方腊，进兵江南。
+  effects:
+    - {op: march, army: nanzheng, to_region: jiangnan, with_commander: true}
+    - {op: set_army_posture, army: nanzheng, posture: attack}
+
+- id: pursue_fangla_liangzhe
+  title: 官军追讨方腊
+  kind: system
+  repeatable: true
+  cooldown: 2
+  conditions:
+    all:
+      - {kind: flag, key: fangla_risen, value: true}
+      - {kind: flag, key: fangla_quelled, operator: absent}
+      - {kind: army_region, army: fangla_army, region: liangzhe}
+      - {kind: army_strength, army: nanzheng, operator: gt, value: 0}
+      - {kind: army_region, army: nanzheng, operator: ne, region: liangzhe}
+  gravity: 1.0
+  text: 南讨诸军追讨方腊，进兵两浙。
+  effects:
+    - {op: march, army: nanzheng, to_region: liangzhe, with_commander: true}
+    - {op: set_army_posture, army: nanzheng, posture: attack}
+
+- id: fangla_quelled
+  title: 方腊就擒
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: fangla_risen, value: true}
+      - {kind: flag, key: fangla_quelled, operator: absent}
+      - any:
+          - {kind: army_strength, army: fangla_army, operator: lte, value: 20000}
+          - all:
+              - {not: {kind: region_controller, region: liangzhe, faction: fangla}}
+              - {not: {kind: region_controller, region: jiangnan, faction: fangla}}
+              - {not: {kind: region_controller, region: huainan, faction: fangla}}
+  gravity: 1.0
+  importance: 3
+  region: liangzhe
+  text: 官军克复诸州，方腊退保帮源洞，裨将韩世忠潜行溪谷，生擒之，余众或降或散（史载擒方腊之功为辛兴宗所冒）。两浙渐定，然兵火之余，室庐多毁。
+  effects:
+    - {op: set_flag, key: fangla_quelled, value: true}
+    - {op: adjust_army, army: fangla_army, delta: -200000, reason: 方腊余众溃散}
+    - {op: set_region_controller, region: liangzhe, faction: song}
+    - {op: set_character_status, character: fang_la, status: dead, cause: 就擒伏诛}
+    - {op: adjust_resource, resource: dongnan, delta: -6, reason: 乱平}
+    - {op: adjust_resource, resource: authority, delta: 2, reason: 东南乱平}
+    - {op: adjust_region, region: liangzhe, stat: prosperity, delta: -10}
+    - {op: adjust_region, region: liangzhe, stat: tax, delta: -4}
+    - {op: adjust_counter, key: war_merit, delta: 1}
+  illustration: event.nanzheng
+
+# 方腊据江南、淮南时，乱平后收回（与上一事件同季：上一事件只收两浙）。
+- id: fangla_lands_restored
+  title: 江南复归
+  kind: system
+  conditions:
+    all:
+      - {kind: flag, key: fangla_quelled, value: true}
+      - any:
+          - {kind: region_controller, region: jiangnan, faction: fangla}
+          - {kind: region_controller, region: huainan, faction: fangla}
+  gravity: 1.0
+  text: 方腊余众既散，江南、淮南州县复归版籍。
+  effects:
+    - {op: set_region_controller, region: jiangnan, faction: song}
+    - {op: set_region_controller, region: huainan, faction: song}
+
+# 奏疏 t5_nanzheng「南讨诸军」未批：乱平两季后依例归建西边。
+- id: nanzheng_return
+  title: 南讨诸军归建
+  kind: system
+  conditions:
+    all:
+      - {kind: flag, key: fangla_quelled, value: true}
+      - {kind: flag_age, key: fangla_quelled, operator: gte, value: 2}
+      - {kind: flag, key: "memorial:t5_nanzheng", operator: absent}
+      - {kind: army_strength, army: nanzheng, operator: gt, value: 0}
+  gravity: 1.0
+  text: 南讨诸军依例归建西边。
+  effects:
+    - {op: merge_army, army: nanzheng, into: xijun_qinfeng, reason: 南讨诸军归建}
+
+- id: songjiang_rising
+  title: 宋江横行京东
+  kind: scheduled
+  when: {turn: 3}
+  conditions: {kind: flag, key: songjiang_risen, operator: absent}
+  gravity: 0.85
+  importance: 1
+  region: jingdong
+  text: 京东盗宋江等三十六人横行齐、魏，转掠十郡，官军莫敢撄其锋；其众出没梁山泊与海滨，将南入楚、海州界。
+  effects:
+    - {op: set_flag, key: songjiang_risen, value: true}
+    - {op: adjust_region, region: jingdong, stat: order, delta: -8}
+    - {op: adjust_resource, resource: morale, delta: -1, reason: 京东盗起}
+  illustration: event.songjiang
+
+# 奏疏 t4_songjiang 未批：海州守臣张叔夜照例设伏焚舟，招降宋江（史实宣和三年二月）。
+- id: songjiang_default
+  title: 张叔夜招降宋江
+  kind: conditional
+  when: {turn: 5}
+  conditions:
+    all:
+      - {kind: flag, key: songjiang_risen, value: true}
+      - {kind: flag, key: "memorial:t4_songjiang", operator: absent}
+      - {kind: office_holder, office: haizhou, character: zhang_shuye}
+  gravity: 0.9
+  importance: 1
+  region: jingdong
+  text: 宋江劫巨舟十余入海州界，知州张叔夜募死士千人设伏，焚其舟，擒其副贼，宋江乃降。京东稍定。
+  effects:
+    - {op: set_flag, key: songjiang_amnesty, value: true}
+    - {op: adjust_region, region: jingdong, stat: order, delta: 6}
+    - {op: remember, character: zhang_shuye, fact: 宣和三年，于海州焚舟设伏，招降宋江}
+  illustration: event.songjiang
+
+# 奏疏 t5_yingfeng（复置应奉司）未批：王黼、梁师成照例奏复（史实宣和三年闰五月复应奉司）。
+- id: yingfeng_default
+  title: 复置应奉司
+  kind: conditional
+  when: {turn: 6}
+  conditions:
+    all:
+      - {kind: flag, key: huashi_abolished, value: true}
+      - {kind: flag, key: "memorial:t5_yingfeng", operator: absent}
+      - {kind: flag, key: yingfeng_restored, operator: absent}
+      - any:
+          - {kind: office_holder, office: taizai, character: wang_fu}
+          - {kind: office_holder, office: shaozai, character: wang_fu}
+  gravity: 0.9
+  importance: 1
+  text: 乱平未久，王黼、梁师成以禁中供奉不给，奏复应奉司，命二人领之。花石之求，换了名目，又起于东南。
+  effects:
+    - {op: set_flag, key: yingfeng_restored, value: true}
+    - {op: add_ledger, id: yingfeng_si, name: 应奉司, category: treasury, amount: -15, kind: recurring, reason: 复置应奉司（游戏折算）, cancellable: false}
+    - {op: adjust_resource, resource: dongnan, delta: 5, reason: 应奉复起}
+    - {op: adjust_resource, resource: ningxing, delta: 2, reason: 王、梁领应奉}
+  illustration: event.huashi
+
+# 金使责宋：海上之盟已定，宋因方腊之乱违夹攻之期（史载宋于宣和三年未能出兵）。
+- id: jiagong_late
+  title: 金使责宋失期
+  kind: conditional
+  conditions:
+    all:
+      - {kind: turn, operator: gte, value: 5}
+      - {kind: turn, operator: lte, value: 7}
+      - {kind: flag, key: haishang_ally, value: true}
+      - {kind: flag, key: jiagong_late, operator: absent}
+      - {kind: flag, key: jiagong_excused, operator: absent}
+      - {kind: flag, key: beifa_started, operator: absent}
+      - any:
+          - all:
+              - {kind: flag, key: fangla_risen, value: true}
+              - {kind: flag, key: fangla_quelled, operator: absent}
+          - {kind: flag, key: "memorial:t2_jiagong", value: delay}
+  gravity: 0.8
+  importance: 2
+  region: jin
+  text: 金使来问夹攻之期，宋以东南有事，辞以未暇。金人归语其主：「南朝许而不践。」
+  effects:
+    - {op: set_flag, key: jiagong_late, value: true}
+    - {op: adjust_resource, resource: jin_contempt, delta: 3, reason: 宋违夹攻之期}
+  illustration: event.jin_envoy
+
+- id: genyue_complete
+  title: 艮岳成
+  kind: scheduled
+  when: {turn: 9}
+  conditions: {not: {kind: flag, key: genyue_halted, value: true}}
+  gravity: 0.9
+  importance: 1
+  text: 万岁山成，更名艮岳。周十余里，峰峦叠嶂，奇石林立，四方珍禽异兽、嘉木名卉聚于其中。陛下亲为之记。
+  effects:
+    - {op: adjust_resource, resource: authority, delta: 1, reason: 艮岳成}
+    - {op: adjust_resource, resource: treasury, delta: -40, reason: 艮岳收尾工役}
+    - {op: adjust_resource, resource: dongnan, delta: 2, reason: 花木石料之役}
+  illustration: event.genyue
+
+# ======================== 辽之崩解（与玩家外交线交织） ========================
+# 辽祚 ≥ 35（联辽、输粮）时中京得以坚守一时；否则史实宣和四年正月中京陷。
+- id: zhongjing_falls
+  title: 金破辽中京
+  kind: scheduled
+  when: {turn: 8}
+  conditions: {kind: resource, id: liao_zuo, operator: lt, value: 35}
+  gravity: 1.0
+  importance: 3
+  region: liao
+  text: 金兵破辽中京大定府，天祚帝西走夹山，辽之诸路震溃。燕京无主，辽宰相等立秦晋国王耶律淳为帝，据燕自守，史称北辽。
+  effects:
+    - {op: set_flag, key: zhongjing_fallen, value: true}
+    - {op: set_region_controller, region: liao, faction: jin}
+    - {op: adjust_army, army: liao_main, delta: -25000, reason: 中京之败}
+    - {op: move_army, army: liao_main, to_region: yunzhong}
+    - {op: adjust_resource, resource: liao_zuo, delta: -10, reason: 辽中京陷}
+  illustration: event.zhongjing_falls
+
+- id: zhongjing_holds
+  title: 中京未下
+  kind: scheduled
+  when: {turn: 8}
+  conditions: {kind: resource, id: liao_zuo, operator: gte, value: 35}
+  gravity: 1.0
+  importance: 2
+  region: liao
+  text: 金兵攻辽中京，辽人得宋之助，守城未下。女真退屯北境，治兵以待来岁。
+  effects:
+    - {op: adjust_resource, resource: liao_zuo, delta: -4, reason: 中京苦战}
+    - {op: adjust_resource, resource: jin_contempt, delta: 2, reason: 金人疑宋阴助辽}
+  illustration: event.zhongjing_falls
+
+- id: yunzhong_falls
+  title: 金取辽西京
+  kind: scheduled
+  when: {turn: 9}
+  conditions:
+    all:
+      - {kind: flag, key: zhongjing_fallen, value: true}
+      - {kind: region_controller, region: yunzhong, faction: liao}
+  gravity: 0.9
+  importance: 2
+  region: yunzhong
+  text: 金将粘罕（完颜宗翰）取辽西京大同府，山后诸州相继降金。金之兵锋，与河东只隔一山。
+  effects:
+    - {op: set_region_controller, region: yunzhong, faction: jin}
+    - {op: adjust_army, army: liao_main, delta: -15000, reason: 西京之败}
+    - {op: adjust_resource, resource: liao_zuo, delta: -4, reason: 辽西京陷}
+  illustration: event.zhongjing_falls
+
+# 辽祚耗尽，或宣和七年起辽祚 < 25：天祚被擒，辽亡。联辽而辽祚尚厚者，天祚得以不亡。
+- id: tianzuo_captured
+  title: 天祚被擒
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: liao_fallen, operator: absent}
+      - {kind: turn, operator: gte, value: 12}
+      - any:
+          - all:
+              - {kind: turn, operator: gte, value: 20}
+              - {kind: resource, id: liao_zuo, operator: lt, value: 25}
+          - all:
+              - {kind: turn, operator: gte, value: 18}
+              - {kind: resource, id: liao_zuo, operator: lte, value: 0}
+  gravity: 1.0
+  importance: 3
+  region: yunzhong
+  text: 金将娄室追及天祚帝于应州之野，执之以归。辽自太祖立国二百余年，至是而亡。宋之北，再无屏障，与金直接为邻。
+  effects:
+    - {op: set_flag, key: liao_fallen, value: true}
+    - {op: adjust_resource, resource: liao_zuo, delta: -100, reason: 辽亡}
+    - {op: set_region_controller, region: liao, faction: jin}
+    - {op: set_region_controller, region: yunzhong, faction: jin}
+    - {op: adjust_army, army: liao_main, delta: -100000, reason: 辽亡}
+    - {op: set_character_faction, character: yelu_yanxi, faction: jin}
+    - {op: set_character_status, character: yelu_yanxi, status: imprisoned, cause: 为金所擒}
+  illustration: event.tianzuo_captured
+
+- id: yelu_dashi_west
+  title: 耶律大石西走
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: yanjing_jin, value: true}
+      - {kind: character_status, character: yelu_dashi, value: alive}
+      - {kind: flag, key: dashi_west, operator: absent}
+  gravity: 0.6
+  importance: 1
+  text: 辽林牙耶律大石率残部西走，渡漠北上，欲于西陲再图辽祚。燕云之间，再无辽人可恃。
+  effects:
+    - {op: set_flag, key: dashi_west, value: true}
+    - {op: move_character, character: yelu_dashi, to_region: liao}
+    - {op: adjust_resource, resource: liao_zuo, delta: -3, reason: 辽之宿将西去}
+  illustration: event.tianzuo_captured
+
+# ======================== 第三幕 宣和四年：燕云之役 ========================
+# 奏疏 t8_beifa「伐燕之议」未批：童贯照前议出师（史实宣和四年三月受命，五月白沟之败）。
+- id: beifa_default
+  title: 童贯伐燕
+  kind: conditional
+  when: {turn: 9}
+  conditions:
+    all:
+      - {kind: flag, key: haishang_ally, value: true}
+      - {kind: flag, key: "memorial:t8_beifa", operator: absent}
+      - {kind: flag, key: beifa_started, operator: absent}
+      - {kind: region_controller, region: yanshan, faction: liao}
+  gravity: 1.0
+  importance: 3
+  region: hebei_dong
+  text: 陛下未有明诏，枢密院照前议出师：以童贯为河北河东宣抚使、蔡攸为副，抽西军与河北禁军合七万出雄州，趋燕京。种师道以为伐燕无名，不能止。
+  effects:
+    - {op: set_flag, key: beifa_started, value: true}
+    - {op: adjust_army, army: xijun_jingyuan, delta: -25000, reason: 抽泾原兵二万五千伐燕}
+    - {op: adjust_army, army: xijun_qinfeng, delta: -20000, reason: 抽秦凤兵二万伐燕}
+    - {op: adjust_army, army: hebei_army, delta: -25000, reason: 抽河北禁军二万五千伐燕}
+    - {op: adjust_army, army: beifa_army, delta: 70000, reason: 伐燕诸军合七万}
+    - {op: appoint, character: tong_guan, office: hebei_xuanfu}
+    - {op: set_army_commander, army: beifa_army, character: tong_guan, dispatch: true}
+    - {op: adjust_relation, a: song, b: liao, delta: -100}
+    - {op: adjust_relation, a: liao, b: song, delta: -100}
+    - {op: march, army: beifa_army, to_region: yanshan, with_commander: false}
+    - {op: set_army_posture, army: beifa_army, posture: attack}
+    - {op: adjust_resource, resource: treasury, delta: -150, reason: 伐燕军费}
+    - {op: adjust_resource, resource: liao_zuo, delta: -3, reason: 宋兵北向}
+  illustration: event.beifa
+
+# 伐燕得胜：官军入燕（燕京易主为宋），且未经金人之手。
+- id: beifa_victory
+  title: 王师入燕
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: beifa_started, value: true}
+      - {kind: flag, key: yanjing_song, operator: absent}
+      - {kind: region_controller, region: yanshan, faction: song}
+  gravity: 1.0
+  importance: 3
+  region: yanshan
+  text: 官军破燕京辽军，入析津府。燕人有迎王师于道者。石晋以来不入中国近二百年之地，复归版图；金人闻之，颇敬宋兵。
+  effects:
+    - {op: set_flag, key: yanjing_song, value: true}
+    - {op: set_flag, key: beifa_won, value: true}
+    - {op: adjust_resource, resource: jin_contempt, delta: -8, reason: 宋兵自取燕京}
+    - {op: adjust_resource, resource: authority, delta: 5, reason: 收复燕京}
+    - {op: adjust_resource, resource: morale, delta: 3, reason: 收复燕京}
+    - {op: adjust_resource, resource: liao_zuo, delta: -8, reason: 辽失燕京}
+    - {op: adjust_resource, resource: nanmu, delta: -3, reason: 燕山之险在宋}
+    - {op: adjust_counter, key: war_merit, delta: 1}
+  illustration: event.beifa
+
+# 伐燕失利：伐燕诸军败于燕京城下（败军折三成），燕京仍在辽人之手。
+- id: beifa_defeat
+  title: 白沟之败
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: beifa_started, value: true}
+      - {kind: flag, key: beifa_lost, operator: absent}
+      - {kind: flag, key: yanjing_song, operator: absent}
+      - {kind: region_controller, region: yanshan, faction: liao}
+      - {kind: army_strength, army: beifa_army, operator: lte, value: 52000}
+  gravity: 1.0
+  importance: 3
+  region: hebei_dong
+  text: 官军攻燕不克，辽将耶律大石、萧干邀击于白沟、范村，官军大溃，自相蹈藉，退保雄州。金人闻之，始轻宋兵。
+  effects:
+    - {op: set_flag, key: beifa_lost, value: true}
+    - {op: adjust_resource, resource: jin_contempt, delta: 8, reason: 宋兵败于残辽之手}
+    - {op: adjust_resource, resource: nanmu, delta: 3, reason: 金人窥宋之弱}
+    - {op: adjust_resource, resource: authority, delta: -3, reason: 伐燕丧师}
+    - {op: adjust_resource, resource: morale, delta: -2, reason: 伐燕丧师}
+  illustration: event.baigou_defeat
+
+# 郭药师以常胜军及涿、易二州来降（史实宣和四年九月）。常胜军仍在燕京城中，与辽军相攻。
+- id: guo_defects
+  title: 郭药师来降
+  kind: conditional
+  conditions:
+    all:
+      - {kind: turn, operator: gte, value: 10}
+      - {kind: flag, key: guo_defected_song, operator: absent}
+      - {kind: region_controller, region: yanshan, faction: liao}
+      - {kind: army_strength, army: changsheng, operator: gt, value: 0}
+      - any:
+          - {kind: flag, key: beifa_started, value: true}
+          - {kind: flag, key: zhongjing_fallen, value: true}
+      - {kind: flag, key: lian_liao, operator: absent}
+  gravity: 0.7
+  importance: 2
+  region: yanshan
+  text: 辽常胜军首领郭药师执其监军，以涿、易二州来降，所部八千皆骁勇。燕京城中辽军与常胜军相持。
+  effects:
+    - {op: set_flag, key: guo_defected_song, value: true}
+    - {op: set_army_faction, army: changsheng, faction: song}
+    - {op: set_character_faction, character: guo_yaoshi, faction: song}
+    - {op: appoint, character: guo_yaoshi, office: changsheng_tong}
+    - {op: adjust_resource, resource: liao_zuo, delta: -3, reason: 常胜军叛辽}
+    - {op: remember, character: guo_yaoshi, fact: 宣和四年，以常胜军及涿、易二州降宋}
+  illustration: event.guo_surrender
+
+# 金取燕京：宋未取燕，则金兵自居庸关入燕（史实宣和四年十二月）。联辽而辽祚尚厚者，燕京得以坚守。
+- id: jin_takes_yanjing
+  title: 金取燕京
+  kind: conditional
+  conditions:
+    all:
+      - {kind: turn, operator: gte, value: 11}
+      - {kind: region_controller, region: yanshan, faction: liao}
+      - {kind: resource, id: liao_zuo, operator: lt, value: 30}
+  gravity: 0.9
+  importance: 3
+  region: yanshan
+  text: 金兵自居庸关入燕，辽人不战而溃，燕京遂为金有。宋两举而不能下之城，女真一鼓而取之。
+  effects:
+    - {op: set_flag, key: yanjing_jin, value: true}
+    - {op: set_region_controller, region: yanshan, faction: jin}
+    - {op: set_region_controller, region: pingzhou, faction: jin}
+    - {op: adjust_army, army: liao_yanjing, delta: -100000, reason: 燕京辽军溃散}
+    - {op: adjust_resource, resource: liao_zuo, delta: -8, reason: 辽失燕京}
+    - {op: adjust_resource, resource: jin_contempt, delta: 4, reason: 宋不能取燕，倚金取之}
+  illustration: event.yanjing_taken
+
+# 常胜军若仍在燕京城中而燕京归金，则退入河北东路。
+- id: changsheng_withdraws
+  title: 常胜军退屯
+  kind: system
+  conditions:
+    all:
+      - {kind: flag, key: yanjing_jin, value: true}
+      - {kind: region_controller, region: yanshan, faction: jin}
+      - {kind: army_region, army: changsheng, region: yanshan}
+      - {kind: flag, key: guo_defected_song, value: true}
+      - {kind: flag, key: guo_defected_jin, operator: absent}
+  gravity: 1.0
+  text: 燕京既为金有，常胜军退屯河北东路。
+  effects:
+    - {op: move_army, army: changsheng, to_region: hebei_dong}
+
+# ======================== 第四幕 宣和五年：赎燕与张觉 ========================
+# 奏疏 t12_shuyan「赎燕之议」未批：王黼照前议许之（史实宣和五年四月）。
+- id: shuyan_default
+  title: 赎回燕京
+  kind: conditional
+  when: {turn: 13}
+  conditions:
+    all:
+      - {kind: flag, key: "memorial:t12_shuyan", operator: absent}
+      - {kind: region_controller, region: yanshan, faction: jin}
+      - {kind: flag, key: haishang_ally, value: true}
+  gravity: 1.0
+  importance: 3
+  region: yanshan
+  text: 王黼照前议许金：岁输银绢如辽旧额，另输燕京代税钱一百万缗。金人乃以燕京及涿、易、檀、顺、景、蓟六州来归，而尽掠其职官、富民、金帛北去，所得者几为空城。
+  effects:
+    - {op: set_flag, key: yanjing_song, value: true}
+    - {op: set_flag, key: yanjing_bought, value: true}
+    - {op: set_region_controller, region: yanshan, faction: song}
+    - {op: adjust_region, region: yanshan, stat: prosperity, delta: -30}
+    - {op: adjust_region, region: yanshan, stat: tax, delta: -6}
+    - {op: adjust_army, army: jinjun, delta: -20000, reason: 抽禁军二万戍燕山}
+    - {op: adjust_army, army: yanshan_army, delta: 20000, reason: 燕山设戍二万}
+    - {op: cancel_ledger, ledger_id: suibi_liao}
+    - {op: add_ledger, id: suibi_jin, name: 岁币（金）, category: treasury, amount: -12, kind: recurring, reason: 输辽旧额转输于金（游戏折算）, cancellable: false}
+    - {op: add_ledger, id: daishui, name: 燕京代税钱, category: treasury, amount: -25, kind: recurring, reason: 岁输一百万缗（游戏折算）, cancellable: false}
+    - {op: adjust_resource, resource: jin_contempt, delta: 4, reason: 宋以金帛买空城}
+    - {op: adjust_resource, resource: nanmu, delta: 2, reason: 金人知宋可欺以利}
+    - {op: adjust_resource, resource: authority, delta: 2, reason: 收复燕京之名}
+  illustration: event.yanjing_returned
+
+- id: zhangjue_rises
+  title: 张觉据平州
+  kind: scheduled
+  when: {turn: 13}
+  conditions: {kind: region_controller, region: pingzhou, faction: jin}
+  gravity: 0.9
+  importance: 2
+  region: pingzhou
+  text: 辽平州守将张觉，先降金，金以平州为南京、以觉留守。及金人驱燕民北迁过平州，张觉杀金使者，据城叛金，遣使奉表求附于宋。
+  effects:
+    - {op: set_flag, key: zhangjue_risen, value: true}
+  illustration: event.zhangjue
+
+# 奏疏 t13_zhangjue「张觉来附」未批：王黼照前议纳之（史实）。
+- id: zhangjue_default
+  title: 纳张觉
+  kind: conditional
+  when: {turn: 14}
+  conditions:
+    all:
+      - {kind: flag, key: zhangjue_risen, value: true}
+      - {kind: flag, key: "memorial:t13_zhangjue", operator: absent}
+  gravity: 1.0
+  importance: 2
+  region: pingzhou
+  text: 陛下未有明诏，王黼照前议纳张觉，以平州为泰宁军，授觉节度使。金人闻之大怒。
+  effects:
+    - {op: set_flag, key: zhangjue_accepted, value: true}
+    - {op: adjust_resource, resource: jin_contempt, delta: 3, reason: 宋纳金之叛将}
+    - {op: adjust_resource, resource: nanmu, delta: 3, reason: 金人以纳叛为辞}
+  illustration: event.zhangjue
+
+- id: aguda_dies
+  title: 金主阿骨打卒
+  kind: scheduled
+  when: {turn: 14}
+  gravity: 1.0
+  importance: 2
+  region: jin
+  text: 金主阿骨打卒于还师途中，弟吴乞买嗣立。新主持重而有吞并之志，诸将宗翰、宗望各握重兵。
+  effects:
+    - {op: set_flag, key: aguda_dead, value: true}
+    - {op: set_character_status, character: wanyan_aguda, status: dead, cause: 卒于军中}
+    - {op: set_army_commander, army: jin_main, character: wanyan_wuqimai}
+    - {op: adjust_resource, resource: jin_contempt, delta: 2, reason: 金之诸将主战}
+  illustration: event.aguda_death
+
+# 纳张觉者：金将宗望击破平州，张觉奔燕山（史实宣和五年）。
+- id: pingzhou_crushed
+  title: 金破平州
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: zhangjue_accepted, value: true}
+      - {kind: flag, key: pingzhou_crushed, operator: absent}
+      - {kind: turn, operator: gte, value: 14}
+  gravity: 0.9
+  importance: 2
+  region: pingzhou
+  text: 金将宗望击破平州，张觉兵败，只身奔燕山，匿于常胜军中。金人移文燕山宣抚司，索张觉甚急。
+  effects:
+    - {op: set_flag, key: pingzhou_crushed, value: true}
+    - {op: move_character, character: zhang_jue, to_region: yanshan}
+    - {op: set_character_faction, character: zhang_jue, faction: song}
+    - {op: adjust_resource, resource: jin_contempt, delta: 1, reason: 宋援觉不力}
+  illustration: event.zhangjue
+
+# 奏疏 t15_zhangjue_demand「金索张觉」未批：燕山守臣照前议斩张觉，函首与金（史实宣和五年十一月）。
+- id: zhangjue_demand_default
+  title: 斩张觉
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: pingzhou_crushed, value: true}
+      - {kind: flag, key: "memorial:t15_zhangjue_demand", operator: absent}
+      - {kind: flag_age, key: pingzhou_crushed, operator: gte, value: 2}
+      - {kind: character_status, character: zhang_jue, value: alive}
+  gravity: 1.0
+  importance: 3
+  region: yanshan
+  text: 金人索张觉愈急，燕山守臣不能抗，缢杀张觉，函其首以与金。常胜军将士皆泣下，郭药师私语：若金人来索药师，亦将与之乎？自是降将解体。
+  effects:
+    - {op: set_flag, key: zhangjue_executed, value: true}
+    - {op: set_character_status, character: zhang_jue, status: dead, cause: 为宋所杀，函首与金}
+    - {op: adjust_resource, resource: jin_contempt, delta: 5, reason: 宋人纳叛而又杀之}
+    - {op: adjust_resource, resource: nanmu, delta: 2, reason: 金人知宋无信}
+    - {op: adjust_trait, character: guo_yaoshi, trait: loyalty, delta: -2}
+    - {op: remember, character: guo_yaoshi, fact: 宣和五年冬，朝廷杀张觉函首与金，药师寒心}
+  illustration: event.zhangjue_executed
+
+# ======================== 第五幕 宣和六年：山后、饥馑与佞幸 ========================
+- id: shanhou_refused
+  title: 金人不与山后
+  kind: scheduled
+  when: {turn: 16}
+  conditions:
+    all:
+      - {kind: flag, key: yanjing_song, value: true}
+      - {kind: region_controller, region: yunzhong, faction: jin}
+  gravity: 0.8
+  importance: 1
+  region: yunzhong
+  text: 童贯遣使求山后蔚、应、朔诸州，金人许而复悔，粘罕据云中不与。宋使往还，徒增金人轻侮。
+  effects:
+    - {op: adjust_resource, resource: jin_contempt, delta: 2, reason: 宋求山后，金人不与}
+  illustration: event.jin_envoy
+
+- id: jin_grain_request
+  title: 金人求粮
+  kind: scheduled
+  when: {turn: 16}
+  conditions: {kind: flag, key: yanjing_song, value: true}
+  gravity: 0.9
+  importance: 1
+  region: yanshan
+  text: 金人以燕地饥乏、交割之初宋曾许粮为辞，遣使求粮二十万石。
+  effects:
+    - {op: set_flag, key: jin_grain_asked, value: true}
+  illustration: event.jin_envoy
+
+# 金索粮二十万石（史载宋许而未输）：奏疏 t16_jin_grain 处置；未批则照例拖延不输。
+- id: jin_grain_default
+  title: 许粮不输
+  kind: conditional
+  when: {turn: 17}
+  conditions:
+    all:
+      - {kind: flag, key: jin_grain_asked, value: true}
+      - {kind: flag, key: "memorial:t16_jin_grain", operator: absent}
+  gravity: 1.0
+  importance: 1
+  text: 金人求粮二十万石，有司许之而不输，金使屡索不得。金人以此谓宋无信。
+  effects:
+    - {op: adjust_resource, resource: jin_contempt, delta: 3, reason: 许粮不输}
+    - {op: adjust_resource, resource: nanmu, delta: 1, reason: 金人谓宋无信}
+  illustration: event.jin_envoy
+
+- id: hebei_famine
+  title: 河北、京东大饥
+  kind: scheduled
+  when: {turn: 17}
+  gravity: 0.9
+  importance: 2
+  region: hebei_dong
+  text: 河北、京东连岁水旱，又困于燕山之馈运，民大饥，父子相食者有之，流民塞道，群盗因之而起。
+  effects:
+    - {op: set_flag, key: hebei_famine, value: true}
+    - {op: adjust_resource, resource: morale, delta: -4, reason: 河北京东大饥}
+    - {op: adjust_region, region: hebei_dong, stat: order, delta: -10}
+    - {op: adjust_region, region: jingdong, stat: order, delta: -10}
+    - {op: adjust_region, region: hebei_dong, stat: grain, delta: -4}
+    - {op: adjust_region, region: jingdong, stat: grain, delta: -3}
+  illustration: event.famine
+
+# 免夫钱：奏疏 t17_mianfu 未批则照例施行（史实宣和六年六月下诏，每夫纳钱三十贯）。
+- id: mianfu_default
+  title: 诏行免夫钱
+  kind: conditional
+  when: {turn: 18}
+  conditions:
+    all:
+      - {kind: flag, key: "memorial:t17_mianfu", operator: absent}
+      - {kind: flag, key: mianfu, operator: absent}
+      - any:
+          - {kind: office_holder, office: taizai, character: wang_fu}
+          - {kind: office_holder, office: shaozai, character: wang_fu}
+  gravity: 1.0
+  importance: 2
+  text: 王黼以燕山馈运、边费不给，奏括天下丁夫，令纳免夫钱，每夫三十贯。州县督责急于星火，所得以千万计，而天下骚然。
+  effects:
+    - {op: set_flag, key: mianfu, value: true}
+    - {op: adjust_resource, resource: treasury, delta: 220, reason: 免夫钱}
+    - {op: adjust_resource, resource: morale, delta: -6, reason: 括丁夫纳钱，天下骚然}
+    - {op: adjust_resource, resource: dongnan, delta: 4, reason: 东南亦括免夫钱}
+    - {op: adjust_resource, resource: corruption, delta: 3, reason: 州县缘此为奸}
+  illustration: event.mianfu
+
+- id: bandits_rise
+  title: 群盗蜂起
+  kind: random
+  repeatable: true
+  cooldown: 3
+  conditions:
+    all:
+      - {kind: resource, id: morale, operator: lt, value: 38}
+      - {kind: turn, operator: gte, value: 4}
+  gravity: 0.35
+  importance: 1
+  region: jingdong
+  text: 京东、河北饥民聚为盗，大者数万，攻剽州县，官军追捕不及。
+  effects:
+    - {op: adjust_resource, resource: morale, delta: -1, reason: 群盗剽掠}
+    - {op: adjust_region, region: jingdong, stat: order, delta: -6}
+    - {op: adjust_region, region: hebei_dong, stat: order, delta: -4}
+    - {op: adjust_resource, resource: treasury, delta: -20, reason: 追捕群盗}
+  illustration: event.songjiang
+
+- id: xixia_submits
+  title: 西夏附金
+  kind: scheduled
+  when: {turn: 17}
+  conditions: {kind: flag, key: liao_fallen, operator: absent}
+  gravity: 0.7
+  importance: 1
+  region: xixia
+  text: 西夏见辽势已去，遣使奉表称藩于金。宋之西北，又多一层顾忌；西军不敢轻离边地。
+  effects:
+    - {op: adjust_relation, a: xixia, b: jin, delta: 40}
+    - {op: adjust_resource, resource: nanmu, delta: 1, reason: 西夏附金}
+  illustration: event.xixia
+
+# 王黼罢、蔡京复出（史实宣和六年九月至十二月）：奏疏 t18_zaixiang 处置；未批则照例施行。
+- id: wangfu_falls_default
+  title: 王黼罢相
+  kind: conditional
+  when: {turn: 19}
+  conditions:
+    all:
+      - {kind: flag, key: "memorial:t18_zaixiang", operator: absent}
+      - {kind: flag, key: wangfu_dismissed, operator: absent}
+      - {kind: character_status, character: wang_fu, value: alive}
+      - any:
+          - {kind: office_holder, office: taizai, character: wang_fu}
+          - {kind: office_holder, office: shaozai, character: wang_fu}
+  gravity: 0.9
+  importance: 2
+  text: 王黼专政日久，与梁师成相表里，又谋摇东宫，中外侧目。至是罢相致仕。白时中、李邦彦分领太宰、少宰事，而起蔡京领三省事——蔡京年近八十，目昏不能视事，事多决于其子蔡絛。
+  effects:
+    - {op: set_flag, key: wangfu_dismissed, value: true}
+    - {op: dismiss, character: wang_fu, office: taizai}
+    - {op: set_character_status, character: wang_fu, status: retired, cause: 罢相致仕}
+    - {op: set_flag, key: cai_returned, value: true}
+    - {op: set_character_status, character: cai_jing, status: alive, cause: 复起领三省事}
+    - {op: appoint, character: cai_jing, office: taishi}
+    - {op: appoint, character: li_bangyan, office: shaozai}
+    - {op: adjust_resource, resource: ningxing, delta: -1, reason: 王黼去而蔡京复来}
+    - {op: adjust_resource, resource: corruption, delta: 2, reason: 蔡京昏耄，政出其家}
+  illustration: event.cai_retire
+
+# ======================== 第六幕 宣和七年：胡马南牧 ========================
+# 先声：胡马南牧 ≥ 60 的第一季，边臣觇报金人治兵（内部旗标 jin_warning 解锁奏疏「金人治兵」）。
+- id: jin_warning
+  title: 金人治兵
+  kind: system
+  conditions:
+    all:
+      - {kind: turn, operator: gte, value: 10}
+      - {kind: resource, id: nanmu, operator: gte, value: 60}
+      - {kind: flag, key: jin_warning, operator: absent}
+  gravity: 1.0
+  text: 边臣觇报：金人于云中、平州聚粮治兵。
+  effects:
+    - {op: set_flag, key: jin_warning, value: true}
+
+- id: jin_envoy_blame
+  title: 金使责宋
+  kind: scheduled
+  when: {turn: 21}
+  conditions:
+    all:
+      - {kind: flag, key: liao_fallen, value: true}
+      - {kind: resource, id: jin_contempt, operator: gte, value: 45}
+  gravity: 0.85
+  importance: 2
+  text: 金使至汴京，倨傲不拜，数宋之罪：纳叛、渝盟、许粮不输、索山后无厌。言辞之间，已有南牧之意。
+  effects:
+    - {op: adjust_resource, resource: nanmu, delta: 2, reason: 金使数宋之罪}
+    - {op: adjust_resource, resource: authority, delta: -2, reason: 金使倨傲于朝}
+  illustration: event.jin_envoy
+
+# 金兵南下：胡马南牧 ≥ 70，且辽祚 ≤ 15（或胡马南牧 ≥ 85），且已过宣和四年冬。东西两路各六万（胡马南牧 ≥ 85 时各七万五千）。
+- id: jin_invasion
+  title: 金兵南下
+  kind: conditional
+  conditions:
+    all:
+      - {kind: turn, operator: gte, value: 12}
+      - {kind: flag, key: jin_invaded, operator: absent}
+      - {kind: resource, id: nanmu, operator: gte, value: 70}
+      - {kind: resource, id: nanmu, operator: lt, value: 85}
+      - {kind: resource, id: liao_zuo, operator: lte, value: 15}
+  gravity: 0.85
+  importance: 3
+  text: 金主下诏伐宋。宗翰（粘罕）自云中趋太原为西路，宗望（斡离不）自平州趋燕山为东路，两路各六万，期会于汴京城下。边报至京，举朝失色。
+  effects:
+    - {op: set_flag, key: jin_invaded, value: true}
+    - {op: adjust_relation, a: song, b: jin, delta: -150}
+    - {op: adjust_relation, a: jin, b: song, delta: -150}
+    - {op: set_region_controller, region: yunzhong, faction: jin}
+    - {op: set_region_controller, region: pingzhou, faction: jin}
+    - {op: adjust_army, army: jin_west, delta: 60000, reason: 宗翰西路六万}
+    - {op: adjust_army, army: jin_east, delta: 60000, reason: 宗望东路六万}
+    - {op: adjust_resource, resource: morale, delta: -3, reason: 金兵南下}
+  illustration: event.jin_invasion
+
+- id: jin_invasion_great
+  title: 金兵大举南下
+  kind: conditional
+  conditions:
+    all:
+      - {kind: turn, operator: gte, value: 12}
+      - {kind: flag, key: jin_invaded, operator: absent}
+      - {kind: resource, id: nanmu, operator: gte, value: 85}
+  gravity: 0.9
+  importance: 3
+  text: 金主倾国伐宋。宗翰自云中趋太原，宗望自平州趋燕山，两路各七万五千，期会于汴京城下。边报至京，举朝失色。
+  effects:
+    - {op: set_flag, key: jin_invaded, value: true}
+    - {op: adjust_relation, a: song, b: jin, delta: -150}
+    - {op: adjust_relation, a: jin, b: song, delta: -150}
+    - {op: set_region_controller, region: yunzhong, faction: jin}
+    - {op: set_region_controller, region: pingzhou, faction: jin}
+    - {op: adjust_army, army: jin_west, delta: 75000, reason: 宗翰西路七万五千}
+    - {op: adjust_army, army: jin_east, delta: 75000, reason: 宗望东路七万五千}
+    - {op: adjust_resource, resource: morale, delta: -4, reason: 金兵大举南下}
+  illustration: event.jin_invasion
+
+# 郭药师之变：金兵南下，常胜军在宋而郭药师已寒心（忠诚 ≤ 3，或张觉之事后未加抚慰）、常胜军未分屯 → 降金（史实宣和七年十二月）。
+- id: guo_turns_jin
+  title: 郭药师降金
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: jin_invaded, value: true}
+      - {kind: flag, key: guo_defected_jin, operator: absent}
+      - {kind: flag, key: changsheng_split, operator: absent}
+      - {kind: army_strength, army: changsheng, operator: gt, value: 0}
+      - {kind: character_status, character: guo_yaoshi, value: alive}
+      - {kind: character_trait, character: guo_yaoshi, trait: loyalty, operator: lte, value: 3}
+  gravity: 0.85
+  importance: 3
+  text: 宗望兵至，郭药师以常胜军降金，反为金人前导。燕山诸州一时俱失，河北门户洞开。
+  effects:
+    - {op: set_flag, key: guo_defected_jin, value: true}
+    - {op: set_army_faction, army: changsheng, faction: jin}
+    - {op: set_character_faction, character: guo_yaoshi, faction: jin}
+    - {op: dismiss, character: guo_yaoshi, office: changsheng_tong}
+    - {op: adjust_resource, resource: authority, delta: -3, reason: 降将反噬}
+    - {op: adjust_resource, resource: morale, delta: -2, reason: 燕山失守}
+  illustration: event.guo_surrender
+
+# 童贯遁归（史实宣和七年十二月）：童贯在河北、河东宣抚任上而金兵至。
+- id: tong_flees
+  title: 童贯遁归
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: jin_invaded, value: true}
+      - {kind: flag, key: tong_fled, operator: absent}
+      - {kind: character_status, character: tong_guan, value: alive}
+      - any:
+          - {kind: character_region, character: tong_guan, region: hedong}
+          - {kind: character_region, character: tong_guan, region: hebei_xi}
+          - {kind: character_region, character: tong_guan, region: hebei_dong}
+          - {kind: character_region, character: tong_guan, region: yanshan}
+  gravity: 0.8
+  importance: 2
+  text: 童贯在宣抚任上，闻金兵至，托言赴阙禀议，弃军南归。守臣张孝纯责之不听。边郡人心为之沮丧。
+  effects:
+    - {op: set_flag, key: tong_fled, value: true}
+    - {op: move_character, character: tong_guan, to_region: bianjing}
+    - {op: adjust_resource, resource: authority, delta: -3, reason: 大帅弃军}
+    - {op: adjust_resource, resource: wubei, delta: -3, reason: 大帅弃军，边军沮丧}
+  illustration: event.jin_invasion
+
+- id: taiyuan_besieged
+  title: 太原被围
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: jin_invaded, value: true}
+      - {kind: flag, key: taiyuan_besieged, operator: absent}
+      - {kind: army_region, army: jin_west, region: hedong}
+      - {kind: region_controller, region: hedong, faction: song}
+  gravity: 1.0
+  importance: 2
+  region: hedong
+  text: 宗翰兵围太原，筑长围、列炮座，昼夜攻城。知府张孝纯与副总管王禀登陴固守。
+  effects:
+    - {op: set_flag, key: taiyuan_besieged, value: true}
+  illustration: event.taiyuan_siege
+
+- id: taiyuan_falls
+  title: 太原陷
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: jin_invaded, value: true}
+      - {kind: flag, key: taiyuan_fallen, operator: absent}
+      - {kind: region_controller, region: hedong, faction: jin}
+  gravity: 1.0
+  importance: 3
+  region: hedong
+  text: 太原城陷，河东诸州相继不守。金之西路，自此可以长驱南下。
+  effects:
+    - {op: set_flag, key: taiyuan_fallen, value: true}
+    - {op: adjust_resource, resource: morale, delta: -3, reason: 太原陷}
+    - {op: adjust_resource, resource: authority, delta: -3, reason: 太原陷}
+  illustration: event.taiyuan_siege
+
+- id: bianjing_besieged
+  title: 兵临汴京
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: jin_invaded, value: true}
+      - {kind: flag, key: bianjing_besieged, operator: absent}
+      - any:
+          - {kind: army_region, army: jin_east, region: hebei_xi}
+          - {kind: army_region, army: jin_west, region: jingxi}
+      - {kind: region_controller, region: bianjing, faction: song}
+  gravity: 1.0
+  importance: 3
+  region: bianjing
+  text: 金兵前锋已至黄河北岸，汴京震动。百官或请固守，或请南幸，或请遣使议和；城中守具多朽，禁军阙额甚多。
+  effects:
+    - {op: set_flag, key: bianjing_besieged, value: true}
+    - {op: adjust_resource, resource: morale, delta: -2, reason: 兵临京师}
+  illustration: event.bianjing_siege
+
+# 西军勤王抵京（奏疏 t_qinwang 发兵，或自行调抵汴京）：入城协守。
+- id: qinwang_arrives
+  title: 勤王兵至
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: jin_invaded, value: true}
+      - {kind: flag, key: qinwang, operator: absent}
+      - any:
+          - {kind: army_region, army: xijun_jingyuan, region: bianjing}
+          - {kind: army_region, army: xijun_qinfeng, region: bianjing}
+  gravity: 1.0
+  importance: 2
+  region: bianjing
+  text: 西军勤王之师至京师城下，老种经略旗号所至，城中欢呼。金人闻西兵至，攻势稍缓。
+  effects:
+    - {op: set_flag, key: qinwang, value: true}
+    - {op: adjust_resource, resource: morale, delta: 3, reason: 勤王兵至}
+    - {op: adjust_resource, resource: authority, delta: 2, reason: 勤王兵至}
+  illustration: event.qinwang
+
+# 师老：金军深入宋境满两季，而汴京未下、勤王之兵已至或李纲守城：金军粮匮，逐季折损。
+- id: jin_attrition
+  title: 金军师老
+  kind: conditional
+  repeatable: true
+  cooldown: 1
+  conditions:
+    all:
+      - {kind: flag, key: jin_invaded, value: true}
+      - {kind: flag, key: jin_withdrawn, operator: absent}
+      - {kind: flag_age, key: jin_invaded, operator: gte, value: 2}
+      - {kind: region_controller, region: bianjing, faction: song}
+      - any:
+          - {kind: flag, key: qinwang, value: true}
+          - {kind: flag, key: ligang_defense, value: true}
+  gravity: 1.0
+  importance: 1
+  text: 金军孤军深入，掠野无所得，河北义兵四起，抄其粮道；营中疾疫，战马多毙。
+  effects:
+    - {op: adjust_army, army: jin_east, delta: -9000, reason: 师老粮匮}
+    - {op: adjust_army, army: jin_west, delta: -6000, reason: 师老粮匮}
+  illustration: event.qinwang
+
+# 金军败退：两路各余不足两万。
+- id: jin_repulsed
+  title: 金军北遁
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: jin_invaded, value: true}
+      - {kind: flag, key: jin_repulsed, operator: absent}
+      - {kind: army_strength, army: jin_west, operator: lte, value: 20000}
+      - {kind: army_strength, army: jin_east, operator: lte, value: 20000}
+      - {kind: region_controller, region: bianjing, faction: song}
+  gravity: 1.0
+  importance: 3
+  text: 金军两路皆挫，余众收兵北遁，弃辎重于道。官军尾随，收复陷没州县。
+  effects:
+    - {op: set_flag, key: jin_repulsed, value: true}
+    - {op: set_flag, key: jin_withdrawn, value: true}
+    - {op: move_army, army: jin_west, to_region: yunzhong}
+    - {op: move_army, army: jin_east, to_region: pingzhou}
+    - {op: adjust_resource, resource: nanmu, delta: -20, reason: 金军败退}
+    - {op: adjust_resource, resource: jin_contempt, delta: -15, reason: 宋兵却敌}
+    - {op: adjust_resource, resource: authority, delta: 5, reason: 却敌}
+    - {op: adjust_resource, resource: morale, delta: 4, reason: 却敌}
+    - {op: adjust_counter, key: war_merit, delta: 1}
+  illustration: event.qinwang
+
+# 金军退后，陷没之地与金军已不在者复归（宋军未必能逐一收复，故只复无金军驻守之地）。
+- id: lost_lands_restored
+  title: 收复州县
+  kind: system
+  conditions:
+    all:
+      - {kind: flag, key: jin_withdrawn, value: true}
+      - {kind: flag, key: lost_lands_restored, operator: absent}
+  gravity: 1.0
+  text: 金军既退，河北、河东陷没州县次第收复。
+  effects:
+    - {op: set_flag, key: lost_lands_restored, value: true}
+    - {op: set_region_controller, region: hebei_xi, faction: song}
+    - {op: set_region_controller, region: hebei_dong, faction: song}
+    - {op: set_region_controller, region: jingxi, faction: song}
+
+# 城下之盟后：金人退兵（奏疏 t_chengxia 许割三镇时设 jin_withdrawn）。三镇不交则金人以背约再南（史实靖康元年八月）。
+- id: jin_returns
+  title: 金人以背约再南
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: sanzhen_ceded, value: true}
+      - {kind: flag, key: sanzhen_delivered, operator: absent}
+      - {kind: flag_age, key: sanzhen_ceded, operator: gte, value: 2}
+      - {kind: flag, key: jin_returned, operator: absent}
+      - {kind: turn, operator: lte, value: 26}
+  gravity: 0.8
+  importance: 3
+  text: 三镇军民不肯从金，朝廷亦悔割地之约。金人以宋背约为辞，再分两路南下。
+  effects:
+    - {op: set_flag, key: jin_returned, value: true}
+    - {op: set_flag, key: jin_withdrawn, value: false}
+    - {op: adjust_relation, a: song, b: jin, delta: -150}
+    - {op: adjust_relation, a: jin, b: song, delta: -150}
+    - {op: adjust_army, army: jin_west, delta: 30000, reason: 金西路再起}
+    - {op: adjust_army, army: jin_east, delta: 30000, reason: 金东路再起}
+  illustration: event.jin_invasion
+
+# ======================== 常设与随机事件 ========================
+- id: auspicious_cranes
+  title: 群鹤翔于宫阙
+  kind: random
+  conditions: {kind: turn, operator: lte, value: 12}
+  gravity: 0.15
+  importance: 1
+  text: 正月十六日，群鹤飞鸣于宣德门上，徘徊不去。都人仰观，以为祥瑞。陛下命画院图之。
+  effects:
+    - {op: adjust_resource, resource: authority, delta: 1, reason: 祥瑞}
+    - {op: adjust_resource, resource: ningxing, delta: 1, reason: 群臣贺祥瑞}
+  illustration: event.daoist_rite
+
+- id: yellow_river_breach
+  title: 河决
+  kind: random
+  repeatable: true
+  cooldown: 6
+  conditions: {kind: region_controller, region: hebei_dong, faction: song}
+  gravity: 0.1
+  importance: 1
+  region: hebei_dong
+  text: 黄河决于河北，漂没民田庐舍，流民南徙。
+  effects:
+    - {op: adjust_region, region: hebei_dong, stat: prosperity, delta: -6}
+    - {op: adjust_region, region: hebei_dong, stat: grain, delta: -4}
+    - {op: adjust_resource, resource: grain, delta: -40, reason: 河决赈济}
+    - {op: adjust_resource, resource: morale, delta: -1, reason: 河决}
+  illustration: event.flood
+
+- id: capital_flood
+  title: 京师大水
+  kind: random
+  repeatable: true
+  cooldown: 8
+  gravity: 0.06
+  importance: 1
+  region: bianjing
+  text: 京师大雨，汴水暴涨，城外民居多没。言者以为阴气太盛，宜防盗贼、外患。
+  effects:
+    - {op: adjust_region, region: bianjing, stat: prosperity, delta: -4}
+    - {op: adjust_resource, resource: treasury, delta: -25, reason: 赈恤水灾}
+  illustration: event.flood
+
+- id: lantern_festival
+  title: 上元灯会
+  kind: random
+  repeatable: true
+  cooldown: 4
+  conditions:
+    all:
+      - {kind: resource, id: morale, operator: gte, value: 45}
+      - {kind: flag, key: jin_invaded, operator: absent}
+  gravity: 0.12
+  importance: 1
+  region: bianjing
+  text: 上元夜，宣德门前结彩山，灯火连十余里，陛下登楼观灯，赐酒万民。都人士女，通宵游赏。
+  effects:
+    - {op: adjust_resource, resource: morale, delta: 1, reason: 与民同乐}
+    - {op: adjust_resource, resource: treasury, delta: -15, reason: 上元赐宴}
+  illustration: event.qingming
+
+- id: daoist_rite
+  title: 斋醮
+  kind: random
+  repeatable: true
+  cooldown: 4
+  conditions: {kind: flag, key: daojiao_curbed, operator: absent}
+  gravity: 0.12
+  importance: 1
+  region: bianjing
+  text: 上清宝箓宫设大斋醮，道众数千，陛下亲临，赐予甚厚。
+  effects:
+    - {op: adjust_resource, resource: treasury, delta: -20, reason: 斋醮赏赐}
+    - {op: adjust_resource, resource: authority, delta: 1, reason: 道君临坛}
+  illustration: event.daoist_rite
+
+- id: goryeo_embassy
+  title: 遣使高丽
+  kind: scheduled
+  when: {turn: 13}
+  gravity: 0.7
+  importance: 1
+  region: goryeo
+  text: 给事中路允迪等奉使高丽，船队自明州出海，抵其王都。高丽礼待甚厚，所见风土，使臣徐兢图而记之。
+  effects:
+    - {op: adjust_relation, a: song, b: goryeo, delta: 5}
+    - {op: adjust_resource, resource: treasury, delta: -10, reason: 遣使高丽}
+  illustration: event.goryeo_envoy
+
+- id: liao_refugees
+  title: 燕人南来
+  kind: random
+  conditions:
+    all:
+      - {kind: flag, key: zhongjing_fallen, value: true}
+      - {kind: turn, operator: lte, value: 16}
+  gravity: 0.25
+  importance: 1
+  region: hebei_dong
+  text: 辽乱，燕、蓟之民扶老携幼南奔，至雄、霸者日以千计。河北守臣请处置。
+  effects:
+    - {op: adjust_resource, resource: grain, delta: -20, reason: 赈给燕人}
+    - {op: adjust_region, region: hebei_dong, stat: order, delta: -2}
+  illustration: event.famine
+
+- id: xixia_raid
+  title: 夏人扰边
+  kind: random
+  repeatable: true
+  cooldown: 5
+  gravity: 0.12
+  importance: 1
+  region: xibian
+  text: 夏人数千骑扰泾原边寨，焚掠而去。西军出击，各有杀伤。
+  effects:
+    - {op: adjust_region, region: xibian, stat: order, delta: -3}
+    - {op: adjust_resource, resource: treasury, delta: -10, reason: 边寨修补}
+  illustration: event.xixia
+
+- id: good_harvest
+  title: 江南大稔
+  kind: random
+  repeatable: true
+  cooldown: 4
+  conditions: {kind: region_controller, region: jiangnan, faction: song}
+  gravity: 0.15
+  importance: 1
+  region: jiangnan
+  text: 江南、淮南大稔，米价平，漕舟相衔而北。
+  effects:
+    - {op: adjust_resource, resource: grain, delta: 60, reason: 东南丰稔，漕运增额}
+  illustration: event.qingming
+
+- id: palace_fire
+  title: 禁中火
+  kind: random
+  repeatable: true
+  cooldown: 8
+  gravity: 0.05
+  importance: 1
+  region: bianjing
+  text: 禁中夜火，延烧数殿，至晓方灭。言者以为天戒。
+  effects:
+    - {op: adjust_resource, resource: treasury, delta: -30, reason: 修葺宫殿}
+    - {op: adjust_resource, resource: authority, delta: -1, reason: 天戒}
+  illustration: event.court_debate
+
+- id: grain_price
+  title: 京师米贵
+  kind: random
+  repeatable: true
+  cooldown: 4
+  conditions:
+    any:
+      - {kind: resource, id: grain, operator: lt, value: 600}
+      - {not: {kind: region_controller, region: liangzhe, faction: song}}
+  gravity: 0.25
+  importance: 1
+  region: bianjing
+  text: 东南漕运不继，京师米价腾涌，市井嗷嗷。
+  effects:
+    - {op: adjust_resource, resource: morale, delta: -2, reason: 京师米贵}
+    - {op: adjust_region, region: bianjing, stat: order, delta: -3}
+  illustration: event.famine
+
+- id: taixue_petition
+  title: 太学生上书
+  kind: random
+  repeatable: true
+  cooldown: 6
+  conditions:
+    all:
+      - {kind: resource, id: ningxing, operator: gte, value: 65}
+      - {kind: turn, operator: gte, value: 6}
+  gravity: 0.15
+  importance: 1
+  region: bianjing
+  text: 太学诸生伏阙上书，论应奉之扰、佞幸之盛。书入，不报。
+  effects:
+    - {op: adjust_resource, resource: authority, delta: -1, reason: 诸生议论}
+  illustration: event.chen_dong
+
+- id: border_bandits
+  title: 散兵寇边
+  kind: random
+  repeatable: true
+  cooldown: 4
+  conditions:
+    all:
+      - {kind: flag, key: zhongjing_fallen, value: true}
+      - {kind: region_controller, region: hebei_xi, faction: song}
+  gravity: 0.15
+  importance: 1
+  region: hebei_xi
+  text: 辽之溃兵与边地亡命相聚，出没于易、雄之间，剽掠边民。
+  effects:
+    - {op: adjust_region, region: hebei_xi, stat: order, delta: -3}
+    - {op: adjust_region, region: hebei_xi, stat: prosperity, delta: -2}
+  illustration: event.military_drill

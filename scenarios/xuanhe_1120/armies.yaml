@@ -1,0 +1,21 @@
+# 军队。兵数与素质全部为本游戏设定（【设】）：史载河北将兵「十无二三」、禁军多阙额，宣和间实数无可考（FACT_CHECK #19）。
+# 兵额 0 的军队为预置的「空营」：伐燕、南讨、燕山戍守、金军南下、方腊起事时由事件或奏疏补兵（adjust_army），不在地图上显示。
+- {id: jinjun, name: 京师禁军, faction: song, region: bianjing, strength: 80000, quality: 0.45, commander: gao_qiu}
+- {id: xijun_jingyuan, name: 泾原军, faction: song, region: xibian, strength: 50000, quality: 1.05, commander: zhong_shidao}
+- {id: xijun_qinfeng, name: 秦凤熙河军, faction: song, region: xibian, strength: 50000, quality: 1.0, commander: zhong_shizhong}
+- {id: hedong_army, name: 河东军, faction: song, region: hedong, strength: 35000, quality: 0.75, commander: zhang_xiaochun}
+- {id: hebei_army, name: 河北西路禁军, faction: song, region: hebei_xi, strength: 50000, quality: 0.55, commander: null}
+- {id: hebei_dong_army, name: 河北东路禁军, faction: song, region: hebei_dong, strength: 30000, quality: 0.55, commander: null}
+- {id: guanzhong_army, name: 永兴军, faction: song, region: guanzhong, strength: 25000, quality: 0.8, commander: null}
+- {id: dongnan_army, name: 东南诸军, faction: song, region: jiangnan, strength: 30000, quality: 0.5, commander: null}
+- {id: nanzheng, name: 南讨诸军, faction: song, region: huainan, strength: 0, quality: 1.0, commander: null}
+- {id: beifa_army, name: 伐燕诸军, faction: song, region: hebei_dong, strength: 0, quality: 0.9, commander: null}
+- {id: yanshan_army, name: 燕山戍军, faction: song, region: yanshan, strength: 0, quality: 0.7, commander: null}
+- {id: liao_yanjing, name: 燕京辽军, faction: liao, region: yanshan, strength: 35000, quality: 1.1, commander: yelu_dashi}
+- {id: changsheng, name: 常胜军, faction: liao, region: yanshan, strength: 8000, quality: 1.2, commander: guo_yaoshi}
+- {id: liao_main, name: 辽主力, faction: liao, region: liao, strength: 50000, quality: 0.8, commander: yelu_yanxi}
+- {id: jin_main, name: 金国本军, faction: jin, region: jin, strength: 90000, quality: 1.4, commander: wanyan_aguda}
+- {id: jin_west, name: 金西路军, faction: jin, region: yunzhong, strength: 0, quality: 1.35, commander: wanyan_zonghan}
+- {id: jin_east, name: 金东路军, faction: jin, region: pingzhou, strength: 0, quality: 1.35, commander: wanyan_zongwang}
+- {id: xixia_army, name: 西夏军, faction: xixia, region: xixia, strength: 50000, quality: 0.9, commander: null}
+- {id: fangla_army, name: 方腊军, faction: fangla, region: liangzhe, strength: 0, quality: 0.45, commander: fang_la}

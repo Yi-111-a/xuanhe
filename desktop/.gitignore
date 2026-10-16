@@ -1,0 +1,6 @@
+node_modules/
+.build/
+src-tauri/target/
+src-tauri/gen/
+src-tauri/resources/server/*
+!src-tauri/resources/server/.gitkeep

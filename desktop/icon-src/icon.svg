@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="cin" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c8372d"/>
+      <stop offset="1" stop-color="#8f1d18"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f1d48a"/>
+      <stop offset="1" stop-color="#b98d3a"/>
+    </linearGradient>
+  </defs>
+  <rect x="64" y="64" width="896" height="896" rx="120" fill="url(#cin)"/>
+  <rect x="112" y="112" width="800" height="800" rx="80" fill="none" stroke="url(#gold)" stroke-width="18"/>
+  <!-- coin: round outer, square hole (abstract treasure mark) -->
+  <path fill="url(#gold)" fill-rule="evenodd"
+        d="M512 232a280 280 0 1 0 0.01 0zM400 400h224v224H400z"/>
+  <!-- inner rim of coin -->
+  <circle cx="512" cy="512" r="236" fill="none" stroke="#8f1d18" stroke-width="10" opacity="0.55"/>
+  <rect x="400" y="400" width="224" height="224" fill="none" stroke="#8f1d18" stroke-width="10" opacity="0.55"/>
+  <!-- four small ticks linking hole to rim -->
+  <g stroke="#8f1d18" stroke-width="14" stroke-linecap="round" opacity="0.6">
+    <path d="M512 300v70M512 654v70M300 512h70M654 512h70"/>
+  </g>
+</svg>

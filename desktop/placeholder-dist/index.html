@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<title>天宝（占位页）</title>
+<style>
+  html,body{margin:0;height:100%;background:#14100e;color:#d9c8a0;font-family:"KaiTi","Microsoft YaHei",serif}
+  main{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+  h1{font-size:72px;font-weight:400;letter-spacing:.3em;margin:0;color:#d9a441}
+  pre{color:#9c8a62;font-size:14px}
+</style>
+</head>
+<body>
+<main data-testid="title.root">
+  <h1 data-testid="title.heading">天宝</h1>
+  <p>桌面壳占位页（app/dist 尚未就绪时仅用于冒烟测试）</p>
+  <button data-testid="title.start">开始</button>
+  <pre id="out" data-testid="title.api-status">api: …</pre>
+</main>
+<script>
+  (async () => {
+    const out = document.getElementById('out');
+    try {
+      const invoke = (window.__TAURI__ && window.__TAURI__.core && window.__TAURI__.core.invoke) ||
+                     (window.__TAURI_INTERNALS__ && window.__TAURI_INTERNALS__.invoke);
+      const base = invoke ? await invoke('get_api_base') : window.__TIANBAO_API_BASE__;
+      const r = await fetch(base + '/api/scenarios');
+      out.textContent = 'api: ' + base + ' -> ' + r.status;
+    } catch (e) { out.textContent = 'api error: ' + e; }
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+# 地区：stats 与驿程日数均为本游戏设定（【设】）。行程 travel_turns 以季计（一季约九十日）。
+# 汴京—关中（经西京驿路）、汴京—闽广（驿路，供官员往来）各计一季：一季九十日足以走完，免得地图分区把行程拉长到三四季。
+# 驿程 courier_days：自本路治所奏到汴京的日数，按急脚递日行数百里、远路放慢估算；超过 settings.courier.late_threshold_days（15）
+# 的川峡、闽广：奏疏与军报晚一季，诏令晚一季到达。外域按转奏之边郡估计。
+# 收入公式 controlled_only：只计 controller = 宋 的地区；陷敌、陷于方腊之地不再输送赋税。
+# map 坐标为底图百分比（x 向东，y 向南），舆图多边形另见 map.json。
+- id: bianjing
+  name: 汴京
+  seat: 开封府
+  courier_days: 1
+  controller: song
+  note: 东京开封府，天下之中；城大而守具久弛
+  adjacency: [{to: jingdong, travel_turns: 1}, {to: jingxi, travel_turns: 1}, {to: hebei_xi, travel_turns: 1}, {to: hebei_dong, travel_turns: 1}, {to: huainan, travel_turns: 1}, {to: guanzhong, travel_turns: 1}, {to: minguang, travel_turns: 1}]
+  stats: {prosperity: 90, order: 70, defense: 45, tax: 22, grain: 6}
+- id: jingdong
+  name: 京东
+  seat: 青州
+  courier_days: 4
+  controller: song
+  note: 齐鲁之地，梁山泊在焉；登州有海道通辽东
+  adjacency: [{to: bianjing, travel_turns: 1}, {to: hebei_dong, travel_turns: 1}, {to: huainan, travel_turns: 1}, {to: jin, travel_turns: 2}, {to: goryeo, travel_turns: 2}]
+  stats: {prosperity: 65, order: 50, defense: 30, tax: 12, grain: 10}
+- id: jingxi
+  name: 京西
+  seat: 河南府
+  courier_days: 3
+  controller: song
+  note: 西京洛阳，北临黄河，河阳桥为南北津要
+  adjacency: [{to: bianjing, travel_turns: 1}, {to: hedong, travel_turns: 1}, {to: guanzhong, travel_turns: 1}, {to: jinghu, travel_turns: 1}, {to: huainan, travel_turns: 1}]
+  stats: {prosperity: 65, order: 65, defense: 35, tax: 9, grain: 8}
+- id: hebei_xi
+  name: 河北西路
+  seat: 真定府
+  courier_days: 5
+  controller: song
+  note: 真定、中山，太行之东，南抵黄河浚、滑之津
+  adjacency: [{to: bianjing, travel_turns: 1}, {to: hebei_dong, travel_turns: 1}, {to: hedong, travel_turns: 1}, {to: yanshan, travel_turns: 1}]
+  stats: {prosperity: 60, order: 60, defense: 45, tax: 9, grain: 9}
+- id: hebei_dong
+  name: 河北东路
+  seat: 河间府
+  courier_days: 4
+  controller: song
+  note: 河间、大名，塘泺之地，北临白沟旧界
+  adjacency: [{to: bianjing, travel_turns: 1}, {to: hebei_xi, travel_turns: 1}, {to: jingdong, travel_turns: 1}, {to: yanshan, travel_turns: 1}]
+  stats: {prosperity: 60, order: 60, defense: 40, tax: 9, grain: 9}
+- id: hedong
+  name: 河东
+  seat: 太原府
+  courier_days: 6
+  controller: song
+  note: 表里山河，太原城坚；北接云中，西邻西夏
+  adjacency: [{to: hebei_xi, travel_turns: 1}, {to: jingxi, travel_turns: 1}, {to: guanzhong, travel_turns: 1}, {to: yunzhong, travel_turns: 1}, {to: xixia, travel_turns: 1}]
+  stats: {prosperity: 55, order: 65, defense: 70, tax: 7, grain: 7}
+- id: guanzhong
+  name: 关中
+  seat: 京兆府
+  courier_days: 5
+  controller: song
+  note: 永兴军路，西军之后方
+  adjacency: [{to: jingxi, travel_turns: 1}, {to: hedong, travel_turns: 1}, {to: xibian, travel_turns: 1}, {to: chuanxia, travel_turns: 1}, {to: bianjing, travel_turns: 1}]
+  stats: {prosperity: 60, order: 65, defense: 50, tax: 7, grain: 7}
+- id: xibian
+  name: 西北边
+  seat: 渭州
+  courier_days: 10
+  controller: song
+  note: 泾原、秦凤、熙河诸路，西军所在
+  adjacency: [{to: guanzhong, travel_turns: 1}, {to: xixia, travel_turns: 1}, {to: chuanxia, travel_turns: 1}]
+  stats: {prosperity: 35, order: 70, defense: 75, tax: 2, grain: 4}
+- id: huainan
+  name: 淮南
+  seat: 扬州
+  courier_days: 4
+  controller: song
+  note: 江淮之间，漕运咽喉
+  adjacency: [{to: bianjing, travel_turns: 1}, {to: jingdong, travel_turns: 1}, {to: jingxi, travel_turns: 1}, {to: liangzhe, travel_turns: 1}, {to: jiangnan, travel_turns: 1}]
+  stats: {prosperity: 75, order: 65, defense: 25, tax: 13, grain: 12}
+- id: liangzhe
+  name: 两浙
+  seat: 杭州
+  courier_days: 8
+  controller: song
+  note: 苏、杭、睦、歙，财赋之区，花石纲所出
+  adjacency: [{to: huainan, travel_turns: 1}, {to: jiangnan, travel_turns: 1}, {to: minguang, travel_turns: 1}]
+  stats: {prosperity: 85, order: 50, defense: 20, tax: 20, grain: 14}
+- id: jiangnan
+  name: 江南
+  seat: 江宁府
+  courier_days: 6
+  controller: song
+  note: 江南东西路，鱼米之乡
+  adjacency: [{to: huainan, travel_turns: 1}, {to: liangzhe, travel_turns: 1}, {to: jinghu, travel_turns: 1}, {to: minguang, travel_turns: 1}]
+  stats: {prosperity: 80, order: 65, defense: 20, tax: 16, grain: 14}
+- id: jinghu
+  name: 荆湖
+  seat: 江陵府
+  courier_days: 8
+  controller: song
+  note: 荆湖南北路
+  adjacency: [{to: jingxi, travel_turns: 1}, {to: jiangnan, travel_turns: 1}, {to: chuanxia, travel_turns: 1}, {to: minguang, travel_turns: 1}]
+  stats: {prosperity: 70, order: 65, defense: 20, tax: 11, grain: 12}
+- id: chuanxia
+  name: 川峡
+  seat: 成都府
+  courier_days: 16
+  controller: song
+  note: 川峡四路，蜀道险远
+  adjacency: [{to: guanzhong, travel_turns: 1}, {to: xibian, travel_turns: 1}, {to: jinghu, travel_turns: 1}]
+  stats: {prosperity: 75, order: 70, defense: 40, tax: 13, grain: 11}
+- id: minguang
+  name: 闽广
+  seat: 福州
+  courier_days: 18
+  controller: song
+  note: 福建、广南，山海之间，南剑州沙县在焉
+  adjacency: [{to: liangzhe, travel_turns: 1}, {to: jiangnan, travel_turns: 1}, {to: jinghu, travel_turns: 1}, {to: bianjing, travel_turns: 1}]
+  stats: {prosperity: 70, order: 70, defense: 20, tax: 10, grain: 8}
+# ---------------- 外域 ----------------
+- id: yanshan
+  name: 燕京
+  seat: 析津府
+  courier_days: 8
+  controller: liao
+  note: 辽之南京，燕云十六州之首；石晋割让以来不入中国二百年
+  adjacency: [{to: hebei_xi, travel_turns: 1}, {to: hebei_dong, travel_turns: 1}, {to: pingzhou, travel_turns: 1}, {to: yunzhong, travel_turns: 1}, {to: liao, travel_turns: 1}]
+  stats: {prosperity: 55, order: 50, defense: 60, tax: 8, grain: 6}
+- id: yunzhong
+  name: 云中
+  seat: 大同府
+  courier_days: 12
+  controller: liao
+  note: 辽之西京，山后诸州
+  adjacency: [{to: yanshan, travel_turns: 1}, {to: hedong, travel_turns: 1}, {to: liao, travel_turns: 1}, {to: xixia, travel_turns: 1}]
+  stats: {prosperity: 40, order: 50, defense: 55, tax: 4, grain: 4}
+- id: pingzhou
+  name: 平州
+  seat: 平州
+  courier_days: 12
+  controller: liao
+  note: 平、营、滦三州，榆关之东，傍海而通辽东
+  adjacency: [{to: yanshan, travel_turns: 1}, {to: liao, travel_turns: 1}, {to: jin, travel_turns: 1}]
+  stats: {prosperity: 40, order: 50, defense: 50, tax: 3, grain: 3}
+- id: liao
+  name: 辽
+  seat: 中京大定府
+  courier_days: 15
+  controller: liao
+  note: 辽之中京与上京故地
+  adjacency: [{to: yanshan, travel_turns: 1}, {to: yunzhong, travel_turns: 1}, {to: pingzhou, travel_turns: 1}, {to: jin, travel_turns: 1}]
+  stats: {prosperity: 30, order: 30, defense: 40, tax: 3, grain: 3}
+- id: jin
+  name: 金
+  seat: 会宁府
+  courier_days: 30
+  controller: jin
+  note: 女真故地与辽东京道
+  adjacency: [{to: liao, travel_turns: 1}, {to: pingzhou, travel_turns: 1}, {to: goryeo, travel_turns: 1}, {to: jingdong, travel_turns: 2}]
+  stats: {prosperity: 30, order: 60, defense: 50, tax: 3, grain: 3}
+- id: xixia
+  name: 西夏
+  seat: 兴庆府
+  courier_days: 15
+  controller: xixia
+  note: 党项之国，贺兰山下
+  adjacency: [{to: xibian, travel_turns: 1}, {to: hedong, travel_turns: 1}, {to: yunzhong, travel_turns: 1}]
+  stats: {prosperity: 35, order: 60, defense: 55, tax: 3, grain: 3}
+- id: goryeo
+  name: 高丽
+  seat: 开京
+  courier_days: 20
+  controller: goryeo
+  note: 海东之国，与宋通使
+  adjacency: [{to: jin, travel_turns: 1}, {to: jingdong, travel_turns: 2}]
+  stats: {prosperity: 50, order: 60, defense: 50, tax: 3, grain: 3}
