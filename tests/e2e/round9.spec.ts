@@ -184,8 +184,9 @@ test('memorials carry their courier date @round9', async ({ page }) => {
   await page.getByTestId('desk.memorialBook').click();
   await expect(page.getByTestId('memorial.root')).toBeVisible();
   const first = page.locator('[data-testid^="memorial.arrival."]').first();
-  await expect(first).toHaveText(/月.{1,3}日自.+奏到|迟到之报/);
-  await expect(page.getByTestId('memorial.dateline')).toContainText('奏到');
+  // 京中之奏写「某月某日奏上」，远地写「自某地奏到」
+  await expect(first).toHaveText(/月.{1,3}日(自.+奏到|奏上)|迟到之报/);
+  await expect(page.getByTestId('memorial.dateline')).toContainText(/奏到|奏上/);
   expect(errors).toEqual([]);
 });
 

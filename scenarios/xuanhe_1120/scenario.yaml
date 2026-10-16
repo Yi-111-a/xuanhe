@@ -129,6 +129,7 @@ difficulties:
     label: 演义
     description: 宽和之局。金人增势较慢，府库稍丰，诏令少有稽迟。适合初识宣和局势。
     drift_scale: {nanmu: 0.85, jin_contempt: 0.8}
+    drift_bias: {nanmu: -0.2}
     start: {treasury: 2800}
     delay_scale: 0.5
   - id: shishi
@@ -136,10 +137,11 @@ difficulties:
     description: 依史事设定的常例。明君善处可保北门，然金人日强，须时时经营。
   - id: diyu
     label: 地狱
-    description: 多事之秋。金人增势更急、更轻宋，君威易损，府库开局即紧，方腊、群盗更易起，诏令多有稽迟。
+    description: 多事之秋。金人增势更急、更轻宋（即便边备整饬，北患也逐季加重），君威易损、民心易散，府库开局即紧，方腊、群盗更易起，诏令多有稽迟。
     drift_scale: {nanmu: 1.15, jin_contempt: 1.2, authority: 1.3}
+    drift_bias: {nanmu: 0.65, jin_contempt: 0.3, morale: -0.1}   # 先乘后加：善治者把漂移压成负数时，地狱照样更难
     gravity_scale: {fangla_rising: 1.3, bandits_rise: 1.3}
-    start: {treasury: 2000, nanmu: 18}
+    start: {treasury: 2300, nanmu: 18}
     delay_scale: 1.5
 default_difficulty: shishi
 
@@ -199,7 +201,7 @@ objectives:
   - id: beimen
     title: 北门锁钥
     detail: >-
-      未南下：至宣和七年冬（宣和七年秋结算之后即终局）金兵未南下，且胡马南牧 < 45（中兴诸结局还须武备、君威 ≥ 55，国库 ≥ 235，佞幸 < 40）。
+      未南下：至宣和七年冬（宣和七年秋结算之后即终局）金兵未南下，且胡马南牧 < 45（中兴诸结局还须武备、君威 ≥ 55，国库 ≥ 235，民心 ≥ 60，佞幸 < 40）。
       金兵若已南下，时限延至宣和八年冬，底线是汴京不失；可提前终局：金军两路败退满两季，汴京、太原、河北两路俱在，即「却敌河上」。
       胡马南牧 ≥ 70 且辽祚 ≤ 15（或胡马南牧 ≥ 85）时，金兵随时可能南下。
     conditions:
@@ -363,8 +365,9 @@ endings:
         - {kind: resource, id: wubei, operator: gte, value: 60}
         - {kind: resource, id: authority, operator: gte, value: 55}
         - {kind: resource, id: treasury, operator: gte, value: 235}
+        - {kind: resource, id: morale, operator: gte, value: 60}
         - {kind: resource, id: ningxing, operator: lt, value: 40}
-    text: 宣和七年冬，燕京城头飘着宋人的旗帜，居庸、古北诸关有兵把守；河北边备一新，金人遣使往来而不敢窥伺。佞幸既黜，朝政渐清，五代以来失陷的燕地终归中国。此为本游戏的反事实结局。【达成条件】至宣和七年冬金兵未南下；胡马南牧 < 45；燕京在宋手；武备 ≥ 60；君威 ≥ 55；国库 ≥ 235（府库有余）；佞幸用事 < 40。
+    text: 宣和七年冬，燕京城头飘着宋人的旗帜，居庸、古北诸关有兵把守；河北边备一新，金人遣使往来而不敢窥伺。佞幸既黜，朝政渐清，五代以来失陷的燕地终归中国。此为本游戏的反事实结局。【达成条件】至宣和七年冬金兵未南下；胡马南牧 < 45；燕京在宋手；武备 ≥ 60；君威 ≥ 55；国库 ≥ 235（府库有余）；民心 ≥ 60；佞幸用事 < 40。
   - id: e_baojing
     kind: ending
     priority: 11
@@ -378,8 +381,9 @@ endings:
         - {kind: resource, id: wubei, operator: gte, value: 55}
         - {kind: resource, id: authority, operator: gte, value: 55}
         - {kind: resource, id: treasury, operator: gte, value: 235}
+        - {kind: resource, id: morale, operator: gte, value: 60}
         - {kind: resource, id: ningxing, operator: lt, value: 40}
-    text: 宣和七年冬，金兵未南下，边声渐息。河北边备整饬，汴京灯火如旧；佞幸既黜，朝政渐清。燕云虽未尽归，北门已有锁钥。此为本游戏的反事实结局。【达成条件】至宣和七年冬金兵未南下；胡马南牧 < 45；武备 ≥ 55；君威 ≥ 55；国库 ≥ 235（府库有余）；佞幸用事 < 40（燕京在宋手且武备 ≥ 60 者为「燕云在握」）。
+    text: 宣和七年冬，金兵未南下，边声渐息。河北边备整饬，汴京灯火如旧；佞幸既黜，朝政渐清。燕云虽未尽归，北门已有锁钥。此为本游戏的反事实结局。【达成条件】至宣和七年冬金兵未南下；胡马南牧 < 45；武备 ≥ 55；君威 ≥ 55；国库 ≥ 235（府库有余）；民心 ≥ 60；佞幸用事 < 40（燕京在宋手且武备 ≥ 60 者为「燕云在握」）。
   - id: e_chunchi
     kind: ending
     priority: 9
@@ -395,8 +399,9 @@ endings:
         - {kind: resource, id: wubei, operator: gte, value: 55}
         - {kind: resource, id: authority, operator: gte, value: 55}
         - {kind: resource, id: treasury, operator: gte, value: 235}
+        - {kind: resource, id: morale, operator: gte, value: 60}
         - {kind: resource, id: ningxing, operator: lt, value: 40}
-    text: 宣和七年冬，辽虽残破，犹据一隅，与金相持于塞外。宋守澶渊旧好，以财粮助辽，金人西顾不暇，南侵之议未起。辽为宋之屏障，唇亡则齿寒——这一回，唇还在。此为本游戏的反事实结局。【达成条件】至宣和七年冬金兵未南下；曾以粮帛助辽；辽祚 ≥ 25（辽未亡）；胡马南牧 < 45；武备 ≥ 55；君威 ≥ 55；国库 ≥ 235；佞幸用事 < 40。
+    text: 宣和七年冬，辽虽残破，犹据一隅，与金相持于塞外。宋守澶渊旧好，以财粮助辽，金人西顾不暇，南侵之议未起。辽为宋之屏障，唇亡则齿寒——这一回，唇还在。此为本游戏的反事实结局。【达成条件】至宣和七年冬金兵未南下；曾以粮帛助辽；辽祚 ≥ 25（辽未亡）；胡马南牧 < 45；武备 ≥ 55；君威 ≥ 55；国库 ≥ 235；民心 ≥ 60；佞幸用事 < 40。
   - id: e_liuzei
     kind: ending
     priority: 13

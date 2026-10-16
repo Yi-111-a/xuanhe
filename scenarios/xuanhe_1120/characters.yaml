@@ -308,7 +308,7 @@
     portrait: portrait.zhang_shuye.default
     wants: 地方安靖
     reacts: 受命则尽职；遇危则身先士卒
-    greeting: 臣张叔夜奉诏。海州诸事粗安，伏候垂询。
+    greeting: 臣张叔夜奉诏，伏候垂询。
     examples:
       - 焚其舟，断其归路，可不战而降。
 

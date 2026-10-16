@@ -227,7 +227,7 @@ test('a full game can be played through the UI to an ending @playthrough', async
       const item = items.nth(i);
       const itemId = (await item.getAttribute('data-testid'))!.slice('memorial.item.'.length);
       if (await item.isEnabled()) await item.click(); // the selected item is rendered disabled
-      await expect(page.locator(`[data-testid="memorial.arrival.${itemId}"]`)).toHaveText(/奏到|迟到之报/);
+      await expect(page.locator(`[data-testid="memorial.arrival.${itemId}"]`)).toHaveText(/奏到|奏上|迟到之报/);
       const options = page.locator(`[data-testid^="memorial.option.${itemId}."]`);
       await expect(options.first()).toBeVisible();
       await (pick === 'last' ? options.last() : options.first()).click();

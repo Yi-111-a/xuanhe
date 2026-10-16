@@ -902,9 +902,11 @@
       - any:
           - {kind: office_holder, office: taizai, character: wang_fu}
           - {kind: office_holder, office: shaozai, character: wang_fu}
+      - {kind: character_status, character: cai_jing, value: retired}
+      - {kind: office_holder, office: taishi, character: null}
   gravity: 0.9
   importance: 2
-  text: 王黼专政日久，与梁师成相表里，又谋摇东宫，中外侧目。至是罢相致仕。白时中、李邦彦分领太宰、少宰事，而起蔡京领三省事——蔡京年近八十，目昏不能视事，事多决于其子蔡絛。
+  text: 王黼执政日久，与梁师成相表里，又谋摇东宫，中外侧目。至是罢相致仕。白时中、李邦彦分领太宰、少宰事，而起蔡京领三省事——蔡京年近八十，目昏不能视事，事多决于其子蔡絛。
   effects:
     - {op: set_flag, key: wangfu_dismissed, value: true}
     - {op: set_character_status, character: wang_fu, status: retired, cause: 罢相致仕}
@@ -914,6 +916,29 @@
     - {op: appoint, character: li_bangyan, office: shaozai}
     - {op: adjust_resource, resource: ningxing, delta: -1, reason: 王黼去而蔡京复来}
     - {op: adjust_resource, resource: corruption, delta: 2, reason: 蔡京昏耄，政出其家}
+  illustration: event.cai_retire
+
+- id: wangfu_falls_default_nocai
+  title: 王黼罢相
+  kind: conditional
+  when: {turn: 19}
+  conditions:
+    all:
+      - {kind: flag, key: "memorial:t18_zaixiang", operator: absent}
+      - {kind: flag, key: wangfu_dismissed, operator: absent}
+      - {kind: character_status, character: wang_fu, value: alive}
+      - any:
+          - {kind: office_holder, office: taizai, character: wang_fu}
+          - {kind: office_holder, office: shaozai, character: wang_fu}
+      - {not: {all: [{kind: character_status, character: cai_jing, value: retired}, {kind: office_holder, office: taishi, character: null}]}}
+  gravity: 0.9
+  importance: 2
+  text: 王黼执政日久，与梁师成相表里，又谋摇东宫，中外侧目。至是罢相致仕，李邦彦为少宰。
+  effects:
+    - {op: set_flag, key: wangfu_dismissed, value: true}
+    - {op: set_character_status, character: wang_fu, status: retired, cause: 罢相致仕}
+    - {op: appoint, character: li_bangyan, office: shaozai}
+    - {op: adjust_resource, resource: ningxing, delta: -2, reason: 王黼罢相}
   illustration: event.cai_retire
 
 # ======================== 第六幕 宣和七年：胡马南牧 ========================
@@ -1324,6 +1349,7 @@
     all:
       - {kind: region_controller, region: hebei_dong, faction: song}
       - {kind: season, value: [夏, 秋]}
+      - {not: {kind: flag_age, key: hefang_repaired, operator: lt, value: 8}}   # 大修堤埽后八季不决
   gravity: 0.2
   importance: 1
   region: hebei_dong

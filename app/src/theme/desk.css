@@ -1347,6 +1347,13 @@
 .region-person:hover {
   background: rgba(183, 162, 113, 0.2);
 }
+.region-person.is-foreign {
+  cursor: default;
+  filter: saturate(0.6);
+}
+.region-person.is-foreign:hover {
+  background: none;
+}
 .region-person span {
   font-size: 14px;
   margin-top: 2px;

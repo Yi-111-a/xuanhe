@@ -41,7 +41,7 @@ def run(tool: str, args: dict) -> str:
 
 
 def main(argv: list[str]) -> int:
-    sys.stdout.reconfigure(encoding="utf-8")  # type: ignore[attr-defined]
+    sys.stdout.reconfigure(encoding="utf-8", newline=chr(10))  # type: ignore[attr-defined]
     if not argv:
         print(__doc__)
         return 2

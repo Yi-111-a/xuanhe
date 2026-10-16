@@ -9,7 +9,7 @@ import { MapView } from './MapView';
 import { SEAT_NAMES } from './geo';
 import { ArmyPanel } from '../ArmyPanel';
 import { agendaCount, agendaExhausted, agendaTitle, repliesRead } from '../../lib/court';
-import { PLAYER_ID } from '../../lib/game';
+import { PLAYER_ID, factionOf } from '../../lib/game';
 
 export function DeskScreen() {
   const g = useGame();
@@ -166,6 +166,7 @@ function RegionCard({ id }: { id: string }) {
   const r = s.regions[id];
   const armies = Object.values(s.armies ?? {}).filter((a) => a.region === id && a.strength > 0);
   const people = Object.values(s.characters).filter((c) => c.region === id && (c.status ?? 'alive') === 'alive' && c.id !== PLAYER_ID);
+  const own = factionOf(s);
   const controller = r.controller ? s.factions?.[r.controller]?.name ?? r.controller : '大宋';
   const office = s.offices?.[`${id}_jds`];
   const holder = office?.holder ? s.characters[office.holder]?.name : null;
@@ -212,13 +213,22 @@ function RegionCard({ id }: { id: string }) {
           <div className="region-people">
             <div className="section-label">在此人物</div>
             <div className="region-people-list">
-              {people.map((c) => (
-                <button key={c.id} className="region-person" data-testid={`map.regionCard.summon.${c.id}`} onClick={() => g.openPanel('audience', c.id)}>
-                  <Portrait id={c.id} className="portrait--chip" />
-                  <span className="t-title">{c.name}</span>
-                  <small>{c.title || ''}</small>
-                </button>
-              ))}
+              {people.map((c) =>
+                (c.faction ?? own) === own ? (
+                  <button key={c.id} className="region-person" data-testid={`map.regionCard.summon.${c.id}`} onClick={() => g.openPanel('audience', c.id)}>
+                    <Portrait id={c.id} className="portrait--chip" />
+                    <span className="t-title">{c.name}</span>
+                    <small>{c.title || ''}</small>
+                  </button>
+                ) : (
+                  // 外方之人（辽、金君臣等）不能召见：只列名，不给按钮
+                  <div key={c.id} className="region-person is-foreign" data-testid={`map.regionCard.person.${c.id}`} title="非本朝臣属，不能召见">
+                    <Portrait id={c.id} className="portrait--chip" />
+                    <span className="t-title">{c.name}</span>
+                    <small>{s.factions?.[c.faction ?? '']?.name ?? ''}</small>
+                  </div>
+                ),
+              )}
             </div>
           </div>
         )}

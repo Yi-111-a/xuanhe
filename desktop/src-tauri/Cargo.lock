@@ -3305,18 +3305,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "xuanhe"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
- "tokio",
- "windows-sys 0.59.0",
-]
-
-[[package]]
 name = "time"
 version = "0.3.55"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4306,6 +4294,18 @@ dependencies = [
  "libc",
  "once_cell",
  "pkg-config",
+]
+
+[[package]]
+name = "xuanhe"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+ "tokio",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]

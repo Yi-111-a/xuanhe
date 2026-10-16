@@ -340,7 +340,7 @@
         - {op: adjust_resource, resource: liao_zuo, delta: 1, reason: 邻好不绝}
       hint: 国库 −20，辽祚 +1
     - id: grain
-      label: 输粮十万石助辽，结唇齿之好
+      label: 输粮百万石助辽，结唇齿之好
       ops:
         - {op: set_flag, key: lian_liao, value: true}
         - {op: adjust_resource, resource: grain, delta: -100, reason: 输粮助辽}
@@ -762,7 +762,7 @@
         - {op: adjust_resource, resource: treasury, delta: -15, reason: 招降安置}
       hint: 京东治安 +5，武备 +1，国库 −15。宋江是否随征方腊，史载存疑（本游戏设定）
     - id: amnesty
-      label: 命张叔夜设伏焚舟，招降之
+      label: 命海州守臣设伏焚舟，招降之
       memory: {character: zhang_shuye, text: "{when}，于海州焚舟设伏，招降宋江"}
       ops:
         - {op: set_flag, key: songjiang_amnesty, value: true}
@@ -1456,7 +1456,7 @@
         - {op: adjust_resource, resource: liao_zuo, delta: 2, reason: 邻好不绝}
       hint: 国库 −30，辽祚 +2
     - id: grain
-      label: 再输粮十万石
+      label: 再输粮百万石
       ops:
         - {op: adjust_resource, resource: grain, delta: -100, reason: 输粮助辽}
         - {op: adjust_resource, resource: liao_zuo, delta: 6, reason: 宋粮助辽}
@@ -1987,7 +1987,7 @@
         - {op: adjust_resource, resource: liao_zuo, delta: 2, reason: 邻好不绝}
       hint: 国库 −30，辽祚 +2
     - id: grain
-      label: 再输粮十万石，结兄弟之好
+      label: 再输粮百万石，结兄弟之好
       ops:
         - {op: set_flag, key: lian_liao, value: true}
         - {op: adjust_resource, resource: grain, delta: -100, reason: 输粮助辽}
@@ -2610,7 +2610,7 @@
         - {op: adjust_resource, resource: liao_zuo, delta: 3, reason: 宋帛助辽}
       hint: 国库 −40，辽祚 +3
     - id: grain
-      label: 输粮十万石助守燕京
+      label: 输粮百万石助守燕京
       ops:
         - {op: adjust_resource, resource: grain, delta: -100, reason: 输粮助燕京}
         - {op: adjust_resource, resource: liao_zuo, delta: 8, reason: 宋粮助守燕京}
@@ -3911,7 +3911,7 @@
   turn: 18
   title: 宰执更替
   summary: >-
-    王黼专政日久，与梁师成相表里，揽权聚敛，中外侧目；言者交章论之，王黼亦自请罢政。中书拟：罢王黼，起蔡京领三省事，
+    王黼执政日久，与梁师成相表里，揽权聚敛，中外侧目；言者交章论之，王黼亦自请罢政。中书拟：罢王黼，起蔡京领三省事，
     以李邦彦为少宰。蔡京年近八十，目昏不能视事。若不处置，下季依中书所拟施行。
   region: bianjing
   illustration: event.cai_retire
@@ -3978,7 +3978,7 @@
   turn: 18
   title: 宰执更替
   summary: >-
-    王黼专政日久，与梁师成相表里，揽权聚敛，中外侧目；言者交章论之，王黼亦自请罢政。中书拟：罢王黼，起蔡京领三省事，
+    王黼执政日久，与梁师成相表里，揽权聚敛，中外侧目；言者交章论之，王黼亦自请罢政。中书拟：罢王黼，起蔡京领三省事，
     以李邦彦为少宰。蔡京年近八十，目昏不能视事。或言张叔夜在京东，干练有守，可召入辅政。若不处置，下季依中书所拟施行。
   region: bianjing
   illustration: event.cai_retire
@@ -4045,7 +4045,7 @@
   turn: 18
   title: 宰执更替
   summary: >-
-    王黼专政日久，与梁师成相表里，揽权聚敛，中外侧目；言者交章论之，王黼亦自请罢政。中书拟：罢王黼，起蔡京领三省事，
+    王黼执政日久，与梁师成相表里，揽权聚敛，中外侧目；言者交章论之，王黼亦自请罢政。中书拟：罢王黼，起蔡京领三省事，
     以李邦彦为少宰。蔡京年近八十，目昏不能视事。若不处置，下季依中书所拟施行。
   region: bianjing
   illustration: event.cai_retire
@@ -4229,7 +4229,7 @@
   turn: 19
   expires_after: 1
   title: 辽主乞援
-  summary: 辽主自夹山间道遣使，言金人追逼日急，部众离散，乞宋粮帛以图存，愿以云中旧地为谢。
+  summary: 辽主间道遣使，言金人攻之日急，乞宋粮帛以图存，愿以云中旧地为谢。
   region: liao
   illustration: event.liao_envoy
   conditions:
@@ -4799,7 +4799,7 @@
   proposal: punish
   keywords: [陈东, 六贼, 童贯, 枢密院]
   advisors:
-    - {character: chen_dong, stance: support, option: punish, line: 学生斗胆！阉宦典兵，自古所戒。童贯丧师辱国，而犹握枢柄，边将岂肯为之死战？}
+    - {character: chen_dong, stance: support, option: punish, line: 学生斗胆！阉宦典兵，自古所戒。童贯好大喜功，而犹握枢柄，边将岂肯为之死战？}
     - {character: tong_guan, stance: oppose, option: keep, line: 官家！老奴为国家开边数千里，几个书生动动嘴，便要夺老奴的兵柄？}
     - {character: ma_kuo, stance: neutral, option: dismiss, requires: {region: bianjing}, line: 枢密院当用知兵之人。童贯去位，西军诸将方肯用命。}
   options:
@@ -6437,7 +6437,8 @@
           on_complete:
             - {op: adjust_region, region: hebei_dong, stat: prosperity, delta: 3}
             - {op: adjust_region, region: hebei_dong, stat: grain, delta: 2}
-      hint: 国库每季 −30 共两季；成后河北东路繁荣 +3、粮产 +2；本条五季后再议
+            - {op: set_flag, key: hefang_repaired, value: true}
+      hint: 国库每季 −30 共两季；成后河北东路繁荣 +3、粮产 +2，此后八季之内河北不复河决；本条五季后再议
 
 - id: s_caoyun
   title: 汴河漕运
@@ -6559,7 +6560,10 @@
   summary: 太学诸生聚议时政，书生上书者日众，言应奉、边事、宰执之失，辞多激切。或请许其上书、下诏求直言，或请禁太学妄议。
   region: bianjing
   illustration: event.chen_dong
-  conditions: {kind: turn, operator: gte, value: 6}
+  conditions:
+    all:
+      - {kind: turn, operator: gte, value: 6}
+      - {not: {kind: turn, operator: eq, value: 11}}   # 宣和四年冬另有「陈东上书」
   proposal: frank
   keywords: [太学, 言路, 陈东]
   advisors:
@@ -6677,6 +6681,7 @@
     all:
       - {kind: turn, operator: gte, value: 8}
       - {kind: flag, key: jin_invaded, operator: absent}
+      - {kind: flag, key: zongshi_trimmed, operator: absent}
   proposal: trim
   keywords: [宗室, 禄赐, 宗学]
   advisors:
@@ -6693,6 +6698,7 @@
       label: 裁疏属冗赐，宗室禄赐定为每季七万缗
       ops:
         - {op: add_ledger, id: zongshi, name: 宗室禄赐, category: treasury, amount: -7, kind: recurring, reason: 裁冗赐后（游戏折算）, cancellable: false}
+        - {op: set_flag, key: zongshi_trimmed, value: true}
         - {op: adjust_resource, resource: authority, delta: -1, reason: 宗室怨裁}
       hint: 宗室禄赐每季定为 7 万缗（原 10 万）；君威 −1；本条六季后再议
     - id: keep

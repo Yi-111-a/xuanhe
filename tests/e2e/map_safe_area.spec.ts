@@ -130,7 +130,8 @@ async function dragToCentre(page: Page, id: string, vw: number, vh: number): Pro
     await page.mouse.move(sx + dx * 0.3, sy + dy * 0.3, { steps: 4 });
     await page.mouse.move(sx + dx, sy + dy, { steps: 6 });
     await page.mouse.up();
-    await page.waitForTimeout(120);
+    // names hidden after the pan fade out over 0.25 s (desk.css); sample after the fade
+    await page.waitForTimeout(350);
   }
   return (await anchorOf(page, id))!;
 }
