@@ -29,3 +29,9 @@
 ## 第四批（桌面图标）
 
 - **icon.app**：无字；汝窑天青冰裂圆盘，银色展脚幞头剪影，墨青圆角方底；缩到 32px 仍可辨。用作 `desktop/icon-src/icon.png`，由 `tauri icon` 生成各尺寸。
+
+## Batch 5 (event.comet / tong_wang / yibing / secret_letter)
+- event.comet: night observatory, comet; celestial globe (浑象) + armillary — period-plausible (苏颂水运仪象). Pass.
+- event.tong_wang: court investiture, purple-robed figure kneeling. Pass.
+- event.yibing: militia in mountain stockade. Pass.
+- event.secret_letter: envoy hands sealed letter in a felt tent. Pass. No text in any image.

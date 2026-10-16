@@ -48,7 +48,7 @@ def mcp_env(home: Path) -> dict[str, str]:
 
 def run_codex(run_dir: Path, model: str) -> list[str]:
     env = mcp_env(run_dir / "home")
-    server = f"mcp_servers.xuanhe"
+    server = "mcp_servers.xuanhe"
     # Call codex.js through node directly: the npm .CMD shim goes through cmd.exe, whose
     # code page mangles UTF-8 arguments. The prompt itself is sent on stdin (see main()).
     codex_js = Path(os.environ["APPDATA"]) / "npm" / "node_modules" / "@openai" / "codex" / "bin" / "codex.js"

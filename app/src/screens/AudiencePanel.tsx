@@ -10,7 +10,7 @@ import { useGame } from '../store/game';
 import { humanize } from '../lib/names';
 import { cls } from '../lib/util';
 import { agendaCount, agendaExhausted, agendaTitle } from '../lib/court';
-import { CAPITAL, PLAYER_ID } from '../lib/game';
+import { CAPITAL, PLAYER_FACTION, PLAYER_ID } from '../lib/game';
 
 interface Msg {
   role: 'player' | 'minister' | 'system';
@@ -29,7 +29,7 @@ export function AudiencePanel() {
   const view = g.view;
   const chars = view?.state.characters ?? {};
   const roster = useMemo(
-    () => Object.values(chars).filter((c) => c.id !== PLAYER_ID && (c.status ?? 'alive') === 'alive'),
+    () => Object.values(chars).filter((c) => c.id !== PLAYER_ID && (c.status ?? 'alive') === 'alive' && (c.faction ?? PLAYER_FACTION) === PLAYER_FACTION),
     [chars],
   );
   const presentInfo = g.aux.present;

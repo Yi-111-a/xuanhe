@@ -249,7 +249,7 @@
   background: var(--mo-soft);
 }
 .cmd-tag.is-present {
-  background: var(--shilv-deep);
+  background: #234639;
 }
 .cmd-tag.is-enroute {
   background: #6b6040;
@@ -266,7 +266,7 @@
   color: #f4f1e2;
 }
 .risk--low {
-  background: var(--shilv-deep);
+  background: #234639;
 }
 .risk--mid {
   background: #6b6040;

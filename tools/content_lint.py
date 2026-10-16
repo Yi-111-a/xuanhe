@@ -11,9 +11,10 @@ X1  史事有据：玩家可见文字提到具名史事（方腊、白沟、郭�
     其条件须正向包含该史事的旗标（或该事件自身设下此旗标）。（《天宝》#3）
 X2  「六贼」之称：此语出自宣和七年陈东上书，宣和七年（第 20 季）之前的文字不得使用。（本作）
 X3  币制：本朝以缗计钱，玩家可见文字不得写「贯」作金额单位（「万贯」「贯钱」），免与《天宝》的「贯」混用。（本作）
-X4  驰表：谏言以「（自某地驰表 / 驰奏）」开头者须 requires.region 指明其地；requires.region 不含汴京的谏言须写成驰表 / 驰奏。（《天宝》#9、#14）
+X4  驰表：谏言以「（自某地驰表 / 驰奏 / 驰书 / 告急）」开头者须 requires.region 指明其地；requires.region 不含御前所在（汴京；
+    南幸后的奏疏为江南行在）的谏言须写成驰表 / 驰奏。（《天宝》#9、#14）
 X5  照例施行：凡有对应 *_default 事件（条件读 memorial:<id> absent）的奏疏，摘要须写明「若不处置」。（本作，机制透明）
-X6  外方不进言：奏疏谏言人须是宋臣（faction song）。（本作）
+X6  外方不进言：奏疏谏言人须是宋臣（faction song，或由剧本 set_character_faction 归宋者，如郭药师）。（本作）
 X7  战时奏疏：标题 / 摘要提到围城、勤王、割三镇、南幸、内禅的奏疏，须正向要求 jin_invaded（或其后续旗标）。（《天宝》#18 精神）
 X8  结局：每个结局正文须有【达成条件】；正文不得出现「靖康」以外的、本局不存在的年号（本作年号只有宣和）。（《天宝》#17、W13）
 X9  调兵守恒：选项里某军减兵、另一军增兵（调拨）时，增减之和须为零（汰兵 / 募兵 / 折损须写在 reason 里：「汰」「募」「折」「败」「溃」「散」「戍」）。（本作）
@@ -29,19 +30,22 @@ from __future__ import annotations
 import argparse
 import re
 import sys
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 PACK = ROOT / "scenarios" / "xuanhe_1120"
 sys.path.insert(0, str(ROOT / "engine" / "scripts"))
 
-from content_lint import Linter, load_pack  # noqa: E402
+from content_lint import Linter, load_pack
 
 # X1 具名史事 → 须正向出现的任一旗标
 NAMED_EVENTS: dict[str, set[str]] = {
     "方腊": {"fangla_risen", "fangla_quelled"},
-    "白沟": {"beifa_lost", "beifa_started"},
+    "白沟之败": {"beifa_lost", "beifa_started"},
+    "败于白沟": {"beifa_lost", "beifa_started"},
+    "白沟丧师": {"beifa_lost", "beifa_started"},
     "郭药师来降": {"guo_defected_song"},
     "常胜军": {"guo_defected_song", "guo_defected_jin"},
     "赎燕": {"yanjing_bought", "yanjing_jin"},
@@ -245,11 +249,12 @@ class XuanheLinter:
                 requires = advisor.get("requires") or {}
                 region = requires.get("region")
                 regions = set(region) if isinstance(region, list) else ({region} if region else set())
-                remote_voice = bool(re.match(r"^（[^）]*(驰表|驰奏)[^）]*）", line))
+                remote_voice = bool(re.match(r"^（[^）]*(驰表|驰奏|驰书|告急)[^）]*）", line))
                 where = f"memorial {item.get('id')}.advisors[{index}]"
                 if remote_voice and not regions:
                     self.add("X4", where, "写成远方驰表，却没有 requires.region")
-                if regions and "bianjing" not in regions and not remote_voice:
+                court = {"bianjing", "jiangnan"} if "'key': 'court_south', 'value': True" in str(item.get("conditions", "")) else {"bianjing"}
+                if regions and not regions & court and not remote_voice:
                     self.add("X4", where, "其人须在外（requires.region 不含汴京），谏言却不是「（自某地驰表）」的口吻")
 
     # X5
@@ -270,11 +275,12 @@ class XuanheLinter:
 
     # X6
     def foreign_advisors(self) -> None:
+        turned = set(re.findall(r"set_character_faction', 'character': '(\w+)', 'faction': 'song'", str(self.events) + str(self.memorials)))
         for item in self.memorials:
             for advisor in item.get("advisors") or []:
                 cid = str(advisor.get("character"))
                 row = self.characters.get(cid)
-                if row is not None and row.get("faction") != "song":
+                if row is not None and row.get("faction") != "song" and cid not in turned:
                     self.add("X6", f"memorial {item.get('id')}", f"谏言人 {row.get('name')} 不是宋臣")
 
     # X7

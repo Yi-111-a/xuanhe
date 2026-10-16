@@ -1,6 +1,6 @@
 [package]
 name = "xuanhe"
-version = "0.1.1"
+version = "0.1.0"
 description = "宣和 desktop shell"
 authors = ["yi111a"]
 edition = "2021"

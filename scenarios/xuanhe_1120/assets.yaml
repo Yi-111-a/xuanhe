@@ -1933,6 +1933,74 @@ entries:
   sha256: c76faad677322286bb84c240604926bce6a07866b103f524b87090ae00cf98b4
   status: generated
   version: 1
+- id: event.comet
+  kind: event
+  used_by: event:comet:illustration
+  path: assets/event/event.comet.webp
+  size:
+  - 1344
+  - 896
+  format: webp
+  prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A night sky over the palace roofs of Bianjing with a long pale comet streaking toward the northeast, court astronomers
+    on a terrace pointing up with instruments, an uneasy mood, deep blue night with silver stars. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers,
+    no seals, no inscriptions anywhere in the image.'
+  negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
+  style_ref: design/asset_prompts/_style_block.txt
+  model: codex-image
+  sha256: a9d3773594080ac618f9c4d69ab5c634d117db6fa41b3729becae82f99cc96ab
+  status: generated
+  version: 1
+- id: event.tong_wang
+  kind: event
+  used_by: event:tong_wang:illustration
+  path: assets/event/event.tong_wang.webp
+  size:
+  - 1344
+  - 896
+  format: webp
+  prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A grand palace ceremony: an elderly tall eunuch in purple robe with a few chin whiskers kneels to receive a jade investiture
+    tablet (blank) from an official on the steps, ranks of officials in long-winged hats watching with disapproving faces. Wide landscape composition with clear focal point. Absolutely no text, no characters,
+    no letters, no numbers, no seals, no inscriptions anywhere in the image.'
+  negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
+  style_ref: design/asset_prompts/_style_block.txt
+  model: codex-image
+  sha256: f977c26624fd69e75370abd8a6f85af2be948ed9e358fdae50a2603f408f0c67
+  status: generated
+  version: 1
+- id: event.yibing
+  kind: event
+  used_by: event:yibing:illustration
+  path: assets/event/event.yibing.webp
+  size:
+  - 1344
+  - 896
+  format: webp
+  prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: Hebei volunteer militia in a mountain stockade at dusk: farmers and local braves in simple armour with spears and crossbows,
+    plain banners, ambushing a Jurchen supply column on a mountain road below, restrained. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no
+    seals, no inscriptions anywhere in the image.'
+  negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
+  style_ref: design/asset_prompts/_style_block.txt
+  model: codex-image
+  sha256: fc36cbf7e810eedbec27d14ed13e576c92c1b4a0cc8c6e6f8b0d8542971c5bdd
+  status: generated
+  version: 1
+- id: event.secret_letter
+  kind: event
+  used_by: event:secret_letter:illustration
+  path: assets/event/event.secret_letter.webp
+  size:
+  - 1344
+  - 896
+  format: webp
+  prompt: 'SUBJECT: Event illustration, a single dramatic scene painted on pale silk: A secret envoy at night handing a sealed letter wrapped in yellow silk (blank) to a weary Khitan emperor in a blue hunting
+    robe inside a felt tent in a snowy mountain hideout, candlelight, tense secrecy. Wide landscape composition with clear focal point. Absolutely no text, no characters, no letters, no numbers, no seals,
+    no inscriptions anywhere in the image.'
+  negative_prompt: text, characters, calligraphy, letters, numbers, seals, inscriptions, watermark, logo, dragon, dragon robe, Ming wing hat, mandarin square, Tang futou, modern, photo, 3d render, anime
+  style_ref: design/asset_prompts/_style_block.txt
+  model: codex-image
+  sha256: bb4ddd1079cb133faa39bf18e8468338de24521a732837fa285b67546c02979d
+  status: generated
+  version: 1
 - id: ending.f_bankrupt
   kind: ending
   used_by: ending:f_bankrupt:illustration

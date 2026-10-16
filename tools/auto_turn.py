@@ -10,20 +10,19 @@ from __future__ import annotations
 
 import argparse
 import asyncio
-import json
 import re
 import sys
 
-from mcp_call import ClientSession, server_params, stdio_client, _render
+from mcp_call import ClientSession, _render, server_params, stdio_client
 
-MEMORIAL = re.compile(r"^### \[([\w-]+)\]", re.M)
-OPTION = re.compile(r"^- 选项 `([\w-]+)`", re.M)
+MEMORIAL = re.compile(r"^### \[([\w-]+)\]", re.MULTILINE)
+OPTION = re.compile(r"^- 选项 `([\w-]+)`", re.MULTILINE)
 CHOICE = re.compile(r"\[(choice-[\w-]+)\][^\n]*?选项：((?:`[\w-]+`「[^」]*」；?)+)")
 
 
 def plan(briefing: str, pick: str, overrides: dict[str, str]) -> list[dict[str, str]]:
     adopted = []
-    blocks = re.split(r"(?=^### \[)", briefing, flags=re.M)
+    blocks = re.split(r"(?=^### \[)", briefing, flags=re.MULTILINE)
     for block in blocks:
         head = MEMORIAL.match(block)
         if not head:

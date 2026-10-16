@@ -27,18 +27,29 @@ import random
 import statistics
 import sys
 from collections import Counter, defaultdict
+from collections.abc import Callable
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "engine" / "backend"))
 sys.path.insert(0, str(ROOT / "engine" / "scripts"))
 
-from simcore.domain.apply import apply  # noqa: E402
-from simcore.domain.memorials import MemorialError, adopted_ops, is_visible, memorial_flag  # noqa: E402
-from simcore.domain.turn import GameOver, resolve_turn  # noqa: E402
-from simcore.scenario.loader import build_initial_state, load_scenario  # noqa: E402
-from simulate import allowed_choice_options, crisis_value, objective_rows, visible_memorials  # noqa: E402
+from simcore.domain.apply import apply
+from simcore.domain.memorials import (
+    MemorialError,
+    adopted_ops,
+    is_visible,
+    memorial_flag,
+)
+from simcore.domain.turn import GameOver, resolve_turn
+from simcore.scenario.loader import build_initial_state, load_scenario
+from simulate import (
+    allowed_choice_options,
+    crisis_value,
+    objective_rows,
+    visible_memorials,
+)
 
 PACK = ROOT / "scenarios" / "xuanhe_1120"
 GOOD = {"e_yanyun", "e_baojing", "e_quedi", "e_chunchi"}
@@ -191,6 +202,7 @@ def play(scenario: dict[str, Any], policy: Policy, seed: int, difficulty: str | 
         "invaded_at": invaded_at,
         "objectives": objective_rows(scenario, state),
         "treasury": round(state.resources["treasury"].amount, 1),
+        "resources": {key: round(row.amount, 1) for key, row in state.resources.items()},
     }
 
 
@@ -215,12 +227,14 @@ def summarize(name: str, rows: list[dict[str, Any]]) -> dict[str, Any]:
         "crisis_mean": round(statistics.mean(row["crisis"] for row in rows), 1),
         "peak_mean": round(statistics.mean(row["peak"] for row in rows), 1),
         "treasury_mean": round(statistics.mean(row["treasury"] for row in rows), 1),
+        "resources_mean": {key: round(statistics.mean(row["resources"][key] for row in rows), 1) for key in rows[0]["resources"]},
     }
 
 
 def print_summary(data: dict[str, Any]) -> None:
     print(f"\n== {data['policy']}（{data['games']} 局）好结局 {data['good_share']:.1%}（中兴 {data['best_share']:.1%}），靖康 {data['jingkang_share']:.1%}，"
           f"金兵南下 {data['invaded_share']:.0%}（平均 T{data['invaded_mean_turn']}），胡马南牧终局 {data['crisis_mean']}、峰值 {data['peak_mean']}，国库终局 {data['treasury_mean']}")
+    print("   终局国势均值：" + "，".join(f"{key} {value:g}" for key, value in data.get("resources_mean", {}).items()))
     for key, row in data["outcomes"].items():
         print(f"   {key:<12} {row['count']:>5} {row['share']:7.1%}  平均终局 T{row['mean_turn']}  {row['title']}")
 

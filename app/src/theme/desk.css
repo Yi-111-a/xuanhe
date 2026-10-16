@@ -1607,9 +1607,9 @@
   height: 34px;
   padding: 0 8px;
   border-radius: 6px;
-  border: 1px solid var(--gold-500, #c9a45a);
-  background: rgba(28, 20, 14, 0.82);
-  color: var(--gold-200, #f1dfae);
+  border: 1px solid var(--nijin, #b7a271);
+  background: rgba(17, 22, 21, 0.82);
+  color: var(--nijin-bright, #e3d7ae);
   font-family: var(--font-title, serif);
   font-size: 18px;
   line-height: 1;
@@ -1618,16 +1618,18 @@
 }
 .map-zoom button[data-testid='map.zoomReset'] {
   font-size: 15px;
+  white-space: nowrap;
+  flex: none;
 }
 .map-zoom button:hover {
-  background: rgba(60, 38, 22, 0.92);
+  background: rgba(36, 54, 50, 0.92);
 }
 .map-zoom-hint {
   margin-right: 4px;
   padding: 4px 10px;
   border-radius: 999px;
-  background: rgba(28, 20, 14, 0.6);
-  color: var(--gold-200, #f1dfae);
+  background: rgba(17, 22, 21, 0.6);
+  color: var(--nijin-bright, #e3d7ae);
   font-size: 14px;
   white-space: nowrap;
 }

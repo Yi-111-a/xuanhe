@@ -12,7 +12,7 @@ import { useGame } from '../store/game';
 import { cls } from '../lib/util';
 import { agendaCount, agendaExhausted, agendaTitle, debateTopicLine } from '../lib/court';
 import { STANCE } from './MemorialPanel';
-import { PLAYER_ID } from '../lib/game';
+import { PLAYER_FACTION, PLAYER_ID } from '../lib/game';
 
 const DEFAULT_PICK = ['wang_fu', 'tong_guan', 'cai_jing', 'li_bangyan'];
 
@@ -21,7 +21,7 @@ export function DebatePanel() {
   const toast = useToast();
   const view = g.view!;
   const chars = view.state.characters;
-  const roster = useMemo(() => Object.values(chars).filter((c) => c.id !== PLAYER_ID && (c.status ?? 'alive') === 'alive'), [chars]);
+  const roster = useMemo(() => Object.values(chars).filter((c) => c.id !== PLAYER_ID && (c.status ?? 'alive') === 'alive' && (c.faction ?? PLAYER_FACTION) === PLAYER_FACTION), [chars]);
   const present = g.aux.present;
   useEffect(() => {
     void g.loadPresent();

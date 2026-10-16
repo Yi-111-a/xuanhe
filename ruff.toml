@@ -1,0 +1,8 @@
+# Lint for the game's own tools/ and scripts/ (the engine has its own, stricter config in engine/backend/pyproject.toml).
+line-length = 160
+target-version = "py311"
+extend-exclude = ["engine", "app", "desktop", "videos", "playtests", "design/asset_prompts"]
+
+[lint]
+select = ["E", "F", "W", "B", "I"]
+ignore = ["E402", "E501", "B008"]

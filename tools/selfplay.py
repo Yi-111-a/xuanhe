@@ -18,9 +18,9 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from mcp import ClientSession  # noqa: E402
-from mcp.client.stdio import stdio_client  # noqa: E402
-from mcp_call import _render, server_params  # noqa: E402
+from mcp import ClientSession
+from mcp.client.stdio import stdio_client
+from mcp_call import _render, server_params
 
 
 async def call(tool: str, args: dict) -> tuple[str, bool]:

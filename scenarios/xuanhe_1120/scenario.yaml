@@ -83,7 +83,7 @@ formulas:
     - {resource: treasury, per: 10000, amount: 3, label: 诸军衣赐, factions: [song]}
     - {resource: grain, per: 10000, amount: 1.2, label: 诸军粮料, factions: [song]}
   drift:
-    nanmu: "(0.25 + 0.05*max(0, turn-6))*(1 - 0.012*min(60, liao_zuo)) + 0.06*min(20, max(0, jin_contempt-30)) - 0.04*(wubei-40) + 0.025*max(0, ningxing-50) - 0.02*(authority-55) - 0.2*max(0, nanmu-75)"
+    nanmu: "(0.35 + 0.08*max(0, turn-6))*(1 - 0.012*min(60, liao_zuo)) + 0.06*min(20, max(0, jin_contempt-30)) - 0.04*(wubei-40) + 0.025*max(0, ningxing-50) - 0.02*(authority-55) - 0.2*max(0, nanmu-75)"
     jin_contempt: "0.4 + 0.02*(ningxing-60) - 0.03*(wubei-40) - 0.02*(authority-55)"
     authority: "-0.25 - 0.02*max(0, ningxing-60)"
     morale: "0.15 - 0.02*max(0, corruption-55) - 0.03*max(0, dongnan-70)"
@@ -117,7 +117,7 @@ crisis:
     - {max: 69, name: 山雨}
     - {max: 100, name: 铁骑}
   terms:
-    - {id: rise, label: 金势日张, expr: "(0.25 + 0.05*max(0, turn-6))*(1 - 0.012*min(60, liao_zuo))"}
+    - {id: rise, label: 金势日张, expr: "(0.35 + 0.08*max(0, turn-6))*(1 - 0.012*min(60, liao_zuo))"}
     - {id: contempt, label: 金人轻宋, expr: "0.06*min(20, max(0, jin_contempt-30))"}
     - {id: wubei, label: 武备, expr: "-0.04*(wubei-40)"}
     - {id: ningxing, label: 佞幸误国, expr: "0.025*max(0, ningxing-50)"}
@@ -156,9 +156,12 @@ counters:
       all:
         - {kind: region_controller, region: liangzhe, faction: fangla}
         - {kind: region_controller, region: jiangnan, faction: fangla}
-  - id: minbian_streak         # 民心 ≤ 12
+  - id: minbian_streak         # 民心 ≤ 12（金兵南下之后不计：战时的崩溃由战局决定）
     mode: streak
-    conditions: {kind: resource, id: morale, operator: lte, value: 12}
+    conditions:
+      all:
+        - {kind: resource, id: morale, operator: lte, value: 12}
+        - {not: {kind: flag, key: jin_invaded, value: true}}
   - id: nanmu_high             # 胡马南牧 ≥ 60 的累计季数
     mode: count
     conditions: {kind: resource, id: nanmu, operator: gte, value: 60}
@@ -196,14 +199,14 @@ objectives:
   - id: beimen
     title: 北门锁钥
     detail: >-
-      未南下：至宣和七年冬（宣和七年秋结算之后即终局）金兵未南下，且胡马南牧 < 55。
+      未南下：至宣和七年冬（宣和七年秋结算之后即终局）金兵未南下，且胡马南牧 < 45（中兴诸结局还须武备、君威 ≥ 55，国库 ≥ 220，佞幸 < 40）。
       金兵若已南下，时限延至宣和八年冬，底线是汴京不失；可提前终局：金军两路败退满两季，汴京、太原、河北两路俱在，即「却敌河上」。
       胡马南牧 ≥ 70 且辽祚 ≤ 15（或胡马南牧 ≥ 85）时，金兵随时可能南下。
     conditions:
       any:
         - all:
             - {not: {kind: flag, key: jin_invaded, value: true}}
-            - {kind: resource, id: nanmu, operator: lt, value: 55}
+            - {kind: resource, id: nanmu, operator: lt, value: 45}
         - all:
             - {kind: flag, key: jin_invaded, value: true}
             - {not: {kind: region_controller, region: bianjing, faction: jin}}
@@ -265,7 +268,7 @@ endings:
     title: 群盗蜂起
     illustration: ending.f_minbian
     conditions: {kind: counter, key: minbian_streak, operator: gte, value: 2}
-    text: 民心离散，河北、京东之盗啸聚千百为群，州县不能制；饥民从之者日众，朝廷之令不出近畿。此为本游戏虚构的失败结局。【达成条件】民心 ≤ 12，连续两季。
+    text: 民心离散，河北、京东之盗啸聚千百为群，州县不能制；饥民从之者日众，朝廷之令不出近畿。此为本游戏虚构的失败结局。【达成条件】金兵南下之前，民心 ≤ 12，连续两季。
   # ---- 结局 ----
   - id: e_neishan
     kind: ending
@@ -355,13 +358,13 @@ endings:
       all:
         - {kind: turn, operator: gte, value: 23}
         - {not: {kind: flag, key: jin_invaded, value: true}}
-        - {kind: resource, id: nanmu, operator: lt, value: 55}
+        - {kind: resource, id: nanmu, operator: lt, value: 45}
         - {kind: region_controller, region: yanshan, faction: song}
-        - {kind: resource, id: wubei, operator: gte, value: 55}
-        - {kind: resource, id: authority, operator: gte, value: 50}
-        - {kind: resource, id: treasury, operator: gt, value: 0}
-        - {kind: resource, id: ningxing, operator: lt, value: 50}
-    text: 宣和七年冬，燕京城头飘着宋人的旗帜，居庸、古北诸关有兵把守；河北边备一新，金人遣使往来而不敢窥伺。佞幸既黜，朝政渐清，五代以来失陷的燕地终归中国。此为本游戏的反事实结局。【达成条件】至宣和七年冬金兵未南下；胡马南牧 < 55；燕京在宋手；武备 ≥ 55；君威 ≥ 50；国库有余；佞幸用事 < 50。
+        - {kind: resource, id: wubei, operator: gte, value: 60}
+        - {kind: resource, id: authority, operator: gte, value: 55}
+        - {kind: resource, id: treasury, operator: gte, value: 220}
+        - {kind: resource, id: ningxing, operator: lt, value: 40}
+    text: 宣和七年冬，燕京城头飘着宋人的旗帜，居庸、古北诸关有兵把守；河北边备一新，金人遣使往来而不敢窥伺。佞幸既黜，朝政渐清，五代以来失陷的燕地终归中国。此为本游戏的反事实结局。【达成条件】至宣和七年冬金兵未南下；胡马南牧 < 45；燕京在宋手；武备 ≥ 60；君威 ≥ 55；国库 ≥ 220（府库有余）；佞幸用事 < 40。
   - id: e_baojing
     kind: ending
     priority: 11
@@ -371,12 +374,12 @@ endings:
       all:
         - {kind: turn, operator: gte, value: 23}
         - {not: {kind: flag, key: jin_invaded, value: true}}
-        - {kind: resource, id: nanmu, operator: lt, value: 55}
-        - {kind: resource, id: wubei, operator: gte, value: 50}
-        - {kind: resource, id: authority, operator: gte, value: 50}
-        - {kind: resource, id: treasury, operator: gt, value: 0}
-        - {kind: resource, id: ningxing, operator: lt, value: 50}
-    text: 宣和七年冬，金兵未南下，边声渐息。河北边备整饬，汴京灯火如旧；佞幸既黜，朝政渐清。燕云虽未尽归，北门已有锁钥。此为本游戏的反事实结局。【达成条件】至宣和七年冬金兵未南下；胡马南牧 < 55；武备 ≥ 50；君威 ≥ 50；国库有余；佞幸用事 < 50（燕京在宋手且武备 ≥ 55 者为「燕云在握」）。
+        - {kind: resource, id: nanmu, operator: lt, value: 45}
+        - {kind: resource, id: wubei, operator: gte, value: 55}
+        - {kind: resource, id: authority, operator: gte, value: 55}
+        - {kind: resource, id: treasury, operator: gte, value: 220}
+        - {kind: resource, id: ningxing, operator: lt, value: 40}
+    text: 宣和七年冬，金兵未南下，边声渐息。河北边备整饬，汴京灯火如旧；佞幸既黜，朝政渐清。燕云虽未尽归，北门已有锁钥。此为本游戏的反事实结局。【达成条件】至宣和七年冬金兵未南下；胡马南牧 < 45；武备 ≥ 55；君威 ≥ 55；国库 ≥ 220（府库有余）；佞幸用事 < 40（燕京在宋手且武备 ≥ 60 者为「燕云在握」）。
   - id: e_chunchi
     kind: ending
     priority: 12
@@ -386,9 +389,13 @@ endings:
       all:
         - {kind: turn, operator: gte, value: 23}
         - {not: {kind: flag, key: jin_invaded, value: true}}
-        - {kind: resource, id: liao_zuo, operator: gte, value: 20}
-        - {kind: resource, id: nanmu, operator: lt, value: 60}
-    text: 宣和七年冬，辽虽残破，犹据一隅，与金相持于塞外。宋守澶渊旧好，以财粮助辽，金人西顾不暇，南侵之议未起。辽为宋之屏障，唇亡则齿寒——这一回，唇还在。此为本游戏的反事实结局。【达成条件】至宣和七年冬金兵未南下；辽祚 ≥ 20（辽未亡）；胡马南牧 < 60。
+        - {kind: flag, key: liao_aided, value: true}
+        - {kind: resource, id: liao_zuo, operator: gte, value: 25}
+        - {kind: resource, id: nanmu, operator: lt, value: 45}
+        - {kind: resource, id: wubei, operator: gte, value: 50}
+        - {kind: resource, id: authority, operator: gte, value: 55}
+        - {kind: resource, id: treasury, operator: gte, value: 220}
+    text: 宣和七年冬，辽虽残破，犹据一隅，与金相持于塞外。宋守澶渊旧好，以财粮助辽，金人西顾不暇，南侵之议未起。辽为宋之屏障，唇亡则齿寒——这一回，唇还在。此为本游戏的反事实结局。【达成条件】至宣和七年冬金兵未南下；曾以粮帛助辽；辽祚 ≥ 25（辽未亡）；胡马南牧 < 45；武备 ≥ 50；君威 ≥ 55；国库 ≥ 220。
   - id: e_liuzei
     kind: ending
     priority: 13
@@ -407,7 +414,7 @@ endings:
     title: 北风未息
     illustration: ending.e_open
     conditions: {kind: turn, operator: gte, value: 999}   # 仅作 fallback_ending
-    text: 宣和七年岁暮，金兵未至，而北风日紧；中兴之业未竟，隐忧未除。后事如何，史书尚未写下。（开放结局。）【达成条件】至期限仍未满足其他任何结局（例如金兵未南下而胡马南牧 ≥ 55，或武备、君威、国库、佞幸未达中兴之数）。
+    text: 宣和七年岁暮，金兵未至，而北风日紧；中兴之业未竟，隐忧未除。后事如何，史书尚未写下。（开放结局。）【达成条件】至期限仍未满足其他任何结局（例如金兵未南下而胡马南牧 ≥ 45，或武备、君威、国库、佞幸未达中兴之数）。
 
 asset_requirements:
   character: "portrait.{id}.default"
@@ -446,6 +453,7 @@ settings:
     haishang_ally: 海上之盟已定
     haishang_refused: 谢绝金使
     lian_liao: 联辽抗金
+    liao_aided: 以粮帛助辽
     liao_fallen: 辽亡
     beifa_won: 伐燕得胜
     beifa_lost: 伐燕失利

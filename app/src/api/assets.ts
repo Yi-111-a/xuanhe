@@ -47,7 +47,7 @@ const resolved = new Map<string, Promise<string | null>>();
 let active = 0;
 const queue: (() => void)[] = [];
 async function withSlot<T>(fn: () => Promise<T>): Promise<T> {
-  if (active >= 3) await new Promise<void>((r) => queue.push(r));
+  if (active >= 6) await new Promise<void>((r) => queue.push(r));
   active += 1;
   try {
     return await fn();

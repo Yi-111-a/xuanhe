@@ -179,6 +179,12 @@ EV = {
     "military_drill": "Song soldiers training with crossbows and spears on a frontier drill field, a veteran general watching, new conscripts in rows, banners plain, crisp autumn day.",
     "court_debate": "A Song court audience in the Chuigong Hall: officials in purple, crimson and green robes with long-winged hats arguing before the emperor on a dais, ivory tablets raised.",
 }
+EV.update({
+    "comet": "A night sky over the palace roofs of Bianjing with a long pale comet streaking toward the northeast, court astronomers on a terrace pointing up with instruments, an uneasy mood, deep blue night with silver stars.",
+    "tong_wang": "A grand palace ceremony: an elderly tall eunuch in purple robe with a few chin whiskers kneels to receive a jade investiture tablet (blank) from an official on the steps, ranks of officials in long-winged hats watching with disapproving faces.",
+    "yibing": "Hebei volunteer militia in a mountain stockade at dusk: farmers and local braves in simple armour with spears and crossbows, plain banners, ambushing a Jurchen supply column on a mountain road below, restrained.",
+    "secret_letter": "A secret envoy at night handing a sealed letter wrapped in yellow silk (blank) to a weary Khitan emperor in a blue hunting robe inside a felt tent in a snowy mountain hideout, candlelight, tense secrecy.",
+})
 for eid, desc in EV.items():
     add(f"event.{eid}", "events", LAND, "SUBJECT: Event illustration, a single dramatic scene painted on pale silk: " + desc + " Wide landscape composition with clear focal point.", outkind="event")
 

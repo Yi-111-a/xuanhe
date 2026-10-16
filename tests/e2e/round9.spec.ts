@@ -136,7 +136,8 @@ test('structured edict: policy cards and 兵部 orders, receipt per clause @roun
   await expect(page.getByTestId('army.root')).toBeVisible();
   const withCmd = page.locator('[data-testid^="army.item."]').filter({ hasText: '在营' });
   await expect(withCmd.first()).toBeVisible({ timeout: 20_000 });
-  await withCmd.first().click();
+  // the first army may already be selected (its button is then disabled)
+  if (await withCmd.first().isEnabled()) await withCmd.first().click();
   await expect(page.getByTestId('army.order.march')).toBeEnabled();
   await page.getByTestId('army.order.march').click();
   await pickFirst(page, 'army.target');
@@ -148,7 +149,7 @@ test('structured edict: policy cards and 兵部 orders, receipt per clause @roun
   await expect(page.getByTestId('edict.root')).toBeVisible();
   await expect(page.locator('[data-testid^="edict.card."][data-card="mil_march"]')).toHaveCount(1);
 
-  // a 内政 card aimed at a far region: 赈济 安西 → 驿程遥远，令达于下季
+  // a 内政 card aimed at a far region: 赈济 闽广 → 驿程遥远，令达于下季
   await page.getByTestId('edict.cardAdd').click();
   await expect(page.getByTestId('edict.cardPicker')).toBeVisible();
   const cat = page.getByTestId('edict.cardCat.内政');
@@ -158,7 +159,7 @@ test('structured edict: policy cards and 兵部 orders, receipt per clause @roun
   const relief = page.locator('[data-testid^="edict.card."][data-card="int_relief"]');
   const idx = (await relief.getAttribute('data-testid'))!.split('.')[2];
   await expect(page.getByTestId('edict.preview')).toBeDisabled(); // a parameter is still missing
-  await page.getByTestId(`edict.card.${idx}.param.region`).selectOption('anxi');
+  await page.getByTestId(`edict.card.${idx}.param.region`).selectOption('minguang');
   // the free text stays folded away until asked for, with the offline notice
   await expect(page.getByTestId('edict.section.military')).toHaveCount(0);
   await expect(page.getByTestId('edict.brushNote')).toBeVisible();

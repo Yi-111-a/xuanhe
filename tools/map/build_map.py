@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Build scenarios/xuanhe_1120/map.json from the painted base map.
 
 Sea is detected by colour (the calm celadon sea is a large uniform blue-green body touching the right edge);
