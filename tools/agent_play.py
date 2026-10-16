@@ -21,6 +21,8 @@ ROOT = Path(__file__).resolve().parents[1]
 PYTHON = ROOT / ".venv" / "Scripts" / "python.exe"
 # A frozen engine checkout keeps long agent runs stable while engine/ is being edited.
 ENGINE = Path(os.environ.get("XUANHE_ENGINE_DIR", ROOT / "engine"))
+# Likewise a frozen copy of scenarios/ (balance edits during a run would otherwise change the game mid-play).
+SCENARIOS = Path(os.environ.get("XUANHE_SCENARIOS_DIR", ROOT / "scenarios"))
 
 PROMPT = """你要完整地玩一局桌面策略游戏《宣和》：你扮演宣和二年（1120 年）的宋徽宗。游戏通过名为 xuanhe 的 MCP 服务提供工具。
 
@@ -39,7 +41,7 @@ def mcp_env(home: Path) -> dict[str, str]:
         "PYTHONUTF8": "1",
         "PYTHONIOENCODING": "utf-8",
         "SIM_GAME_ROOT": str(ROOT),
-        "SIM_SCENARIOS_DIR": str(ROOT / "scenarios"),
+        "SIM_SCENARIOS_DIR": str(SCENARIOS),
         "LLM_SIM_HOME": str(home),
         "SIM_MCP_MODE": "client",
         "SIM_MCP_NAME": "xuanhe",

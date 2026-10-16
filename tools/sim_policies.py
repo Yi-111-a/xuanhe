@@ -56,6 +56,11 @@ GOOD = {"e_yanyun", "e_baojing", "e_quedi", "e_chunchi"}
 BEST = {"e_yanyun", "e_baojing"}
 
 # 偏好表：按序取第一个出现在本奏疏选项里的 id；"*" 之外的键为奏疏 id 专用偏好（优先）。
+WISE = ["abolish", "kuo", "recall", "retire_check", "written", "repair", "check", "keep_yu", "frank", "curb", "tangluo",
+              "soothe", "zhong", "amnesty", "thrift", "pardon", "gifts", "refuse", "remit", "home", "canal",
+              "zhong_lead", "fortify", "refuse_jue", "keep_jue", "settle", "split", "relief", "defend", "qinwang",
+              "ligang", "repel", "train", "integrity", "punish", "dismiss", "yes"]
+
 PREFS: dict[str, dict[str, list[str]]] = {
     "historical": {
         "*": ["ally", "raise", "recruit", "stay", "retire", "six", "wang", "delay", "favor", "none", "strict", "tong",
@@ -65,14 +70,13 @@ PREFS: dict[str, dict[str, list[str]]] = {
     "wise": {
         "t0_haishang": ["spy"],
         "t1_haishang_again": ["loose"],
-        "*": ["abolish", "kuo", "recall", "retire_check", "written", "repair", "check", "keep_yu", "frank", "curb", "tangluo",
-              "soothe", "zhong", "amnesty", "thrift", "pardon", "gifts", "refuse", "remit", "home", "canal",
-              "zhong_lead", "fortify", "refuse_jue", "keep_jue", "settle", "split", "relief", "defend", "qinwang",
-              "ligang", "repel", "train", "integrity", "punish", "dismiss", "yes"],
+        "*": WISE,
     },
+    # 联辽：开局谢绝金使、以粮帛助辽，其余照稳健打法（看「唇齿相依」是否可达）
     "lianliao": {
         "t0_haishang": ["refuse"],
-        "*": ["grain", "aid", "abolish", "kuo", "recall", "lianliao", "repair", "tangluo", "fortify", "defend", "qinwang"],
+        "t1_haishang_again": ["refuse"],
+        "*": ["grain", "aid", "lianliao", *WISE],
     },
     "appease": {"*": ["ally", "cede", "peace", "buy", "accept", "gifts"]},
     "flee": {"*": ["south", "flee", "nanxing"]},
