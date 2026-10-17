@@ -23,7 +23,20 @@ for (const size of SIZES) {
         const reached = await openScreen(page, screen);
         test.skip(!reached, `screen ${screen} not reachable in ${REAL ? 'real' : 'mock'} mode`);
         if (screen !== 'resources') await page.mouse.move(2, size.h - 2);
-        await page.waitForTimeout(500);
+        // paintings and portraits are fetched from the engine and decoded lazily: wait until the network is
+        // quiet and every <img> on screen has decoded, so the shot shows the art and not the placeholders
+        if (screen === 'title') await page.locator('.title-art--img').waitFor({ timeout: 15_000 }).catch(() => undefined);
+        await page.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
+        await page
+          .waitForFunction(
+            () =>
+              document.querySelectorAll('.portrait-pending').length === 0 &&
+              [...document.images].every((img) => img.complete && (img.naturalWidth > 0 || !img.src)),
+            null,
+            { timeout: 15_000 },
+          )
+          .catch(() => undefined);
+        await page.waitForTimeout(800);
         fs.mkdirSync(OUT, { recursive: true });
         await page.screenshot({ path: path.join(OUT, `${screen}-${size.w}x${size.h}${REAL ? '-real' : ''}.png`) });
         // no page-level overflow
