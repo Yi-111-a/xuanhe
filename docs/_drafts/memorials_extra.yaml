@@ -1,0 +1,831 @@
+# 补写奏疏草稿（第 3 批，22 条）。追加到 scenarios/xuanhe_1120/memorials.yaml 末尾即可；选项次序已按 tools/rotate_options.py 轮转。
+# 一、补薄季：宣和二年秋（2 条）、冬（2 条）、宣和三年夏（2 条），固定回合，无路线前提。
+# 二、反事实路线：联辽（4 条，正向守卫 lian_liao）、燕京在宋手（4 条，守卫 region_controller yanshan song）、
+#     谢绝金使而未联辽（3 条，守卫 haishang_refused 且 lian_liao absent）。
+# 三、地方与常设之外的变化：和籴抑配（读计数器 hedi_buys，由 events 草稿的记账事件累计）、川峡茶马、转般仓、福建海寇、关中弓箭手。
+# 数值为本游戏设定（【设】）；史实依据与存疑之处见交付说明。hint 中「（风闻）」指隐藏数值，只写方向。
+
+# ============================== 补薄季：宣和二年秋 ==============================
+- id: t2_changping
+  turn: 2
+  title: 常平籴本
+  summary: 司农寺奏：京畿、京东诸路秋稼稍登，请出钱籴入常平仓，以备来岁荒歉；又言常平钱物近岁屡为他司借用，所存不及旧额之半。
+  region: bianjing
+  illustration: event.qingming
+  proposal: fair
+  keywords: [常平, 籴, 赈济, 财赋]
+  advisors:
+    - {character: cai_jing, stance: oppose, option: tax, line: 常平之钱，岁岁闲置。借以给用，丰年无害；荒年再拨还，亦不为迟。}
+    - {character: li_gang, stance: support, option: fair, requires: {region: bianjing}, line: 常平者，所以待凶年也。丰年不籴，凶年何以为赈？借用之钱，宜令有司限期拨还。}
+    - {character: li_bangyan, stance: neutral, option: keep, requires: {region: bianjing}, line: 今年收成还过得去，仓里有多少算多少，明年的事明年再说。}
+  options:
+    - id: keep
+      label: 依旧
+      ops:
+        - {op: remember, character: cai_jing, fact: "{when}，常平籴本之议未行"}
+      hint: 无增减
+    - id: tax
+      label: 借常平钱四十万缗以充经费
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: 40, reason: 借用常平钱}
+        - {op: adjust_resource, resource: corruption, delta: 1, reason: 常平钱移用}
+      hint: 国库 +40，吏治积弊 +1；常平空虚，日后诸路告歉时恐无以赈粜
+    - id: fair
+      label: 出钱四十万缗籴入常平，禁州县抑配
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -40, reason: 籴入常平}
+        - {op: adjust_resource, resource: grain, delta: 35, reason: 常平籴入}
+        - {op: adjust_resource, resource: corruption, delta: -1, reason: 禁抑配}
+      hint: 国库 −40，粮储 +35，吏治积弊 −1
+
+- id: t2_yubi
+  turn: 2
+  title: 御笔径下
+  summary: 中书、门下省奏：近岁御笔手诏多自禁中径下有司，不由三省书读；有司稍有稽违，即以违御笔论，宰执或不得与闻。三省文书壅滞，诏令前后抵牾。请凡御笔皆经三省覆奏而后施行。
+  region: bianjing
+  illustration: event.court_debate
+  conditions: {kind: office_holder, office: yubi, character: liang_shicheng}
+  proposal: curb
+  keywords: [御笔, 三省, 梁师成]
+  advisors:
+    - {character: liang_shicheng, stance: oppose, option: favor, requires: {office: yubi}, line: 御笔是官家亲书，外廷还要覆奏，岂不是信不过官家？奴婢只是替官家传话罢了。}
+    - {character: li_gang, stance: support, option: curb, requires: {region: bianjing}, line: 政出多门，则天下不知所从。诏令不由三省，宰执不得与闻，是以近习之笔代朝廷之议也。}
+    - {character: yu_shen, stance: neutral, option: keep, requires: {office: taizai}, line: 御笔以济急，三省以守常，二说皆有理。臣以为……当请圣裁。}
+  options:
+    - id: favor
+      label: 申严违御笔之罚
+      ops:
+        - {op: adjust_resource, resource: authority, delta: 1, reason: 御笔令行}
+        - {op: adjust_resource, resource: ningxing, delta: 2, reason: 近习专御笔}
+        - {op: adjust_resource, resource: corruption, delta: 1, reason: 诏令抵牾}
+      hint: 君威 +1，佞幸 +2，吏治积弊 +1
+    - id: keep
+      label: 依旧
+      ops:
+        - {op: remember, character: liang_shicheng, fact: "{when}，三省请覆奏御笔，议不行"}
+      hint: 无增减
+    - id: curb
+      label: 凡御笔须经三省覆奏而后施行
+      memory: {character: liang_shicheng, text: "{when}，陛下令御笔须经三省覆奏"}
+      ops:
+        - {op: adjust_resource, resource: ningxing, delta: -2, reason: 御笔不得径下}
+        - {op: adjust_resource, resource: authority, delta: -1, reason: 御笔受三省覆奏}
+        - {op: adjust_trait, character: liang_shicheng, trait: favor, delta: -1}
+      hint: 佞幸 −2，君威 −1；梁师成不悦
+
+# ============================== 补薄季：宣和二年冬 ==============================
+- id: t3_qianfa
+  turn: 3
+  title: 钱监鼓铸
+  summary: 陕西、河东转运司奏：铜锡不继，钱监岁铸不及旧额，而边费日增；请增铸当十大钱，或铸夹锡钱以济边用。言者谓大钱一行，私铸必起，物价翔踊。
+  region: guanzhong
+  illustration: event.mianfu
+  proposal: tax
+  keywords: [钱法, 钱监, 财赋, 边费]
+  advisors:
+    - {character: cai_jing, stance: support, option: tax, line: 当十之钱，以一当十，所省铜料无算。行之以渐，市井自然通行。}
+    - {character: zhang_xiaochun, stance: oppose, option: settle, requires: {region: hedong}, line: （自太原驰奏）河东边费全仰钱监。然大钱一出，市井不受，兵士得钱而不得物。臣以为不如循小平钱之制，量增鼓铸。}
+    - {character: li_bangyan, stance: neutral, option: keep, requires: {region: bianjing}, line: 钱的事最绕人。一当十也好，十当一也罢，臣只盼莫要一年三变。}
+  options:
+    - id: settle
+      label: 罢大钱之议，循小平钱之制量增鼓铸
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -5, reason: 增铸小平钱之本}
+        - {op: adjust_resource, resource: corruption, delta: -1, reason: 钱法不轻改}
+        - {op: adjust_region, region: guanzhong, stat: order, delta: 2}
+      hint: 国库 −5，吏治积弊 −1，关中治安 +2
+    - id: tax
+      label: 增铸当十大钱以济边用
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: 60, reason: 增铸当十钱}
+        - {op: adjust_resource, resource: corruption, delta: 2, reason: 大钱行而奸弊生}
+      hint: 国库 +60，吏治积弊 +2；此后私铸或将蜂起，物价随之腾踊
+    - id: keep
+      label: 依旧
+      ops:
+        - {op: remember, character: zhang_xiaochun, fact: "{when}，钱监鼓铸之议未行"}
+      hint: 无增减
+
+- id: t3_xuehan
+  turn: 3
+  title: 雪寒
+  summary: 开封府奏：入冬大雪，京城苦寒，贫民冻馁，有僵仆于道者。请依例放免公私僦舍之钱，出粜官米，给薪炭于贫乏之家。
+  region: bianjing
+  illustration: event.famine
+  conditions: {kind: season, value: 冬}
+  proposal: relief
+  keywords: [赈济, 京城, 雪寒]
+  advisors:
+    - {character: chen_dong, stance: support, option: relief, requires: {region: bianjing}, line: 学生斗胆！天子脚下，冻死者相枕于道，四方何以观之？请陛下推一念之仁。}
+    - {character: li_bangyan, stance: oppose, option: keep, requires: {region: bianjing}, line: 放三日房钱便是天恩了，再多，开封府的账可就难看了。}
+    - {character: wang_fu, stance: neutral, option: keep, requires: {office: [shaozai, taizai]}, line: 京城雪寒，岁岁有之。依例放免三日，此陛下圣德所致，都人自然感戴。}
+  options:
+    - id: relief
+      label: 放免房钱、出粜官米、给薪炭
+      ops:
+        - {op: adjust_resource, resource: grain, delta: -25, reason: 雪寒出粜官米}
+        - {op: adjust_resource, resource: morale, delta: 1, reason: 雪寒赈恤}
+        - {op: adjust_region, region: bianjing, stat: order, delta: 2}
+      hint: 粮储 −25，民心 +1，汴京治安 +2
+    - id: keep
+      label: 依例只放免房钱三日
+      ops:
+        - {op: adjust_region, region: bianjing, stat: order, delta: -1}
+      hint: 汴京治安 −1
+
+# ============================== 补薄季：宣和三年夏 ==============================
+- id: t5_sanshe
+  turn: 5
+  title: 州县三舍
+  summary: 礼部奏：州县学三舍之法行之近二十年，养士之费仰给学田、常平，而升补之际请托冒滥，寒士反不得进。议者请罢州县三舍，复以科举取士，独太学仍存三舍。
+  region: bianjing
+  illustration: event.chen_dong
+  proposal: thrift
+  keywords: [三舍, 科举, 太学, 学校]
+  advisors:
+    - {character: cai_jing, stance: oppose, option: keep, line: 三舍之法，所以养士于学，不专以一日之文取人。罢之，是弃二十年之功。}
+    - {character: li_gang, stance: support, option: thrift, requires: {region: bianjing}, line: 州县之学，以舍选为名，以请托为实。不如复科举，使天下之士以文自见。}
+    - {character: chen_dong, stance: neutral, option: limit, requires: {region: bianjing}, line: 学生身在太学，受三舍之教，不敢尽言其非。州县之弊，在人不在法；汰其冒滥，可也。}
+  options:
+    - id: thrift
+      label: 罢州县三舍，复以科举取士
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: 30, reason: 省州县养士之费}
+        - {op: adjust_resource, resource: corruption, delta: -1, reason: 升补请托之弊息}
+        - {op: adjust_resource, resource: authority, delta: -1, reason: 学制屡改，舍生失职者怨}
+      hint: 国库 +30，吏治积弊 −1，君威 −1
+    - id: keep
+      label: 依旧
+      ops:
+        - {op: remember, character: cai_jing, fact: "{when}，罢州县三舍之议未行"}
+      hint: 无增减
+    - id: limit
+      label: 留三舍而严升补，汰其冒滥
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -10, reason: 遣官考覆舍生}
+        - {op: adjust_resource, resource: corruption, delta: -2, reason: 汰三舍冒滥}
+      hint: 国库 −10，吏治积弊 −2
+
+- id: t5_hushi
+  turn: 5
+  title: 夏人请市
+  summary: 鄜延路奏：夏国遣使至保安军，请复榷场和市，以青盐、马驼易缯帛、茶叶。或言夏人得缯帛则益富，青盐入境则夺解盐之利。
+  region: xibian
+  illustration: event.xixia
+  conditions: {kind: region_controller, region: xibian, faction: song}
+  proposal: open
+  keywords: [西夏, 互市, 榷场, 西边]
+  advisors:
+    - {character: zhong_shidao, stance: support, option: open, requires: {region: xibian}, line: （自泾原驰表）互市既开，夏人有所利而不轻动；我得其马，西兵亦可稍补。}
+    - {character: tong_guan, stance: oppose, option: keep, line: 夏人反复。开了市，他们拿咱们的茶帛养兵，回头又来扰边。}
+    - {character: cai_jing, stance: neutral, option: limit, line: 市可开，盐须禁。青盐一入，解盐之课便亏了。}
+  options:
+    - id: limit
+      label: 许市而禁青盐入境
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: 5, reason: 榷场之税}
+        - {op: adjust_relation, a: song, b: xixia, delta: 3}
+        - {op: adjust_relation, a: xixia, b: song, delta: 3}
+      hint: 国库 +5，宋夏关系 +3
+    - id: open
+      label: 许复保安军榷场，以茶帛易马驼
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: 10, reason: 榷场之税}
+        - {op: adjust_relation, a: song, b: xixia, delta: 5}
+        - {op: adjust_relation, a: xixia, b: song, delta: 5}
+        - {op: adjust_region, region: xibian, stat: order, delta: 2}
+      hint: 国库 +10（榷场之税），宋夏关系 +5，西北边治安 +2；此后或得夏马，而私贩青盐者亦将随之
+    - id: keep
+      label: 依旧闭市
+      ops:
+        - {op: remember, character: zhong_shidao, fact: "{when}，夏人请复和市，朝廷不许"}
+      hint: 无增减
+
+# ============================== 川峡、淮南、闽广、关中（地方） ==============================
+- id: t8_chama
+  turn: 8
+  expires_after: 1
+  title: 川峡茶马
+  summary: 成都府路茶马司奏到：蜀茶博马，岁额不足；而茶场抑买茶户，给价不及市直，园户或伐茶而逃。请增茶额以博马，或宽茶户之抑买。
+  region: chuanxia
+  illustration: event.military_drill
+  proposal: ma
+  keywords: [茶马, 川峡, 马政]
+  advisors:
+    - {character: tong_guan, stance: support, option: ma, line: 西兵要马，北边也要马。蜀茶多换些马来，比什么都强。}
+    - {character: li_gang, stance: oppose, option: kuan, requires: {region: bianjing}, line: 茶户困于抑买，则茶日少；茶日少，则马亦不至。宽其民，所以足其马也。}
+    - {character: cai_jing, stance: neutral, option: keep, line: 茶马之法，行之有年，不必大改。}
+  options:
+    - id: keep
+      label: 依旧
+      ops:
+        - {op: remember, character: cai_jing, fact: "{when}，川峡茶马之议未行"}
+      hint: 无增减
+    - id: kuan
+      label: 宽茶户之抑买，茶价依市
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -10, reason: 增给茶本}
+        - {op: adjust_region, region: chuanxia, stat: prosperity, delta: 3}
+        - {op: adjust_region, region: chuanxia, stat: order, delta: 1}
+      hint: 国库 −10，川峡繁荣 +3、治安 +1（令达于下季）
+    - id: ma
+      label: 增茶额以博马
+      ops:
+        - {op: adjust_resource, resource: wubei, delta: 1, reason: 博马增额}
+        - {op: adjust_region, region: chuanxia, stat: order, delta: -3}
+        - {op: adjust_region, region: chuanxia, stat: prosperity, delta: -1}
+      hint: 武备 +1；川峡治安 −3、繁荣 −1（令达于下季）
+
+- id: t10_zhuanban
+  turn: 10
+  expires_after: 1
+  title: 转般仓
+  summary: 发运司奏：东南纲船改行直达以来，船兵篙工经年在途，沿路侵盗、沉溺者众，真、扬、楚、泗诸仓多废。请复转般之法，分段转运；或只严押纲之法。
+  region: huainan
+  illustration: event.qingming
+  proposal: zhuanban
+  keywords: [漕运, 转般, 纲运, 淮南]
+  advisors:
+    - {character: cai_jing, stance: oppose, option: keep, line: 直达之法，船不停留，省仓廪之费，行之已久，何必复旧？}
+    - {character: li_gang, stance: support, option: zhuanban, requires: {region: bianjing}, line: 转般之法，祖宗所以通东南之粟。直达行而纲船坏、仓储废，复之可也。}
+    - {character: chen_dong, stance: neutral, option: strict, requires: {region: bianjing}, line: 纲运之弊，在于押纲之吏侵渔。不惩其人，法虽复旧，弊亦如故。}
+  options:
+    - id: strict
+      label: 不复旧法，严押纲官吏之责
+      ops:
+        - {op: adjust_resource, resource: corruption, delta: -1, reason: 严押纲之法}
+        - {op: adjust_resource, resource: grain, delta: 15, reason: 纲运侵盗稍减}
+        - {op: adjust_region, region: huainan, stat: order, delta: -1}
+      hint: 吏治积弊 −1，粮储 +15，淮南治安 −1（纲兵怨）
+    - id: zhuanban
+      label: 复真、扬诸仓转般之法（两季）
+      ops:
+        - op: start_project
+          name: 复转般仓
+          region: huainan
+          cost_per_turn: {treasury: 20}
+          turns: 2
+          on_complete:
+            - {op: adjust_resource, resource: grain, delta: 50, reason: 转般复行，漕粮到京}
+            - {op: adjust_region, region: huainan, stat: prosperity, delta: 2}
+      hint: 国库每季 −20 共两季；成后粮储 +50、淮南繁荣 +2
+    - id: keep
+      label: 依旧直达
+      ops:
+        - {op: remember, character: cai_jing, fact: "{when}，复转般之议不行"}
+      hint: 无增减
+
+- id: t17_haikou
+  turn: 17
+  expires_after: 1
+  title: 福建海寇
+  summary: 福建路安抚司奏到：海寇出没泉、漳之间，劫掠蕃舶、商船，濒海之民或从之为盗。请置巡检、造战船以捕之，或招其胁从隶为水军。
+  region: minguang
+  illustration: event.goryeo_envoy
+  proposal: fortify
+  keywords: [海寇, 闽广, 市舶]
+  advisors:
+    - {character: cai_jing, stance: support, option: fortify, line: 泉、广市舶，岁入以百万计。海道不靖则蕃舶不来，置巡检之费，所值多矣。}
+    - {character: zhang_shuye, stance: support, option: amnesty, requires: {region: jingdong}, line: （自海州驰奏）海寇所恃者舟楫。断其舟楫，招其胁从，可不战而散。}
+    - {character: li_bangyan, stance: oppose, option: keep, requires: {region: bianjing}, line: 闽广天高地远，几个海贼，叫州县自己捉去。}
+  options:
+    - id: keep
+      label: 令州县自行捕之
+      ops:
+        - {op: adjust_region, region: minguang, stat: order, delta: -2}
+      hint: 闽广治安 −2（令达于下季）
+    - id: amnesty
+      label: 招其胁从，隶为水军
+      ops:
+        - {op: adjust_resource, resource: grain, delta: -15, reason: 招安海寇给粮}
+        - {op: adjust_region, region: minguang, stat: order, delta: 2}
+        - {op: adjust_resource, resource: corruption, delta: 1, reason: 招安冒滥}
+      hint: 粮储 −15，闽广治安 +2（令达于下季），吏治积弊 +1
+    - id: fortify
+      label: 置巡检、造战船以捕海寇
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -30, reason: 置巡检造战船}
+        - {op: adjust_region, region: minguang, stat: order, delta: 4}
+        - {op: adjust_region, region: minguang, stat: prosperity, delta: 1}
+      hint: 国库 −30；闽广治安 +4、繁荣 +1（令达于下季）
+
+- id: t20_gongjianshou
+  turn: 20
+  expires_after: 1
+  title: 关中弓箭手
+  summary: 永兴军、秦凤诸路奏：沿边弓箭手田多为豪强、将校所占，弓箭手贫乏逃亡，阙额甚多。请括还其田，复招弓箭手。
+  region: guanzhong
+  illustration: event.military_drill
+  conditions: {kind: region_controller, region: guanzhong, faction: song}
+  proposal: settle
+  keywords: [弓箭手, 西军, 关中, 武备]
+  advisors:
+    - {character: zhong_shidao, stance: support, option: settle, requires: {region: xibian}, line: （自泾原驰表）弓箭手者，西边之藩篱。田归其人，则人自为战，不烦馈饷。}
+    - {character: tong_guan, stance: oppose, option: keep, line: 西边将校跟着老奴出生入死，占几亩田，算得什么？括起田来，军心先乱了。}
+    - {character: zhong_shizhong, stance: support, option: settle, requires: {region: xibian}, line: （自秦州驰表）末将营中弓箭手，十人里逃了三人。田还了他们，人自然回来。}
+  options:
+    - id: settle
+      label: 括还弓箭手田，复招阙额
+      ops:
+        - {op: adjust_region, region: xibian, stat: defense, delta: 3}
+        - {op: adjust_region, region: guanzhong, stat: order, delta: -2}
+        - {op: adjust_resource, resource: grain, delta: -20, reason: 复招弓箭手给种粮}
+      hint: 西北边防务 +3；关中治安 −2（豪强、将校怨），粮储 −20
+    - id: keep
+      label: 依旧
+      ops:
+        - {op: adjust_region, region: xibian, stat: defense, delta: -1}
+      hint: 西北边防务 −1
+
+# ============================== 河北和籴之后（读计数器） ==============================
+# 计数器 hedi_buys：常设奏疏「河北和籴」每批「出钱和籴」一次即 +1（events 草稿的记账事件 hedi_tally）。满两次后言者论抑配。
+- id: t_hedi_yipei
+  title: 和籴抑配
+  summary: 言者论河北和籴之弊：连岁出钱和籴，州县名为和籴，实则按户敷配，给价不及市直，又以茶盐钞、度牒折价，民有鬻牛以输者。请罢抑配之法。
+  region: hebei_xi
+  illustration: event.famine
+  conditions:
+    all:
+      - {kind: counter, key: hedi_buys, operator: gte, value: 2}
+      - {kind: region_controller, region: hebei_xi, faction: song}
+      - {kind: flag, key: jin_invaded, operator: absent}
+  proposal: integrity
+  keywords: [和籴, 边储, 河北, 吏治]
+  advisors:
+    - {character: li_gang, stance: support, option: integrity, requires: {region: bianjing}, line: 和籴本以便民，今乃病民。罢抑配，籴价依市，则民乐输而边储自实。}
+    - {character: li_bangyan, stance: oppose, option: keep, requires: {region: bianjing}, line: 州县不按户摊派，哪里凑得齐这许多粮？边储要紧，民间嚷嚷几句也就过去了。}
+    - {character: ma_kuo, stance: neutral, option: halt, requires: {region: bianjing}, line: 臣在河北，见民间鬻牛以输籴粮。边储固要紧，然民力已竭，不如暂停一二年。}
+  options:
+    - id: keep
+      label: 依旧
+      ops:
+        - {op: adjust_resource, resource: corruption, delta: 1, reason: 抑配如故}
+        - {op: adjust_region, region: hebei_xi, stat: order, delta: -3}
+      hint: 吏治积弊 +1，河北西路治安 −3
+    - id: halt
+      label: 暂停河北和籴，边储改由漕运
+      ops:
+        - {op: adjust_resource, resource: grain, delta: -30, reason: 漕粮改输河北边储}
+        - {op: adjust_region, region: hebei_xi, stat: order, delta: 2}
+      hint: 粮储 −30，河北西路治安 +2
+    - id: integrity
+      label: 遣使按察，罢抑配，籴价依市
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -25, reason: 遣使按察并补籴价}
+        - {op: adjust_resource, resource: corruption, delta: -2, reason: 罢抑配}
+        - {op: adjust_region, region: hebei_xi, stat: order, delta: 3}
+      hint: 国库 −25，吏治积弊 −2，河北西路治安 +3
+
+# ============================== 联辽之局（lian_liao） ==============================
+- id: t_liao_queshang
+  title: 雄州榷场
+  summary: 燕京辽人遣使言：燕地兵兴，谷帛不继，请复雄州榷场，以燕地之马、羊易宋之粮帛；愿岁时通使，永为兄弟之邦。
+  region: hebei_dong
+  illustration: event.liao_envoy
+  conditions:
+    all:
+      - {kind: flag, key: lian_liao, value: true}
+      - {kind: flag, key: liao_fallen, operator: absent}
+      - {kind: flag, key: jin_invaded, operator: absent}
+      - {kind: region_controller, region: yanshan, faction: liao}
+      - {kind: region_controller, region: hebei_dong, faction: song}
+      - {kind: turn, operator: gte, value: 9}
+  proposal: lianliao
+  keywords: [辽使, 联辽, 互市, 榷场, 燕京]
+  advisors:
+    - {character: li_gang, stance: support, option: lianliao, requires: {region: bianjing}, line: 榷场既开，燕人仰我之粟帛，辽之存亡与我相系，此不战而固藩篱之术也。}
+    - {character: wang_fu, stance: oppose, option: keep, requires: {office: [shaozai, taizai]}, line: 粮米出境，河北先饥。辽人有求无已，开了这个口子，便没个了局。}
+    - {character: ma_kuo, stance: neutral, option: limit, requires: {region: bianjing}, line: 市可开，粮不可多出。以帛易马，于我有益；以粟资辽，金人必怒。}
+  options:
+    - id: keep
+      label: 不开
+      ops:
+        - {op: remember, character: ma_kuo, fact: "{when}，辽人请复雄州榷场，朝廷不许"}
+      hint: 无增减
+    - id: lianliao
+      label: 开雄州榷场，许辽人市粮帛
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: 15, reason: 雄州榷税}
+        - {op: adjust_resource, resource: grain, delta: -30, reason: 榷场出粮}
+        - {op: adjust_resource, resource: liao_zuo, delta: 3, reason: 燕地得宋粮帛}
+        - {op: adjust_resource, resource: jin_contempt, delta: 1, reason: 金人疑宋资辽}
+        - {op: adjust_region, region: hebei_dong, stat: prosperity, delta: 2}
+      hint: 国库 +15（榷税），粮储 −30，辽祚 +3，河北东路繁荣 +2；金人轻宋（风闻）略↑
+    - id: limit
+      label: 开市而禁粮米出境，只许以帛易马
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -10, reason: 以帛易马}
+        - {op: adjust_resource, resource: liao_zuo, delta: 1, reason: 燕地稍得帛}
+        - {op: adjust_resource, resource: wubei, delta: 1, reason: 得燕马}
+      hint: 国库 −10，辽祚 +1，武备 +1（得燕马）
+
+- id: t_liao_wenzui
+  title: 金使诘问助辽
+  summary: 金使至汴京，执国书诘问：南朝既与大金通使，何以输粮帛资辽？请宋绝辽使、罢输粮，否则两国之好，自此而绝。金使留馆待报。
+  region: bianjing
+  illustration: event.jin_envoy
+  conditions:
+    all:
+      - {kind: flag, key: lian_liao, value: true}
+      - {kind: flag, key: jin_questions_aid_done, value: true}
+      - {kind: flag_age, key: jin_questions_aid_done, operator: lte, value: 2}
+      - {kind: flag, key: liao_fallen, operator: absent}
+      - {kind: flag, key: jin_invaded, operator: absent}
+  proposal: frank
+  keywords: [金使, 联辽, 存辽, 女真]
+  advisors:
+    - {character: li_gang, stance: support, option: frank, requires: {region: bianjing}, line: 宋辽百年之好，天下共知。直告金使：宋不预辽金之争，亦不受人胁。}
+    - {character: li_bangyan, stance: support, option: gifts, requires: {region: bianjing}, line: 金使脾气大，多送些礼，说几句软话，打发回去便是。}
+    - {character: ma_kuo, stance: neutral, option: frank, requires: {region: bianjing}, line: 臣亲见女真，最恨人欺之以诈。实言以告，胜于支吾。}
+  options:
+    - id: frank
+      label: 答以宋辽旧好，不预兵事，亦不绝辽
+      ops:
+        - {op: adjust_resource, resource: authority, delta: 1, reason: 答金使不屈}
+        - {op: adjust_resource, resource: jin_contempt, delta: 1, reason: 金人怒宋不绝辽}
+      hint: 君威 +1；金人轻宋（风闻）略↑
+    - id: gifts
+      label: 厚赂金使，言辞卑逊，阴助如故
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -40, reason: 厚赂金使}
+        - {op: adjust_resource, resource: authority, delta: -1, reason: 卑辞事金}
+        - {op: adjust_resource, resource: jin_contempt, delta: -1, reason: 金使得赂}
+      hint: 国库 −40，君威 −1；金人轻宋（风闻）略↓
+    - id: keep
+      label: 留金使于馆，久不报
+      ops:
+        - {op: adjust_resource, resource: jin_contempt, delta: 2, reason: 金使久留不报}
+        - {op: adjust_resource, resource: nanmu, delta: 1, reason: 金人以宋为辽之党}
+      hint: 金人轻宋（风闻）↑，胡马南牧（风闻）略↑
+
+- id: t_dashi
+  title: 林牙去留
+  summary: 雄州间者报：燕京守将、辽林牙耶律大石以其主远在塞外，燕京诸将议论不一，欲率精骑出塞以奉其主。燕人惶惧，辽使私请宋廷留之。
+  region: yanshan
+  illustration: event.liao_envoy
+  conditions:
+    all:
+      - {kind: flag, key: lian_liao, value: true}
+      - {kind: flag, key: liao_fallen, operator: absent}
+      - {kind: flag, key: jin_invaded, operator: absent}
+      - {kind: flag, key: dashi_west, operator: absent}
+      - {kind: region_controller, region: yanshan, faction: liao}
+      - {kind: character_status, character: yelu_dashi, value: alive}
+      - {kind: character_region, character: yelu_dashi, region: yanshan, arrived: true}
+      - {kind: turn, operator: gte, value: 13}
+  proposal: liu
+  keywords: [联辽, 存辽, 燕京, 耶律大石]
+  advisors:
+    - {character: zhong_shidao, stance: support, option: liu, requires: {region: xibian}, line: （自泾原驰表）燕京之可守，以有大石。大石去，燕京不过一空城耳。厚礼留之，所费不多。}
+    - {character: tong_guan, stance: oppose, option: keep, line: 契丹的将，走便走了，与咱们何干？他一走，燕京的事反倒好商量。}
+    - {character: li_gang, stance: support, option: aid, requires: {region: bianjing}, line: 大石善战，与其坐守燕京，不如资之甲械，使出居庸以扰金人之后。}
+  options:
+    - id: liu
+      label: 厚赐大石，劝其留守燕京
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -40, reason: 厚赐耶律大石}
+        - {op: adjust_resource, resource: liao_zuo, delta: 2, reason: 燕京宿将留守}
+      hint: 国库 −40，辽祚 +2；耶律大石留守燕京
+    - id: aid
+      label: 资大石粮帛甲械，使出居庸以扰金后
+      ops:
+        - {op: adjust_resource, resource: grain, delta: -40, reason: 资耶律大石粮}
+        - {op: adjust_resource, resource: treasury, delta: -30, reason: 资耶律大石甲械}
+        - {op: adjust_resource, resource: liao_zuo, delta: 4, reason: 大石出兵扰金}
+        - {op: adjust_resource, resource: jin_contempt, delta: 2, reason: 宋资辽将扰金}
+        - {op: adjust_resource, resource: nanmu, delta: 1, reason: 金人怒宋}
+      hint: 粮储 −40，国库 −30，辽祚 +4；金人轻宋（风闻）↑，胡马南牧（风闻）略↑
+    - id: keep
+      label: 听其自处
+      ops:
+        - {op: remember, character: zhong_shidao, fact: "{when}，辽林牙耶律大石欲出塞，朝廷听其自处"}
+      hint: 无增减；耶律大石或将出塞而去，燕京辽军失其宿将（辽祚 ↓）
+
+- id: t_liao_hebing
+  title: 辽人请合兵
+  summary: 辽使言：金人连岁攻辽不下，师老于外；请宋陈河北之兵于白沟、雄州为声援，与辽夹击女真，愿以燕山以东诸州为谢。
+  region: hebei_dong
+  illustration: event.liao_envoy
+  conditions:
+    all:
+      - {kind: flag, key: lian_liao, value: true}
+      - {kind: flag, key: liao_fallen, operator: absent}
+      - {kind: flag, key: jin_invaded, operator: absent}
+      - {kind: resource, id: liao_zuo, operator: gte, value: 30}
+      - {kind: region_controller, region: hebei_dong, faction: song}
+      - {kind: turn, operator: gte, value: 14}
+  proposal: aid
+  keywords: [联辽, 存辽, 辽使, 河北]
+  advisors:
+    - {character: yao_pingzhong, stance: support, option: aid, requires: {region: xibian}, line: （自西边驰书）末将愿领精骑出白沟，与辽人夹击，女真可一战而走！}
+    - {character: zhong_shidao, stance: oppose, option: gifts, requires: {region: xibian}, line: （自泾原驰表）助辽以粮可也，助辽以兵不可。兵一出，金人之怒移于我，非存辽之本意。}
+    - {character: li_bangyan, stance: oppose, option: keep, requires: {region: bianjing}, line: 人家两家打架，咱们出钱出粮已是仗义，再出兵，那是自己往刀口上撞。}
+  options:
+    - id: keep
+      label: 守约不出兵
+      ops:
+        - {op: remember, character: zhong_shidao, fact: "{when}，辽人请宋合兵夹击女真，朝廷守约不出"}
+      hint: 无增减
+    - id: aid
+      label: 令河北东路禁军陈兵白沟为声援
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -30, reason: 河北陈兵犒赏}
+        - {op: adjust_resource, resource: liao_zuo, delta: 4, reason: 宋兵声援，辽人气振}
+        - {op: adjust_resource, resource: jin_contempt, delta: 3, reason: 宋陈兵助辽}
+        - {op: adjust_resource, resource: nanmu, delta: 2, reason: 金人移怒于宋}
+      hint: 国库 −30，辽祚 +4；金人轻宋（风闻）↑，胡马南牧（风闻）↑
+    - id: gifts
+      label: 不出兵，资辽甲械弓弩
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -40, reason: 资辽甲械}
+        - {op: adjust_resource, resource: liao_zuo, delta: 2, reason: 辽得宋甲械}
+        - {op: adjust_resource, resource: jin_contempt, delta: 1, reason: 金人疑宋资辽}
+      hint: 国库 −40，辽祚 +2；金人轻宋（风闻）略↑
+
+# ============================== 燕京在宋手（region_controller yanshan song） ==============================
+- id: t_yushan_guan
+  title: 榆关之守
+  summary: 燕山府奏：燕山北有居庸、古北、松亭诸口，东有榆关。今平州之地在金，榆关之险不在我；金骑自关外出入，旬日可至城下。请增修诸关隘，屯兵守之。
+  region: yanshan
+  illustration: event.military_drill
+  conditions:
+    all:
+      - {kind: region_controller, region: yanshan, faction: song}
+      - {kind: region_controller, region: pingzhou, faction: jin}
+      - {kind: flag, key: jin_invaded, operator: absent}
+      - {kind: turn, operator: gte, value: 12}
+  proposal: fortify
+  keywords: [燕山, 关隘, 城防, 武备]
+  advisors:
+    - {character: ma_kuo, stance: support, option: fortify, requires: {region: bianjing}, line: 臣亲见女真骑兵，一日夜可行三百里。关隘不守，燕山即是平地。}
+    - {character: zhang_shuye, stance: support, option: fortify, requires: {office: yanshan_xuanfu, region: yanshan}, line: （自燕山驰奏）诸关之险，臣已亲历。古北、居庸犹可守；榆关在金人之手，臣请增戍松亭以当其冲。}
+    - {character: li_bangyan, stance: oppose, option: envoy, requires: {region: bianjing}, line: 关隘修了，金人看着又要说咱们防他。不如派个使者去，把关外的界划清楚。}
+  options:
+    - id: keep
+      label: 依旧
+      ops:
+        - {op: remember, character: ma_kuo, fact: "{when}，燕山关隘之议未行"}
+      hint: 无增减
+    - id: envoy
+      label: 遣使与金议定关外之界
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -20, reason: 遣使议界}
+        - {op: adjust_resource, resource: authority, delta: -1, reason: 示弱于金}
+        - {op: adjust_resource, resource: jin_contempt, delta: -1, reason: 宋使恭谨}
+      hint: 国库 −20，君威 −1；金人轻宋（风闻）略↓
+    - id: fortify
+      label: 修居庸、古北、松亭诸关隘（三季）
+      ops:
+        - op: start_project
+          name: 修燕山诸关隘
+          region: yanshan
+          cost_per_turn: {treasury: 35}
+          turns: 3
+          on_complete:
+            - {op: adjust_region, region: yanshan, stat: defense, delta: 8}
+            - {op: adjust_resource, resource: wubei, delta: 1, reason: 燕山关隘修治}
+      hint: 国库每季 −35 共三季；成后燕京防务 +8、武备 +1
+
+- id: t_yan_guanli
+  title: 燕山官吏
+  summary: 燕山府奏：燕地新复，朝廷所遣守令多南人，不习燕俗，或以燕人为番人而侵渔之；燕之旧吏、豪族怏怏不平，至有私通关外者。请参用燕人为佐贰。
+  region: yanshan
+  illustration: event.court_debate
+  conditions:
+    all:
+      - {kind: region_controller, region: yanshan, faction: song}
+      - {kind: flag, key: jin_invaded, operator: absent}
+      - {kind: turn, operator: gte, value: 12}
+  proposal: integrity
+  keywords: [燕山, 燕人, 吏治, 归明]
+  advisors:
+    - {character: zhao_liangsi, stance: support, option: favor, line: 臣亦燕人也。燕人仕于辽者多通吏事，参用之，则燕人知朝廷不以夷狄视之。}
+    - {character: ma_kuo, stance: neutral, option: integrity, requires: {region: bianjing}, line: 燕人可用，南吏亦可用；要在择廉，不在南北。}
+    - {character: wang_fu, stance: oppose, option: keep, requires: {office: [shaozai, taizai]}, line: 燕地新附，用燕人为官，万一有变，谁来担待？}
+  options:
+    - id: favor
+      label: 以归明燕人为燕山诸州守令
+      ops:
+        - {op: adjust_region, region: yanshan, stat: order, delta: 3}
+        - {op: adjust_resource, resource: authority, delta: 1, reason: 燕人感恩}
+        - {op: adjust_resource, resource: corruption, delta: 1, reason: 请托随之}
+      hint: 燕京治安 +3，君威 +1，吏治积弊 +1（请托随之）
+    - id: integrity
+      label: 择廉干之吏守燕山，参用燕之旧人
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -15, reason: 择吏赴燕山}
+        - {op: adjust_region, region: yanshan, stat: order, delta: 5}
+        - {op: adjust_resource, resource: corruption, delta: -1, reason: 择廉吏}
+      hint: 国库 −15，燕京治安 +5，吏治积弊 −1
+    - id: keep
+      label: 依旧
+      ops:
+        - {op: adjust_region, region: yanshan, stat: order, delta: -2}
+      hint: 燕京治安 −2
+
+- id: t_changsheng_tian
+  title: 常胜军请田
+  summary: 郭药师奏：常胜军将士家属多在燕山，无田可耕；请以燕山官田给之，又请增募燕人，扩常胜军之额。河北守臣言常胜军所至侵扰，不宜更增。
+  region: yanshan
+  illustration: event.guo_surrender
+  conditions:
+    all:
+      - {kind: flag, key: guo_defected_song, value: true}
+      - {kind: flag, key: guo_defected_jin, operator: absent}
+      - {kind: flag, key: jin_invaded, operator: absent}
+      - {kind: office_holder, office: changsheng_tong, character: guo_yaoshi}
+      - {kind: army_strength, army: changsheng, operator: gte, value: 6000}
+      - {kind: region_controller, region: yanshan, faction: song}
+      - {kind: turn, operator: gte, value: 13}
+      - any:
+          - {kind: army_region, army: changsheng, region: yanshan}
+          - {kind: army_region, army: changsheng, region: hebei_dong}
+  proposal: favor
+  keywords: [郭药师, 常胜军, 燕山, 降将]
+  advisors:
+    - {character: guo_yaoshi, stance: support, option: favor, requires: {region: [yanshan, hebei_dong]}, line: （驰奏）弟兄们拖家带口，没块田地，心里不安稳。朝廷给田，药师再募些燕地子弟，替朝廷守边。}
+    - {character: ma_kuo, stance: neutral, option: settle, requires: {region: bianjing}, line: 给田可也，增额不可。降将之兵，宁少而精，不可多而骄。}
+    - {character: zhong_shidao, stance: oppose, option: keep, line: 降人之兵，增一人则多一分可虑。田可给，兵不可增，且须约束其骚扰。}
+  options:
+    - id: favor
+      label: 许增募燕人七千，扩常胜军之额
+      memory: {character: guo_yaoshi, text: "{when}，朝廷许药师增募燕人七千"}
+      ops:
+        - {op: adjust_army, army: changsheng, delta: 7000, reason: 增募燕人七千}
+        - {op: adjust_resource, resource: treasury, delta: -25, reason: 常胜军增募安家钱}
+        - {op: adjust_trait, character: guo_yaoshi, trait: loyalty, delta: 1}
+      hint: 常胜军 +7000，国库 −25；郭药师感恩（忠诚 +1）；此后养兵每季 +2.1 万缗、粮 +0.84 万石，而兵柄益重于药师
+    - id: keep
+      label: 不许，令河北守臣约束之
+      ops:
+        - {op: adjust_trait, character: guo_yaoshi, trait: loyalty, delta: -1}
+        - {op: adjust_region, region: hebei_dong, stat: order, delta: 2}
+      hint: 郭药师怏怏（忠诚 −1）；河北东路治安 +2
+    - id: settle
+      label: 以燕山官田给常胜军家属，不增其额
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -15, reason: 给常胜军家属田宅}
+        - {op: adjust_trait, character: guo_yaoshi, trait: loyalty, delta: 1}
+        - {op: adjust_region, region: yanshan, stat: order, delta: -1}
+      hint: 国库 −15；郭药师稍安（忠诚 +1）；燕京治安 −1（燕人田为所占）
+
+- id: t_yanshan_qushi
+  title: 燕山取士
+  summary: 燕山府奏：燕地士人久习辽之科举，今归朝廷，多有观望。请特设燕山解额，许燕士就试礼部，以收其心。
+  region: yanshan
+  illustration: event.chen_dong
+  conditions:
+    all:
+      - {kind: region_controller, region: yanshan, faction: song}
+      - {kind: flag, key: jin_invaded, operator: absent}
+      - {kind: turn, operator: gte, value: 13}
+  proposal: settle
+  keywords: [燕山, 燕人, 科举]
+  advisors:
+    - {character: zhao_liangsi, stance: support, option: settle, line: 燕人思汉久矣！许其就试，则燕之士族皆知朝廷不弃燕人。}
+    - {character: li_bangyan, stance: oppose, option: keep, requires: {region: bianjing}, line: 燕人读的是辽国的书，考出来也是辽国的进士。}
+    - {character: chen_dong, stance: neutral, option: limit, requires: {region: bianjing}, line: 燕士可试，然不宜骤与高第。先令附试河北诸州，以观其人。}
+  options:
+    - id: settle
+      label: 特设燕山解额，许燕士就试礼部
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -10, reason: 燕山贡举}
+        - {op: adjust_region, region: yanshan, stat: order, delta: 3}
+        - {op: adjust_resource, resource: authority, delta: 1, reason: 燕士来试}
+      hint: 国库 −10，燕京治安 +3，君威 +1
+    - id: keep
+      label: 依旧
+      ops:
+        - {op: remember, character: zhao_liangsi, fact: "{when}，燕山取士之议未行"}
+      hint: 无增减
+    - id: limit
+      label: 许燕士附试河北诸州
+      ops:
+        - {op: adjust_region, region: yanshan, stat: order, delta: 1}
+      hint: 燕京治安 +1
+
+# ============================== 谢绝金使而未联辽（haishang_refused，lian_liao absent） ==============================
+- id: t6_jin_dushi
+  turn: 6
+  expires_after: 1
+  title: 金使渡海
+  summary: 金主遣使渡海至登州，入见诘问：南朝何以守辽人旧约，拒大金之好？言辞之间颇有恫吓，且请宋以旧输辽之岁币转输于金。
+  region: bianjing
+  illustration: event.jin_envoy
+  conditions:
+    all:
+      - {kind: flag, key: haishang_refused, value: true}
+      - {kind: flag, key: lian_liao, operator: absent}
+  proposal: frank
+  keywords: [金使, 女真, 岁币]
+  advisors:
+    - {character: ma_kuo, stance: support, option: frank, requires: {region: bianjing}, line: 女真重实而恶诈。直言宋守澶渊之约、不预辽金之争，彼虽不悦，犹敬之。}
+    - {character: zhao_liangsi, stance: oppose, option: gifts, line: 金人方盛，拒之太峻，恐结怨于新兴之国。厚礼其使，许以互市，留个后路。}
+    - {character: zhong_shidao, stance: neutral, option: spy, requires: {region: xibian}, line: （自泾原驰表）金使所言，虚实难知。宜遣能言之士报聘，观其兵马，再定可否。}
+  options:
+    - id: frank
+      label: 申澶渊之约，告以宋不预辽金之争，岁币之请不许
+      ops:
+        - {op: adjust_resource, resource: authority, delta: 1, reason: 答金使以正}
+        - {op: adjust_resource, resource: jin_contempt, delta: 1, reason: 金使失意}
+      hint: 君威 +1；金人轻宋（风闻）略↑
+    - id: gifts
+      label: 厚礼其使，许以登州互市
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -30, reason: 厚礼金使}
+        - {op: adjust_resource, resource: jin_contempt, delta: -2, reason: 金使得礼}
+      hint: 国库 −30；金人轻宋（风闻）↓
+    - id: spy
+      label: 遣马扩报聘，兼觇其国
+      memory: {character: ma_kuo, text: "{when}，奉命报聘于金，兼觇其国"}
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -20, reason: 遣使报聘}
+        - {op: set_flag, key: "intel:jin_contempt", value: true}
+      hint: 国库 −20；得金人虚实之报（「金人轻宋」的风闻区间减半，只减半一次、不叠加）
+
+- id: t_jin_suibi
+  title: 金索岁币
+  summary: 金既取燕京，遣使来言：燕地今为大金所有，宋旧输辽之岁币，当输于金；不然，燕山之兵旦夕可至白沟。
+  region: bianjing
+  illustration: event.jin_envoy
+  conditions:
+    all:
+      - {kind: flag, key: haishang_refused, value: true}
+      - {kind: flag, key: lian_liao, operator: absent}
+      - {kind: flag, key: yanjing_jin, value: true}
+      - {kind: flag_age, key: yanjing_jin, operator: gte, value: 1}
+      - {kind: region_controller, region: yanshan, faction: jin}
+      - {kind: flag, key: jin_invaded, operator: absent}
+      - {kind: turn, operator: lte, value: 21}
+  proposal: gifts
+  keywords: [金使, 岁币, 燕京, 议和]
+  advisors:
+    - {character: li_gang, stance: oppose, option: refuse, requires: {region: bianjing}, line: 岁币者，澶渊之约所以与辽也。辽未尽亡，而金责之于我，是无约而索也。一许之，则后索无已。}
+    - {character: li_bangyan, stance: support, option: gifts, requires: {region: bianjing}, line: 几十万匹绢，买个太平，划得来。}
+    - {character: ma_kuo, stance: neutral, option: stall, requires: {region: bianjing}, line: 女真索币，意在试我。遣使往复，观其所欲，再作区处。}
+  options:
+    - id: refuse
+      label: 不许，岁币仍循澶渊旧约
+      ops:
+        - {op: adjust_resource, resource: authority, delta: 1, reason: 拒金人索币}
+        - {op: adjust_resource, resource: jin_contempt, delta: 2, reason: 金人索币不得}
+        - {op: adjust_resource, resource: nanmu, delta: 1, reason: 金人以拒币为辞}
+      hint: 君威 +1；金人轻宋（风闻）↑，胡马南牧（风闻）略↑；金人或将陈兵试我
+    - id: stall
+      label: 遣使往复议之
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -15, reason: 遣使议币}
+        - {op: adjust_resource, resource: jin_contempt, delta: 1, reason: 金人以宋为拖延}
+      hint: 国库 −15；金人轻宋（风闻）略↑
+    - id: gifts
+      label: 许岁输银绢于金（另立岁币）
+      ops:
+        - {op: add_ledger, id: suibi_jin, name: 岁币（金）, category: treasury, amount: -8, kind: recurring, reason: 许金岁币（游戏折算）, cancellable: false}
+        - {op: adjust_resource, resource: authority, delta: -2, reason: 无约而输币}
+        - {op: adjust_resource, resource: jin_contempt, delta: -2, reason: 金人得币}
+      hint: 每季另支岁币（金）8 万缗；君威 −2；金人轻宋（风闻）↓
+
+- id: t_hebei_zishou
+  title: 河北自守
+  summary: 河北安抚司奏：自谢绝金使以来，河北修城练兵，边备渐整；金使过境，颇加敛容。请定久守之计：或募弓箭手屯田沿边，或遣使与金重申白沟旧界。
+  region: hebei_xi
+  illustration: event.tangluo
+  conditions:
+    all:
+      - {kind: flag, key: haishang_refused, value: true}
+      - {kind: flag, key: lian_liao, operator: absent}
+      - {kind: flag, key: jin_invaded, operator: absent}
+      - {kind: resource, id: wubei, operator: gte, value: 50}
+      - {kind: region_controller, region: hebei_xi, faction: song}
+      - {kind: turn, operator: gte, value: 14}
+  proposal: tuntian
+  keywords: [河北, 屯田, 武备, 弓箭手]
+  advisors:
+    - {character: zong_ze, stance: support, option: tuntian, requires: {region: [jingdong, hebei_xi, hebei_dong]}, line: （自任所驰书）边备方整，正宜募民屯田，人自为守。十年之后，河北皆兵！}
+    - {character: ma_kuo, stance: neutral, option: envoy, requires: {region: bianjing}, line: 金人敬我之备，此时遣使申明旧界，彼必不敢多求。}
+    - {character: li_bangyan, stance: oppose, option: keep, requires: {region: bianjing}, line: 城也修了，兵也练了，再屯田，钱从哪里来？}
+  options:
+    - id: keep
+      label: 依旧
+      ops:
+        - {op: remember, character: ma_kuo, fact: "{when}，河北自守之议未行"}
+      hint: 无增减
+    - id: tuntian
+      label: 募弓箭手屯田沿边（三季）
+      ops:
+        - op: start_project
+          name: 河北沿边屯田
+          region: hebei_xi
+          cost_per_turn: {treasury: 30}
+          turns: 3
+          on_complete:
+            - {op: adjust_region, region: hebei_xi, stat: defense, delta: 4}
+            - {op: adjust_region, region: hebei_xi, stat: grain, delta: 3}
+            - {op: adjust_resource, resource: wubei, delta: 1, reason: 河北屯田有成}
+      hint: 国库每季 −30 共三季；成后河北西路防务 +4、粮产 +3，武备 +1
+    - id: envoy
+      label: 遣使与金重申白沟旧界
+      ops:
+        - {op: adjust_resource, resource: treasury, delta: -20, reason: 遣使申界}
+        - {op: adjust_resource, resource: jin_contempt, delta: -2, reason: 宋备而使至}
+      hint: 国库 −20；金人轻宋（风闻）↓

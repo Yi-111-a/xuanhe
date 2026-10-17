@@ -1,0 +1,77 @@
+
+== do_nothing（300 局）好结局 0.0%（中兴 0.0%），靖康 89.0%，金兵南下 99%（平均 T19.0），胡马南牧终局 87.1、峰值 87.8，国库终局 1346.1
+   终局国势均值：treasury 1346.1，grain 2158.4，authority 37.9，morale 12.9，corruption 78.5，ningxing 73.6，dongnan 81.9，wubei 19.2，liao_zuo 0，jin_contempt 88.6，nanmu 87.1
+   e_jingkang     267   89.0%  平均终局 T23.0  靖康之耻
+   e_huahe         29    9.7%  平均终局 T27  划河而守
+   e_open           4    1.3%  平均终局 T23  北风未息
+
+== historical（300 局）好结局 0.0%（中兴 0.0%），靖康 91.3%，金兵南下 97%（平均 T19.5），胡马南牧终局 87.0、峰值 87.3，国库终局 1315.6
+   终局国势均值：treasury 1315.6，grain 2338.9，authority 31，morale 0.6，corruption 81.5，ningxing 77.1，dongnan 98.3，wubei 25.4，liao_zuo 0，jin_contempt 85.4，nanmu 87
+   e_jingkang     274   91.3%  平均终局 T23.4  靖康之耻
+   e_huahe         16    5.3%  平均终局 T27  划河而守
+   e_open           8    2.7%  平均终局 T23  北风未息
+   f_minbian        2    0.7%  平均终局 T22  群盗蜂起
+
+== wise（300 局）好结局 75.7%（中兴 75.7%），靖康 0.0%，金兵南下 0%（平均 TNone），胡马南牧终局 19.6、峰值 19.6，国库终局 289.9
+   终局国势均值：treasury 289.9，grain 2527.9，authority 65.5，morale 71.8，corruption 32.2，ningxing 10.2，dongnan 31.6，wubei 64.1，liao_zuo 0，jin_contempt 23.5，nanmu 19.6
+   e_baojing      227   75.7%  平均终局 T23  宣和中兴·保境安民
+   e_open          73   24.3%  平均终局 T23  北风未息
+
+== half_wise（300 局）好结局 6.7%（中兴 6.7%），靖康 0.3%，金兵南下 3%（平均 T22.6），胡马南牧终局 51.8、峰值 51.8，国库终局 453.2
+   终局国势均值：treasury 453.2，grain 2403，authority 58.3，morale 58.2，corruption 50.2，ningxing 32.7，dongnan 48.8，wubei 50.4，liao_zuo 0，jin_contempt 46.3，nanmu 51.8
+   e_open         271   90.3%  平均终局 T23  北风未息
+   e_baojing       20    6.7%  平均终局 T23  宣和中兴·保境安民
+   e_huahe          8    2.7%  平均终局 T27  划河而守
+   e_jingkang       1    0.3%  平均终局 T26  靖康之耻
+
+== first（300 局）好结局 0.0%（中兴 0.0%），靖康 0.0%，金兵南下 0%（平均 TNone），胡马南牧终局 46.0、峰值 46.0，国库终局 162.2
+   终局国势均值：treasury 162.2，grain 2275.8，authority 65，morale 66.2，corruption 62.2，ningxing 38.5，dongnan 59.2，wubei 49.6，liao_zuo 0，jin_contempt 45.1，nanmu 46
+   e_open         300  100.0%  平均终局 T23  北风未息
+
+== last（300 局）好结局 0.0%（中兴 0.0%），靖康 0.0%，金兵南下 0%（平均 TNone），胡马南牧终局 64.7、峰值 64.7，国库终局 99.0
+   终局国势均值：treasury 99，grain 2118.4，authority 67.4，morale 49.1，corruption 37.8，ningxing 39，dongnan 56.2，wubei 47.3，liao_zuo 0，jin_contempt 56.1，nanmu 64.7
+   e_open         300  100.0%  平均终局 T23  北风未息
+
+== random（300 局）好结局 1.3%（中兴 1.0%），靖康 0.3%，金兵南下 6%（平均 T22.4），胡马南牧终局 52.2、峰值 52.2，国库终局 737.7
+   终局国势均值：treasury 737.7，grain 2257.4，authority 55.5，morale 50.3，corruption 56，ningxing 47.6，dongnan 55.9，wubei 47.2，liao_zuo 12，jin_contempt 51，nanmu 52.2
+   e_open         237   79.0%  平均终局 T23  北风未息
+   f_dongnan       43   14.3%  平均终局 T11.9  东南板荡
+   e_neishan        5    1.7%  平均终局 T23.6  内禅东宫
+   e_chengxia       4    1.3%  平均终局 T27  城下之盟
+   e_nandu          4    1.3%  平均终局 T27  衣冠南渡
+   e_huahe          2    0.7%  平均终局 T27  划河而守
+   e_baojing        2    0.7%  平均终局 T23  宣和中兴·保境安民
+   e_jingkang       1    0.3%  平均终局 T26  靖康之耻
+   e_chunchi        1    0.3%  平均终局 T23  唇齿相依
+   e_yanyun         1    0.3%  平均终局 T23  宣和中兴·燕云在握
+
+== lianliao（300 局）好结局 52.0%（中兴 0.0%），靖康 0.0%，金兵南下 0%（平均 TNone），胡马南牧终局 43.2、峰值 43.2，国库终局 338.1
+   终局国势均值：treasury 338.1，grain 2030.5，authority 66.6，morale 71.8，corruption 30.8，ningxing 8.2，dongnan 30.7，wubei 63.1，liao_zuo 42.4，jin_contempt 43.5，nanmu 43.2
+   e_chunchi      156   52.0%  平均终局 T23  唇齿相依
+   e_open         144   48.0%  平均终局 T23  北风未息
+
+== appease（300 局）好结局 0.0%（中兴 0.0%），靖康 0.0%，金兵南下 95%（平均 T19.5），胡马南牧终局 92.8、峰值 92.8，国库终局 219.7
+   终局国势均值：treasury 219.7，grain 2426.9，authority 30.8，morale 4.3，corruption 80.2，ningxing 75.3，dongnan 84.8，wubei 22.5，liao_zuo 0，jin_contempt 92.7，nanmu 92.7
+   e_chengxia     285   95.0%  平均终局 T27  城下之盟
+   e_open          15    5.0%  平均终局 T23  北风未息
+
+== flee（300 局）好结局 0.0%（中兴 0.0%），靖康 0.0%，金兵南下 99%（平均 T19.0），胡马南牧终局 87.6、峰值 88.4，国库终局 1346.0
+   终局国势均值：treasury 1346，grain 2158.7，authority 31.8，morale 8，corruption 78.8，ningxing 75.6，dongnan 82，wubei 19.1，liao_zuo 0，jin_contempt 89.3，nanmu 87.6
+   e_nandu        296   98.7%  平均终局 T23.4  衣冠南渡
+   e_open           4    1.3%  平均终局 T23  北风未息
+
+== abdicate（300 局）好结局 0.0%（中兴 0.0%），靖康 0.0%，金兵南下 99%（平均 T19.0），胡马南牧终局 76.8、峰值 76.8，国库终局 1523.1
+   终局国势均值：treasury 1523.1，grain 2162.1，authority 46.5，morale 28，corruption 76.9，ningxing 73.9，dongnan 79.2，wubei 20.8，liao_zuo 0，jin_contempt 84.9，nanmu 76.8
+   e_neishan      296   98.7%  平均终局 T20.0  内禅东宫
+   e_open           4    1.3%  平均终局 T23  北风未息
+
+== favorites（300 局）好结局 0.0%（中兴 0.0%），靖康 89.0%，金兵南下 100%（平均 T18.1），胡马南牧终局 89.1、峰值 89.5，国库终局 1247.6
+   终局国势均值：treasury 1247.6，grain 1983.4，authority 31.5，morale 0.4，corruption 94.3，ningxing 85，dongnan 90.7，wubei 19.7，liao_zuo 0，jin_contempt 92.2，nanmu 89.1
+   e_jingkang     267   89.0%  平均终局 T22.1  靖康之耻
+   e_huahe         33   11.0%  平均终局 T27  划河而守
+
+== bankrupt（300 局）好结局 0.0%（中兴 0.0%），靖康 84.0%，金兵南下 94%（平均 T21.2），胡马南牧终局 82.5、峰值 83.7，国库终局 93.0
+   终局国势均值：treasury 93，grain 2411，authority 37.7，morale 21.9，corruption 80.7，ningxing 75.7，dongnan 74.1，wubei 41.3，liao_zuo 0，jin_contempt 75.2，nanmu 82.5
+   e_jingkang     252   84.0%  平均终局 T25.2  靖康之耻
+   e_huahe         29    9.7%  平均终局 T27  划河而守
+   e_open          19    6.3%  平均终局 T23  北风未息

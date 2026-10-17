@@ -647,6 +647,41 @@
   effects:
     - {op: move_army, army: changsheng, to_region: hebei_dong}
 
+# 伐燕诸军尚在燕京城下而燕京已为金有：引还河北东路（统帅在军者随行）。不引还则七万之众困于金境。
+- id: beifa_army_withdraws
+  title: 伐燕之师引还
+  kind: conditional
+  conditions:
+    all:
+      - {kind: region_controller, region: yanshan, faction: jin}
+      - {kind: army_region, army: beifa_army, region: yanshan}
+      - {kind: army_strength, army: beifa_army, operator: gt, value: 0}
+  gravity: 1.0
+  importance: 2
+  region: hebei_dong
+  text: 燕京既入金人之手，城下的伐燕诸军进退无据，奉诏引还，退屯河北东路。
+  effects:
+    - {op: move_army, army: beifa_army, to_region: hebei_dong}
+    - {op: adjust_resource, resource: authority, delta: -1, reason: 伐燕无功而还}
+  illustration: event.military_drill
+
+# 辽亡而岁币未改输于金：输辽岁币自罢。
+- id: liao_tribute_ends
+  title: 辽亡罢岁币
+  kind: conditional
+  conditions:
+    all:
+      - {kind: flag, key: liao_fallen, value: true}
+      - {kind: flag, key: suibi_liao_ended, operator: absent}
+  gravity: 1.0
+  importance: 1
+  region: bianjing
+  text: 辽既亡，澶渊以来岁输于辽的银绢自此罢输。
+  effects:
+    - {op: set_flag, key: suibi_liao_ended, value: true}
+    - {op: cancel_ledger, ledger_id: suibi_liao}
+  illustration: event.court_debate
+
 # ======================== 第四幕 宣和五年：赎燕与张觉 ========================
 # 奏疏 t12_shuyan「赎燕之议」未批：王黼照前议许之（史实宣和五年四月）。
 - id: shuyan_default
@@ -671,6 +706,7 @@
     - {op: adjust_army, army: jinjun, delta: -20000, reason: 抽禁军二万戍燕山}
     - {op: adjust_army, army: yanshan_army, delta: 20000, reason: 燕山设戍二万}
     - {op: cancel_ledger, ledger_id: suibi_liao}
+    - {op: set_flag, key: suibi_liao_ended, value: true}
     - {op: add_ledger, id: suibi_jin, name: 岁币（金）, category: treasury, amount: -12, kind: recurring, reason: 输辽旧额转输于金（游戏折算）, cancellable: false}
     - {op: add_ledger, id: daishui, name: 燕京代税钱, category: treasury, amount: -25, kind: recurring, reason: 岁输一百万缗（游戏折算）, cancellable: false}
     - {op: adjust_resource, resource: jin_contempt, delta: 4, reason: 宋以金帛买空城}
@@ -1724,6 +1760,7 @@
       - {kind: turn, operator: gte, value: 10}
       - {kind: flag, key: liao_fallen, operator: absent}
       - {kind: flag, key: jin_invaded, operator: absent}
+      - {not: {kind: flag_age, key: jin_soothed, operator: lt, value: 3}}   # 遣使释疑后三季不问罪
   gravity: 0.45
   importance: 2
   region: jin

@@ -1,0 +1,303 @@
+{
+ "difficulty": "yanyi",
+ "seeds": 300,
+ "results": {
+  "do_nothing": {
+   "policy": "do_nothing",
+   "games": 300,
+   "outcomes": {
+    "e_jingkang": {
+     "count": 253,
+     "share": 0.8433,
+     "title": "靖康之耻",
+     "mean_turn": 24.6
+    },
+    "e_huahe": {
+     "count": 28,
+     "share": 0.0933,
+     "title": "划河而守",
+     "mean_turn": 27
+    },
+    "e_open": {
+     "count": 19,
+     "share": 0.0633,
+     "title": "北风未息",
+     "mean_turn": 23
+    }
+   },
+   "good_share": 0.0,
+   "best_share": 0.0,
+   "jingkang_share": 0.8433,
+   "invaded_share": 0.9367,
+   "invaded_mean_turn": 20.6,
+   "crisis_mean": 83.8,
+   "peak_mean": 85.0,
+   "treasury_mean": 1670.8,
+   "resources_mean": {
+    "treasury": 1670.8,
+    "grain": 2176.0,
+    "authority": 37.5,
+    "morale": 12.4,
+    "corruption": 79.0,
+    "ningxing": 73.6,
+    "dongnan": 82.8,
+    "wubei": 18.7,
+    "liao_zuo": 0.0,
+    "jin_contempt": 85.6,
+    "nanmu": 83.8
+   }
+  },
+  "historical": {
+   "policy": "historical",
+   "games": 300,
+   "outcomes": {
+    "e_jingkang": {
+     "count": 200,
+     "share": 0.6667,
+     "title": "靖康之耻",
+     "mean_turn": 24.3
+    },
+    "e_open": {
+     "count": 77,
+     "share": 0.2567,
+     "title": "北风未息",
+     "mean_turn": 23
+    },
+    "f_minbian": {
+     "count": 20,
+     "share": 0.0667,
+     "title": "群盗蜂起",
+     "mean_turn": 20.7
+    },
+    "e_huahe": {
+     "count": 3,
+     "share": 0.01,
+     "title": "划河而守",
+     "mean_turn": 27
+    }
+   },
+   "good_share": 0.0,
+   "best_share": 0.0,
+   "jingkang_share": 0.6667,
+   "invaded_share": 0.6767,
+   "invaded_mean_turn": 20.3,
+   "crisis_mean": 79.4,
+   "peak_mean": 79.4,
+   "treasury_mean": 1700.0,
+   "resources_mean": {
+    "treasury": 1700.0,
+    "grain": 2335.2,
+    "authority": 34.2,
+    "morale": 4.4,
+    "corruption": 81.5,
+    "ningxing": 77.3,
+    "dongnan": 98.6,
+    "wubei": 26.0,
+    "liao_zuo": 0.0,
+    "jin_contempt": 81.1,
+    "nanmu": 79.4
+   }
+  },
+  "wise": {
+   "policy": "wise",
+   "games": 300,
+   "outcomes": {
+    "e_baojing": {
+     "count": 300,
+     "share": 1.0,
+     "title": "宣和中兴·保境安民",
+     "mean_turn": 23
+    }
+   },
+   "good_share": 1.0,
+   "best_share": 1.0,
+   "jingkang_share": 0.0,
+   "invaded_share": 0.0,
+   "invaded_mean_turn": null,
+   "crisis_mean": 18.9,
+   "peak_mean": 18.9,
+   "treasury_mean": 689.2,
+   "resources_mean": {
+    "treasury": 689.2,
+    "grain": 2527.6,
+    "authority": 65.5,
+    "morale": 71.8,
+    "corruption": 32.2,
+    "ningxing": 10.2,
+    "dongnan": 31.6,
+    "wubei": 64.1,
+    "liao_zuo": 0.0,
+    "jin_contempt": 23.8,
+    "nanmu": 18.9
+   }
+  },
+  "half_wise": {
+   "policy": "half_wise",
+   "games": 300,
+   "outcomes": {
+    "e_open": {
+     "count": 274,
+     "share": 0.9133,
+     "title": "北风未息",
+     "mean_turn": 23
+    },
+    "e_baojing": {
+     "count": 26,
+     "share": 0.0867,
+     "title": "宣和中兴·保境安民",
+     "mean_turn": 23
+    }
+   },
+   "good_share": 0.0867,
+   "best_share": 0.0867,
+   "jingkang_share": 0.0,
+   "invaded_share": 0.0,
+   "invaded_mean_turn": null,
+   "crisis_mean": 46.2,
+   "peak_mean": 46.2,
+   "treasury_mean": 841.0,
+   "resources_mean": {
+    "treasury": 841.0,
+    "grain": 2401.7,
+    "authority": 58.6,
+    "morale": 58.3,
+    "corruption": 50.4,
+    "ningxing": 32.4,
+    "dongnan": 49.6,
+    "wubei": 50.4,
+    "liao_zuo": 0.0,
+    "jin_contempt": 45.0,
+    "nanmu": 46.2
+   }
+  },
+  "first": {
+   "policy": "first",
+   "games": 300,
+   "outcomes": {
+    "e_open": {
+     "count": 300,
+     "share": 1.0,
+     "title": "北风未息",
+     "mean_turn": 23
+    }
+   },
+   "good_share": 0.0,
+   "best_share": 0.0,
+   "jingkang_share": 0.0,
+   "invaded_share": 0.0,
+   "invaded_mean_turn": null,
+   "crisis_mean": 40.0,
+   "peak_mean": 40.0,
+   "treasury_mean": 519.3,
+   "resources_mean": {
+    "treasury": 519.3,
+    "grain": 2274.4,
+    "authority": 67.0,
+    "morale": 66.3,
+    "corruption": 62.2,
+    "ningxing": 38.4,
+    "dongnan": 59.2,
+    "wubei": 49.6,
+    "liao_zuo": 0.0,
+    "jin_contempt": 41.8,
+    "nanmu": 40.0
+   }
+  },
+  "last": {
+   "policy": "last",
+   "games": 300,
+   "outcomes": {
+    "e_open": {
+     "count": 300,
+     "share": 1.0,
+     "title": "北风未息",
+     "mean_turn": 23
+    }
+   },
+   "good_share": 0.0,
+   "best_share": 0.0,
+   "jingkang_share": 0.0,
+   "invaded_share": 0.0,
+   "invaded_mean_turn": null,
+   "crisis_mean": 58.4,
+   "peak_mean": 58.4,
+   "treasury_mean": 162.0,
+   "resources_mean": {
+    "treasury": 162.0,
+    "grain": 2119.2,
+    "authority": 67.4,
+    "morale": 48.4,
+    "corruption": 37.8,
+    "ningxing": 39.8,
+    "dongnan": 56.3,
+    "wubei": 46.6,
+    "liao_zuo": 0.0,
+    "jin_contempt": 53.0,
+    "nanmu": 58.4
+   }
+  },
+  "random": {
+   "policy": "random",
+   "games": 300,
+   "outcomes": {
+    "e_open": {
+     "count": 253,
+     "share": 0.8433,
+     "title": "北风未息",
+     "mean_turn": 23
+    },
+    "f_dongnan": {
+     "count": 38,
+     "share": 0.1267,
+     "title": "东南板荡",
+     "mean_turn": 10.7
+    },
+    "e_baojing": {
+     "count": 6,
+     "share": 0.02,
+     "title": "宣和中兴·保境安民",
+     "mean_turn": 23
+    },
+    "e_huahe": {
+     "count": 1,
+     "share": 0.0033,
+     "title": "划河而守",
+     "mean_turn": 27
+    },
+    "e_neishan": {
+     "count": 1,
+     "share": 0.0033,
+     "title": "内禅东宫",
+     "mean_turn": 24
+    },
+    "e_chunchi": {
+     "count": 1,
+     "share": 0.0033,
+     "title": "唇齿相依",
+     "mean_turn": 23
+    }
+   },
+   "good_share": 0.0233,
+   "best_share": 0.02,
+   "jingkang_share": 0.0,
+   "invaded_share": 0.0067,
+   "invaded_mean_turn": 22.5,
+   "crisis_mean": 46.3,
+   "peak_mean": 46.3,
+   "treasury_mean": 1123.0,
+   "resources_mean": {
+    "treasury": 1123.0,
+    "grain": 2256.0,
+    "authority": 56.3,
+    "morale": 51.0,
+    "corruption": 56.3,
+    "ningxing": 47.8,
+    "dongnan": 56.1,
+    "wubei": 46.9,
+    "liao_zuo": 11.9,
+    "jin_contempt": 48.6,
+    "nanmu": 46.3
+   }
+  }
+ }
+}

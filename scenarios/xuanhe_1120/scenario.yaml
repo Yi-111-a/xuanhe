@@ -107,7 +107,7 @@ ledger:
   - {id: jingshi_lumi, name: 京师禄米, category: grain, amount: -45, reason: 百官禄米（诸军口粮另按兵额计入「诸军粮料」）（游戏折算）}
 
 # 危机计：terms 与 drift.nanmu 的六个分项一一对应（各项之和 = 每季漂移）。
-# 压力项只计超出部分并封顶（金人轻宋 20 封顶），示好不能把危机「存」成负数；「朝野戒备」在 75 以上抑制增势。
+# 压力项只计超出部分并封顶（金人轻宋 20 封顶），示好不能把危机「存」成负数；「势极自缓」在 75 以上抑制增势（非玩家可操作之项）。
 crisis:
   resource: nanmu
   title: 胡马南牧
@@ -122,7 +122,7 @@ crisis:
     - {id: wubei, label: 武备, expr: "-0.04*(wubei-40)"}
     - {id: ningxing, label: 佞幸误国, expr: "0.025*max(0, ningxing-50)"}
     - {id: authority, label: 君威, expr: "-0.02*(authority-55)"}
-    - {id: watch, label: 朝野戒备, expr: "-0.2*max(0, nanmu-75)"}
+    - {id: watch, label: 势极自缓（75 以上）, expr: "-0.2*max(0, nanmu-75)"}
 
 difficulties:
   - id: yanyi

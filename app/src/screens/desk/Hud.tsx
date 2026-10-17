@@ -20,7 +20,7 @@ const DRIFT_NOTES: Record<string, string> = {
   wubei: '禁军阙额、河北边防、器甲。不修则逐季废弛；武备愈高，金人愈不敢轻宋。',
   liao_zuo: '辽的残余国力，宋之北方屏障。辽祚尚在，金人西顾，南侵之势折减；辽亡则宋与金直接为邻。',
   jin_contempt: '金人对宋的轻视：伐燕不克、赎燕、纳叛而又杀之、失信、武备废弛都会推高它。只知风闻区间。',
-  nanmu: '由金势日张、金人轻宋、武备、佞幸误国、君威、朝野戒备六项合成。',
+  nanmu: '由金势日张、金人轻宋、武备、佞幸误国、君威五项推动；到 75 以上增势自缓。',
 };
 
 export function ResourceBar({ view, deltas }: { view: ViewResponse; deltas: Record<string, number> }) {
