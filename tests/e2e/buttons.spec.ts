@@ -198,6 +198,12 @@ test('flows: adopt → edict chip → remove; preview → promulgate → advance
   await expect(page.locator('[data-testid^="result.clause."]').first()).toBeVisible();
   await page.getByTestId('result.next').click();
   await expect(page.getByTestId('result.root')).toHaveCount(0);
+  // the new season may open an event choice over the desk: defer it (the choice flow itself is tested below)
+  const choice = page.getByTestId('choice.root');
+  if (await choice.waitFor({ state: 'visible', timeout: 2_000 }).then(() => true, () => false)) {
+    await page.getByTestId('choice.defer').click();
+    await expect(choice).toHaveCount(0);
+  }
   // unconfirmed draft → advance asks first
   await page.getByTestId('desk.edictScroll').click();
   await openBrush(page);
