@@ -1385,7 +1385,7 @@
     all:
       - {kind: region_controller, region: hebei_dong, faction: song}
       - {kind: season, value: [夏, 秋]}
-      - {not: {kind: flag_age, key: hefang_repaired, operator: lt, value: 8}}   # 大修堤埽后八季不决
+      - {not: {kind: flag_age, key: hefang_repaired, operator: lt, value: 9}}   # 大修堤埽竣工后八季之内（含第八季结算）不决
   gravity: 0.2
   importance: 1
   region: hebei_dong
@@ -1760,7 +1760,7 @@
       - {kind: turn, operator: gte, value: 10}
       - {kind: flag, key: liao_fallen, operator: absent}
       - {kind: flag, key: jin_invaded, operator: absent}
-      - {not: {kind: flag_age, key: jin_soothed, operator: lt, value: 3}}   # 遣使释疑后三季不问罪
+      - {not: {kind: flag_age, key: jin_soothed, operator: lt, value: 4}}   # 遣使释疑后三季（含本季）结算不问罪：事件按进入之季计龄，故写 4
   gravity: 0.45
   importance: 2
   region: jin
@@ -2429,6 +2429,7 @@
   conditions:
     all:
       - {kind: resource, id: ningxing, operator: gte, value: 60}
+      - {not: {kind: flag, key: "memorial:t3_suiji", value: thrift}}   # 已省宫廷用度，不再曲宴赐予无算
       - {kind: flag, key: jin_invaded, operator: absent}
   gravity: 0.12
   importance: 1

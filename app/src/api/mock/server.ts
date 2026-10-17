@@ -1281,7 +1281,7 @@ const routes: [string, RegExp, Handler][] = [
       trackUsage('narrator', sess.state.turn, 1200, 300);
       pushEntry(sess, 'turn', `推演：${calendarLabel(sess.state.turn)}`);
       saveStore();
-      return json({ state: publicView(sess), report, memorial, outcome: sess.state.outcome ?? null, replies: sess.replies ?? [], written_opinions: sess.advice.filter((a) => a.source === '书面议状' && a.turn === sess.state.turn) });
+      return json({ state: publicView(sess), report, memorial, outcome: sess.state.outcome ?? null, settled_label: calendarLabel(sess.state.turn - 1), replies: sess.replies ?? [], written_opinions: sess.advice.filter((a) => a.source === '书面议状' && a.turn === sess.state.turn) });
     },
   ],
   [

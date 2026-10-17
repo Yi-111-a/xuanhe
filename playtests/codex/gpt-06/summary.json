@@ -1,0 +1,7 @@
+{
+  "agent": "codex",
+  "run": "gpt-06",
+  "exit": 0,
+  "seconds": 455,
+  "report": true
+}

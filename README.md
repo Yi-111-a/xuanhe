@@ -17,7 +17,9 @@
 </p>
 
 <p align="center">
-  <!--DOWNLOAD-->
+  <a href="https://github.com/Yi-111-a/xuanhe/releases/latest"><b>⬇ 下载 Windows 桌面版</b></a>
+  ·
+  <a href="#怎么玩">怎么玩</a>
 </p>
 
 ---
@@ -60,7 +62,12 @@
 
 ### 桌面版（Windows，推荐）
 
-<!--INSTALL-->
+1. 到 [Releases](https://github.com/Yi-111-a/xuanhe/releases/latest) 下载 `Xuanhe_0.1.0_x64-setup.exe`（约 64 MB）。发布页列有 SHA-256，可在 PowerShell 里核对：`Get-FileHash .\Xuanhe_0.1.0_x64-setup.exe -Algorithm SHA256`。
+2. 双击安装（装到当前用户目录，不需要管理员权限）。安装包没有代码签名，Windows SmartScreen 可能提示「Windows 已保护你的电脑」：点「更多信息」→「仍要运行」。
+3. 从开始菜单打开「宣和」，选难度开局。引擎随应用启动，不需要另装 Python。
+4. 想让真实的大模型扮演大臣：「设置 → 模型」选「Claude（本机）」或「Codex（本机）」（需要本机已安装并登录对应的命令行），或填任意 OpenAI 兼容服务。什么都不选也能完整玩到结局。
+
+存档与日志在 `%APPDATA%\xuanhe`，卸载时不会删除。
 
 ### 在 Codex / Claude Code 里玩
 
@@ -89,7 +96,7 @@ npm --prefix app ci && npm --prefix app run dev               # 另一个终端�
 
 ## 它是怎么做的
 
-- 引擎：[llm-sim-game-template](https://github.com/Yi-111-a/llm-sim-game-template)（`engine/` 子模块）。剧本是纯数据包 [`scenarios/xuanhe_1120/`](scenarios/xuanhe_1120)：31 位人物、21 个地区、154 个事件、181 道奏疏、29 张政令卡、14 种结局、三档难度。
+- 引擎：[llm-sim-game-template](https://github.com/Yi-111-a/llm-sim-game-template)（`engine/` 子模块）。剧本是纯数据包 [`scenarios/xuanhe_1120/`](scenarios/xuanhe_1120)：31 位人物、21 个地区、154 个事件、182 道奏疏、29 张政令卡、14 种结局、三档难度。
 - 设计与史实：[设计大纲](docs/XUANHE_OUTLINE.md)、[史实核对](docs/FACT_CHECK.md)（逐卷核对《宋史》《金史》《辽史》《宋史纪事本末》）、[迭代日志](docs/ITERATION_LOG.md)。
 - 美术：全部由 Codex 按北宋院体工笔与青绿山水的风格块生成，逐张人工验收（[验收记录](design/asset_prompts/QA.md)），图中不含任何文字。
 - 测试：引擎单元测试、两套内容检查（模板通用 + 本剧本 14 项）、每档难度 300 种子的平衡模拟（史实档稳健打法约四分之三得好结局、放任约九成靖康）、Playwright 界面测试（每个按钮、从开局打到结局），以及 GPT（Codex）、Claude 与开发者本人经 MCP 的整局试玩。

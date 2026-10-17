@@ -357,7 +357,7 @@
         - {op: adjust_resource, resource: liao_zuo, delta: 6, reason: 宋粮助辽}
         - {op: set_flag, key: liao_aided, value: true}
         - {op: adjust_resource, resource: jin_contempt, delta: 2, reason: 金人怨宋助辽}
-      hint: 粮储 −100，辽祚 +6，金人轻宋（风闻）↑；自此为联辽之局（燕京不由盟约而得）；金人或以宋为辽之党，移兵问罪（胡马南牧 ↑、辽祚 ↓，可遣使释疑）
+      hint: 粮储 −100，辽祚 +6，金人轻宋（风闻）↑；自此为联辽之局（燕京不由盟约而得）；此后金人或以宋为辽之党，屡屡移兵问罪（凡输粮助辽即记在金人账上，赐帛犒军不算；胡马南牧 ↑、辽祚 ↓，可遣使释疑暂止）
 
 - id: t1_zhexi
   turn: 1
@@ -1011,7 +1011,7 @@
         - {op: adjust_resource, resource: liao_zuo, delta: 8, reason: 宋助辽粮帛}
         - {op: set_flag, key: liao_aided, value: true}
         - {op: adjust_resource, resource: jin_contempt, delta: 2, reason: 金人怨宋助辽}
-      hint: 粮储 −120，国库 −60，辽祚 +8，金人轻宋（风闻）↑；联辽之局；金人或以宋为辽之党，移兵问罪（胡马南牧 ↑、辽祚 ↓，可遣使释疑）
+      hint: 粮储 −120，国库 −60，辽祚 +8，金人轻宋（风闻）↑；联辽之局；此后金人或以宋为辽之党，屡屡移兵问罪（凡输粮助辽即记在金人账上，赐帛犒军不算；胡马南牧 ↑、辽祚 ↓，可遣使释疑暂止）
 
 # ============================== T5 宣和三年夏 ==============================
 - id: t5_yingfeng
@@ -1977,7 +1977,7 @@
 - id: t8_liao_envoy_zhong
   turn: 8
   title: 辽主遣使
-  summary: 金兵攻辽中京未下，退屯北境。辽主遣使，言中京幸而得全，然女真来岁必复至，请再以粮帛助守，愿世为兄弟之国。
+  summary: 金兵攻辽中京未下，退屯北境。辽主遣使，言中京幸而得全，然女真来岁必复至，乞南朝以粮帛助守，愿世为兄弟之国。
   region: bianjing
   illustration: event.liao_envoy
   variant_of: t8_liao_envoy
@@ -1990,8 +1990,8 @@
   keywords: [辽使, 联辽, 存辽, 唇齿]
   advisors:
     - {character: zhong_shidao, stance: support, option: grain, requires: {region: xibian}, line: （自泾原驰表）中京之守，宋粮之力也。一年之费，换女真一年不得南顾，值得。}
-    - {character: li_gang, stance: support, option: grain, requires: {region: bianjing}, line: 唇齿之势已成，不可中辍。中辍则前功尽弃。}
-    - {character: wang_fu, stance: oppose, option: decline, requires: {office: [shaozai, taizai]}, line: 输了一次又一次，契丹何时是个头？东南之米，岂是给契丹人种的？}
+    - {character: li_gang, stance: support, option: grain, requires: {region: bianjing}, line: 中京未下，女真尚有所忌。此时助辽一臂，可保河北数年无事。}
+    - {character: wang_fu, stance: oppose, option: decline, requires: {office: [shaozai, taizai]}, line: 契丹自家守不住，倒要南朝的米去填？东南之米，岂是给契丹人种的？}
   options:
     - id: gifts
       label: 厚赐其使，婉辞粮帛
@@ -2000,13 +2000,15 @@
         - {op: adjust_resource, resource: liao_zuo, delta: 2, reason: 邻好不绝}
       hint: 国库 −30，辽祚 +2
     - id: grain
-      label: 再输粮百万石，结兄弟之好
+      label: 输粮百万石，结兄弟之好
       ops:
+        - {op: adjust_relation, a: song, b: liao, delta: 3}
         - {op: set_flag, key: lian_liao, value: true}
         - {op: adjust_resource, resource: grain, delta: -100, reason: 输粮助辽}
         - {op: adjust_resource, resource: liao_zuo, delta: 6, reason: 宋粮助辽}
+        - {op: set_flag, key: liao_aided, value: true}
         - {op: adjust_resource, resource: jin_contempt, delta: 2, reason: 金人怨宋助辽}
-      hint: 粮储 −100，辽祚 +6，金人轻宋（风闻）↑；联辽之局
+      hint: 粮储 −100，辽祚 +6，金人轻宋（风闻）↑；联辽之局；此后金人或以宋为辽之党，屡屡移兵问罪（凡输粮助辽即记在金人账上，赐帛犒军不算；胡马南牧 ↑、辽祚 ↓，可遣使释疑暂止）
     - id: decline
       label: 以礼遣还
       ops:
@@ -4290,7 +4292,7 @@
         - {op: adjust_resource, resource: liao_zuo, delta: 6, reason: 宋助辽粮帛}
         - {op: set_flag, key: liao_aided, value: true}
         - {op: adjust_resource, resource: jin_contempt, delta: 2, reason: 金人怨宋助辽}
-      hint: 粮储 −80，国库 −40，辽祚 +6，金人轻宋（风闻）↑；金人或以宋为辽之党，移兵问罪（胡马南牧 ↑、辽祚 ↓，可遣使释疑）
+      hint: 粮储 −80，国库 −40，辽祚 +6，金人轻宋（风闻）↑；此后金人或以宋为辽之党，屡屡移兵问罪（凡输粮助辽即记在金人账上，赐帛犒军不算；胡马南牧 ↑、辽祚 ↓，可遣使释疑暂止）
 
 # ============================== 宣和七年（T20–T23）：辽亡与胡马南牧 ==============================
 - id: t_liao_wang
@@ -4870,6 +4872,8 @@
       - {kind: character_status, character: chen_dong, value: alive}
       - {kind: character_region, character: chen_dong, region: bianjing}
       - {kind: office_holder, office: yubi, character: liang_shicheng}
+      - {not: {kind: flag, key: "memorial:t2_yubi", value: curb}}
+      - {not: {kind: flag, key: "memorial:t_chendong_liang_fs", operator: exists}}
       - any:
           - {kind: flag_age, key: "memorial:t_chendong_wangfu", operator: gte, value: 1}
           - all:
@@ -4890,6 +4894,67 @@
   keywords: [陈东, 六贼, 梁师成, 御笔]
   advisors:
     - {character: chen_dong, stance: support, option: punish, line: 学生斗胆！御笔者，天子之言也，而出于一宦者之手，天下安知诏敕之真伪？}
+    - {character: liang_shicheng, stance: oppose, option: keep, requires: {office: yubi}, line: 官家，奴婢替官家写字罢了，哪敢做什么主？书生的话，官家听听便罢。}
+    - {character: zhao_huan, stance: neutral, option: dismiss, requires: {office: crown_prince}, line: 此等大事，儿臣不敢专。只是……御笔之事，儿臣以为当归于陛下亲裁。}
+  options:
+    - id: punish
+      label: 罢梁师成，窜之远方
+      ops:
+        - {op: set_flag, key: liang_dismissed, value: true}
+        - {op: set_character_status, character: liang_shicheng, status: exiled, cause: 为太学生所论，窜逐远方}
+        - {op: adjust_resource, resource: ningxing, delta: -6, reason: 窜梁师成}
+        - {op: adjust_resource, resource: authority, delta: 2, reason: 御笔归于上}
+      hint: 梁师成窜逐，御笔之职空出；佞幸 −6，君威 +2
+    - id: dismiss
+      label: 罢梁师成御笔之职，令其闲住
+      ops:
+        - {op: set_flag, key: liang_dismissed, value: true}
+        - {op: set_character_status, character: liang_shicheng, status: retired, cause: 为太学生所论，罢御笔闲住}
+        - {op: adjust_resource, resource: ningxing, delta: -4, reason: 罢梁师成}
+        - {op: adjust_resource, resource: authority, delta: 1, reason: 御笔归于上}
+      hint: 梁师成罢归，御笔之职空出；佞幸 −4，君威 +1
+    - id: keep
+      immediate: true
+      label: 书入不报
+      ops:
+        - {op: adjust_resource, resource: authority, delta: -1, reason: 拒谏}
+        - {op: adjust_resource, resource: morale, delta: -1, reason: 太学之议沸腾}
+      hint: 君威 −1，民心 −1
+
+- id: t_chendong_liang_fs
+  title: 陈东论梁师成
+  summary: 陈东四上书，论梁师成：御笔虽已令三省覆奏，梁师成仍以宦者传宣，三省畏其势，十驳不得一；都人目为「隐相」，交通外廷，招权纳贿。请逐之。
+  region: bianjing
+  variant_of: t_chendong_liang
+  illustration: event.chen_dong
+  conditions:
+    all:
+      - {kind: turn, operator: gte, value: 20}
+      - {kind: character_status, character: chen_dong, value: alive}
+      - {kind: character_region, character: chen_dong, region: bianjing}
+      - {kind: office_holder, office: yubi, character: liang_shicheng}
+      - {kind: flag, key: "memorial:t2_yubi", value: curb}
+      - {not: {kind: flag, key: "memorial:t_chendong_liang", operator: exists}}
+      - any:
+          - {kind: flag_age, key: "memorial:t_chendong_wangfu", operator: gte, value: 1}
+          - all:
+              - {not: {kind: office_holder, office: taizai, character: wang_fu}}
+              - {not: {kind: office_holder, office: shaozai, character: wang_fu}}
+              - {kind: flag, key: "memorial:t_chendong_wangfu", operator: absent}
+      - any:
+          - {kind: flag_age, key: "memorial:t_chendong_cai", operator: gte, value: 1}
+          - all:
+              - {not: {kind: office_holder, office: taishi, character: cai_jing}}
+              - {kind: flag, key: "memorial:t_chendong_cai", operator: absent}
+      - any:
+          - {kind: flag_age, key: "memorial:t_chendong_tong", operator: gte, value: 1}
+          - all:
+              - {not: {kind: office_holder, office: shumi, character: tong_guan}}
+              - {kind: flag, key: "memorial:t_chendong_tong", operator: absent}
+  proposal: punish
+  keywords: [陈东, 六贼, 梁师成, 御笔]
+  advisors:
+    - {character: chen_dong, stance: support, option: punish, line: 学生斗胆！覆奏之令虽下，覆奏者不敢驳，御笔依旧出于一宦者之手。令行而人不改，与无令何异？}
     - {character: liang_shicheng, stance: oppose, option: keep, requires: {office: yubi}, line: 官家，奴婢替官家写字罢了，哪敢做什么主？书生的话，官家听听便罢。}
     - {character: zhao_huan, stance: neutral, option: dismiss, requires: {office: crown_prince}, line: 此等大事，儿臣不敢专。只是……御笔之事，儿臣以为当归于陛下亲裁。}
   options:
@@ -6362,6 +6427,7 @@
   title: 京东蝗旱
   cooldown: 4
   summary: 京东转运司奏：齐、郓诸州旱，飞蝗蔽野，秋稼多损，民有菜色。请发常平仓赈济，或请蠲本年租赋。
+  repeat_summary: 京东转运司又奏：今岁齐、郓复旱，蝗子遗种未尽，去岁之灾方苏而新灾又至，流移渐多。请再议赈济、蠲租之策。
   region: jingdong
   illustration: event.famine
   conditions:
@@ -6399,6 +6465,7 @@
   title: 淮南水潦
   cooldown: 4
   summary: 淮南转运司奏：江淮霖雨，圩田多坏，楚、泗诸州漂没民居。请发粟赈恤，或请发丁修复圩岸。
+  repeat_summary: 淮南转运司又奏：霖雨复作，前修圩岸有新决者，低田再没。请再发粟赈恤，或续修圩岸。
   region: huainan
   illustration: event.flood
   conditions:
@@ -6441,6 +6508,7 @@
   title: 河防
   cooldown: 5
   summary: 都水监奏：黄河北流，堤埽多朽，澶、滑之间屡告险工。请发丁夫修筑堤埽，以免河决之患。
+  repeat_summary: 都水监又奏：前修堤埽年久复朽，澶、滑之间又告险工。请续修堤埽，或先补险工。
   region: hebei_dong
   illustration: event.flood
   conditions:
@@ -6483,6 +6551,7 @@
   title: 汴河漕运
   cooldown: 4
   summary: 发运司奏：汴河淤浅，纲船阻滞，东南上供之米到京迟误；纲兵、篙工逃亡者众。请疏浚汴河，或增发纲船。
+  repeat_summary: 发运司又奏：汴河复淤，纲船又滞，前番整饬渐弛，纲兵逃亡复多。请再议疏浚、增船之策。
   region: huainan
   illustration: event.qingming
   conditions:
@@ -6525,6 +6594,7 @@
   title: 河北和籴
   cooldown: 4
   summary: 河北都转运司奏：沿边诸州边储不足一岁之用，请出钱和籴，以实边储；或言和籴之弊，州县抑配于民，不如折纳现钱。
+  repeat_summary: 河北都转运司又奏：前籴边储，岁支已半，沿边又告不足。请再出钱和籴，或折纳现钱。
   region: hebei_xi
   illustration: event.tangluo
   conditions:
@@ -6565,6 +6635,7 @@
   title: 考课守令
   cooldown: 4
   summary: 吏部奏：诸路守令考课之法久废，以货得官者众，催科之外无治绩可言。请遣使按察诸路，或严考课以黜庸吏。
+  repeat_summary: 吏部又奏：前番考课之后，诸路守令新旧更替，庸吏复有夤缘得官者。请再议按察、考课之法。
   region: bianjing
   illustration: event.court_debate
   conditions: {kind: turn, operator: gte, value: 4}
@@ -6599,6 +6670,7 @@
   title: 太学议政
   cooldown: 5
   summary: 太学诸生聚议时政，书生上书者日众，言应奉、边事、宰执之失，辞多激切。或请许其上书、下诏求直言，或请禁太学妄议。
+  repeat_summary: 太学诸生又聚议时政，前事未息，新论又起，上书者复众。请再定许其上书或禁其妄议。
   region: bianjing
   illustration: event.chen_dong
   conditions:
@@ -6637,6 +6709,7 @@
   title: 宫观斋醮
   cooldown: 5
   summary: 道录院奏：天下神霄玉清万寿宫岁费不赀，又请于上清宝箓宫设大斋醮，度道士、赐田产。言者谓宫观之费，夺民之食。
+  repeat_summary: 道录院又奏：宫观岁费复增，又请设斋醮、度道士。言者复谓宫观之费，夺民之食。
   region: bianjing
   illustration: event.daoist_rite
   conditions:
@@ -6677,6 +6750,7 @@
   title: 艮岳修葺
   cooldown: 5
   summary: 提举万岁山所奏：艮岳峰石多有欹侧，园中珍禽异木须时时补给，又请于东南续取奇石以增胜景。
+  repeat_summary: 提举万岁山所又奏：艮岳峰石又有欹侧，园中花木禽鸟须续补给，复请于东南续取奇石。
   region: bianjing
   illustration: event.genyue
   conditions:
@@ -6716,6 +6790,7 @@
   title: 宗室禄廪
   cooldown: 6
   summary: 大宗正司奏：宗室日繁，禄廪、婚嫁、恩赏之费岁增，而疏属多贫不能自存。请或裁冗赐，或置宗学教养。
+  repeat_summary: 大宗正司又奏：宗室生齿复繁，前定之制渐不敷用，疏属贫乏者又众。请再议裁赐、宗学之事。
   region: bianjing
   illustration: event.court_debate
   conditions:
@@ -6753,6 +6828,7 @@
   title: 川峡钱引
   cooldown: 5
   summary: 成都府路转运司奏到：钱引印造日多，而本钱不足，引价日贱，蜀中物价腾踊。或请增印钱引以济边费，或请收缩钱引、以本钱称提。
+  repeat_summary: 成都府路转运司又奏到：钱引印造复多，引价又贱，前番之策效验渐消。请再议增印或称提。
   region: chuanxia
   illustration: event.court_debate
   proposal: tighten
@@ -6786,6 +6862,7 @@
   title: 闽广市舶
   cooldown: 5
   summary: 泉州、广州市舶司奏到：蕃舶岁至，抽解之物山积。或请增抽解之数以佐国用，或请宽舶商之征以广招徕。
+  repeat_summary: 泉州、广州市舶司又奏到：蕃舶今岁复至，抽解之物又积。请再定抽解之数。
   region: minguang
   illustration: event.qingming
   proposal: lenient
@@ -6816,6 +6893,7 @@
   title: 高丽使至
   cooldown: 6
   summary: 高丽遣使入贡，自明州登岸至京。礼部请定接伴之礼；或言高丽与女真接壤，可询其虚实。
+  repeat_summary: 高丽复遣使入贡，自明州登岸至京。礼部请定接伴之礼；或言可再询女真虚实。
   region: bianjing
   illustration: event.goryeo_envoy
   conditions:
@@ -6853,6 +6931,7 @@
   title: 夏人扰边
   cooldown: 5
   summary: 泾原、环庆诸路奏：夏人小队时出扰边，焚掠熟户，弓箭手多逃亡。请增修堡寨、补弓箭手，或遣使责问夏国。
+  repeat_summary: 泾原、环庆诸路又奏：夏人小队复出扰边，前补堡寨、弓箭手又有缺额。请再议备御之策。
   region: xibian
   illustration: event.xixia
   conditions: {kind: turn, operator: gte, value: 6}
@@ -6886,6 +6965,7 @@
   title: 军器监
   cooldown: 5
   summary: 军器监奏：库中甲胄多朽，弓弩筋胶不堪用，而诸路所进器甲多以次充好。请拨款修造，或先汰朽器、严核诸路所进。
+  repeat_summary: 军器监又奏：前番修造之后，库中器甲又多朽坏，诸路所进复有以次充好者。请再议修造、核验之法。
   region: bianjing
   illustration: event.jinjun_review
   conditions: {kind: turn, operator: gte, value: 6}
@@ -6916,6 +6996,7 @@
   title: 河北保甲
   cooldown: 5
   summary: 河北诸路保甲、弓手久不教阅，名存实亡。边臣请复教阅保甲，或募弓箭手屯边，以补禁军之不足。
+  repeat_summary: 河北诸路又奏：保甲、弓手教阅渐弛，前番整顿之后又多虚额。请再议教阅或募兵屯边。
   region: hebei_xi
   illustration: event.military_drill
   conditions:
@@ -6951,6 +7032,7 @@
   title: 殿前司教阅
   cooldown: 5
   summary: 殿前司诸班直久不教阅，营中老弱充数，将校役使兵士为之营作。言者请拨款教阅，或汰老弱以实其额。
+  repeat_summary: 殿前司又奏：前番整顿之后，诸班直日久又弛，老弱复有充数者，将校役使兵士之弊未绝。请再议教阅、汰兵之法。
   region: bianjing
   illustration: event.jinjun_review
   conditions:
@@ -6991,6 +7073,7 @@
   title: 流民入京
   cooldown: 4
   summary: 诸路饥民流入京畿，聚于城外，日有冻馁死者；开封府请处置：或设居养院收养，或遣还本贯。
+  repeat_summary: 开封府又奏：饥民复有流入京畿者，城外又聚，冻馁不绝。请再议居养或遣还。
   region: bianjing
   illustration: event.famine
   conditions:
@@ -7030,6 +7113,7 @@
   title: 遣使释疑
   cooldown: 4
   summary: 宋以粮帛助辽，金人屡移文诘责，扬言将问资敌之罪。枢密院请遣使赴金，申说澶渊以来与辽通好之故，许以互市，释其疑忌；或请不必理会。
+  repeat_summary: 金人又移文诘责宋以粮帛助辽，前番释疑之效已过。枢密院请再遣使赴金，或仍不必理会。
   region: bianjing
   illustration: event.jin_envoy
   conditions:
@@ -7055,7 +7139,7 @@
       label: 不必理会
       immediate: true
       ops:
-        - {op: remember, character: ma_kuo, fact: "{when}，金人诘责助辽，朝廷置之不理"}
+        - {op: remember, character: li_gang, fact: "{when}，金人诘责助辽，朝廷置之不理"}
       hint: 无增减；金人问罪照旧可能；本条四季后再议
 
 # 补写奏疏草稿（第 3 批，22 条）。追加到 scenarios/xuanhe_1120/memorials.yaml 末尾即可；选项次序已按 tools/rotate_options.py 轮转。

@@ -253,7 +253,9 @@ export function ResultPanel() {
               <h2 className="result-title t-title">
                 <span>推演结果</span>
               </h2>
-              <div className="result-season t-title">{view.calendar_label}</div>
+              <div className="result-season t-title" data-testid="result.season">
+                {g.lastTurn?.settled_label ? `${g.lastTurn.settled_label}结算毕 · 今入${view.calendar_label}` : view.calendar_label}
+              </div>
               <div className="result-content selectable">
                 {g.lastEdict && g.lastEdict.clauses.length > 0 && (
                   <section>

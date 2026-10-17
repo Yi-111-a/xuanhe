@@ -571,6 +571,8 @@ export interface TurnResponse {
   outcome: Outcome | null;
   replies?: Reply[];
   written_opinions?: Advice[];
+  /** the season just settled (facts and events happened in it); the view's calendar_label is the season now entered */
+  settled_label?: string;
 }
 
 export interface DebateSpeech {

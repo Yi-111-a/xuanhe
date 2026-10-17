@@ -23,6 +23,7 @@ playtests/**/events.jsonl
 playtests/**/stderr.txt
 app/test-results*/
 playtests/home-dev/
+playtests/home-e2e*/
 # promo videos: sources are tracked; binaries are regenerated (tests/e2e/promo_capture.spec.ts, scripts/tts_edge.py) or shared as release files
 videos/*/assets/
 videos/*/audio/
