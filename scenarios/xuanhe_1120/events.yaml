@@ -3096,6 +3096,7 @@
       - {kind: season, value: 春}
       - {kind: region_controller, region: minguang, faction: song}
       - {kind: flag, key: jin_invaded, operator: absent}
+      - {kind: flag, key: beiyuan_remitted, operator: absent}   # 减了贡额就不再年年督增
   gravity: 0.3
   importance: 1
   region: minguang
@@ -3111,6 +3112,7 @@
       effects:
         - {op: adjust_region, region: minguang, stat: order, delta: 2}
         - {op: adjust_resource, resource: ningxing, delta: -1, reason: 进奉之路稍塞}
+        - {op: set_flag, key: beiyuan_remitted, value: true}
   default_choice: keep
   choice_deadline: 1
   illustration: event.qingming

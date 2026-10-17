@@ -37,7 +37,24 @@
 
 ## 游戏画面
 
-<!--SCREENS-->
+<table>
+  <tr>
+    <td><img src="docs/media/desk.jpg" alt="御案与舆图"><br><sub>御案：顶上是国势与危机计「胡马南牧」，中间是舆图（疆域、治安、兵力、漕运、北边烽燧五层）</sub></td>
+    <td><img src="docs/media/memorial.jpg" alt="奏疏"><br><sub>奏疏：每道写明奏到日期、谏言与各选项的确切代价</sub></td>
+  </tr>
+  <tr>
+    <td><img src="docs/media/audience.jpg" alt="召对"><br><sub>召对：大臣由大模型按人设与引擎事实扮演，数字只来自引擎</sub></td>
+    <td><img src="docs/media/debate.jpg" alt="廷议"><br><sub>廷议：在京者当廷与议，不在京者递书面议状</sub></td>
+  </tr>
+  <tr>
+    <td><img src="docs/media/edict.jpg" alt="拟诏"><br><sub>拟诏：采纳奏疏、使用政令卡，或以御笔自由书写；有司逐条回执</sub></td>
+    <td><img src="docs/media/result.jpg" alt="推演结果"><br><sub>推演结果：纪事、时事、有司奏报与逐项对账</sub></td>
+  </tr>
+  <tr>
+    <td><img src="docs/media/army.jpg" alt="兵部"><br><sub>兵部：诸军兵力、统帅、行程、军令与将领自主风险</sub></td>
+    <td><img src="docs/media/newgame.jpg" alt="新局"><br><sub>新局：三档难度（演义、史实、地狱）</sub></td>
+  </tr>
+</table>
 
 ## 怎么玩
 
@@ -72,10 +89,10 @@ npm --prefix app ci && npm --prefix app run dev               # 另一个终端�
 
 ## 它是怎么做的
 
-- 引擎：[llm-sim-game-template](https://github.com/Yi-111-a/llm-sim-game-template)（`engine/` 子模块）。剧本是纯数据包 [`scenarios/xuanhe_1120/`](scenarios/xuanhe_1120)：31 位人物、21 个地区、约 150 个事件、约 180 道奏疏、29 张政令卡、14 种结局、三档难度。
+- 引擎：[llm-sim-game-template](https://github.com/Yi-111-a/llm-sim-game-template)（`engine/` 子模块）。剧本是纯数据包 [`scenarios/xuanhe_1120/`](scenarios/xuanhe_1120)：31 位人物、21 个地区、154 个事件、181 道奏疏、29 张政令卡、14 种结局、三档难度。
 - 设计与史实：[设计大纲](docs/XUANHE_OUTLINE.md)、[史实核对](docs/FACT_CHECK.md)（逐卷核对《宋史》《金史》《辽史》《宋史纪事本末》）、[迭代日志](docs/ITERATION_LOG.md)。
 - 美术：全部由 Codex 按北宋院体工笔与青绿山水的风格块生成，逐张人工验收（[验收记录](design/asset_prompts/QA.md)），图中不含任何文字。
-- 测试：引擎单元测试、两套内容检查（模板通用 + 本剧本 14 项）、300 种子以上的平衡模拟、Playwright 界面测试（每个按钮、从开局打到结局），以及 GPT（Codex）、Claude 与开发者本人经 MCP 的整局试玩。
+- 测试：引擎单元测试、两套内容检查（模板通用 + 本剧本 14 项）、每档难度 300 种子的平衡模拟（史实档稳健打法约四分之三得好结局、放任约九成靖康）、Playwright 界面测试（每个按钮、从开局打到结局），以及 GPT（Codex）、Claude 与开发者本人经 MCP 的整局试玩。
 
 ## 文档
 

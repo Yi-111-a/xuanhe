@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "xuanhe": {
+      "command": "C:\\Users\\yiyin\\Desktop\\新建文件夹\\xuanhe\\.venv\\Scripts\\python.exe",
+      "args": [
+        "-m",
+        "cli.main",
+        "mcp"
+      ],
+      "cwd": "C:\\Users\\yiyin\\Desktop\\新建文件夹\\xuanhe\\playtests\\engine-r4\\backend",
+      "env": {
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8",
+        "SIM_GAME_ROOT": "C:\\Users\\yiyin\\Desktop\\新建文件夹\\xuanhe",
+        "SIM_SCENARIOS_DIR": "C:\\Users\\yiyin\\Desktop\\新建文件夹\\xuanhe\\playtests\\engine-r4\\scenarios_snapshot",
+        "LLM_SIM_HOME": "C:\\Users\\yiyin\\Desktop\\新建文件夹\\xuanhe\\playtests\\claude\\claude-04\\home",
+        "SIM_MCP_MODE": "client",
+        "SIM_MCP_NAME": "xuanhe"
+      }
+    }
+  }
+}

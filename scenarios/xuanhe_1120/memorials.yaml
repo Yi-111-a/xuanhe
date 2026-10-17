@@ -1977,7 +1977,7 @@
 - id: t8_liao_envoy_zhong
   turn: 8
   title: 辽主遣使
-  summary: 金兵攻辽中京未下，退屯北境。辽主遣使来谢，言中京赖宋之援得全，然女真来岁必复至，请再以粮帛助守，愿世为兄弟之国。
+  summary: 金兵攻辽中京未下，退屯北境。辽主遣使，言中京幸而得全，然女真来岁必复至，请再以粮帛助守，愿世为兄弟之国。
   region: bianjing
   illustration: event.liao_envoy
   variant_of: t8_liao_envoy
@@ -7050,7 +7050,7 @@
         - {op: set_flag, key: jin_soothed, value: true}
         - {op: adjust_resource, resource: treasury, delta: -30, reason: 使金之费}
         - {op: adjust_resource, resource: jin_contempt, delta: 1, reason: 金人见宋示弱}
-      hint: 国库 −30，金人轻宋（风闻）略↑；此后三季之内金人不以助辽问罪；本条四季后再议
+      hint: 国库 −30，金人轻宋（风闻）略↑；自本季结算起三季之内金人不以助辽问罪；本条四季后再议
     - id: keep
       label: 不必理会
       immediate: true
