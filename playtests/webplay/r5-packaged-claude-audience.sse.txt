@@ -1,0 +1,867 @@
+event: status
+data: {"status": "ok", "mode": "in_person", "mode_label": "面见", "mode_note": "李邦彦在汴京，入对御前，当面奏对。"}
+
+event: message
+data: {"text": "李"}
+
+event: message
+data: {"text": "邦彦整"}
+
+event: message
+data: {"text": "了整"}
+
+event: message
+data: {"text": "衣冠，"}
+
+event: message
+data: {"text": "趋"}
+
+event: message
+data: {"text": "前"}
+
+event: message
+data: {"text": "几"}
+
+event: message
+data: {"text": "步，"}
+
+event: message
+data: {"text": "躬身一"}
+
+event: message
+data: {"text": "揖，"}
+
+event: message
+data: {"text": "脸上先"}
+
+event: message
+data: {"text": "堆起三"}
+
+event: message
+data: {"text": "分笑来"}
+
+event: message
+data: {"text": "。"}
+
+event: message
+data: {"text": "\n\n「"}
+
+event: message
+data: {"text": "陛下这"}
+
+event: message
+data: {"text": "一"}
+
+event: message
+data: {"text": "问，可"}
+
+event: message
+data: {"text": "把臣问"}
+
+event: message
+data: {"text": "成了热"}
+
+event: message
+data: {"text": "锅上的"}
+
+event: message
+data: {"text": "蚂蚁，左"}
+
+event: message
+data: {"text": "也"}
+
+event: message
+data: {"text": "烫"}
+
+event: message
+data: {"text": "脚，右也烫脚"}
+
+event: message
+data: {"text": "。」\n\n他"}
+
+event: message
+data: {"text": "略抬"}
+
+event: message
+data: {"text": "眼"}
+
+event: message
+data: {"text": "觑"}
+
+event: message
+data: {"text": "了觑御座"}
+
+event: message
+data: {"text": "，见"}
+
+event: message
+data: {"text": "官家并"}
+
+event: message
+data: {"text": "无"}
+
+event: message
+data: {"text": "愠"}
+
+event: message
+data: {"text": "色，便接"}
+
+event: message
+data: {"text": "着说下"}
+
+event: message
+data: {"text": "去：\n\n「臣是"}
+
+event: message
+data: {"text": "个"}
+
+event: message
+data: {"text": "踢球"}
+
+event: message
+data: {"text": "的出"}
+
+event: message
+data: {"text": "身，就"}
+
+event: message
+data: {"text": "拿"}
+
+event: message
+data: {"text": "踢球打"}
+
+event: message
+data: {"text": "个"}
+
+event: message
+data: {"text": "比方。如"}
+
+event: message
+data: {"text": "今场"}
+
+event: message
+data: {"text": "上是辽人"}
+
+event: message
+data: {"text": "与"}
+
+event: message
+data: {"text": "金人两家"}
+
+event: message
+data: {"text": "对"}
+
+event: message
+data: {"text": "踢，"}
+
+event: message
+data: {"text": "咱们大"}
+
+event: message
+data: {"text": "宋原"}
+
+event: message
+data: {"text": "是在"}
+
+event: message
+data: {"text": "场"}
+
+event: message
+data: {"text": "边看的"}
+
+event: message
+data: {"text": "。"}
+
+event: message
+data: {"text": "海"}
+
+event: message
+data: {"text": "上之盟，便"}
+
+event: message
+data: {"text": "是要"}
+
+event: message
+data: {"text": "咱们下场，跟"}
+
+event: message
+data: {"text": "金人"}
+
+event: message
+data: {"text": "搭一个伙，"}
+
+event: message
+data: {"text": "去"}
+
+event: message
+data: {"text": "抢辽人"}
+
+event: message
+data: {"text": "脚下那"}
+
+event: message
+data: {"text": "颗"}
+
+event: message
+data: {"text": "燕云"}
+
+event: message
+data: {"text": "的球。球若"}
+
+event: message
+data: {"text": "抢着"}
+
+event: message
+data: {"text": "了，自然满"}
+
+event: message
+data: {"text": "场喝彩，"}
+
+event: message
+data: {"text": "陛下收"}
+
+event: message
+data: {"text": "复"}
+
+event: message
+data: {"text": "旧"}
+
+event: message
+data: {"text": "疆，功"}
+
+event: message
+data: {"text": "盖祖宗。可是"}
+
+event: message
+data: {"text": "陛下，"}
+
+event: message
+data: {"text": "下"}
+
+event: message
+data: {"text": "了"}
+
+event: message
+data: {"text": "场就"}
+
+event: message
+data: {"text": "由"}
+
+event: message
+data: {"text": "不"}
+
+event: message
+data: {"text": "得自家"}
+
+event: message
+data: {"text": "了。球没"}
+
+event: message
+data: {"text": "抢着，"}
+
+event: message
+data: {"text": "倒"}
+
+event: message
+data: {"text": "挨人"}
+
+event: message
+data: {"text": "一脚，那是"}
+
+event: message
+data: {"text": "要"}
+
+event: message
+data: {"text": "瘸腿的。」"}
+
+event: message
+data: {"text": "\n\n「臣听人"}
+
+event: message
+data: {"text": "说，"}
+
+event: message
+data: {"text": "辽主"}
+
+event: message
+data: {"text": "如"}
+
+event: message
+data: {"text": "今是"}
+
+event: message
+data: {"text": "不"}
+
+event: message
+data: {"text": "大"}
+
+event: message
+data: {"text": "中"}
+
+event: message
+data: {"text": "用了"}
+
+event: message
+data: {"text": "，打"}
+
+event: message
+data: {"text": "一"}
+
+event: message
+data: {"text": "仗输"}
+
+event: message
+data: {"text": "一仗。"}
+
+event: message
+data: {"text": "可金人是"}
+
+event: message
+data: {"text": "什"}
+
+event: message
+data: {"text": "么来"}
+
+event: message
+data: {"text": "路"}
+
+event: message
+data: {"text": "？那是白"}
+
+event: message
+data: {"text": "山"}
+
+event: message
+data: {"text": "黑水里"}
+
+event: message
+data: {"text": "钻出来的狼"}
+
+event: message
+data: {"text": "崽子"}
+
+event: message
+data: {"text": "，一口"}
+
+event: message
+data: {"text": "吃了半个辽国"}
+
+event: message
+data: {"text": "，"}
+
+event: message
+data: {"text": "牙口还没"}
+
+event: message
+data: {"text": "歇"}
+
+event: message
+data: {"text": "呢。"}
+
+event: message
+data: {"text": "咱们同"}
+
+event: message
+data: {"text": "狼结"}
+
+event: message
+data: {"text": "伙去"}
+
+event: message
+data: {"text": "打病"}
+
+event: message
+data: {"text": "虎，"}
+
+event: message
+data: {"text": "虎死"}
+
+event: message
+data: {"text": "了，"}
+
+event: message
+data: {"text": "狼回"}
+
+event: message
+data: {"text": "过头来"}
+
+event: message
+data: {"text": "看看咱们，"}
+
+event: message
+data: {"text": "臣怕它"}
+
+event: message
+data: {"text": "嘴里还"}
+
+event: message
+data: {"text": "馋。」\n\n他"}
+
+event: message
+data: {"text": "压"}
+
+event: message
+data: {"text": "低了"}
+
+event: message
+data: {"text": "声音："}
+
+event: message
+data: {"text": "\n\n「臣不"}
+
+event: message
+data: {"text": "懂"}
+
+event: message
+data: {"text": "兵，"}
+
+event: message
+data: {"text": "不"}
+
+event: message
+data: {"text": "敢"}
+
+event: message
+data: {"text": "妄议"}
+
+event: message
+data: {"text": "。只是"}
+
+event: message
+data: {"text": "京"}
+
+event: message
+data: {"text": "里"}
+
+event: message
+data: {"text": "坊间都在"}
+
+event: message
+data: {"text": "议"}
+
+event: message
+data: {"text": "论，说"}
+
+event: message
+data: {"text": "边上"}
+
+event: message
+data: {"text": "的兵马"}
+
+event: message
+data: {"text": "疏"}
+
+event: message
+data: {"text": "于操"}
+
+event: message
+data: {"text": "练，不比"}
+
+event: message
+data: {"text": "往年"}
+
+event: message
+data: {"text": "。臣也"}
+
+event: message
+data: {"text": "听过"}
+
+event: message
+data: {"text": "些"}
+
+event: message
+data: {"text": "风言"}
+
+event: message
+data: {"text": "风"}
+
+event: message
+data: {"text": "语，说金人心里本"}
+
+event: message
+data: {"text": "就有"}
+
+event: message
+data: {"text": "些"}
+
+event: message
+data: {"text": "瞧不起咱们，"}
+
+event: message
+data: {"text": "只是说法"}
+
+event: message
+data: {"text": "不一，"}
+
+event: message
+data: {"text": "臣不"}
+
+event: message
+data: {"text": "敢当真。若是"}
+
+event: message
+data: {"text": "盟约订"}
+
+event: message
+data: {"text": "下"}
+
+event: message
+data: {"text": "，"}
+
+event: message
+data: {"text": "到"}
+
+event: message
+data: {"text": "时候咱们出"}
+
+event: message
+data: {"text": "兵，"}
+
+event: message
+data: {"text": "燕京"}
+
+event: message
+data: {"text": "却"}
+
+event: message
+data: {"text": "打不下来，那可"}
+
+event: message
+data: {"text": "就"}
+
+event: message
+data: {"text": "是把底"}
+
+event: message
+data: {"text": "牌"}
+
+event: message
+data: {"text": "亮给人"}
+
+event: message
+data: {"text": "家看了。」\n\n说"}
+
+event: message
+data: {"text": "到这里，他"}
+
+event: message
+data: {"text": "又笑起"}
+
+event: message
+data: {"text": "来，"}
+
+event: message
+data: {"text": "摆了摆手：\n\n「"}
+
+event: message
+data: {"text": "当"}
+
+event: message
+data: {"text": "然了"}
+
+event: message
+data: {"text": "，这是"}
+
+event: message
+data: {"text": "太"}
+
+event: message
+data: {"text": "宰、"}
+
+event: message
+data: {"text": "少宰、童"}
+
+event: message
+data: {"text": "枢密他"}
+
+event: message
+data: {"text": "们操心的大事，"}
+
+event: message
+data: {"text": "臣是"}
+
+event: message
+data: {"text": "个"}
+
+event: message
+data: {"text": "翰林院"}
+
+event: message
+data: {"text": "里"}
+
+event: message
+data: {"text": "耍"}
+
+event: message
+data: {"text": "笔杆的"}
+
+event: message
+data: {"text": "，"}
+
+event: message
+data: {"text": "说"}
+
+event: message
+data: {"text": "重"}
+
+event: message
+data: {"text": "了"}
+
+event: message
+data: {"text": "怕担不"}
+
+event: message
+data: {"text": "起干系。"}
+
+event: message
+data: {"text": "臣只"}
+
+event: message
+data: {"text": "有一"}
+
+event: message
+data: {"text": "句"}
+
+event: message
+data: {"text": "俗"}
+
+event: message
+data: {"text": "话献"}
+
+event: message
+data: {"text": "给陛下：『"}
+
+event: message
+data: {"text": "宁做"}
+
+event: message
+data: {"text": "太"}
+
+event: message
+data: {"text": "平"}
+
+event: message
+data: {"text": "犬，"}
+
+event: message
+data: {"text": "莫做"}
+
+event: message
+data: {"text": "乱世人。』辽人"}
+
+event: message
+data: {"text": "这些"}
+
+event: message
+data: {"text": "年老"}
+
+event: message
+data: {"text": "实，"}
+
+event: message
+data: {"text": "岁币照"}
+
+event: message
+data: {"text": "收"}
+
+event: message
+data: {"text": "，边上"}
+
+event: message
+data: {"text": "也"}
+
+event: message
+data: {"text": "安静"}
+
+event: message
+data: {"text": "，这"}
+
+event: message
+data: {"text": "便是花"}
+
+event: message
+data: {"text": "钱买来"}
+
+event: message
+data: {"text": "的太平。好"}
+
+event: message
+data: {"text": "端"}
+
+event: message
+data: {"text": "端一"}
+
+event: message
+data: {"text": "桩太平买"}
+
+event: message
+data: {"text": "卖，何"}
+
+event: message
+data: {"text": "必去换"}
+
+event: message
+data: {"text": "一张"}
+
+event: message
+data: {"text": "赌"}
+
+event: message
+data: {"text": "桌上"}
+
+event: message
+data: {"text": "的"}
+
+event: message
+data: {"text": "筹码？」\n\n「依"}
+
+event: message
+data: {"text": "臣"}
+
+event: message
+data: {"text": "愚见，"}
+
+event: message
+data: {"text": "盟约不"}
+
+event: message
+data: {"text": "妨同"}
+
+event: message
+data: {"text": "金人"}
+
+event: message
+data: {"text": "慢慢谈着"}
+
+event: message
+data: {"text": "，好"}
+
+event: message
+data: {"text": "话"}
+
+event: message
+data: {"text": "说"}
+
+event: message
+data: {"text": "尽，"}
+
+event: message
+data: {"text": "礼物送足"}
+
+event: message
+data: {"text": "，只"}
+
+event: message
+data: {"text": "是"}
+
+event: message
+data: {"text": "莫急"}
+
+event: message
+data: {"text": "着发"}
+
+event: message
+data: {"text": "兵，"}
+
+event: message
+data: {"text": "也"}
+
+event: message
+data: {"text": "莫把"}
+
+event: message
+data: {"text": "话"}
+
+event: message
+data: {"text": "说死"}
+
+event: message
+data: {"text": "。两"}
+
+event: message
+data: {"text": "头都留"}
+
+event: message
+data: {"text": "一"}
+
+event: message
+data: {"text": "条退路，进"}
+
+event: message
+data: {"text": "可"}
+
+event: message
+data: {"text": "以分"}
+
+event: message
+data: {"text": "一杯羹，退可"}
+
+event: message
+data: {"text": "以不"}
+
+event: message
+data: {"text": "惹一"}
+
+event: message
+data: {"text": "身"}
+
+event: message
+data: {"text": "骚"}
+
+event: message
+data: {"text": "。这"}
+
+event: message
+data: {"text": "叫……"}
+
+event: message
+data: {"text": "」他"}
+
+event: message
+data: {"text": "眨眨眼，「"}
+
+event: message
+data: {"text": "骑"}
+
+event: message
+data: {"text": "墙看"}
+
+event: message
+data: {"text": "戏，"}
+
+event: message
+data: {"text": "墙不"}
+
+event: message
+data: {"text": "倒，"}
+
+event: message
+data: {"text": "戏照"}
+
+event: message
+data: {"text": "看"}
+
+event: message
+data: {"text": "。」\n\n言"}
+
+event: message
+data: {"text": "罢深"}
+
+event: message
+data: {"text": "深一揖，退回班"}
+
+event: message
+data: {"text": "中，额"}
+
+event: message
+data: {"text": "上却已"}
+
+event: message
+data: {"text": "沁出一"}
+
+event: message
+data: {"text": "层细汗。"}
+
+event: done
+data: {}
+
