@@ -15,3 +15,14 @@ for k, v in JOBS.items():
     v["aspect"] = A
     v["id"] = k
     v["group"] = "trailer"
+
+# ---- video cover (thumbnail) candidates: leave clean space for title type, no text in the image ----
+C = "Wide cinematic landscape 3:2 aspect ratio (1536x1024), designed as a video THUMBNAIL: one bold readable focal subject, strong silhouette, high contrast, reads clearly even when shown very small."
+COVER = {
+  "cover_a": "SUBJECT: Movie-poster key art. Emperor Huizong in a dramatic half-figure close-up on the RIGHT third of the frame, three-quarter view, staring straight into the camera with cold, burning resolve; pale ochre-yellow round-collar robe, black straight-winged futou hat, thin moustache; his face lit warm by fire from one side and cold blue from the other. Behind him on the left, the capital Kaifeng burns at night under falling snow, and a wall of Jurchen iron cavalry charges out of the smoke toward the viewer. The LEFT 45% of the frame is darker smoke and night sky with no detail, left empty for big title lettering.",
+  "cover_b": "SUBJECT: A split-world poster. The left half is golden Lantern Festival splendour of Kaifeng — lanterns, the Rainbow Bridge, fireworks; the right half is the SAME city burning in a snowstorm with Jurchen cavalry in the streets. The seam between the two halves is a ragged line of ink and embers. Emperor Huizong stands small but sharp in the very centre on a palace terrace exactly on the seam, his back to us, robe whipped by the wind, looking at the burning half. The top 30% of the frame is open dark sky for title lettering.",
+  "cover_c": "SUBJECT: Epic war-poster key art from a very low camera angle: Li Gang, the loyal minister, on the snow-covered wall of Kaifeng raising a sword high against a sky raining fire arrows, crimson robe with a lamellar breastplate, straight-winged futou; Song defenders roaring around him; far below, a sea of Jurchen torches and siege towers. He stands on the RIGHT side of the frame; the LEFT 40% is stormy sky and smoke, left open for big title lettering.",
+}
+for k, subj in COVER.items():
+    JOBS[k] = {"subject": subj + " Absolutely no text, no characters, no letters, no numbers, no seals, no inscriptions anywhere in the image.",
+               "aspect": C, "id": k, "group": "cover"}
