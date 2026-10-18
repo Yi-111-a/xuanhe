@@ -86,7 +86,7 @@ def make_a():
         d.text((92, 560), "繁华只剩六年", font=hook, fill=RED, stroke_width=4, stroke_fill=INK)
         d.text((98, 760), "这一次，你是宋徽宗", font=line, fill=SNOW)
     img = glow_paste(img, text_layer(hooks), radius=16, spread=4)
-    img = seal(img, (1500, 62), "AI 演满朝文武")
+    # (no corner tag: the client dropped 「AI 演满朝文武」)
     return img.convert("RGB")
 
 
@@ -111,7 +111,7 @@ def make_b():
         l, t, r, b = d.textbbox((0, 0), "靖康", font=hook)
         d.text((W - 70 - (r - l) - l, 300), "靖康", font=hook, fill=RED, stroke_width=4, stroke_fill=INK)
     img = glow_paste(img, text_layer(hooks), radius=14, spread=4)
-    img = seal(img, (70, 70), "AI 演满朝文武", size=34)
+    # (no corner tag: the client dropped 「AI 演满朝文武」)
     return img.convert("RGB")
 
 
