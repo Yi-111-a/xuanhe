@@ -297,5 +297,5 @@
       "source": "host"
     }
   ],
-  "mix_note": "Delivered audio is mixed outside the composition by mix/remix.py (music +5 dB, ducked per line -8/-15/-13 dB with 0.12 s ramps, 3.4 s fade-in, voice +9 dB, only two drop impacts, loudnorm -14 LUFS) and muxed onto the rendered picture; index.html's own audio is the earlier render's."
+  "mix_note": "Delivered audio is mixed outside the composition by mix/remix.py: music at one constant level (-1 dB, no ducking — client's choice) with a fixed mid cut (-4 dB @1 kHz, -8 dB @2.6 kHz) and a 3.4 s fade-in, voice +9 dB with light compression, only two soft drop impacts, loudnorm -14 LUFS; muxed onto the rendered picture. index.html's own audio is the earlier render's."
 }

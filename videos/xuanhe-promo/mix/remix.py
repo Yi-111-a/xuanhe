@@ -1,11 +1,12 @@
 """Trailer audio remix v2 — sample-accurate mix, muxed onto the rendered picture (video stream copied).
 
-    .venv-tts/Scripts/python mix/remix.py [--music-db 5] [--duck-db -8,-8,-8,-15,-15,-15,-15,-13,-13] [--voice-db 9]
+    .venv-tts/Scripts/python mix/remix.py [--music-db -1] [--duck-db 0] [--voice-db 9]
 
 - narration: the nine padded VO clips at their frame starts, lifted (edge-tts comes out quiet);
-- music: assets/bgm/track.wav at full level wherever nobody speaks, lowered per line by --duck-db only while it is
-  being spoken (spans from the word timings in audio_meta.json, 0.12 s cosine ramps), a soft fade-in over the
-  first 3.4 s so the track's own opening hit does not slam into the first words;
+- music: assets/bgm/track.wav at one constant level for the whole film (no ducking — the client found level
+  changes under the voice odd; --duck-db can still lower it per line), with a fixed mid-range EQ cut that leaves
+  room for the voice, and a soft fade-in over the first 3.4 s so the track's own opening hit does not slam
+  into the first words;
 - effects: none on spoken words; two soft impacts on the drops 「你」 (17.85 s) and 「死守汴京」 (33.10 s);
 - loudness-normalised to about -14 LUFS (true peak -1.5 dB) by ffmpeg loudnorm.
 """
@@ -25,9 +26,9 @@ STARTS = [0.0, 6.0, 10.6, 16.9, 20.4, 23.4, 29.35, 41.0, 47.5]
 HITS = [(17.85, 0.30), (33.10, 0.34)]
 
 
-def load(path: Path, channels: int) -> np.ndarray:
+def load(path: Path, channels: int, af: str | None = None) -> np.ndarray:
     raw = subprocess.run(
-        ["ffmpeg", "-v", "error", "-i", str(path), "-f", "f32le", "-ac", str(channels), "-ar", str(SR), "-"],
+        ["ffmpeg", "-v", "error", "-i", str(path), *(["-af", af] if af else []), "-f", "f32le", "-ac", str(channels), "-ar", str(SR), "-"],
         capture_output=True, check=True,
     ).stdout
     return np.frombuffer(raw, dtype=np.float32).reshape(-1, channels).copy()
@@ -52,10 +53,14 @@ def ramp_env(n: int, spans: list[tuple[float, float, float]], ramp: float = 0.12
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--music-db", type=float, default=5.0)
+    ap.add_argument("--music-db", type=float, default=-1.0)
     # per line: the build (lines 1-3) is quiet already, the drop section (4-7) is loud, the second track (8-9) in between
-    ap.add_argument("--duck-db", default="-8,-8,-8,-15,-15,-15,-15,-13,-13")
+    ap.add_argument("--duck-db", default="0", help="0 = the music never changes level under the voice (client's choice)")
+    # a constant mid cut on the music leaves room for the voice without any audible level changes
+    ap.add_argument("--music-eq", default="equalizer=f=1000:t=o:w=1.2:g=-4,equalizer=f=2600:t=o:w=1.4:g=-8")
     ap.add_argument("--voice-db", type=float, default=9.0)
+    # light compression evens the TTS voice out so it sits on top of a constant music bed
+    ap.add_argument("--voice-af", default="acompressor=threshold=0.08:ratio=3:attack=5:release=90:makeup=2")
     ap.add_argument("--stems", action="store_true", help="also write mix/stem-vo.wav and mix/stem-bed.wav")
     args = ap.parse_args()
     n = int(DUR * SR)
@@ -67,11 +72,11 @@ def main() -> None:
     ducks = [float(x) for x in str(args.duck_db).split(",")]
     ducks = ducks * 9 if len(ducks) == 1 else ducks
     for v, start, duck in zip(voices, STARTS, ducks):
-        clip = load(ROOT / v["path"], 1)
+        clip = load(ROOT / v["path"], 1, args.voice_af or None)
         place(vo, np.repeat(clip, 2, axis=1), start, 10 ** (args.voice_db / 20))
         spans.append((start + v["words"][0]["start"] - 0.05, start + v["words"][-1]["end"] + 0.15, 10 ** (duck / 20)))
 
-    bed = load(ROOT / "assets/bgm/track.wav", 2)[:n]
+    bed = load(ROOT / "assets/bgm/track.wav", 2, args.music_eq or None)[:n]
     bed = np.pad(bed, ((0, n - len(bed)), (0, 0)))
     t = np.arange(n) / SR
     fade_in = np.clip((t - 0.15) / 3.4, 0, 1) ** 1.5
