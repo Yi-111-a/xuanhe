@@ -21,7 +21,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 SR = 48000
-DUR = 60.0
+DUR = 50.5  # the film ends on the 「宣和」 slam
 STARTS = [0.0, 6.0, 10.6, 16.9, 20.4, 23.4, 29.35, 41.0, 47.5]
 HITS = [(17.85, 0.30), (33.10, 0.34)]
 
@@ -89,8 +89,8 @@ def main() -> None:
         place(fx, hit, at, g)
 
     mix = vo + bed + fx
-    tail = t > DUR - 0.8
-    mix[tail] *= np.linspace(1, 0, tail.sum())[:, None].astype(np.float32)
+    tail = t > DUR - 1.5  # music and all fade out with the picture's fade to black
+    mix[tail] *= (np.linspace(1, 0, tail.sum()) ** 1.5)[:, None].astype(np.float32)
 
     out = ROOT / "mix"
     out.mkdir(exist_ok=True)

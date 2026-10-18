@@ -1,8 +1,8 @@
 ---
 format: 1920x1080
-duration: 60s
+duration: 50.5s
 message: "繁华只剩六年——这一次你是宋徽宗：召对、廷议、调兵，死守汴京，史书由你来写。"
-arc: 繁华（静）→ 史书上的「靖康」→ 城破四连砸 → 爆点「你，是宋徽宗」→ 实机快切（召对 / 廷议 / 诏书 / 西军）→「议和，还是——」停顿 → 爆点「死守汴京」+ 无旁白战斗蒙太奇 → AI 演群臣、引擎算钱粮 →「宣和」落版，「这一次，史书由你来写」
+arc: 繁华（静）→ 史书上的「靖康」→ 城破四连砸 → 爆点「你，是宋徽宗」→ 实机快切（召对 / 廷议 / 诏书 / 西军）→「议和，还是——」停顿 → 爆点「死守汴京」+ 无旁白战斗蒙太奇 → AI 演群臣、引擎算钱粮 →「宣和」落版
 audience: B站 / YouTube 的历史、策略游戏玩家，AI 圈
 mode: autonomous
 music: none  # host-made bed: assets/bgm/track.wav — build 0–17s, drop at 18.0s, break 32.0–32.9s, re-entry 33.0s, second track from 40.9s to the end
@@ -200,23 +200,21 @@ Scene 2 (2.55–6.5s): on 「钱粮兵马」 (2.55s) the cards whip away; slam-s
 
 ## Frame 9 — 宣和
 
-- scene: 墨迹晕开，「宣和」墨块标志砸下落版；「开源免费」「可接入 Codex · Claude Code」；行书「这一次，史书由你来写」；结尾网址
-- voiceover: "《宣和》。开源免费，可接入 Codex 与 Claude Code。这一次，史书由你来写。"
-- duration: 12.5s
+- scene: 墨迹晕开，「宣和」墨块标志砸下落版，停约两秒后淡出到黑（卖点、口号与网址写在视频简介里，不进片）
+- voiceover: "《宣和》。"
+- duration: 3s
 - transition_in: cut
 - status: animated
 - src: compositions/frames/09-title.html
 - type: cta
-- persuasion: Identity / call to action
+- persuasion: Identity
 - beat: resolve
 - blueprint: logo-assemble-lockup (Adapt)
 - asset_candidates: assets/01-title.png — 标题画面（左上墨块「宣和」标志，约 x 100–480, y 80–640）; assets/t_glory.jpg — 汴京上元夜（做虚化底）
 - focal: assets/01-title.png
 - roles: 01-title = supporting (the ink-blot 「宣和」 logo crop = the mark) · t_glory = background (blurred, dark)
-- sfx: low-boom @0.45s · taiko-hit @0.45s · whoosh @4.8s
+- sfx: none
 
-Adapt: the mark assembles and holds; the promise is written by hand; the end card holds.
-Scene 1 (0.0–1.6s): ink ground; ink blooms from the center (gooey ink, see `ink-bleed-reveal`) and on 「宣和」 (0.50s) the cropped ink-blot 「宣和」 logo lands center with a `logo-sting`-style slam (scale 1.25→1, one white impact frame, ember ring), behind it t_glory blurred 10px at 35% brightness.
-Scene 2 (1.6–4.8s): the logo slides to the upper-left third; on 「开源免费」 (1.63s) a gold label row 「开源免费 · Windows 一键安装」 types in at the right; on 「可接入」 (2.49s) a second row 「接入 Codex · Claude Code」 (Noto Sans SC 600, snow) with a small terminal pill typing `codex mcp add xuanhe -- xuanhe-server mcp`.
-Scene 3 (4.85–7.5s): on 「这一次」 (4.85s) the rows dim; on 「史书由你来写」 (5.68s) the brush-script line 「这一次，史书由你来写」 (Zhi Mang Xing 120px, snow, ink glow) writes on left→right across the center (1.1s wipe), an ember brush underline strokes beneath it.
-Scene 4 (7.5–12.5s): end card: the logo returns centered small above the script line; URL 「github.com/Yi-111-a/xuanhe」 (Noto Sans SC 600, gold) wipes in beneath; hold; embers drift; fade to black 12.0–12.5s.
+Adapt: the mark assembles and holds, then the film ends.
+Scene 1 (0.0–1.6s): ink ground; ink blooms from the center and on 「宣和」 (0.50s) the cropped ink-blot 「宣和」 logo lands center with a slam (scale 1.3→1, one white impact frame, ember ring), behind it t_glory blurred at 35% brightness.
+Scene 2 (1.6–3.0s): the logo holds centered with embers drifting and the camera still pushing; fade to black 2.5–3.0s.

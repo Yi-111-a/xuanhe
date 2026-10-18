@@ -64,7 +64,7 @@
 
 ## Line 9 — 宣和 (Frame 9)
 
-**Time:** 48.0 – 60.0s
-**Delivery:** 收住，沉稳有力。
+**Time:** 47.5 – 50.5s
+**Delivery:** 收住，沉稳有力。（开源免费、接入 Codex / Claude Code 等卖点不进片，写在视频简介里。）
 
-    《宣和》。开源免费，可接入 Codex 与 Claude Code。这一次，史书由你来写。
+    《宣和》。

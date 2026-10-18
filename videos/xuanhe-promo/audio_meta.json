@@ -243,37 +243,13 @@
     {
       "frame": 9,
       "path": "audio/vo-09.wav",
-      "duration_s": 12.5,
+      "duration_s": 3.0,
       "words": [
         {
           "text": "宣和",
           "start": 0.498,
           "end": 1.099,
           "id": "w29"
-        },
-        {
-          "text": "开源免费",
-          "start": 1.626,
-          "end": 2.323,
-          "id": "w30"
-        },
-        {
-          "text": "可接入 Codex 与 Claude Code",
-          "start": 2.491,
-          "end": 4.306,
-          "id": "w31"
-        },
-        {
-          "text": "这一次",
-          "start": 4.847,
-          "end": 5.352,
-          "id": "w32"
-        },
-        {
-          "text": "史书由你来写",
-          "start": 5.676,
-          "end": 6.782,
-          "id": "w33"
         }
       ],
       "offset_in_frame_s": 0.4

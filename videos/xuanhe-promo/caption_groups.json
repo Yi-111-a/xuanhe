@@ -1,5 +1,5 @@
 {
-  "total_duration_s": 60,
+  "total_duration_s": 50.5,
   "width": 1920,
   "height": 1080,
   "groups": [
@@ -435,57 +435,6 @@
           "text": "宣和",
           "start": 47.998,
           "end": 48.599
-        }
-      ]
-    },
-    {
-      "id": "caption-group-29",
-      "frame": 9,
-      "start": 49.126,
-      "end": 51.926,
-      "text": "开源免费 可接入 Codex 与 Claude Code",
-      "words": [
-        {
-          "id": "caption-word-29-0",
-          "text": "开源免费",
-          "start": 49.126,
-          "end": 49.823
-        },
-        {
-          "id": "caption-word-29-1",
-          "text": "可接入 Codex 与 Claude Code",
-          "start": 49.991,
-          "end": 51.806
-        }
-      ]
-    },
-    {
-      "id": "caption-group-30",
-      "frame": 9,
-      "start": 52.347,
-      "end": 52.972,
-      "text": "这一次",
-      "words": [
-        {
-          "id": "caption-word-30-0",
-          "text": "这一次",
-          "start": 52.347,
-          "end": 52.852
-        }
-      ]
-    },
-    {
-      "id": "caption-group-31",
-      "frame": 9,
-      "start": 53.176,
-      "end": 54.402,
-      "text": "史书由你来写",
-      "words": [
-        {
-          "id": "caption-word-31-0",
-          "text": "史书由你来写",
-          "start": 53.176,
-          "end": 54.282
         }
       ]
     }
