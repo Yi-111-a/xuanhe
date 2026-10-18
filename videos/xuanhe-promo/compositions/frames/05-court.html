@@ -1,0 +1,510 @@
+<template>
+  <style>
+    @font-face{font-family:"Ma Shan Zheng";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/MaShanZheng-Regular.ttf") format("truetype");}
+    @font-face{font-family:"Noto Sans SC";font-weight:100 900;font-style:normal;font-display:block;src:url("assets/fonts/NotoSansSC-VF.ttf") format("truetype");}
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+    }
+    #f05-stage,
+    #f05-grain,
+    #f05-letterbox {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+    }
+    #f05-stage { z-index: 1; background: #0b0907; }
+    #f05-grain { z-index: 8; pointer-events: none; }
+    #f05-letterbox { z-index: 9; pointer-events: none; }
+
+    .f05-cam,
+    .f05-kick,
+    .f05-persp {
+      position: absolute;
+      inset: 0;
+    }
+    .f05-persp {
+      perspective: 2000px;
+      perspective-origin: 960px 540px;
+    }
+
+    /* ---- painting ground ---- */
+    .f05-bg {
+      position: absolute;
+      left: 0;
+      top: -100px;
+      width: 1920px;
+      height: 1280px;
+      display: block;
+    }
+    #f05-bg { transform-origin: 960px 640px; }
+    .f05-scrim {
+      position: absolute;
+      inset: 0;
+      background: rgba(11, 9, 7, 0.55);
+    }
+    .f05-vignette {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 72% 68% at 50% 50%, rgba(11, 9, 7, 0) 40%, rgba(11, 9, 7, 0.78) 100%),
+        linear-gradient(90deg, rgba(11, 9, 7, 0.35) 0%, rgba(11, 9, 7, 0) 30%, rgba(11, 9, 7, 0) 70%, rgba(11, 9, 7, 0.45) 100%);
+    }
+    .f05-fireglow {
+      position: absolute;
+      left: 1180px;
+      top: 300px;
+      width: 900px;
+      height: 700px;
+      background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(232, 121, 46, 0.22) 0%, rgba(232, 121, 46, 0) 70%);
+    }
+
+    /* ---- embers ---- */
+    .f05-embers {
+      position: absolute;
+      inset: 0;
+    }
+    .f05-ember {
+      position: absolute;
+      border-radius: 50%;
+      background: #f4a35a;
+      box-shadow: 0 0 8px 2px rgba(232, 121, 46, 0.85), 0 0 18px 4px rgba(194, 58, 38, 0.35);
+    }
+
+    /* ---- intel cards ---- */
+    .f05-card {
+      position: absolute;
+      left: 150px;
+      top: 205px;
+      width: 1190px;
+      height: 669px;
+      transform-origin: 50% 50%;
+      opacity: 0;
+    }
+    .f05-face {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #0b0907;
+      border: 2px solid #d6b46a;
+      box-shadow:
+        0 40px 90px rgba(0, 0, 0, 0.75),
+        0 0 0 1px rgba(11, 9, 7, 0.9),
+        0 0 36px rgba(214, 180, 106, 0.18);
+    }
+    .f05-world {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+      transform-origin: 0 0;
+    }
+    .f05-world img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+      display: block;
+    }
+    .f05-sheen {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(115deg, rgba(239, 233, 220, 0) 35%, rgba(239, 233, 220, 0.16) 48%, rgba(239, 233, 220, 0) 60%);
+      pointer-events: none;
+    }
+    .f05-tag {
+      position: absolute;
+      left: -2px;
+      top: -50px;
+      height: 44px;
+      padding: 0 18px 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(11, 9, 7, 0.92);
+      border: 1px solid rgba(214, 180, 106, 0.55);
+      border-left: 5px solid #c23a26;
+      font-family: "Noto Sans SC";
+      font-weight: 600;
+      font-size: 22px;
+      letter-spacing: 6px;
+      color: #d6b46a;
+      white-space: nowrap;
+    }
+    .f05-tag-dot {
+      width: 8px;
+      height: 8px;
+      background: #e8792e;
+      box-shadow: 0 0 8px #e8792e;
+    }
+
+    /* scan band over the reply text (world coords) */
+    #f05-scan {
+      position: absolute;
+      left: 890px;
+      top: 250px;
+      width: 660px;
+      height: 70px;
+      background: linear-gradient(180deg, rgba(214, 180, 106, 0) 0%, rgba(214, 180, 106, 0.32) 70%, rgba(232, 121, 46, 0.55) 100%);
+      mix-blend-mode: multiply;
+      opacity: 0;
+    }
+    .f05-bracket {
+      position: absolute;
+      border: 4px solid #d6b46a;
+      opacity: 0;
+    }
+
+    /* seal stamps (world coords of 09-debate) */
+    .f05-seal {
+      position: absolute;
+      width: 78px;
+      height: 78px;
+      margin-left: -39px;
+      margin-top: -39px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Ma Shan Zheng";
+      font-size: 60px;
+      line-height: 1;
+      color: #efe9dc;
+      background: #c23a26;
+      border: 3px solid #efe9dc;
+      box-shadow: 0 0 0 3px #c23a26, 0 10px 26px rgba(0, 0, 0, 0.6), 0 0 30px rgba(194, 58, 38, 0.55);
+      opacity: 0;
+    }
+    .f05-seal.f05-seal-mid {
+      background: #5d6870;
+      box-shadow: 0 0 0 3px #5d6870, 0 10px 26px rgba(0, 0, 0, 0.6), 0 0 26px rgba(140, 153, 163, 0.5);
+    }
+    .f05-ring {
+      position: absolute;
+      width: 250px;
+      height: 274px;
+      border: 3px solid #d6b46a;
+      box-shadow: 0 0 22px rgba(214, 180, 106, 0.6), inset 0 0 22px rgba(214, 180, 106, 0.35);
+      opacity: 0;
+    }
+
+    /* ---- brush slams ---- */
+    .f05-slamwrap {
+      position: absolute;
+      left: 1500px;
+      top: 214px;
+      width: 220px;
+      height: 600px;
+    }
+    .f05-slam {
+      position: absolute;
+      left: 40px;
+      top: 0;
+      width: 140px;
+      height: 600px;
+      writing-mode: vertical-rl;
+      font-family: "Ma Shan Zheng";
+      font-size: 132px;
+      line-height: 1.05;
+      font-weight: 400;
+      color: #efe9dc;
+      text-shadow: 0 0 24px rgba(11, 9, 7, 0.95), 0 0 8px rgba(11, 9, 7, 0.85), 0 4px 0 rgba(11, 9, 7, 0.6);
+      transform-origin: 50% 50%;
+      opacity: 0;
+      white-space: nowrap;
+    }
+    .f05-splat {
+      position: absolute;
+      left: -140px;
+      top: -40px;
+      width: 500px;
+      height: 680px;
+      overflow: visible;
+    }
+    .f05-rule {
+      position: absolute;
+      left: 0;
+      top: 30px;
+      width: 3px;
+      height: 540px;
+      background: linear-gradient(180deg, rgba(214, 180, 106, 0) 0%, #d6b46a 20%, #d6b46a 80%, rgba(214, 180, 106, 0) 100%);
+      transform-origin: 50% 0%;
+    }
+
+    #f05-flash {
+      position: absolute;
+      inset: 0;
+      background: #efe9dc;
+      opacity: 0;
+    }
+
+    /* ---- grain + letterbox ---- */
+    .f05-grainfield {
+      position: absolute;
+      left: -120px;
+      top: -120px;
+      width: 2160px;
+      height: 1320px;
+      opacity: 0.07;
+      mix-blend-mode: overlay;
+    }
+    .f05-bar {
+      position: absolute;
+      left: 0;
+      width: 1920px;
+      height: 140px;
+      background: #0b0907;
+    }
+    .f05-bar-top { top: 0; }
+    .f05-bar-bot { top: 940px; }
+  </style>
+
+  <div id="root" data-composition-id="05-court" data-start="0" data-duration="3" data-width="1920" data-height="1080">
+
+    <!-- picture: camera rig over painting + intel cards + slams -->
+    <div id="f05-stage" class="clip" data-start="0" data-duration="3" data-track-index="0">
+      <div id="f05-cam" class="f05-cam" data-layout-allow-overflow>
+        <div id="f05-kick" class="f05-kick">
+          <img id="f05-bg" class="f05-bg" src="assets/t_court.jpg" alt="" />
+          <div class="f05-scrim"></div>
+          <div id="f05-fireglow" class="f05-fireglow"></div>
+          <div class="f05-vignette"></div>
+          <div id="f05-embers-back" class="f05-embers"></div>
+
+          <div class="f05-persp">
+            <!-- card 1: audience (召对童贯) -->
+            <div id="f05-card1" class="f05-card">
+              <div class="f05-face">
+                <div id="f05-world1" class="f05-world" data-layout-allow-overflow>
+                  <img src="assets/07-audience.png" alt="" />
+                  <div id="f05-scan"></div>
+                  <div id="f05-br1" class="f05-bracket" style="left:428px;top:236px;width:200px;height:176px;"></div>
+                </div>
+                <div id="f05-sheen1" class="f05-sheen" data-layout-allow-overflow></div>
+              </div>
+              <div id="f05-tag1" class="f05-tag"><span class="f05-tag-dot"></span>召对 · 大模型扮演</div>
+            </div>
+
+            <!-- card 2: debate (廷议) -->
+            <div id="f05-card2" class="f05-card">
+              <div class="f05-face">
+                <div id="f05-world2" class="f05-world" data-layout-allow-overflow>
+                  <img src="assets/09-debate.png" alt="" />
+                  <div id="f05-ring1" class="f05-ring" style="left:353px;top:264px;"></div>
+                  <div id="f05-ring2" class="f05-ring" style="left:835px;top:264px;"></div>
+                  <div id="f05-ring3" class="f05-ring" style="left:1317px;top:264px;"></div>
+                  <div id="f05-seal1" class="f05-seal" style="left:566px;top:298px;">可</div>
+                  <div id="f05-seal2" class="f05-seal" style="left:1048px;top:298px;">可</div>
+                  <div id="f05-seal3" class="f05-seal f05-seal-mid" style="left:1528px;top:298px;">中</div>
+                </div>
+                <div id="f05-sheen2" class="f05-sheen" data-layout-allow-overflow></div>
+              </div>
+              <div id="f05-tag2" class="f05-tag"><span class="f05-tag-dot"></span>廷议</div>
+            </div>
+          </div>
+
+          <!-- slams, right of the card -->
+          <div class="f05-slamwrap">
+            <svg id="f05-splat1" class="f05-splat" viewBox="0 0 500 680"></svg>
+            <svg id="f05-splat2" class="f05-splat" viewBox="0 0 500 680"></svg>
+            <div id="f05-rule" class="f05-rule"></div>
+            <div id="f05-slam1" class="f05-slam">召对群臣</div>
+            <div id="f05-slam2" class="f05-slam">廷议和战</div>
+          </div>
+
+          <div id="f05-embers-front" class="f05-embers"></div>
+        </div>
+      </div>
+      <div id="f05-flash"></div>
+    </div>
+
+    <!-- film grain -->
+    <div id="f05-grain" class="clip" data-start="0" data-duration="3" data-track-index="1">
+      <svg id="f05-grainfield" class="f05-grainfield" viewBox="0 0 2160 1320" preserveAspectRatio="none">
+        <filter id="f05-noise" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect width="2160" height="1320" filter="url(#f05-noise)" />
+      </svg>
+    </div>
+
+    <!-- letterbox bars (captions ride in the bottom bar) -->
+    <div id="f05-letterbox" class="clip" data-start="0" data-duration="3" data-track-index="2">
+      <div class="f05-bar f05-bar-top"></div>
+      <div class="f05-bar f05-bar-bot"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      var DUR = 3;
+      var T1 = 0.15; // 「召对群臣」
+      var T2 = 1.30; // 「廷议和战」
+      var FR = 1 / 30;
+
+      // deterministic PRNG (seeded LCG) — no Math.random
+      var seed = 50521;
+      function rnd() {
+        seed = (seed * 1664525 + 1013904223) % 4294967296;
+        return seed / 4294967296;
+      }
+
+      var SVGNS = "http://www.w3.org/2000/svg";
+      function buildSplat(id, palette) {
+        var svg = document.getElementById(id);
+        var dots = [];
+        for (var i = 0; i < 16; i++) {
+          var a = rnd() * Math.PI * 2;
+          var d = 90 + rnd() * 190;
+          var r = 6 + rnd() * (i < 5 ? 34 : 14);
+          var c = document.createElementNS(SVGNS, "circle");
+          c.setAttribute("cx", (250 + Math.cos(a) * d * 0.75).toFixed(1));
+          c.setAttribute("cy", (340 + Math.sin(a) * d * 1.15).toFixed(1));
+          c.setAttribute("r", r.toFixed(1));
+          c.setAttribute("fill", palette[i % palette.length]);
+          c.setAttribute("opacity", "0");
+          svg.appendChild(c);
+          dots.push(c);
+        }
+        return dots;
+      }
+      var splat1 = buildSplat("f05-splat1", ["#c23a26", "#c23a26", "#0b0907"]);
+      var splat2 = buildSplat("f05-splat2", ["#c23a26", "#e8792e", "#0b0907", "#c23a26"]);
+
+      function buildEmbers(id, n, sizeMin, sizeMax) {
+        var host = document.getElementById(id);
+        var list = [];
+        for (var i = 0; i < n; i++) {
+          var el = document.createElement("div");
+          el.className = "f05-ember";
+          var s = sizeMin + rnd() * (sizeMax - sizeMin);
+          el.style.width = s.toFixed(1) + "px";
+          el.style.height = s.toFixed(1) + "px";
+          el.style.left = (rnd() * 1880 + 20).toFixed(0) + "px";
+          el.style.top = (360 + rnd() * 620).toFixed(0) + "px";
+          host.appendChild(el);
+          list.push({ el: el, rise: 220 + rnd() * 320, sway: (rnd() - 0.5) * 140, o: 0.35 + rnd() * 0.55 });
+        }
+        return list;
+      }
+      var embersBack = buildEmbers("f05-embers-back", 18, 2, 5);
+      var embersFront = buildEmbers("f05-embers-front", 6, 5, 9);
+
+      // card world framing helpers: world is 1920x1080 inside a 1190x669 card
+      var BASE = 1190 / 1920;
+      function frameOn(cx, cy, zoom) {
+        var s = BASE * zoom;
+        return { scale: s, x: 595 - cx * s, y: 334.5 - cy * s };
+      }
+
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+
+      // ---------- always-on: painting drift, camera push, embers, grain ----------
+      // shot A: the standoff, wide; hard cut at T2 to shot B: punch-in on the burning city in the window
+      tl.fromTo("#f05-bg", { scale: 1.06, x: -30, y: 6, transformOrigin: "960px 640px" }, { scale: 1.14, x: 18, y: -6, duration: T2, ease: "none" }, 0);
+      tl.fromTo("#f05-bg", { scale: 1.34, x: 26, y: 0, transformOrigin: "1511px 373px" }, { scale: 1.44, x: -22, y: 8, duration: DUR - T2, ease: "none", immediateRender: false }, T2);
+      tl.fromTo("#f05-fireglow", { opacity: 0.55 }, { opacity: 1, duration: DUR, ease: "sine.inOut" }, 0);
+
+      tl.fromTo("#f05-cam", { scale: 1.0 }, { scale: 1.035, duration: DUR, ease: "none" }, 0);
+
+      embersBack.concat(embersFront).forEach(function (e, i) {
+        tl.fromTo(e.el, { y: 0, x: 0, opacity: 0 }, { y: -e.rise, x: e.sway, duration: DUR, ease: "none" }, 0);
+        tl.to(e.el, { opacity: e.o, duration: 0.35, ease: "power1.out" }, 0.02 * (i % 8));
+      });
+
+      tl.fromTo("#f05-grainfield", { x: 0, y: 0 }, { x: -96, y: -84, duration: DUR, ease: "steps(45)" }, 0);
+
+      // ---------- SCENE 1 — 召对群臣 ----------
+      // intel card whips in from the right
+      tl.fromTo("#f05-card1",
+        { x: 640, rotationY: -26, skewX: -7, opacity: 0, filter: "blur(14px)" },
+        { x: 0, rotationY: -8, skewX: 0, opacity: 1, filter: "blur(0px)", duration: 0.28, ease: "expo.out" }, T1);
+      tl.fromTo("#f05-sheen1", { xPercent: -110 }, { xPercent: 110, duration: 0.5, ease: "power2.out" }, T1 + 0.06);
+      tl.fromTo("#f05-tag1", { x: -24, opacity: 0 }, { x: 0, opacity: 1, duration: 0.2, ease: "expo.out" }, T1 + 0.12);
+
+      // zoom-to-target: 童贯 portrait + his reply
+      var w1a = frameOn(890, 520, 1.06);
+      var w1b = frameOn(890, 492, 1.42);
+      tl.fromTo("#f05-world1", w1a, Object.assign({ duration: T2 - (T1 + 0.2), ease: "power3.inOut" }, w1b), T1 + 0.2);
+      tl.fromTo("#f05-br1", { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: 0.16, ease: "power4.out" }, 0.62);
+      tl.fromTo("#f05-scan", { opacity: 0, y: 0 }, { opacity: 1, duration: 0.08, ease: "none" }, 0.66);
+      tl.to("#f05-scan", { y: 470, duration: 0.56, ease: "power1.inOut" }, 0.66);
+
+      // brush slam
+      tl.fromTo("#f05-slam1", { scale: 1.35, opacity: 0, rotation: -2 }, { scale: 1, opacity: 1, rotation: -1.2, duration: 0.12, ease: "power4.out" }, T1);
+      tl.fromTo("#f05-rule", { scaleY: 0, opacity: 1 }, { scaleY: 1, duration: 0.3, ease: "expo.out" }, T1 + 0.05);
+      splat1.forEach(function (c, i) {
+        tl.fromTo(c, { opacity: 0, scale: 0.2, transformOrigin: "50% 50%" }, { opacity: 0.9, scale: 1, duration: 0.1, ease: "power4.out" }, T1 + 0.02 + (i % 4) * 0.012);
+        tl.to(c, { opacity: 0, scale: 1.35, duration: 0.5, ease: "power2.in" }, T1 + 0.18 + (i % 5) * 0.03);
+      });
+
+      // camera kick (3 frames) on the slam settle
+      function kick(t, k) {
+        tl.to("#f05-kick", { x: 8 * k, y: -5 * k, rotation: 0.6 * k, duration: FR, ease: "none" }, t);
+        tl.to("#f05-kick", { x: -7 * k, y: 4 * k, rotation: -0.45 * k, duration: FR, ease: "none" }, t + FR);
+        tl.to("#f05-kick", { x: 0, y: 0, rotation: 0, duration: FR, ease: "none" }, t + FR * 2);
+      }
+      kick(T1 + 0.12, 1);
+
+      // ---------- SCENE 2 — 廷议和战 ----------
+      // flash cut on the drum
+      tl.set("#f05-flash", { opacity: 0.62 }, T2);
+      tl.set("#f05-flash", { opacity: 0.25 }, T2 + FR);
+      tl.set("#f05-flash", { opacity: 0 }, T2 + FR * 2);
+
+      // audience card whips out left, debate card whips in from right
+      tl.to("#f05-card1", { x: -1500, rotationY: 18, skewX: 8, filter: "blur(16px)", duration: 0.12, ease: "power3.in" }, T2 - 0.05);
+      tl.set("#f05-card1", { opacity: 0 }, T2 + 0.07);
+      tl.fromTo("#f05-card2",
+        { x: 720, rotationY: -28, skewX: -8, opacity: 0, filter: "blur(16px)" },
+        { x: 0, rotationY: -8, skewX: 0, opacity: 1, filter: "blur(0px)", duration: 0.3, ease: "expo.out" }, T2 + 0.03);
+      tl.fromTo("#f05-sheen2", { xPercent: -110 }, { xPercent: 110, duration: 0.5, ease: "power2.out" }, T2 + 0.1);
+      tl.fromTo("#f05-tag2", { x: -24, opacity: 0 }, { x: 0, opacity: 1, duration: 0.2, ease: "expo.out" }, T2 + 0.14);
+
+      // zoom onto the three portraits + their seals, slow push through the hold
+      var w2a = frameOn(960, 470, 1.22);
+      var w2b = frameOn(960, 404, 1.46);
+      tl.fromTo("#f05-world2", w2a, Object.assign({ duration: DUR - (T2 + 0.05), ease: "power2.out" }, w2b), T2 + 0.05);
+
+      // slam swap
+      tl.set("#f05-slam1", { opacity: 0 }, T2);
+      tl.fromTo("#f05-slam2", { scale: 1.35, opacity: 0, rotation: 2.4 }, { scale: 1, opacity: 1, rotation: 1.2, duration: 0.12, ease: "power4.out" }, T2);
+      tl.fromTo("#f05-rule", { scaleY: 0.2 }, { scaleY: 1, duration: 0.3, ease: "expo.out", immediateRender: false }, T2 + 0.04);
+      splat2.forEach(function (c, i) {
+        tl.fromTo(c, { opacity: 0, scale: 0.2, transformOrigin: "50% 50%" }, { opacity: 0.9, scale: 1, duration: 0.1, ease: "power4.out" }, T2 + 0.02 + (i % 4) * 0.012);
+        tl.to(c, { opacity: 0, scale: 1.35, duration: 0.55, ease: "power2.in" }, T2 + 0.2 + (i % 5) * 0.03);
+      });
+      kick(T2 + 0.12, -1.15);
+
+      // seals stamp onto each portrait: 可 · 可 · 中
+      var stamps = [
+        { ring: "#f05-ring1", seal: "#f05-seal1", t: 1.74 },
+        { ring: "#f05-ring2", seal: "#f05-seal2", t: 1.92 },
+        { ring: "#f05-ring3", seal: "#f05-seal3", t: 2.12 }
+      ];
+      stamps.forEach(function (s, i) {
+        tl.fromTo(s.ring, { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1, duration: 0.14, ease: "power4.out" }, s.t - 0.04);
+        tl.fromTo(s.seal, { opacity: 0, scale: 2.2, rotation: i === 2 ? 14 : -14 }, { opacity: 1, scale: 1, rotation: i === 2 ? 4 : -6, duration: 0.12, ease: "power4.out" }, s.t);
+        tl.to("#f05-card2", { y: 4, duration: FR, ease: "none" }, s.t + 0.1);
+        tl.to("#f05-card2", { y: 0, duration: FR * 2, ease: "none" }, s.t + 0.1 + FR);
+      });
+      // the dissenting seat fades back; the 可 seats keep their gold ring
+      tl.to("#f05-ring3", { opacity: 0.35, duration: 0.4, ease: "power1.out" }, 2.4);
+
+      // pad to the exact frame length
+      tl.set({}, {}, DUR);
+
+      window.__timelines["05-court"] = tl;
+    })();
+  </script>
+</template>

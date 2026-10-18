@@ -1,0 +1,488 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face{font-family:"Ma Shan Zheng";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/MaShanZheng-Regular.ttf") format("truetype");}
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+    }
+    #root .f03-layer {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    #f03-ground { background: #0b0907; }
+
+    /* camera: handheld shake (functional) > slam kick (gsap) > shots */
+    #f03-shake, #f03-kick {
+      position: absolute;
+      inset: 0;
+      transform-origin: 960px 540px;
+    }
+    .f03-shot {
+      position: absolute;
+      inset: 0;
+      visibility: hidden;
+    }
+    .f03-push {
+      position: absolute;
+      inset: 0;
+    }
+    .f03-push img {
+      position: absolute;
+      display: block;
+      max-width: none;
+    }
+    #f03-img1 { left: -60px; top: -60px; width: 2040px; height: 1360px; }
+    #f03-img2 { left: -90px; top: 20px; width: 2100px; height: 1400px; }
+    #f03-img3 { left: -60px; top: -60px; width: 2040px; height: 1360px; }
+    #f03-img4 { left: -60px; top: -40px; width: 2040px; height: 1360px;
+      filter: grayscale(1) brightness(0.66) contrast(1.12); }
+    #f03-cold {
+      position: absolute; inset: 0;
+      background: #8c99a3; mix-blend-mode: multiply; opacity: 0.42;
+    }
+    .f03-vignette {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 72% 70% at 50% 52%, rgba(11,9,7,0) 55%, rgba(11,9,7,0.62) 100%);
+    }
+    .f03-scrim { position: absolute; inset: 0; }
+    #f03-scrim1 { background: radial-gradient(ellipse 760px 360px at 520px 800px, rgba(11,9,7,0.78) 0%, rgba(11,9,7,0.45) 45%, rgba(11,9,7,0) 100%); }
+    #f03-scrim2 { background: radial-gradient(ellipse 760px 330px at 1340px 300px, rgba(11,9,7,0.8) 0%, rgba(11,9,7,0.45) 48%, rgba(11,9,7,0) 100%); }
+    #f03-scrim3 { background: radial-gradient(ellipse 900px 360px at 960px 545px, rgba(11,9,7,0.72) 0%, rgba(11,9,7,0.35) 52%, rgba(11,9,7,0) 100%); }
+    #f03-scrim4 { background: linear-gradient(90deg, rgba(11,9,7,0) 38%, rgba(11,9,7,0.62) 72%, rgba(11,9,7,0.7) 100%); }
+
+    /* heat pulse on the burning gate */
+    #f03-heat {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 820px 520px at 1290px 600px, rgba(232,121,46,0.55), rgba(194,58,38,0) 70%);
+      mix-blend-mode: screen; opacity: 0;
+    }
+
+    /* brush slams */
+    .f03-slam {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .f03-word, .f03-echo {
+      position: absolute;
+      left: 0; right: 0; top: 0; bottom: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: "Ma Shan Zheng";
+      font-weight: 400;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .f03-word {
+      color: #c23a26;
+      text-shadow: 0 0 24px rgba(11,9,7,0.95), 0 0 8px rgba(11,9,7,0.9), 0 8px 34px rgba(0,0,0,0.8);
+    }
+    .f03-echo {
+      color: #e8792e;
+      opacity: 0;
+    }
+    .f03-splat {
+      position: absolute;
+      left: 50%; top: 50%;
+      width: 0; height: 0;
+    }
+    .f03-blob {
+      position: absolute;
+      left: 0; top: 0;
+      border-radius: 50%;
+    }
+    .f03-swash {
+      position: absolute;
+      left: -70px; right: -70px; top: 22%; bottom: 14%;
+      background: #0b0907;
+      border-radius: 46% 54% 40% 60% / 60% 42% 58% 40%;
+      filter: blur(6px);
+      opacity: 0.86;
+      transform-origin: 0% 50%;
+    }
+
+    #f03-slam1 { left: 110px; top: 660px; width: 900px; height: 240px; transform: rotate(-3deg); }
+    #f03-slam1 .f03-word, #f03-slam1 .f03-echo { font-size: 220px; }
+    #f03-slam2 { left: 900px; top: 178px; width: 900px; height: 240px; transform: rotate(2deg); }
+    #f03-slam2 .f03-word, #f03-slam2 .f03-echo { font-size: 220px; }
+    #f03-slam3 { left: 360px; top: 395px; width: 1200px; height: 300px; }
+    #f03-slam3 .f03-word, #f03-slam3 .f03-echo { font-size: 280px; }
+    #f03-slam4 { left: 1040px; top: 470px; width: 760px; height: 200px; }
+    #f03-slam4 .f03-word { font-size: 180px; color: #efe9dc; letter-spacing: 6px; }
+
+    /* particles */
+    .f03-p {
+      position: absolute;
+      left: 0; top: 0;
+      border-radius: 50%;
+      will-change: transform;
+    }
+    .f03-flake { background: #efe9dc; }
+    .f03-ember {
+      background: #ffcf8a;
+      box-shadow: 0 0 6px 2px rgba(232,121,46,0.85), 0 0 14px 4px rgba(194,58,38,0.45);
+    }
+
+    #f03-flash { background: #efe9dc; opacity: 0; }
+    #f03-flash-ember { background: #e8792e; opacity: 0; mix-blend-mode: screen; }
+    #f03-ink { background: #0b0907; opacity: 0; }
+
+    #f03-grain-tex {
+      position: absolute;
+      left: -480px; top: -270px;
+      width: 2880px; height: 1620px;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.075;
+    }
+
+    .f03-bar {
+      position: absolute;
+      left: 0;
+      width: 1920px;
+      height: 140px;
+      background: #0b0907;
+    }
+    #f03-bar-top { top: 0; }
+    #f03-bar-bottom { top: 940px; }
+  </style>
+
+  <div id="root" data-composition-id="03-fall" data-width="1920" data-height="1080" data-duration="6.3">
+    <!-- ink ground -->
+    <div id="f03-ground" class="clip f03-layer" data-start="0" data-duration="6.3" data-track-index="0"></div>
+
+    <!-- the camera: four shots, hard cuts -->
+    <div id="f03-cam" class="clip f03-layer" data-start="0" data-duration="6.3" data-track-index="1">
+      <div id="f03-shake">
+        <div id="f03-kick">
+
+          <!-- Shot 1 · 金骑踏冰 -->
+          <div id="f03-shot1" class="f03-shot">
+            <div id="f03-push1" class="f03-push" style="transform-origin: 888px 470px;">
+              <img id="f03-img1" src="assets/t_jin_charge.jpg" alt="" />
+            </div>
+            <div class="f03-vignette"></div>
+            <div id="f03-scrim1" class="f03-scrim"></div>
+            <div id="f03-slam1" class="f03-slam">
+              <div id="f03-splat1" class="f03-splat"></div>
+              <div id="f03-echo1" class="f03-echo">金兵南下</div>
+              <div id="f03-word1" class="f03-word">金兵南下</div>
+            </div>
+          </div>
+
+          <!-- Shot 2 · 太原城头 -->
+          <div id="f03-shot2" class="f03-shot">
+            <div id="f03-push2" class="f03-push" style="transform-origin: 900px 560px;">
+              <img id="f03-img2" src="assets/t_taiyuan.jpg" alt="" />
+            </div>
+            <div class="f03-vignette"></div>
+            <div id="f03-scrim2" class="f03-scrim"></div>
+            <div id="f03-slam2" class="f03-slam">
+              <div id="f03-splat2" class="f03-splat"></div>
+              <div id="f03-echo2" class="f03-echo">太原被围</div>
+              <div id="f03-word2" class="f03-word">太原被围</div>
+            </div>
+          </div>
+
+          <!-- Shot 3 · 宫门焚毁 -->
+          <div id="f03-shot3" class="f03-shot">
+            <div id="f03-push3" class="f03-push" style="transform-origin: 1296px 592px;">
+              <img id="f03-img3" src="assets/t_fall.jpg" alt="" />
+            </div>
+            <div id="f03-heat"></div>
+            <div class="f03-vignette"></div>
+            <div id="f03-scrim3" class="f03-scrim"></div>
+            <div id="f03-slam3" class="f03-slam">
+              <div id="f03-swash3" class="f03-swash"></div>
+              <div id="f03-splat3" class="f03-splat"></div>
+              <div id="f03-echo3" class="f03-echo">汴京城破</div>
+              <div id="f03-word3" class="f03-word">汴京城破</div>
+            </div>
+          </div>
+
+          <!-- Shot 4 · 二帝北狩 (cold, desaturated) -->
+          <div id="f03-shot4" class="f03-shot">
+            <div id="f03-push4" class="f03-push" style="transform-origin: 40% 50%;">
+              <img id="f03-img4" src="assets/ending.e_jingkang.webp" alt="" />
+              <div id="f03-cold"></div>
+            </div>
+            <div class="f03-vignette"></div>
+            <div id="f03-scrim4" class="f03-scrim"></div>
+            <div id="f03-slam4" class="f03-slam">
+              <div id="f03-word4" class="f03-word">二帝北狩</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- atmosphere: snow rush, embers, falling snow (all seek-safe, driven by time) -->
+    <div id="f03-particles" class="clip f03-layer" data-start="0" data-duration="6.3" data-track-index="2"></div>
+
+    <!-- cut flashes -->
+    <div id="f03-flash" class="clip f03-layer" data-start="0" data-duration="6.3" data-track-index="3"></div>
+    <div id="f03-flash-ember" class="clip f03-layer" data-start="0" data-duration="6.3" data-track-index="4"></div>
+
+    <!-- music drops: picture to ink -->
+    <div id="f03-ink" class="clip f03-layer" data-start="0" data-duration="6.3" data-track-index="5"></div>
+
+    <!-- film grain -->
+    <div id="f03-grain" class="clip f03-layer" data-start="0" data-duration="6.3" data-track-index="6">
+      <div id="f03-grain-tex"></div>
+    </div>
+
+    <!-- letterbox bars -->
+    <div id="f03-bars" class="clip f03-layer" data-start="0" data-duration="6.3" data-track-index="7">
+      <div id="f03-bar-top" class="f03-bar"></div>
+      <div id="f03-bar-bottom" class="f03-bar"></div>
+    </div>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+    (function () {
+      var root = document.querySelector('[data-composition-id="03-fall"]');
+      function $(sel) { return root.querySelector(sel); }
+      var DUR = 6.3;
+      var W = 1920, H = 1080;
+      var TAU = Math.PI * 2;
+      var CUTS = [0.30, 1.90, 3.43, 5.04];
+      var FADE_START = 5.9;
+
+      // deterministic hash (no Math.random)
+      function rnd(n) {
+        var x = Math.sin(n * 127.1 + 311.7) * 43758.5453;
+        return x - Math.floor(x);
+      }
+      function frac(x) { return x - Math.floor(x); }
+
+      var tl = gsap.timeline({ paused: true });
+
+      /* ---------- shots + camera pushes ---------- */
+      var shots = [$("#f03-shot1"), $("#f03-shot2"), $("#f03-shot3"), $("#f03-shot4")];
+
+      // Shot 1: fast push 1.0 -> 1.15, the cavalry rushes the lens (accelerates into the cut)
+      tl.fromTo("#f03-push1", { scale: 1.0, x: 0, y: 0 }, { scale: 1.15, x: -10, y: 14, duration: CUTS[1] - CUTS[0], ease: "power1.in" }, CUTS[0]);
+      // Shot 2: push with lateral drift right
+      tl.fromTo("#f03-push2", { scale: 1.04, x: -10 }, { scale: 1.13, x: 70, duration: CUTS[2] - CUTS[1], ease: "power2.inOut" }, CUTS[1]);
+      // Shot 3: slow push into the burning gate
+      tl.fromTo("#f03-push3", { scale: 1.02 }, { scale: 1.12, duration: CUTS[3] - CUTS[2], ease: "power1.inOut" }, CUTS[2]);
+      // Shot 4: slow pull 1.08 -> 1.0
+      tl.fromTo("#f03-push4", { scale: 1.08 }, { scale: 1.0, duration: DUR - CUTS[3], ease: "power2.out" }, CUTS[3]);
+
+      // camera kick on the three loud slams (3 frames + settle); punch-in on the cut
+      var kicks = [
+        { t: CUTS[0], x: 12, y: -8, r: -0.6, s: 1.07 },
+        { t: CUTS[1], x: -12, y: 7, r: 0.6, s: 1.06 },
+        { t: CUTS[2], x: 10, y: 10, r: -0.5, s: 1.08 }
+      ];
+      kicks.forEach(function (k, i) {
+        tl.fromTo("#f03-kick", { x: k.x, y: k.y, rotation: k.r, scale: k.s },
+          { x: -k.x * 0.6, y: -k.y * 0.6, rotation: -k.r * 0.6, scale: k.s - 0.02, duration: 0.034, ease: "none", immediateRender: i === 0 }, k.t);
+        tl.to("#f03-kick", { x: k.x * 0.3, y: k.y * 0.3, rotation: k.r * 0.3, scale: 1.02, duration: 0.033, ease: "none" }, k.t + 0.034);
+        tl.to("#f03-kick", { x: 0, y: 0, rotation: 0, scale: 1, duration: 0.2, ease: "power3.out" }, k.t + 0.067);
+      });
+      // (before the first cut the shot is ink; the kick's start state is invisible there)
+
+      /* ---------- slams ---------- */
+      function slam(i, t, opts) {
+        var word = "#f03-word" + i, echo = "#f03-echo" + i;
+        tl.fromTo(word,
+          { autoAlpha: 0, scale: opts.from || 1.35, filter: "blur(10px)" },
+          { autoAlpha: 1, scale: 1, filter: "blur(0px)", duration: 0.12, ease: "power4.out" }, t);
+        // continued micro-settle so the word never freezes
+        tl.fromTo(word, { scale: 1 }, { scale: opts.drift || 0.965, duration: opts.hold, ease: "none", immediateRender: false }, t + 0.12);
+        if (opts.echo !== false) {
+          tl.fromTo(echo, { opacity: 0.8, scale: 1 }, { opacity: 0, scale: 1.55, duration: 0.42, ease: "power2.out" }, t);
+        }
+      }
+      slam(1, CUTS[0], { hold: CUTS[1] - CUTS[0] - 0.12 });
+      slam(2, CUTS[1], { hold: CUTS[2] - CUTS[1] - 0.12 });
+      slam(3, CUTS[2], { from: 1.45, hold: CUTS[3] - CUTS[2] - 0.12, drift: 1.04 });
+      // Shot 4: the blow lands quiet — no flash, no kick, no splatter
+      tl.fromTo("#f03-word4",
+        { autoAlpha: 0, scale: 1.12, filter: "blur(8px)" },
+        { autoAlpha: 1, scale: 1, filter: "blur(0px)", duration: 0.3, ease: "power4.out" }, CUTS[3]);
+      tl.fromTo("#f03-word4", { scale: 1 }, { scale: 0.975, duration: DUR - CUTS[3] - 0.3, ease: "none", immediateRender: false }, CUTS[3] + 0.3);
+
+      // ink swash behind 汴京城破 (wipes in left -> right on the hit)
+      tl.fromTo("#f03-swash3", { scaleX: 0, opacity: 0.86 }, { scaleX: 1, duration: 0.14, ease: "expo.out" }, CUTS[2] - 0.02);
+
+      // heat pulse on the burning gate
+      tl.fromTo("#f03-heat", { opacity: 0.9 }, { opacity: 0.25, duration: 0.6, ease: "power2.out" }, CUTS[2]);
+      tl.to("#f03-heat", { opacity: 0.5, duration: DUR - CUTS[2] - 0.6 - 1.4, ease: "sine.inOut" }, CUTS[2] + 0.6);
+
+      /* ---------- ink / cinnabar splatter bursts ---------- */
+      function splatter(i, t, count, reach, seed) {
+        var host = $("#f03-splat" + i);
+        for (var b = 0; b < count; b++) {
+          var a = TAU * rnd(seed + b * 3.1);
+          var d = reach * (0.35 + 0.65 * rnd(seed + b * 5.7));
+          var size = 8 + 54 * Math.pow(rnd(seed + b * 7.3), 2);
+          var isRed = rnd(seed + b * 9.9) > 0.45;
+          var el = document.createElement("div");
+          el.className = "f03-blob";
+          el.style.width = size + "px";
+          el.style.height = size + "px";
+          el.style.marginLeft = (-size / 2) + "px";
+          el.style.marginTop = (-size / 2) + "px";
+          el.style.background = isRed ? "#c23a26" : "#0b0907";
+          host.appendChild(el);
+          var tx = Math.cos(a) * d * 1.6, ty = Math.sin(a) * d * 0.7;
+          var stretch = 1 + 1.8 * rnd(seed + b * 2.2);
+          var rot = a * 180 / Math.PI;
+          tl.fromTo(el,
+            { x: 0, y: 0, scaleX: 0.2, scaleY: 0.2, rotation: rot, opacity: 0 },
+            { x: tx, y: ty, scaleX: stretch, scaleY: 1, opacity: 0.95, duration: 0.16, ease: "power4.out" }, t);
+          tl.to(el, { x: tx * 1.12, y: ty * 1.12 + 18, scaleX: 1, opacity: 0, duration: 0.55 + 0.4 * rnd(seed + b), ease: "power2.in" }, t + 0.16);
+        }
+      }
+      splatter(1, CUTS[0], 22, 360, 11);
+      splatter(2, CUTS[1], 22, 360, 211);
+      splatter(3, CUTS[2], 34, 520, 411);
+
+      /* ---------- particles (positions are pure functions of time) ---------- */
+      var field = $("#f03-particles");
+      function mk(cls, size, op) {
+        var el = document.createElement("div");
+        el.className = "f03-p " + cls;
+        el.style.width = size + "px";
+        el.style.height = size + "px";
+        el.style.marginLeft = (-size / 2) + "px";
+        el.style.marginTop = (-size / 2) + "px";
+        el.style.opacity = op;
+        field.appendChild(el);
+        return el;
+      }
+      // Shot 1: snow rushing at the lens (radial stream from the vanishing point)
+      var rush = [];
+      for (var i = 0; i < 120; i++) {
+        var s = 2 + 4 * rnd(i + 40);
+        rush.push({ el: mk("f03-flake", s, 1), a: TAU * rnd(i + 1000), ph: rnd(i + 2000), sp: 0.9 + 0.9 * rnd(i + 3000), base: rnd(i + 4000) });
+      }
+      // Shots 2–3: embers rising
+      var embers = [];
+      for (var j = 0; j < 80; j++) {
+        var es = 3 + 5 * rnd(j + 500);
+        embers.push({ el: mk("f03-ember", es, 1), x: rnd(j + 600) * W, ph: rnd(j + 700), sp: 0.35 + 0.5 * rnd(j + 800), sw: 20 + 60 * rnd(j + 900), sf: 0.6 + 1.4 * rnd(j + 950), fl: TAU * rnd(j + 990) });
+      }
+      // Shot 4 (+ light in shot 2): slow falling snow
+      var fall = [];
+      for (var k = 0; k < 110; k++) {
+        var depth = rnd(k + 5000);
+        var fs = 2 + 9 * depth * depth;
+        var fe = mk("f03-flake", fs, 0.35 + 0.4 * depth);
+        if (depth > 0.85) fe.style.filter = "blur(2px)";
+        fall.push({ el: fe, x: frac(k * 0.6180339887 + 0.07) * W, ph: frac(k * 0.41421356 + 0.37), sp: 0.12 + 0.18 * depth, sw: 8 + 22 * depth, sf: 0.5 + rnd(k + 5100), sph: TAU * rnd(k + 5200), op: 0.35 + 0.4 * depth });
+      }
+
+      var shakeEl = $("#f03-shake");
+      var grainEl = $("#f03-grain-tex");
+      var flashEl = $("#f03-flash");
+      var flashEmberEl = $("#f03-flash-ember");
+      var lastShot = -2;
+
+      function shotAt(t) {
+        if (t < CUTS[0]) return -1;
+        if (t < CUTS[1]) return 0;
+        if (t < CUTS[2]) return 1;
+        if (t < CUTS[3]) return 2;
+        return 3;
+      }
+      function flashAt(t, at, len) {
+        var d = t - at;
+        if (d < 0 || d >= len) return 0;
+        return 1 - d / len;
+      }
+
+      function render(t) {
+        var sh = shotAt(t);
+        if (sh !== lastShot) {
+          for (var q = 0; q < shots.length; q++) shots[q].style.visibility = q === sh ? "visible" : "hidden";
+          lastShot = sh;
+        }
+
+        // flash cuts: 2-frame snow flash on cuts 1 & 2, ember flash on cut 3, none on cut 4
+        flashEl.style.opacity = Math.max(flashAt(t, CUTS[0], 0.09), flashAt(t, CUTS[1], 0.09) * 0.92).toFixed(3);
+        flashEmberEl.style.opacity = (flashAt(t, CUTS[2], 0.12) * 0.95).toFixed(3);
+
+        // handheld rumble that spikes after each loud slam
+        var amp = sh < 0 ? 0 : 1.4;
+        var strengths = [1.0, 0.85, 1.15];
+        for (var c = 0; c < 3; c++) {
+          if (t >= CUTS[c]) amp += strengths[c] * 13 * Math.exp(-(t - CUTS[c]) * 6.5);
+        }
+        if (sh === 3) amp = 0.9;
+        var sx = amp * (0.6 * Math.sin(t * 13.7) + 0.4 * Math.sin(t * 23.1 + 1.3));
+        var sy = amp * 0.8 * (0.6 * Math.sin(t * 15.3 + 0.7) + 0.4 * Math.sin(t * 29.7 + 2.1));
+        var sr = amp * 0.03 * Math.sin(t * 9.1 + 0.3);
+        shakeEl.style.transform = "translate(" + sx.toFixed(2) + "px," + sy.toFixed(2) + "px) rotate(" + sr.toFixed(3) + "deg)";
+
+        // grain: jumps every 1/24s
+        var gf = Math.floor(t * 24);
+        grainEl.style.transform = "translate(" + Math.round((rnd(gf + 77) - 0.5) * 400) + "px," + Math.round((rnd(gf + 133) - 0.5) * 240) + "px)";
+
+        // snow rush (shot 1)
+        var showRush = sh === 0;
+        for (var r = 0; r < rush.length; r++) {
+          var f = rush[r];
+          if (!showRush) { f.el.style.visibility = "hidden"; continue; }
+          var z = frac(f.ph + t * f.sp);
+          var dist = 30 + z * z * 1250;
+          var px = 900 + Math.cos(f.a) * dist * 1.15;
+          var py = 470 + Math.sin(f.a) * dist * 0.8;
+          var sc = 0.4 + z * 1.5;
+          var stretch = 1 + z * 3.2;
+          f.el.style.visibility = "visible";
+          f.el.style.opacity = (Math.min(1, z * 3) * (0.55 + 0.35 * f.base)).toFixed(3);
+          f.el.style.transform = "translate(" + px.toFixed(1) + "px," + py.toFixed(1) + "px) rotate(" + (f.a * 180 / Math.PI).toFixed(1) + "deg) scale(" + (sc * stretch).toFixed(2) + "," + sc.toFixed(2) + ")";
+        }
+
+        // embers (shots 2 & 3; denser and faster in 3)
+        var showEmb = sh === 1 || sh === 2;
+        var boost = sh === 2 ? 1.5 : 1.0;
+        for (var e = 0; e < embers.length; e++) {
+          var m = embers[e];
+          if (!showEmb || (sh === 1 && e % 3 === 0)) { m.el.style.visibility = "hidden"; continue; }
+          var yy = frac(m.ph + t * m.sp * boost);
+          var ey = H + 40 - yy * (H + 120);
+          var ex = m.x + m.sw * Math.sin(t * m.sf * TAU * 0.5 + m.fl) + yy * 120;
+          var flick = 0.55 + 0.45 * Math.sin(t * 17 + m.fl * 3);
+          m.el.style.visibility = "visible";
+          m.el.style.opacity = (flick * Math.min(1, (1 - yy) * 3)).toFixed(3);
+          m.el.style.transform = "translate(" + ex.toFixed(1) + "px," + ey.toFixed(1) + "px)";
+        }
+
+        // falling snow (light in shot 2, full in shot 4)
+        var showFall = sh === 1 || sh === 3;
+        for (var g = 0; g < fall.length; g++) {
+          var fl = fall[g];
+          if (!showFall || (sh === 1 && g % 2 === 0)) { fl.el.style.visibility = "hidden"; continue; }
+          var fy = frac(fl.ph + t * fl.sp);
+          var yv = -20 + fy * (H + 40);
+          var xv = fl.x + fl.sw * Math.sin(t * fl.sf * TAU * 0.4 + fl.sph) - fy * 60;
+          fl.el.style.visibility = "visible";
+          fl.el.style.transform = "translate(" + xv.toFixed(1) + "px," + yv.toFixed(1) + "px)";
+        }
+      }
+
+      var clock = { t: 0 };
+      tl.to(clock, { t: DUR, duration: DUR, ease: "none", onUpdate: function () { render(clock.t); } }, 0);
+
+      // 5.9s: the music drops out — the picture sinks to ink by 6.3s (packet-specified)
+      tl.fromTo("#f03-ink", { opacity: 0 }, { opacity: 1, duration: DUR - FADE_START, ease: "power1.in" }, FADE_START);
+
+      render(0);
+      window.__timelines["03-fall"] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,450 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face{font-family:"Ma Shan Zheng";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/MaShanZheng-Regular.ttf") format("truetype");}
+    @font-face{font-family:"Zhi Mang Xing";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/ZhiMangXing-Regular.ttf") format("truetype");}
+    @font-face{font-family:"Noto Sans SC";font-weight:100 900;font-style:normal;font-display:block;src:url("assets/fonts/NotoSansSC-VF.ttf") format("truetype");}
+
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+    }
+    #f07-ground { position: absolute; inset: 0; background: #0b0907; }
+    #f07-cam { position: absolute; inset: 0; overflow: hidden; }
+    .f07-layer { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; }
+
+    /* paintings: 2160x1440 -> cover at 1920x1280 */
+    .f07-paint { position: absolute; left: 0; top: 0; width: 1920px; height: 1280px; }
+    .f07-paint img { position: absolute; left: 0; top: 0; width: 1920px; height: 1280px; display: block; }
+    .f07-vignette {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 75% 70% at 50% 50%, rgba(11,9,7,0) 55%, rgba(11,9,7,0.7) 100%);
+    }
+
+    /* scene 1-2 */
+    #f07-court-scrim { position: absolute; inset: 0; background: #0b0907; opacity: 0.2; }
+    #f07-court-img { opacity: 0.3; }
+    #f07-m5-paint { background: url("assets/t_ligang.jpg") 0 0 / 1920px 1280px no-repeat; }
+    #f07-band { filter: blur(10px); }
+    #f07-band-sm { position: absolute; left: 90px; top: 715px; width: 720px; height: 120px; border-radius: 50%; background: #0b0907; opacity: 0.55; filter: blur(22px); }
+    #f07-split {
+      position: absolute; left: 959px; top: 160px; width: 2px; height: 760px;
+      background: linear-gradient(180deg, rgba(232,121,46,0) 0%, #e8792e 18%, #ffb070 50%, #e8792e 82%, rgba(232,121,46,0) 100%);
+      box-shadow: 0 0 14px 2px rgba(232,121,46,0.75), 0 0 40px 6px rgba(232,121,46,0.3);
+    }
+    .f07-word {
+      position: absolute; text-align: center; white-space: nowrap;
+      font-family: "Ma Shan Zheng"; font-weight: 400;
+      text-shadow: 0 0 24px rgba(11,9,7,0.95), 0 0 64px rgba(11,9,7,0.7), 0 6px 0 rgba(11,9,7,0.55);
+    }
+    #f07-lianjin { left: 120px; top: 430px; width: 800px; height: 200px; line-height: 200px; font-size: 180px; color: #d6b46a; }
+    #f07-cunliao { left: 1000px; top: 430px; width: 760px; height: 200px; line-height: 200px; font-size: 180px; color: #efe9dc; }
+    #f07-q { left: 1560px; top: 380px; width: 180px; height: 200px; line-height: 200px; font-size: 150px; color: #e8792e; }
+    #f07-yihe { left: 460px; top: 440px; width: 1000px; height: 180px; line-height: 180px; font-size: 160px; color: #efe9dc; }
+
+    /* scene 3 */
+    #f07-haishi {
+      position: absolute; left: 560px; top: 486px; width: 800px; height: 108px; line-height: 108px;
+      text-align: center; font-family: "Zhi Mang Xing"; font-size: 76px; color: #d6b46a; letter-spacing: 4px;
+    }
+
+    /* splatter */
+    .f07-splat { position: absolute; width: 0; height: 0; }
+    .f07-blob { position: absolute; border-radius: 50%; }
+
+    /* the drop */
+    #f07-band { position: absolute; left: 160px; top: 430px; width: 1600px; height: 300px; }
+    #f07-slam {
+      left: 160px; top: 420px; width: 1600px; height: 320px; line-height: 320px; font-size: 300px;
+      color: #c23a26; letter-spacing: 8px;
+      text-shadow: 0 0 24px rgba(11,9,7,0.95), 0 0 70px rgba(11,9,7,0.8), 0 8px 0 rgba(11,9,7,0.6), 0 0 120px rgba(232,121,46,0.35);
+    }
+    #f07-slam-sm {
+      left: 140px; top: 700px; width: 640px; height: 150px; line-height: 150px; font-size: 132px;
+      color: #efe9dc; text-align: left;
+    }
+
+    /* intel card */
+    #f07-intel-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 55% at 46% 52%, rgba(194,58,38,0.32) 0%, rgba(11,9,7,0) 70%), #0b0907;
+    }
+    #f07-stage3d { position: absolute; inset: 0; perspective: 1700px; }
+    #f07-card { position: absolute; left: 320px; top: 180px; width: 1280px; height: 720px; }
+    #f07-card-frame {
+      position: absolute; left: 0; top: 0; width: 1280px; height: 720px; overflow: hidden;
+      box-shadow: 0 0 0 2px #d6b46a, 0 30px 90px rgba(0,0,0,0.85);
+      background: #0b0907;
+    }
+    #f07-zoom-outer { position: absolute; left: 0; top: 0; width: 1280px; height: 720px; transform-origin: 50% 50%; }
+    #f07-zoom-inner { position: absolute; left: 0; top: 0; width: 1280px; height: 720px; }
+    #f07-zoom-inner img { position: absolute; left: 0; top: 0; width: 1280px; height: 720px; display: block; }
+    #f07-tag {
+      position: absolute; left: -2px; top: -44px; height: 42px; line-height: 42px; padding: 0 18px 0 16px;
+      background: #0b0907; box-shadow: 0 0 0 2px #d6b46a;
+      font-family: "Noto Sans SC"; font-weight: 600; font-size: 22px; letter-spacing: 6px; color: #d6b46a; white-space: nowrap;
+    }
+    #f07-reticle { position: absolute; left: 430px; top: 60px; width: 420px; height: 600px; }
+    .f07-br { position: absolute; width: 54px; height: 54px; border-color: #d6b46a; border-style: solid; border-width: 0; }
+    .f07-br.tl { left: 0; top: 0; border-left-width: 4px; border-top-width: 4px; }
+    .f07-br.tr { right: 0; top: 0; border-right-width: 4px; border-top-width: 4px; }
+    .f07-br.bl { left: 0; bottom: 0; border-left-width: 4px; border-bottom-width: 4px; }
+    .f07-br.brr { right: 0; bottom: 0; border-right-width: 4px; border-bottom-width: 4px; }
+    #f07-dial {
+      position: absolute; left: 1440px; top: 168px; width: 250px; height: 250px; border-radius: 50%;
+      background-image: url("assets/24-war-desk-3.png"); background-repeat: no-repeat;
+      background-size: 2880px 1620px; background-position: -2627px -288px;
+      box-shadow: 0 0 0 3px #d6b46a, 0 0 0 9px rgba(11,9,7,0.9), 0 18px 50px rgba(0,0,0,0.8);
+    }
+
+    /* atmosphere */
+    #f07-particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .f07-flake { position: absolute; left: 0; top: 0; border-radius: 50%; background: #efe9dc; }
+    .f07-ember { position: absolute; left: 0; top: 0; border-radius: 50%; background: #ffb070; box-shadow: 0 0 6px 2px rgba(232,121,46,0.9), 0 0 16px 4px rgba(232,121,46,0.45); }
+    #f07-grain {
+      position: absolute; left: -64px; top: -64px; width: 2048px; height: 1208px; opacity: 0.07; pointer-events: none;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    #f07-flash { position: absolute; inset: 0; background: #efe9dc; opacity: 0; pointer-events: none; }
+
+    /* letterbox */
+    #f07-bars { position: absolute; inset: 0; pointer-events: none; }
+    #f07-bar-top { position: absolute; left: 0; top: 0; width: 1920px; height: 140px; background: #0b0907; }
+    #f07-bar-bot { position: absolute; left: 0; top: 940px; width: 1920px; height: 140px; background: #0b0907; }
+  </style>
+
+  <div id="root" data-composition-id="07-defend" data-width="1920" data-height="1080" data-duration="11.65">
+    <!-- ink ground -->
+    <div id="f07-ground" class="clip" data-start="0" data-duration="11.65" data-track-index="0"></div>
+
+    <!-- camera rig (kicks) holding every picture layer -->
+    <div id="f07-cam" class="clip" data-start="0" data-duration="11.65" data-track-index="1" data-layout-allow-overflow>
+
+      <!-- Scene 1-2: court + paired choices -->
+      <div id="f07-court" class="clip f07-layer" data-start="0" data-duration="3.14" data-track-index="2" data-layout-allow-overflow>
+        <div id="f07-court-paint" class="f07-paint" style="top:-100px;"><img id="f07-court-img" src="assets/t_court.jpg" alt="" /></div>
+        <div id="f07-court-scrim"></div>
+        <div class="f07-vignette"></div>
+      </div>
+      <div id="f07-choices" class="clip f07-layer" data-start="0" data-duration="3.14" data-track-index="3" data-layout-allow-overflow>
+        <div id="f07-split"></div>
+        <div id="f07-splat-a" class="f07-splat" style="left:520px;top:530px;"></div>
+        <div id="f07-splat-b" class="f07-splat" style="left:1380px;top:530px;"></div>
+        <div id="f07-splat-c" class="f07-splat" style="left:960px;top:530px;"></div>
+        <div id="f07-lianjin" class="f07-word">联金</div>
+        <div id="f07-cunliao" class="f07-word">存辽</div>
+        <div id="f07-q" class="f07-word">？</div>
+        <div id="f07-yihe" class="f07-word">议和</div>
+      </div>
+
+      <!-- Scene 3: silence -->
+      <div id="f07-silence" class="clip f07-layer" data-start="3.14" data-duration="0.66" data-track-index="2">
+        <div id="f07-haishi">还是——</div>
+      </div>
+
+      <!-- Scene 4: the drop -->
+      <div id="f07-drop" class="clip f07-layer" data-start="3.8" data-duration="1.2" data-track-index="2" data-layout-allow-overflow>
+        <div id="f07-drop-paint" class="f07-paint"><img src="assets/t_ligang.jpg" alt="" /></div>
+        <div class="f07-vignette"></div>
+      </div>
+      <div id="f07-drop-type" class="clip f07-layer" data-start="3.8" data-duration="1.2" data-track-index="3" data-layout-allow-overflow>
+        <div id="f07-band"></div>
+        <div id="f07-splat-big" class="f07-splat" style="left:960px;top:580px;"></div>
+        <div id="f07-slam" class="f07-word">死守汴京</div>
+      </div>
+
+      <!-- Scene 5: drum-cut montage -->
+      <div id="f07-m1" class="clip f07-layer" data-start="5" data-duration="1.1" data-track-index="8" data-layout-allow-overflow>
+        <div id="f07-m1-paint" class="f07-paint"><img src="assets/t_taiyuan.jpg" alt="" /></div>
+        <div class="f07-vignette"></div>
+      </div>
+      <div id="f07-m2" class="clip f07-layer" data-start="6.1" data-duration="1.1" data-track-index="10" data-layout-allow-overflow>
+        <div id="f07-m2-paint" class="f07-paint"><img src="assets/t_jin_charge.jpg" alt="" /></div>
+        <div class="f07-vignette"></div>
+      </div>
+      <div id="f07-m3" class="clip f07-layer" data-start="7.2" data-duration="1.1" data-track-index="8" data-layout-allow-overflow>
+        <div id="f07-intel-bg"></div>
+        <div id="f07-stage3d">
+          <div id="f07-card">
+            <div id="f07-card-frame">
+              <div id="f07-zoom-outer">
+                <div id="f07-zoom-inner"><img src="assets/24-war-desk-3.png" alt="" /></div>
+              </div>
+            </div>
+            <div id="f07-reticle">
+              <div class="f07-br tl"></div><div class="f07-br tr"></div><div class="f07-br bl"></div><div class="f07-br brr"></div>
+            </div>
+            <div id="f07-tag">战局 · 实机</div>
+          </div>
+        </div>
+        <div id="f07-dial"></div>
+      </div>
+      <div id="f07-m4" class="clip f07-layer" data-start="8.3" data-duration="1.1" data-track-index="10" data-layout-allow-overflow>
+        <div id="f07-m4-paint" class="f07-paint"><img src="assets/t_xijun.jpg" alt="" /></div>
+        <div class="f07-vignette"></div>
+      </div>
+      <div id="f07-m5" class="clip f07-layer" data-start="9.4" data-duration="1.5" data-track-index="8" data-layout-allow-overflow>
+        <div id="f07-m5-paint" class="f07-paint"></div>
+        <div class="f07-vignette"></div>
+      </div>
+      <div id="f07-m5-type" class="clip f07-layer" data-start="9.4" data-duration="1.5" data-track-index="9" data-layout-allow-overflow>
+        <div id="f07-band-sm"></div>
+        <div id="f07-splat-sm" class="f07-splat" style="left:430px;top:775px;"></div>
+        <div id="f07-slam-sm" class="f07-word">死守汴京</div>
+      </div>
+
+      <!-- snow + embers over the war shots -->
+      <div id="f07-particles" class="clip" data-start="3.8" data-duration="7.1" data-track-index="4" data-layout-allow-overflow></div>
+    </div>
+
+    <!-- film grain -->
+    <div id="f07-grain-wrap" class="clip f07-layer" data-start="0" data-duration="10.9" data-track-index="5" data-layout-allow-overflow>
+      <div id="f07-grain"></div>
+    </div>
+
+    <!-- flash cuts -->
+    <div id="f07-flash-wrap" class="clip f07-layer" data-start="0" data-duration="11.65" data-track-index="6">
+      <div id="f07-flash"></div>
+    </div>
+
+    <!-- letterbox bars (open for 6 frames on the drop) -->
+    <div id="f07-bars" class="clip" data-start="0" data-duration="11.65" data-track-index="7" data-layout-allow-overflow>
+      <div id="f07-bar-top"></div>
+      <div id="f07-bar-bot"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      window.__timelines = window.__timelines || {};
+      var root = document.querySelector('[data-composition-id="07-defend"]');
+      function $(id) { return root.querySelector("#" + id); }
+
+      var W = 1920, H = 1080, FR = 1 / 30;
+      function rnd(n) { var x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+      function frac(x) { return x - Math.floor(x); }
+
+      var tl = gsap.timeline({ paused: true });
+
+      /* ---------- helpers ---------- */
+      var cam = $("f07-cam");
+      function kick(t, amp) {
+        var a = amp || 1;
+        tl.set(cam, { x: 9 * a, y: -7 * a, rotation: 0.6 * a }, t);
+        tl.set(cam, { x: -8 * a, y: 6 * a, rotation: -0.5 * a }, t + FR);
+        tl.set(cam, { x: 3 * a, y: -2 * a, rotation: 0.2 * a }, t + 2 * FR);
+        tl.set(cam, { x: 0, y: 0, rotation: 0 }, t + 3 * FR);
+      }
+      var flash = $("f07-flash");
+      function flashCut(t, color, peak) {
+        tl.set(flash, { backgroundColor: color, opacity: peak }, t);
+        tl.set(flash, { opacity: peak * 0.45 }, t + FR);
+        tl.set(flash, { opacity: 0 }, t + 2 * FR);
+      }
+      // deterministic ink / cinnabar splatter burst: big ink blots near the core (backing the type),
+      // small cinnabar droplets flung far, every drop stretched along its flight line
+      function splat(id, seed, n, sx, sy, rMin, rMax, accent, t, dur) {
+        var host = $(id);
+        for (var i = 0; i < n; i++) {
+          var u = rnd(seed + i * 3.1), v = rnd(seed + i * 7.7), w = rnd(seed + i * 11.3);
+          var ang = u * Math.PI * 2;
+          var d = 0.15 + 0.85 * Math.pow(v, 0.75);
+          var r = rMin + (rMax - rMin) * Math.pow(1 - d, 2.2) * (0.6 + 0.4 * w);
+          var stretch = 1 + d * (0.8 + 1.6 * w);
+          var b = document.createElement("div");
+          b.className = "f07-blob";
+          b.style.width = (2 * r * stretch).toFixed(1) + "px";
+          b.style.height = (2 * r / Math.sqrt(stretch)).toFixed(1) + "px";
+          b.style.left = (-r * stretch).toFixed(1) + "px";
+          b.style.top = (-r / Math.sqrt(stretch)).toFixed(1) + "px";
+          b.style.background = (r < rMin + (rMax - rMin) * 0.22 && w > 0.35) ? accent : "#0b0907";
+          host.appendChild(b);
+          var dx = Math.cos(ang) * d * sx, dy = Math.sin(ang) * d * sy;
+          var rot = Math.atan2(dy, dx) * 180 / Math.PI;
+          tl.fromTo(b, { x: 0, y: 0, scale: 0.15, rotation: rot, opacity: 0.95 },
+            { x: dx, y: dy, scale: 1, rotation: rot, opacity: d > 0.8 ? 0.6 : 0.9, duration: dur, ease: "expo.out" }, t);
+        }
+      }
+
+      /* ---------- Scene 1 (0.0-2.44): 联金 | 存辽？ ---------- */
+      tl.fromTo("#f07-court-paint", { scale: 1.04, x: 0 }, { scale: 1.1, x: -30, duration: 3.14, ease: "none" }, 0);
+      tl.fromTo("#f07-split", { scaleY: 0, opacity: 1 }, { scaleY: 1, duration: 0.14, ease: "expo.out" }, 0);
+      // riser underneath: the ember seam heats up
+      tl.fromTo("#f07-split", { boxShadow: "0 0 14px 2px rgba(232,121,46,0.75), 0 0 40px 6px rgba(232,121,46,0.3)" },
+        { boxShadow: "0 0 22px 4px rgba(255,150,70,0.95), 0 0 90px 18px rgba(232,121,46,0.5)", duration: 1.9, ease: "power2.in", immediateRender: false }, 0.5);
+
+      tl.fromTo("#f07-lianjin", { scale: 1.35, opacity: 0, filter: "blur(8px)" },
+        { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.12, ease: "power4.out" }, 0.10);
+      splat("f07-splat-a", 11, 20, 440, 180, 3, 40, "#c23a26", 0.10, 0.3);
+      kick(0.10, 0.7);
+      tl.fromTo("#f07-lianjin", { x: 0 }, { x: -18, duration: 2.2, ease: "none", immediateRender: false }, 0.22);
+
+      tl.fromTo("#f07-cunliao", { scale: 1.35, x: 50, opacity: 0, filter: "blur(8px)" },
+        { scale: 1, x: 0, opacity: 1, filter: "blur(0px)", duration: 0.12, ease: "power4.out" }, 0.98);
+      splat("f07-splat-b", 47, 20, 440, 180, 3, 40, "#c23a26", 0.98, 0.3);
+      kick(0.98, 0.7);
+      tl.fromTo("#f07-cunliao", { x: 0 }, { x: 18, duration: 1.3, ease: "none", immediateRender: false }, 1.1);
+      tl.fromTo("#f07-q", { scale: 1.8, rotation: -14, opacity: 0 },
+        { scale: 1, rotation: 8, opacity: 1, duration: 0.12, ease: "power4.out" }, 1.30);
+      tl.fromTo("#f07-q", { x: 0 }, { x: 18, duration: 1.14, ease: "none", immediateRender: false }, 1.30);
+
+      /* ---------- Scene 2 (2.44-3.14): 议和 knocks both out ---------- */
+      tl.set("#f07-court-img", { opacity: 1 }, 2.44);
+      tl.set("#f07-court-scrim", { opacity: 0.52 }, 2.44);
+      tl.to("#f07-split", { scaleY: 0, opacity: 0, duration: 0.08, ease: "power2.in" }, 2.44);
+      tl.to("#f07-lianjin", { x: -560, y: 60, rotation: -22, opacity: 0, filter: "blur(10px)", duration: 0.22, ease: "expo.out" }, 2.44);
+      tl.to("#f07-cunliao", { x: 560, y: -50, rotation: 20, opacity: 0, filter: "blur(10px)", duration: 0.22, ease: "expo.out" }, 2.44);
+      tl.to("#f07-q", { x: 520, y: -160, rotation: 60, opacity: 0, duration: 0.22, ease: "expo.out" }, 2.44);
+      tl.to(["#f07-splat-a", "#f07-splat-b"], { opacity: 0, duration: 0.12, ease: "power2.out" }, 2.44);
+      tl.fromTo("#f07-yihe", { scale: 1.5, opacity: 0, filter: "blur(10px)" },
+        { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.12, ease: "power4.out" }, 2.44);
+      splat("f07-splat-c", 91, 22, 560, 200, 3, 46, "#c23a26", 2.44, 0.3);
+      kick(2.44, 1);
+      tl.to("#f07-yihe", { scale: 1.06, duration: 0.64, ease: "none" }, 2.56);
+
+      /* ---------- Scene 3 (3.14-3.80): 还是—— in total stillness ---------- */
+
+      /* ---------- Scene 4 (3.80-5.0): THE DROP ---------- */
+      flashCut(3.80, "#efe9dc", 1);
+      // bars snap open for 6 frames
+      tl.set("#f07-bar-top", { y: -140 }, 3.80);
+      tl.set("#f07-bar-bot", { y: 140 }, 3.80);
+      tl.to("#f07-bar-top", { y: 0, duration: 2 * FR, ease: "expo.in" }, 3.80 + 6 * FR);
+      tl.to("#f07-bar-bot", { y: 0, duration: 2 * FR, ease: "expo.in" }, 3.80 + 6 * FR);
+      // camera punch toward the raised sword
+      tl.set("#f07-drop-paint", { transformOrigin: "800px 250px" }, 3.80);
+      tl.fromTo("#f07-drop-paint", { scale: 1.0 }, { scale: 1.14, duration: 0.2, ease: "power4.out" }, 3.80);
+      tl.to("#f07-drop-paint", { scale: 1.2, x: -24, duration: 0.98, ease: "none" }, 4.0);
+      // ink brush band behind the slam
+      (function () {
+        var band = $("f07-band");
+        for (var i = 0; i < 9; i++) {
+          var e = document.createElement("div");
+          e.className = "f07-blob";
+          var wv = rnd(400 + i), hv = rnd(500 + i);
+          var bw = 420 + wv * 360, bh = 150 + hv * 110;
+          e.style.width = bw + "px"; e.style.height = bh + "px";
+          e.style.left = (i * 160 + 40 - bw / 2 + 120).toFixed(0) + "px";
+          e.style.top = (150 - bh / 2 + (rnd(600 + i) - 0.5) * 50).toFixed(0) + "px";
+          e.style.background = "#0b0907";
+          e.style.opacity = "0.82";
+          band.appendChild(e);
+        }
+      })();
+      tl.fromTo("#f07-band", { scaleX: 0, transformOrigin: "0% 50%", opacity: 1 }, { scaleX: 1, duration: 0.1, ease: "expo.out" }, 3.80);
+      splat("f07-splat-big", 7, 70, 1000, 430, 4, 110, "#c23a26", 3.82, 0.42);
+      tl.fromTo("#f07-slam", { scale: 1.8, rotation: -3, opacity: 0, filter: "blur(14px)" },
+        { scale: 1, rotation: -2, opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power4.out" }, 3.80);
+      tl.to("#f07-slam", { scale: 1.06, duration: 1.04, ease: "none" }, 3.94);
+      // 3-frame kick, the biggest in the film
+      tl.set(cam, { x: 16, y: -12, rotation: 1.0 }, 3.80 + FR);
+      tl.set(cam, { x: -14, y: 10, rotation: -0.9 }, 3.80 + 2 * FR);
+      tl.set(cam, { x: 6, y: -4, rotation: 0.4 }, 3.80 + 3 * FR);
+      tl.set(cam, { x: 0, y: 0, rotation: 0 }, 3.80 + 4 * FR);
+
+      /* ---------- Scene 5 (5.0-11.65): drum-cut montage ---------- */
+      // 5.0 Taiyuan fire-war: push right
+      flashCut(5.0, "#e8792e", 0.85);
+      kick(5.0, 0.8);
+      tl.fromTo("#f07-m1-paint", { scale: 1.16, x: 120, transformOrigin: "50% 40%" },
+        { scale: 1.2, x: -90, duration: 1.1, ease: "power3.out" }, 5.0);
+
+      // 6.1 Jin cavalry on the ice: push in
+      flashCut(6.1, "#efe9dc", 0.85);
+      kick(6.1, 0.8);
+      tl.fromTo("#f07-m2-paint", { scale: 1.02, transformOrigin: "960px 340px", filter: "blur(8px)" },
+        { scale: 1.2, filter: "blur(0px)", duration: 1.1, ease: "expo.out" }, 6.1);
+
+      // 7.2 intel card: whip in, zoom to the red occupied mass, crisis dial callout
+      flashCut(7.2, "#e8792e", 0.6);
+      kick(7.2, 0.6);
+      tl.fromTo("#f07-card", { x: -260, rotationY: 16, opacity: 0.6, filter: "blur(18px)" },
+        { x: 0, rotationY: -6, opacity: 1, filter: "blur(0px)", duration: 0.25, ease: "expo.out" }, 7.2);
+      tl.to("#f07-card", { rotationY: -3, duration: 0.85, ease: "none" }, 7.45);
+      // zoom-to-target (nested: outer scales, inner counter-translates by -offset)
+      // red mass centre (796,455) in screenshot -> (530.7,303.3) in card; offset from card centre (-109.3,-56.7)
+      tl.fromTo("#f07-zoom-outer", { scale: 1 }, { scale: 2.1, duration: 0.55, ease: "expo.inOut" }, 7.42);
+      tl.fromTo("#f07-zoom-inner", { x: 0, y: 0 }, { x: 109.3, y: 56.7, duration: 0.55, ease: "expo.inOut" }, 7.42);
+      tl.fromTo("#f07-reticle", { scale: 1.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.14, ease: "expo.out" }, 7.92);
+      tl.fromTo("#f07-dial", { scale: 1.4, opacity: 0, x: 40 }, { scale: 1, opacity: 1, x: 0, duration: 0.14, ease: "power4.out" }, 7.74);
+      tl.to("#f07-dial", { scale: 1.06, duration: 0.42, ease: "none" }, 7.88);
+
+      // 8.3 Western army charge: push
+      flashCut(8.3, "#efe9dc", 0.85);
+      kick(8.3, 0.8);
+      tl.fromTo("#f07-m4-paint", { scale: 1.04, x: 50, transformOrigin: "800px 330px" },
+        { scale: 1.2, x: -20, duration: 1.1, ease: "expo.out" }, 8.3);
+
+      // 9.4 Li Gang again, tight crop, slow push; small 死守汴京 returns lower-left
+      flashCut(9.4, "#e8792e", 0.7);
+      kick(9.4, 0.6);
+      // origin 0 0: screen = t + S*P ; keep his head P=(836,316) at Q=(1080,500) so the raised hilt stays in the picture
+      tl.fromTo("#f07-m5-paint", { transformOrigin: "0px 0px", scale: 1.7, x: 1080 - 1.7 * 836, y: 500 - 1.7 * 316 },
+        { scale: 1.84, x: 1080 - 1.84 * 836, y: 500 - 1.84 * 316, duration: 1.5, ease: "power1.out" }, 9.4);
+      tl.fromTo("#f07-band-sm", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.12, ease: "expo.out" }, 9.62);
+      splat("f07-splat-sm", 233, 18, 380, 130, 3, 30, "#c23a26", 9.62, 0.3);
+      tl.fromTo("#f07-slam-sm", { scale: 1.35, opacity: 0, transformOrigin: "20% 50%", filter: "blur(6px)" },
+        { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.12, ease: "power4.out" }, 9.62);
+      kick(9.62, 0.4);
+      tl.to("#f07-slam-sm", { x: 14, duration: 1.2, ease: "none" }, 9.74);
+      // 10.9 snap to black: every picture clip ends at 10.9
+
+      /* ---------- atmosphere: seeded snow + embers (pure function of time) ---------- */
+      var field = $("f07-particles");
+      var parts = [];
+      for (var i = 0; i < 120; i++) {
+        var depth = rnd(i + 1);
+        var f = document.createElement("div");
+        f.className = "f07-flake";
+        var sz = 2 + depth * depth * 11;
+        f.style.width = sz + "px"; f.style.height = sz + "px";
+        f.style.opacity = (0.4 + depth * 0.3).toFixed(2);
+        if (depth > 0.85) f.style.filter = "blur(2px)";
+        field.appendChild(f);
+        parts.push({ el: f, ember: false, x0: frac(i * 0.6180339887) * (W + 200), y0: rnd(i + 900) * (H + 60),
+          vy: 220 + depth * 520, vx: -(90 + depth * 260), sway: 6 + depth * 18, sw: 1.5 + rnd(i + 77) * 2, ph: rnd(i + 55) * 6.28 });
+      }
+      for (var j = 0; j < 46; j++) {
+        var dj = rnd(j + 2000);
+        var e = document.createElement("div");
+        e.className = "f07-ember";
+        var es = 2 + dj * 4;
+        e.style.width = es + "px"; e.style.height = es + "px";
+        field.appendChild(e);
+        parts.push({ el: e, ember: true, x0: frac(j * 0.4142135623 + 0.2) * (W + 200), y0: rnd(j + 2900) * (H + 60),
+          vy: 120 + dj * 260, vx: 60 + dj * 140, sway: 10 + dj * 30, sw: 1 + rnd(j + 31) * 2.5, ph: rnd(j + 71) * 6.28, base: 0.55 + dj * 0.45 });
+      }
+      var pState = { t: 0 };
+      function renderParticles() {
+        var t = pState.t;
+        for (var k = 0; k < parts.length; k++) {
+          var p = parts[k];
+          var x = ((p.x0 + p.vx * t) % (W + 200) + (W + 200)) % (W + 200) - 100 + p.sway * Math.sin(p.sw * t + p.ph);
+          var yy = ((p.y0 + p.vy * t) % (H + 60) + (H + 60)) % (H + 60) - 30;
+          var y = p.ember ? H - yy : yy;
+          p.el.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px)";
+          if (p.ember) p.el.style.opacity = (p.base * (0.55 + 0.45 * Math.sin(9 * t + p.ph * 3))).toFixed(2);
+        }
+      }
+      tl.fromTo(pState, { t: 0 }, { t: 7.1, duration: 7.1, ease: "none", onUpdate: renderParticles, immediateRender: false }, 3.8);
+      renderParticles();
+
+      // film grain: jitter the noise tile per frame (24fps feel), deterministic
+      var grain = $("f07-grain");
+      var gState = { t: 0 };
+      function renderGrain() {
+        var n = Math.floor(gState.t * 24);
+        grain.style.transform = "translate(" + Math.floor(rnd(n + 5) * 64) + "px," + Math.floor(rnd(n + 9) * 64) + "px)";
+      }
+      tl.fromTo(gState, { t: 0 }, { t: 10.9, duration: 10.9, ease: "none", onUpdate: renderGrain }, 0);
+      renderGrain();
+
+      // pin the timeline length to the frame duration
+      tl.set({}, {}, 11.65);
+
+      window.__timelines["07-defend"] = tl;
+    })();
+  </script>
+</template>

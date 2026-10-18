@@ -1,0 +1,493 @@
+<template>
+  <style>
+    @font-face{font-family:"Ma Shan Zheng";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/MaShanZheng-Regular.ttf") format("truetype");}
+    @font-face{font-family:"Zhi Mang Xing";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/ZhiMangXing-Regular.ttf") format("truetype");}
+    @font-face{font-family:"Noto Sans SC";font-weight:100 900;font-style:normal;font-display:block;src:url("assets/fonts/NotoSansSC-VF.ttf") format("truetype");}
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      color: #efe9dc;
+      pointer-events: none;
+    }
+    #root *, #root *::before, #root *::after { box-sizing: border-box; }
+
+    #f09-ground { position: absolute; inset: 0; background: #0b0907; }
+
+    #f09-cam { position: absolute; inset: 0; transform-origin: 50% 50%; }
+
+    #f09-world { position: absolute; inset: 0; transform-origin: 50% 46%; }
+    #f09-glory {
+      position: absolute; inset: 0; width: 1920px; height: 1080px;
+      object-fit: cover; object-position: 50% 50%;
+      filter: blur(10px) brightness(0.35) saturate(1.1);
+    }
+    #f09-vignette {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 62% 58% at 50% 50%, rgba(11,9,7,0) 40%, rgba(11,9,7,0.82) 100%);
+    }
+    #f09-scrim { position: absolute; inset: 0; background: #0b0907; opacity: 0; }
+
+    #f09-ink { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+
+    #f09-embers { position: absolute; inset: 0; }
+    .f09-ember {
+      position: absolute; left: 0; top: 0; border-radius: 50%;
+      background: #f3a35a;
+      box-shadow: 0 0 6px 2px rgba(232,121,46,0.85), 0 0 16px 4px rgba(194,58,38,0.45);
+      opacity: 0;
+    }
+
+    #f09-splat { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+    #f09-ring {
+      position: absolute; left: 740px; top: 320px; width: 440px; height: 440px;
+      border-radius: 50%; border: 5px solid #e8792e;
+      box-shadow: 0 0 28px rgba(232,121,46,0.75), inset 0 0 22px rgba(232,121,46,0.5);
+      opacity: 0;
+    }
+
+    #f09-stage { position: absolute; inset: 0; transform-origin: 50% 50%; }
+
+    /* logo: outer = placement / dim, inner = slam */
+    #f09-logo-pos {
+      position: absolute; left: 765px; top: 262px; width: 390px; height: 556px;
+      transform-origin: 50% 50%;
+    }
+    #f09-logo-glow {
+      position: absolute; left: -180px; top: -140px; width: 750px; height: 862px;
+      background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(232,121,46,0.55) 0%, rgba(194,58,38,0.22) 45%, rgba(194,58,38,0) 72%);
+      opacity: 0;
+    }
+    #f09-logo {
+      position: absolute; inset: 0;
+      background-image: url("assets/01-title.png");
+      background-size: 1920px 1080px;
+      background-position: -100px -82px;
+      background-repeat: no-repeat;
+      transform-origin: 50% 50%;
+      filter: contrast(1.12) brightness(0.96);
+      -webkit-mask-image:
+        radial-gradient(ellipse 56% 54% at 50% 50%, #000 74%, rgba(0,0,0,0) 100%),
+        linear-gradient(90deg, rgba(0,0,0,0) 0, #000 30px, #000 calc(100% - 30px), rgba(0,0,0,0) 100%),
+        linear-gradient(180deg, rgba(0,0,0,0) 0, #000 40px, #000 calc(100% - 40px), rgba(0,0,0,0) 100%);
+      -webkit-mask-composite: source-in, source-in;
+      mask-image:
+        radial-gradient(ellipse 56% 54% at 50% 50%, #000 74%, rgba(0,0,0,0) 100%),
+        linear-gradient(90deg, rgba(0,0,0,0) 0, #000 30px, #000 calc(100% - 30px), rgba(0,0,0,0) 100%),
+        linear-gradient(180deg, rgba(0,0,0,0) 0, #000 40px, #000 calc(100% - 40px), rgba(0,0,0,0) 100%);
+      mask-composite: intersect, intersect;
+    }
+
+    /* scene 2 rows */
+    #f09-rows { position: absolute; left: 820px; top: 0; width: 980px; height: 1080px; }
+    #f09-row1 {
+      position: absolute; left: 0; top: 292px; white-space: nowrap;
+      font-family: "Ma Shan Zheng", serif; font-size: 140px; line-height: 1; color: #efe9dc;
+      text-shadow: 0 0 24px rgba(11,9,7,0.95), 0 0 6px rgba(11,9,7,0.9);
+    }
+    .f09-stamp { display: inline-block; transform-origin: 50% 60%; }
+    #f09-row1b {
+      position: absolute; left: 4px; top: 462px; white-space: nowrap;
+      font-family: "Noto Sans SC", sans-serif; font-weight: 600; font-size: 34px; letter-spacing: 6px;
+      color: #d6b46a; line-height: 1;
+      text-shadow: 0 0 14px rgba(11,9,7,0.95);
+    }
+    #f09-row1b .f09-bar {
+      display: inline-block; width: 44px; height: 3px; background: #d6b46a;
+      vertical-align: middle; margin-right: 18px; position: relative; top: -2px;
+    }
+    #f09-row2 {
+      position: absolute; left: 2px; top: 540px; white-space: nowrap;
+      font-family: "Noto Sans SC", sans-serif; font-weight: 600; font-size: 54px; line-height: 1.1;
+      color: #efe9dc; text-shadow: 0 0 18px rgba(11,9,7,0.95);
+    }
+    #f09-row2 .f09-gold { color: #d6b46a; margin-right: 22px; }
+    #f09-row2 .f09-dot { color: #e8792e; margin: 0 14px; }
+    #f09-pill {
+      position: absolute; left: 2px; top: 642px; height: 66px; min-width: 760px;
+      padding: 0 26px; display: flex; align-items: center; white-space: nowrap;
+      background: rgba(11,9,7,0.86); border: 2px solid #d6b46a; border-radius: 3px;
+      font-family: "Noto Sans SC", sans-serif; font-weight: 500; font-size: 28px; color: #efe9dc;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
+    #f09-pill .f09-prompt { color: #e8792e; margin-right: 14px; }
+    #f09-caret { display: inline-block; width: 14px; height: 32px; background: #d6b46a; margin-left: 4px; }
+
+    /* scene 3 script line */
+    #f09-script {
+      position: absolute; left: 340px; top: 462px; width: 1240px; height: 160px;
+      text-align: center; white-space: nowrap; visibility: hidden; /* shown at 5.6s: a mask alone still counts as on-screen for layout checks */
+      font-family: "Zhi Mang Xing", cursive; font-size: 120px; line-height: 160px; color: #efe9dc;
+      text-shadow: 0 0 24px rgba(11,9,7,0.95), 0 0 8px rgba(11,9,7,0.9);
+      -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 47%, rgba(0,0,0,0) 53%, rgba(0,0,0,0) 100%);
+      -webkit-mask-size: 220% 100%; -webkit-mask-repeat: no-repeat; -webkit-mask-position: 100% 0%;
+      mask-image: linear-gradient(90deg, #000 0%, #000 47%, rgba(0,0,0,0) 53%, rgba(0,0,0,0) 100%);
+      mask-size: 220% 100%; mask-repeat: no-repeat; mask-position: 100% 0%;
+    }
+    .f09-edge {
+      position: absolute; top: 0; left: 0; width: 110px; height: 190px;
+      background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(243,163,90,0.9) 0%, rgba(232,121,46,0.45) 35%, rgba(232,121,46,0) 70%);
+      mix-blend-mode: screen; opacity: 0;
+    }
+    #f09-under { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible;
+      filter: drop-shadow(0 0 8px rgba(232,121,46,0.7)); }
+
+    /* scene 4 url */
+    #f09-url {
+      position: absolute; left: 560px; top: 702px; width: 800px; height: 60px;
+      text-align: center; white-space: nowrap;
+      font-family: "Noto Sans SC", sans-serif; font-weight: 600; font-size: 40px; line-height: 60px;
+      letter-spacing: 4px; color: #d6b46a; text-shadow: 0 0 16px rgba(11,9,7,0.95);
+      -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 47%, rgba(0,0,0,0) 53%, rgba(0,0,0,0) 100%);
+      -webkit-mask-size: 220% 100%; -webkit-mask-repeat: no-repeat; -webkit-mask-position: 100% 0%;
+      mask-image: linear-gradient(90deg, #000 0%, #000 47%, rgba(0,0,0,0) 53%, rgba(0,0,0,0) 100%);
+      mask-size: 220% 100%; mask-repeat: no-repeat; mask-position: 100% 0%;
+    }
+
+    #f09-flash { position: absolute; inset: 0; background: #efe9dc; opacity: 0; }
+    #f09-grain { position: absolute; inset: 0; width: 1920px; height: 1080px; opacity: 0.07; mix-blend-mode: overlay; }
+    #f09-black { position: absolute; inset: 0; background: #000; opacity: 0; }
+    #f09-bars { position: absolute; inset: 0; }
+    #f09-bar-top { position: absolute; left: 0; top: 0; width: 1920px; height: 140px; background: #0b0907; }
+    #f09-bar-bot { position: absolute; left: 0; top: 940px; width: 1920px; height: 140px; background: #0b0907; }
+  </style>
+
+  <div id="root" data-composition-id="09-title" data-width="1920" data-height="1080" data-duration="12.5">
+
+    <div id="f09-ground" class="clip" data-start="0" data-duration="12.5" data-track-index="0"></div>
+
+    <div id="f09-cam" class="clip" data-start="0" data-duration="12.5" data-track-index="1">
+      <div id="f09-world">
+        <img id="f09-glory" src="assets/t_glory.jpg" alt="" />
+        <div id="f09-vignette"></div>
+        <div id="f09-scrim"></div>
+      </div>
+      <canvas id="f09-ink" width="1920" height="1080"></canvas>
+      <div id="f09-embers"></div>
+      <svg id="f09-splat" viewBox="0 0 1920 1080" aria-hidden="true"></svg>
+      <div id="f09-ring"></div>
+
+      <div id="f09-stage">
+        <div id="f09-logo-pos">
+          <div id="f09-logo-glow"></div>
+          <div id="f09-logo"></div>
+        </div>
+
+        <div id="f09-rows">
+          <div id="f09-row1"><span class="f09-stamp">开</span><span class="f09-stamp">源</span><span class="f09-stamp">免</span><span class="f09-stamp">费</span></div>
+          <div id="f09-row1b"><span class="f09-bar"></span><span id="f09-label"></span></div>
+          <div id="f09-row2"><span class="f09-gold">接入</span>Codex<span class="f09-dot">·</span>Claude Code</div>
+          <div id="f09-pill"><span class="f09-prompt">$</span><span id="f09-cmd"></span><span id="f09-caret"></span></div>
+        </div>
+
+        <div id="f09-script">这一次，史书由你来写</div>
+        <svg id="f09-under" viewBox="0 0 1920 1080" aria-hidden="true">
+          <path id="f09-under-a" d="M 452 640 C 700 622, 1010 650, 1250 634 S 1440 620, 1478 628" fill="none" stroke="#e8792e" stroke-width="10" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+          <path id="f09-under-b" d="M 520 654 C 780 642, 1100 662, 1400 646" fill="none" stroke="#c23a26" stroke-width="3.5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" opacity="0.8" />
+        </svg>
+        <div id="f09-edge-script" class="f09-edge"></div>
+
+        <div id="f09-url">github.com/Yi-111-a/xuanhe</div>
+        <div id="f09-edge-url" class="f09-edge"></div>
+      </div>
+    </div>
+
+    <div id="f09-fx" class="clip" data-start="0" data-duration="12.5" data-track-index="2">
+      <div id="f09-flash"></div>
+      <svg id="f09-grain" viewBox="0 0 1920 1080" aria-hidden="true">
+        <filter id="f09-grain-filter" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="9" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect width="1920" height="1080" filter="url(#f09-grain-filter)" />
+      </svg>
+      <div id="f09-black"></div>
+    </div>
+
+    <div id="f09-bars" class="clip" data-start="0" data-duration="12.5" data-track-index="3">
+      <div id="f09-bar-top"></div>
+      <div id="f09-bar-bot"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      var D = 12.5;
+      var W = 1920, H = 1080, CX = 960, CY = 540;
+      function $(id) { return document.getElementById(id); }
+      function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+      function easeOutCubic(v) { return 1 - Math.pow(1 - v, 3); }
+      function easeOutQuart(v) { return 1 - Math.pow(1 - v, 4); }
+      function easeInOutSine(v) { return -(Math.cos(Math.PI * v) - 1) / 2; }
+      function lcg(seed) {
+        var s = seed >>> 0;
+        return function () { s = (Math.imul(1664525, s) + 1013904223) >>> 0; return s / 4294967296; };
+      }
+
+      var cam = $("f09-cam"), world = $("f09-world"), stage = $("f09-stage");
+      var flash = $("f09-flash"), ring = $("f09-ring");
+      var logoPos = $("f09-logo-pos"), logo = $("f09-logo"), logoGlow = $("f09-logo-glow");
+      var rows = $("f09-rows");
+      var cmdEl = $("f09-cmd"), caret = $("f09-caret"), labelEl = $("f09-label");
+      var script = $("f09-script"), edgeScript = $("f09-edge-script");
+      var url = $("f09-url"), edgeUrl = $("f09-edge-url");
+
+      /* ---------- gooey ink bloom (canvas, closed-form per frame) ---------- */
+      var canvas = $("f09-ink");
+      var ctx = canvas.getContext("2d");
+      var LOW = 4;
+      var work = document.createElement("canvas");
+      work.width = W / LOW; work.height = H / LOW;
+      var wctx = work.getContext("2d", { willReadFrequently: true });
+      var rim = document.createElement("canvas");
+      rim.width = W / LOW; rim.height = H / LOW;
+      var rctx = rim.getContext("2d");
+      var INK_END = 1.55;
+      var blobs = (function () {
+        var r = lcg(0x09b100d5), list = [];
+        for (var i = 0; i < 11; i++) {
+          var a = (i / 11) * Math.PI * 2 + r() * 0.5;
+          var outer = i % 2 === 1;
+          list.push({
+            dx: Math.cos(a), dy: Math.sin(a) * 0.82,
+            dist: outer ? 0.92 + 0.22 * r() : 0.5 + 0.25 * r(),
+            size: outer ? 0.16 + 0.1 * r() : 0.34 + 0.16 * r(),
+            lag: 0.02 + 0.1 * r(),
+            wob: 0.04 + 0.05 * r(), wf: 3 + Math.floor(r() * 4), wp: r() * Math.PI * 2
+          });
+        }
+        return list;
+      })();
+      function inkRadius(t) {
+        if (t <= 0.04) return 0;
+        if (t < 0.5) return 330 * easeOutCubic((t - 0.04) / 0.46);
+        return 330 + (1380 - 330) * easeOutQuart(clamp01((t - 0.5) / 1.0));
+      }
+      function paintInk(t) {
+        ctx.globalCompositeOperation = "source-over";
+        ctx.globalAlpha = 1;
+        ctx.clearRect(0, 0, W, H);
+        if (t >= INK_END) return;
+        ctx.fillStyle = "#0b0907";
+        ctx.fillRect(0, 0, W, H);
+        var R = inkRadius(t);
+        if (R <= 0.5) return;
+        wctx.filter = "none";
+        wctx.clearRect(0, 0, work.width, work.height);
+        wctx.filter = "blur(7px)";
+        wctx.fillStyle = "#ffffff";
+        wctx.beginPath();
+        wctx.arc(CX / LOW, CY / LOW, (R * 0.86) / LOW, 0, Math.PI * 2);
+        wctx.fill();
+        for (var i = 0; i < blobs.length; i++) {
+          var b = blobs[i];
+          var Rb = inkRadius(Math.max(0, t - b.lag));
+          var wob = Math.sin(t * b.wf * 2.2 + b.wp) * b.wob * Rb;
+          var x = CX + b.dx * (b.dist * Rb) + wob * b.dy;
+          var y = CY + b.dy * (b.dist * Rb) - wob * b.dx;
+          var rr = b.size * Rb;
+          if (rr < 1) continue;
+          wctx.beginPath();
+          wctx.arc(x / LOW, y / LOW, rr / LOW, 0, Math.PI * 2);
+          wctx.fill();
+        }
+        wctx.filter = "none";
+        var img = wctx.getImageData(0, 0, work.width, work.height);
+        var d = img.data;
+        for (var j = 3; j < d.length; j += 4) {
+          var a = (d[j] / 255) * 22 - 9;
+          d[j] = a <= 0 ? 0 : a >= 1 ? 255 : Math.round(a * 255);
+        }
+        wctx.putImageData(img, 0, 0);
+        // ember halo = blurred hole, tinted
+        rctx.globalCompositeOperation = "source-over";
+        rctx.filter = "none";
+        rctx.clearRect(0, 0, rim.width, rim.height);
+        rctx.filter = "blur(5px)";
+        rctx.drawImage(work, 0, 0);
+        rctx.filter = "none";
+        rctx.globalCompositeOperation = "source-in";
+        rctx.fillStyle = "#e8792e";
+        rctx.fillRect(0, 0, rim.width, rim.height);
+        rctx.globalCompositeOperation = "source-over";
+        var flare = t >= 0.5 ? Math.max(0, 1 - (t - 0.5) / 0.35) : 0;
+        ctx.globalAlpha = Math.min(1, 0.8 + 0.2 * flare) * (1 - clamp01((t - 1.25) / 0.3));
+        ctx.drawImage(rim, 0, 0, W, H);
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.drawImage(work, 0, 0, W, H);
+        ctx.globalCompositeOperation = "source-over";
+      }
+
+      /* ---------- ink-splatter burst (seeded) ---------- */
+      var SVGNS = "http://www.w3.org/2000/svg";
+      var splatSvg = $("f09-splat");
+      var splats = (function () {
+        var r = lcg(0x5e1a77e2), list = [];
+        var cols = ["#c23a26", "#e8792e", "#c23a26", "#7a1f12"];
+        for (var i = 0; i < 28; i++) {
+          var a = r() * Math.PI * 2;
+          var c = document.createElementNS(SVGNS, "circle");
+          c.setAttribute("fill", cols[i % cols.length]);
+          c.setAttribute("r", "0");
+          c.setAttribute("opacity", "0");
+          splatSvg.appendChild(c);
+          list.push({ el: c, dx: Math.cos(a), dy: Math.sin(a), dist: 220 + 380 * r(), rad: 3 + (i % 5 === 0 ? 18 : 9) * r(), sp: 0.7 + 0.5 * r() });
+        }
+        return list;
+      })();
+      function paintSplat(t) {
+        var u = (t - 0.5) / 0.8;
+        for (var i = 0; i < splats.length; i++) {
+          var s = splats[i];
+          if (u < 0 || u >= 1) { s.el.setAttribute("opacity", "0"); continue; }
+          var k = easeOutQuart(clamp01(u * s.sp * 1.6));
+          s.el.setAttribute("cx", (CX + s.dx * s.dist * k).toFixed(2));
+          s.el.setAttribute("cy", (CY + s.dy * s.dist * k * 0.8).toFixed(2));
+          s.el.setAttribute("r", (s.rad * (0.35 + 0.65 * k)).toFixed(2));
+          s.el.setAttribute("opacity", (0.95 * (1 - clamp01((u - 0.3) / 0.7))).toFixed(3));
+        }
+      }
+
+      /* ---------- embers (seeded, closed-form) ---------- */
+      var emberWrap = $("f09-embers");
+      var embers = (function () {
+        var r = lcg(0x0e3be125), list = [];
+        for (var i = 0; i < 46; i++) {
+          var el = document.createElement("div");
+          el.className = "f09-ember";
+          var sz = 2 + r() * 4.5;
+          el.style.width = sz.toFixed(1) + "px";
+          el.style.height = sz.toFixed(1) + "px";
+          emberWrap.appendChild(el);
+          list.push({ el: el, x0: r() * 1920, ph: r(), sp: 55 + r() * 120, amp: 10 + r() * 46, f: 0.6 + r() * 1.4, fp: r() * 6.28, drift: -18 + r() * 36, fl: 5 + r() * 9 });
+        }
+        return list;
+      })();
+      function emberEnv(t) {
+        var e = 0.85 * clamp01((t - 0.5) / 0.6);
+        if (t > 4.85) e = 0.85 - 0.3 * clamp01((t - 4.85) / 0.5);
+        if (t > 7.5) e = 0.55 + 0.45 * clamp01((t - 7.5) / 1.0);
+        return e;
+      }
+      function paintEmbers(t) {
+        var env = emberEnv(t);
+        for (var i = 0; i < embers.length; i++) {
+          var m = embers[i];
+          if (env <= 0) { m.el.style.opacity = "0"; continue; }
+          var span = 900;
+          var cyc = (m.ph + (t * m.sp) / span) % 1;
+          var y = 970 - cyc * span;
+          var x = m.x0 + Math.sin(t * m.f + m.fp) * m.amp + m.drift * t;
+          var edge = clamp01(cyc / 0.12) * clamp01((1 - cyc) / 0.25);
+          var flick = 0.55 + 0.45 * Math.sin(t * m.fl + m.fp * 3);
+          m.el.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px)";
+          m.el.style.opacity = (env * edge * flick).toFixed(3);
+        }
+      }
+
+      /* ---------- typing ---------- */
+      var LABEL = "Windows 一键安装";
+      var LABEL_T0 = 2.02, LABEL_STEP = 0.04;
+      var CMD = "codex mcp add xuanhe -- xuanhe-server mcp";
+      var CMD_T0 = 2.92, CMD_STEP = 0.026;
+      var lastLabel = -1, lastCmd = -1;
+      function paintTyping(t) {
+        var nl = Math.max(0, Math.min(LABEL.length, Math.floor((t - LABEL_T0) / LABEL_STEP + 1e-6) + 1));
+        if (t < LABEL_T0) nl = 0;
+        if (nl !== lastLabel) { labelEl.textContent = LABEL.slice(0, nl); lastLabel = nl; }
+        var nc = t < CMD_T0 ? 0 : Math.max(0, Math.min(CMD.length, Math.floor((t - CMD_T0) / CMD_STEP + 1e-6) + 1));
+        if (nc !== lastCmd) { cmdEl.textContent = CMD.slice(0, nc); lastCmd = nc; }
+        var typing = t >= CMD_T0 && nc < CMD.length;
+        var on = typing || Math.floor(t * 2.6) % 2 === 0;
+        caret.style.opacity = on ? "1" : "0";
+      }
+
+      /* ---------- brush wipes (mask position, closed-form) ---------- */
+      function paintWipe(el, edge, t, t0, dur, left, width, top, h) {
+        var u = easeInOutSine(clamp01((t - t0) / dur));
+        var p = (1 - u) * 100;
+        var pos = p.toFixed(3) + "% 0%";
+        el.style.webkitMaskPosition = pos;
+        el.style.maskPosition = pos;
+        var ex = left + width * (1.1 - 1.2 * (p / 100));
+        ex = Math.max(left, Math.min(left + width, ex));
+        var raw = (t - t0) / dur;
+        var vis = raw > 0 && raw < 1 ? Math.sin(Math.PI * raw) : 0;
+        edge.style.opacity = vis.toFixed(3);
+        edge.style.transform = "translate(" + (ex - 55).toFixed(1) + "px," + (top + h / 2 - 95).toFixed(1) + "px)";
+      }
+
+      /* ---------- impact: flash, ring, camera kick ---------- */
+      var KICK = [[9, -6, 0.6], [-7, 5, -0.45], [3, -2, 0.2]];
+      function paintImpact(t) {
+        var f = Math.floor((t - 0.5) * 30 + 1e-4);
+        flash.style.opacity = f === 0 ? "1" : f === 1 ? "0.45" : "0";
+        var k = f >= 0 && f < 3 ? KICK[f] : [0, 0, 0];
+        cam.style.transform = "translate(" + k[0] + "px," + k[1] + "px) rotate(" + k[2] + "deg)";
+        var u = (t - 0.5) / 0.65;
+        if (u < 0 || u >= 1) { ring.style.opacity = "0"; }
+        else {
+          ring.style.opacity = (0.95 * Math.pow(1 - u, 1.5)).toFixed(3);
+          ring.style.transform = "scale(" + (0.35 + 2.3 * easeOutCubic(u)).toFixed(4) + ")";
+        }
+      }
+
+      function drive(t) {
+        paintInk(t);
+        paintSplat(t);
+        paintImpact(t);
+        paintEmbers(t);
+        paintTyping(t);
+        paintWipe(script, edgeScript, t, 5.68, 1.1, 340, 1240, 462, 160);
+        paintWipe(url, edgeUrl, t, 8.3, 0.7, 560, 800, 702, 60);
+      }
+
+      var tl = gsap.timeline({ paused: true, onUpdate: function () { drive(tl.time()); } });
+      tl.to({ v: 0 }, { v: 1, duration: D, ease: "none" }, 0);
+
+      /* camera: the painting never stops pushing */
+      tl.fromTo(world, { scale: 1.06, x: 0 }, { scale: 1.17, x: -30, duration: D, ease: "power1.inOut" }, 0);
+      tl.fromTo(stage, { scale: 1.0 }, { scale: 1.035, duration: D, ease: "none" }, 0);
+
+      /* Scene 1: slam on 「宣和」 (0.50) */
+      tl.fromTo(logo, { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.12, ease: "power4.out" }, 0.38);
+      tl.fromTo(logoGlow, { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none" }, 0.5);
+      tl.fromTo(logoGlow, { opacity: 1 }, { opacity: 0.38, duration: 1.0, ease: "power2.out", immediateRender: false }, 0.56);
+
+      /* Scene 2: logo to upper-left third; rows arrive on the VO */
+      tl.fromTo(logoPos, { x: 0, y: 0, scale: 1 }, { x: -490, y: -70, scale: 0.74, duration: 0.6, ease: "power3.inOut" }, 1.55);
+      var stamps = document.querySelectorAll("#f09-row1 .f09-stamp");
+      for (var i = 0; i < stamps.length; i++) {
+        tl.fromTo(stamps[i], { opacity: 0, scale: 1.55 }, { opacity: 1, scale: 1, duration: 0.14, ease: "power4.out" }, 1.63 + i * 0.085);
+      }
+      tl.fromTo("#f09-row1b .f09-bar", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.25, ease: "expo.out" }, 1.95);
+      tl.fromTo("#f09-row2", { opacity: 0, x: 240 }, { opacity: 1, x: 0, duration: 0.28, ease: "expo.out" }, 2.49);
+      tl.fromTo("#f09-pill", { opacity: 0, x: 120 }, { opacity: 1, x: 0, duration: 0.25, ease: "expo.out" }, 2.72);
+
+      /* Scene 3: rows dim on 「这一次」 (4.85); script writes on 「史书由你来写」 (5.68) */
+      tl.fromTo(rows, { opacity: 1, filter: "blur(0px)" }, { opacity: 0.1, filter: "blur(6px)", duration: 0.45, ease: "power2.out" }, 4.85);
+      tl.fromTo(logoPos, { opacity: 1, filter: "blur(0px)" }, { opacity: 0.22, filter: "blur(4px)", duration: 0.45, ease: "power2.out" }, 4.85);
+      tl.fromTo("#f09-scrim", { opacity: 0 }, { opacity: 0.35, duration: 0.6, ease: "power2.out" }, 4.85);
+      tl.set("#f09-script", { visibility: "visible" }, 5.6);
+      tl.fromTo("#f09-script", { scale: 1.04, transformOrigin: "50% 50%" }, { scale: 1, duration: 1.6, ease: "power2.out" }, 5.68);
+      tl.fromTo("#f09-under-a", { attr: { "stroke-dashoffset": 1 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.55, ease: "power2.out" }, 6.62);
+      tl.fromTo("#f09-under-b", { attr: { "stroke-dashoffset": 1 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.5, ease: "power2.out" }, 6.74);
+
+      /* Scene 4: end card */
+      tl.fromTo(rows, { opacity: 0.1 }, { opacity: 0, duration: 0.4, ease: "power2.in", immediateRender: false }, 7.5);
+      tl.fromTo(logoPos, { x: -490, y: -70, scale: 0.74 }, { x: 0, y: -226, scale: 0.5, duration: 0.8, ease: "power3.inOut", immediateRender: false }, 7.5);
+      tl.fromTo(logoPos, { opacity: 0.22, filter: "blur(4px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.6, ease: "power2.out", immediateRender: false }, 7.6);
+      tl.fromTo("#f09-black", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power1.in" }, 12.0);
+
+      drive(0);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["09-title"] = tl;
+    })();
+  </script>
+</template>

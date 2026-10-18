@@ -1,0 +1,11 @@
+20:20:44 START 8 jobs: ['t_glory', 't_emperor', 't_jin_charge', 't_taiyuan', 't_fall', 't_xijun', 't_ligang', 't_court']
+20:20:59 START 8 jobs: ['t_glory', 't_emperor', 't_jin_charge', 't_taiyuan', 't_fall', 't_xijun', 't_ligang', 't_court']
+20:22:19 OK   t_jin_charge 80s attempt 1
+20:22:24 OK   t_emperor 85s attempt 1
+20:23:32 OK   t_glory 153s attempt 1
+20:23:43 OK   t_fall 79s attempt 1
+20:25:03 OK   t_taiyuan 163s attempt 1
+20:25:04 OK   t_xijun 92s attempt 1
+20:26:09 OK   t_ligang 145s attempt 1
+20:27:14 OK   t_court 131s attempt 1
+20:27:14 DONE ok=8 fail=[]

@@ -1,0 +1,412 @@
+{
+  "bgm": {
+    "path": "assets/bgm/track.wav",
+    "volume": 0.3,
+    "source": "host",
+    "duration_s": 60.0,
+    "query": "HeyGen library: 'epic cinematic trailer, taiko war drums, chinese orchestra' (47s, build 0-17s, drop at 18s, break 32s) 0-41.5s, then 'intense hybrid orchestral action trailer with erhu' (52s) from 27.9s entering at 40.9s to its natural end at 60s"
+  },
+  "bgm_pending": false,
+  "voices": [
+    {
+      "frame": 1,
+      "path": "audio/vo-01.wav",
+      "duration_s": 6.0,
+      "words": [
+        {
+          "text": "宣和二年",
+          "start": 1.448,
+          "end": 2.349,
+          "id": "w1"
+        },
+        {
+          "text": "汴京",
+          "start": 2.554,
+          "end": 3.035,
+          "id": "w2"
+        },
+        {
+          "text": "天下第一繁华",
+          "start": 3.574,
+          "end": 4.799,
+          "id": "w3"
+        }
+      ],
+      "offset_in_frame_s": 1.35
+    },
+    {
+      "frame": 2,
+      "path": "audio/vo-02.wav",
+      "duration_s": 4.6,
+      "words": [
+        {
+          "text": "可史书上写着",
+          "start": 0.398,
+          "end": 1.564,
+          "id": "w4"
+        },
+        {
+          "text": "六年之后",
+          "start": 1.84,
+          "end": 2.61,
+          "id": "w5"
+        },
+        {
+          "text": "靖康",
+          "start": 2.862,
+          "end": 3.391,
+          "id": "w6"
+        }
+      ],
+      "offset_in_frame_s": 0.3
+    },
+    {
+      "frame": 3,
+      "path": "audio/vo-03.wav",
+      "duration_s": 6.3,
+      "words": [
+        {
+          "text": "金兵南下",
+          "start": 0.298,
+          "end": 1.368,
+          "id": "w7"
+        },
+        {
+          "text": "太原被围",
+          "start": 1.895,
+          "end": 2.904,
+          "id": "w8"
+        },
+        {
+          "text": "汴京城破",
+          "start": 3.433,
+          "end": 4.503,
+          "id": "w9"
+        },
+        {
+          "text": "二帝北狩",
+          "start": 5.044,
+          "end": 6.005,
+          "id": "w10"
+        }
+      ],
+      "offset_in_frame_s": 0.2
+    },
+    {
+      "frame": 4,
+      "path": "audio/vo-04.wav",
+      "duration_s": 3.5,
+      "words": [
+        {
+          "text": "这一次",
+          "start": 0.198,
+          "end": 0.751,
+          "id": "w11"
+        },
+        {
+          "text": "你",
+          "start": 0.991,
+          "end": 1.28,
+          "id": "w12"
+        },
+        {
+          "text": "是宋徽宗",
+          "start": 1.484,
+          "end": 2.398,
+          "id": "w13"
+        }
+      ],
+      "offset_in_frame_s": 0.1
+    },
+    {
+      "frame": 5,
+      "path": "audio/vo-05.wav",
+      "duration_s": 3.0,
+      "words": [
+        {
+          "text": "召对群臣",
+          "start": 0.148,
+          "end": 1.025,
+          "id": "w14"
+        },
+        {
+          "text": "廷议和战",
+          "start": 1.302,
+          "end": 2.083,
+          "id": "w15"
+        }
+      ],
+      "offset_in_frame_s": 0.05
+    },
+    {
+      "frame": 6,
+      "path": "audio/vo-06.wav",
+      "duration_s": 5.95,
+      "words": [
+        {
+          "text": "一纸诏书",
+          "start": 0.148,
+          "end": 0.989,
+          "id": "w16"
+        },
+        {
+          "text": "调西军北上",
+          "start": 1.23,
+          "end": 2.263,
+          "id": "w17"
+        },
+        {
+          "text": "千里之外",
+          "start": 2.504,
+          "end": 3.249,
+          "id": "w18"
+        },
+        {
+          "text": "军令要走好几季",
+          "start": 3.453,
+          "end": 4.968,
+          "id": "w19"
+        }
+      ],
+      "offset_in_frame_s": 0.05
+    },
+    {
+      "frame": 7,
+      "path": "audio/vo-07.wav",
+      "duration_s": 11.65,
+      "words": [
+        {
+          "text": "联金",
+          "start": 0.098,
+          "end": 0.591,
+          "id": "w20"
+        },
+        {
+          "text": "还是存辽",
+          "start": 0.976,
+          "end": 1.913,
+          "id": "w21"
+        },
+        {
+          "text": "议和",
+          "start": 2.44,
+          "end": 2.909,
+          "id": "w22"
+        },
+        {
+          "text": "还是",
+          "start": 3.137,
+          "end": 3.594,
+          "id": "w23"
+        },
+        {
+          "text": "死守汴京",
+          "start": 3.798,
+          "end": 4.856,
+          "id": "w24"
+        }
+      ],
+      "offset_in_frame_s": 0.0
+    },
+    {
+      "frame": 8,
+      "path": "audio/vo-08.wav",
+      "duration_s": 6.5,
+      "words": [
+        {
+          "text": "满朝文武",
+          "start": 0.498,
+          "end": 1.339,
+          "id": "w25"
+        },
+        {
+          "text": "由 AI 来演",
+          "start": 1.544,
+          "end": 2.301,
+          "id": "w26"
+        },
+        {
+          "text": "钱粮兵马",
+          "start": 2.553,
+          "end": 3.287,
+          "id": "w27"
+        },
+        {
+          "text": "由引擎结算",
+          "start": 3.491,
+          "end": 4.512,
+          "id": "w28"
+        }
+      ],
+      "offset_in_frame_s": 0.4
+    },
+    {
+      "frame": 9,
+      "path": "audio/vo-09.wav",
+      "duration_s": 12.5,
+      "words": [
+        {
+          "text": "宣和",
+          "start": 0.498,
+          "end": 1.099,
+          "id": "w29"
+        },
+        {
+          "text": "开源免费",
+          "start": 1.626,
+          "end": 2.323,
+          "id": "w30"
+        },
+        {
+          "text": "可接入 Codex 与 Claude Code",
+          "start": 2.491,
+          "end": 4.306,
+          "id": "w31"
+        },
+        {
+          "text": "这一次",
+          "start": 4.847,
+          "end": 5.352,
+          "id": "w32"
+        },
+        {
+          "text": "史书由你来写",
+          "start": 5.676,
+          "end": 6.782,
+          "id": "w33"
+        }
+      ],
+      "offset_in_frame_s": 0.4
+    }
+  ],
+  "sfx": [
+    {
+      "frame": 1,
+      "file": "assets/sfx/low-boom.mp3",
+      "offset_s": 0.95,
+      "duration_s": 2.044,
+      "volume": 0.5,
+      "source": "host"
+    },
+    {
+      "frame": 2,
+      "file": "assets/sfx/taiko-hit.mp3",
+      "offset_s": 2.86,
+      "duration_s": 0.384,
+      "volume": 0.55,
+      "source": "host"
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/impact-heavy.mp3",
+      "offset_s": 0.25,
+      "duration_s": 5.387,
+      "volume": 0.35,
+      "source": "host"
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/taiko-hit.mp3",
+      "offset_s": 1.9,
+      "duration_s": 0.384,
+      "volume": 0.4,
+      "source": "host"
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/taiko-hit.mp3",
+      "offset_s": 3.43,
+      "duration_s": 0.384,
+      "volume": 0.4,
+      "source": "host"
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/war-drum.mp3",
+      "offset_s": 5.0,
+      "duration_s": 2.871,
+      "volume": 0.35,
+      "source": "host"
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/impact-heavy.mp3",
+      "offset_s": 0.99,
+      "duration_s": 5.387,
+      "volume": 0.45,
+      "source": "host"
+    },
+    {
+      "frame": 5,
+      "file": "assets/sfx/whoosh.mp3",
+      "offset_s": 0.0,
+      "duration_s": 1.58,
+      "volume": 0.35,
+      "source": "host"
+    },
+    {
+      "frame": 6,
+      "file": "assets/sfx/whoosh.mp3",
+      "offset_s": 1.2,
+      "duration_s": 1.58,
+      "volume": 0.35,
+      "source": "host"
+    },
+    {
+      "frame": 7,
+      "file": "assets/sfx/riser.mp3",
+      "offset_s": 0.5,
+      "duration_s": 4.97,
+      "volume": 0.3,
+      "source": "host"
+    },
+    {
+      "frame": 7,
+      "file": "assets/sfx/impact-heavy.mp3",
+      "offset_s": 3.8,
+      "duration_s": 5.387,
+      "volume": 0.5,
+      "source": "host"
+    },
+    {
+      "frame": 7,
+      "file": "assets/sfx/war-drum.mp3",
+      "offset_s": 4.9,
+      "duration_s": 2.871,
+      "volume": 0.35,
+      "source": "host"
+    },
+    {
+      "frame": 8,
+      "file": "assets/sfx/shimmer.mp3",
+      "offset_s": 0.3,
+      "duration_s": 3.329,
+      "volume": 0.3,
+      "source": "host"
+    },
+    {
+      "frame": 9,
+      "file": "assets/sfx/low-boom.mp3",
+      "offset_s": 0.45,
+      "duration_s": 2.044,
+      "volume": 0.5,
+      "source": "host"
+    },
+    {
+      "frame": 9,
+      "file": "assets/sfx/taiko-hit.mp3",
+      "offset_s": 0.45,
+      "duration_s": 0.384,
+      "volume": 0.5,
+      "source": "host"
+    },
+    {
+      "frame": 9,
+      "file": "assets/sfx/whoosh.mp3",
+      "offset_s": 4.8,
+      "duration_s": 1.58,
+      "volume": 0.3,
+      "source": "host"
+    }
+  ]
+}

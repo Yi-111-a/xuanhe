@@ -1,0 +1,493 @@
+{
+  "total_duration_s": 60,
+  "width": 1920,
+  "height": 1080,
+  "groups": [
+    {
+      "id": "caption-group-0",
+      "frame": 1,
+      "start": 1.448,
+      "end": 2.469,
+      "text": "宣和二年",
+      "words": [
+        {
+          "id": "caption-word-0-0",
+          "text": "宣和二年",
+          "start": 1.448,
+          "end": 2.349
+        }
+      ]
+    },
+    {
+      "id": "caption-group-1",
+      "frame": 1,
+      "start": 2.554,
+      "end": 3.155,
+      "text": "汴京",
+      "words": [
+        {
+          "id": "caption-word-1-0",
+          "text": "汴京",
+          "start": 2.554,
+          "end": 3.035
+        }
+      ]
+    },
+    {
+      "id": "caption-group-2",
+      "frame": 1,
+      "start": 3.574,
+      "end": 4.919,
+      "text": "天下第一繁华",
+      "words": [
+        {
+          "id": "caption-word-2-0",
+          "text": "天下第一繁华",
+          "start": 3.574,
+          "end": 4.799
+        }
+      ]
+    },
+    {
+      "id": "caption-group-3",
+      "frame": 2,
+      "start": 6.398,
+      "end": 7.684,
+      "text": "可史书上写着",
+      "words": [
+        {
+          "id": "caption-word-3-0",
+          "text": "可史书上写着",
+          "start": 6.398,
+          "end": 7.564
+        }
+      ]
+    },
+    {
+      "id": "caption-group-4",
+      "frame": 2,
+      "start": 7.84,
+      "end": 8.73,
+      "text": "六年之后",
+      "words": [
+        {
+          "id": "caption-word-4-0",
+          "text": "六年之后",
+          "start": 7.84,
+          "end": 8.61
+        }
+      ]
+    },
+    {
+      "id": "caption-group-5",
+      "frame": 2,
+      "start": 8.862,
+      "end": 9.511,
+      "text": "靖康",
+      "words": [
+        {
+          "id": "caption-word-5-0",
+          "text": "靖康",
+          "start": 8.862,
+          "end": 9.391
+        }
+      ]
+    },
+    {
+      "id": "caption-group-6",
+      "frame": 3,
+      "start": 10.898,
+      "end": 12.088,
+      "text": "金兵南下",
+      "words": [
+        {
+          "id": "caption-word-6-0",
+          "text": "金兵南下",
+          "start": 10.898,
+          "end": 11.968
+        }
+      ]
+    },
+    {
+      "id": "caption-group-7",
+      "frame": 3,
+      "start": 12.495,
+      "end": 13.624,
+      "text": "太原被围",
+      "words": [
+        {
+          "id": "caption-word-7-0",
+          "text": "太原被围",
+          "start": 12.495,
+          "end": 13.504
+        }
+      ]
+    },
+    {
+      "id": "caption-group-8",
+      "frame": 3,
+      "start": 14.033,
+      "end": 15.223,
+      "text": "汴京城破",
+      "words": [
+        {
+          "id": "caption-word-8-0",
+          "text": "汴京城破",
+          "start": 14.033,
+          "end": 15.103
+        }
+      ]
+    },
+    {
+      "id": "caption-group-9",
+      "frame": 3,
+      "start": 15.644,
+      "end": 16.725,
+      "text": "二帝北狩",
+      "words": [
+        {
+          "id": "caption-word-9-0",
+          "text": "二帝北狩",
+          "start": 15.644,
+          "end": 16.605
+        }
+      ]
+    },
+    {
+      "id": "caption-group-10",
+      "frame": 4,
+      "start": 17.098,
+      "end": 17.771,
+      "text": "这一次",
+      "words": [
+        {
+          "id": "caption-word-10-0",
+          "text": "这一次",
+          "start": 17.098,
+          "end": 17.651
+        }
+      ]
+    },
+    {
+      "id": "caption-group-11",
+      "frame": 4,
+      "start": 17.891,
+      "end": 18.3,
+      "text": "你",
+      "words": [
+        {
+          "id": "caption-word-11-0",
+          "text": "你",
+          "start": 17.891,
+          "end": 18.18
+        }
+      ]
+    },
+    {
+      "id": "caption-group-12",
+      "frame": 4,
+      "start": 18.384,
+      "end": 19.418,
+      "text": "是宋徽宗",
+      "words": [
+        {
+          "id": "caption-word-12-0",
+          "text": "是宋徽宗",
+          "start": 18.384,
+          "end": 19.298
+        }
+      ]
+    },
+    {
+      "id": "caption-group-13",
+      "frame": 5,
+      "start": 20.548,
+      "end": 21.545,
+      "text": "召对群臣",
+      "words": [
+        {
+          "id": "caption-word-13-0",
+          "text": "召对群臣",
+          "start": 20.548,
+          "end": 21.425
+        }
+      ]
+    },
+    {
+      "id": "caption-group-14",
+      "frame": 5,
+      "start": 21.702,
+      "end": 22.603,
+      "text": "廷议和战",
+      "words": [
+        {
+          "id": "caption-word-14-0",
+          "text": "廷议和战",
+          "start": 21.702,
+          "end": 22.483
+        }
+      ]
+    },
+    {
+      "id": "caption-group-15",
+      "frame": 6,
+      "start": 23.548,
+      "end": 24.509,
+      "text": "一纸诏书",
+      "words": [
+        {
+          "id": "caption-word-15-0",
+          "text": "一纸诏书",
+          "start": 23.548,
+          "end": 24.389
+        }
+      ]
+    },
+    {
+      "id": "caption-group-16",
+      "frame": 6,
+      "start": 24.63,
+      "end": 25.783,
+      "text": "调西军北上",
+      "words": [
+        {
+          "id": "caption-word-16-0",
+          "text": "调西军北上",
+          "start": 24.63,
+          "end": 25.663
+        }
+      ]
+    },
+    {
+      "id": "caption-group-17",
+      "frame": 6,
+      "start": 25.904,
+      "end": 26.769,
+      "text": "千里之外",
+      "words": [
+        {
+          "id": "caption-word-17-0",
+          "text": "千里之外",
+          "start": 25.904,
+          "end": 26.649
+        }
+      ]
+    },
+    {
+      "id": "caption-group-18",
+      "frame": 6,
+      "start": 26.853,
+      "end": 28.488,
+      "text": "军令要走好几季",
+      "words": [
+        {
+          "id": "caption-word-18-0",
+          "text": "军令要走好几季",
+          "start": 26.853,
+          "end": 28.368
+        }
+      ]
+    },
+    {
+      "id": "caption-group-19",
+      "frame": 7,
+      "start": 29.448,
+      "end": 30.061,
+      "text": "联金",
+      "words": [
+        {
+          "id": "caption-word-19-0",
+          "text": "联金",
+          "start": 29.448,
+          "end": 29.941
+        }
+      ]
+    },
+    {
+      "id": "caption-group-20",
+      "frame": 7,
+      "start": 30.326,
+      "end": 31.383,
+      "text": "还是存辽",
+      "words": [
+        {
+          "id": "caption-word-20-0",
+          "text": "还是存辽",
+          "start": 30.326,
+          "end": 31.263
+        }
+      ]
+    },
+    {
+      "id": "caption-group-21",
+      "frame": 7,
+      "start": 31.79,
+      "end": 32.379,
+      "text": "议和",
+      "words": [
+        {
+          "id": "caption-word-21-0",
+          "text": "议和",
+          "start": 31.79,
+          "end": 32.259
+        }
+      ]
+    },
+    {
+      "id": "caption-group-22",
+      "frame": 7,
+      "start": 32.487,
+      "end": 33.064,
+      "text": "还是",
+      "words": [
+        {
+          "id": "caption-word-22-0",
+          "text": "还是",
+          "start": 32.487,
+          "end": 32.944
+        }
+      ]
+    },
+    {
+      "id": "caption-group-23",
+      "frame": 7,
+      "start": 33.148,
+      "end": 34.326,
+      "text": "死守汴京",
+      "words": [
+        {
+          "id": "caption-word-23-0",
+          "text": "死守汴京",
+          "start": 33.148,
+          "end": 34.206
+        }
+      ]
+    },
+    {
+      "id": "caption-group-24",
+      "frame": 8,
+      "start": 41.498,
+      "end": 42.459,
+      "text": "满朝文武",
+      "words": [
+        {
+          "id": "caption-word-24-0",
+          "text": "满朝文武",
+          "start": 41.498,
+          "end": 42.339
+        }
+      ]
+    },
+    {
+      "id": "caption-group-25",
+      "frame": 8,
+      "start": 42.544,
+      "end": 43.421,
+      "text": "由 AI 来演",
+      "words": [
+        {
+          "id": "caption-word-25-0",
+          "text": "由 AI 来演",
+          "start": 42.544,
+          "end": 43.301
+        }
+      ]
+    },
+    {
+      "id": "caption-group-26",
+      "frame": 8,
+      "start": 43.553,
+      "end": 44.407,
+      "text": "钱粮兵马",
+      "words": [
+        {
+          "id": "caption-word-26-0",
+          "text": "钱粮兵马",
+          "start": 43.553,
+          "end": 44.287
+        }
+      ]
+    },
+    {
+      "id": "caption-group-27",
+      "frame": 8,
+      "start": 44.491,
+      "end": 45.632,
+      "text": "由引擎结算",
+      "words": [
+        {
+          "id": "caption-word-27-0",
+          "text": "由引擎结算",
+          "start": 44.491,
+          "end": 45.512
+        }
+      ]
+    },
+    {
+      "id": "caption-group-28",
+      "frame": 9,
+      "start": 47.998,
+      "end": 48.719,
+      "text": "宣和",
+      "words": [
+        {
+          "id": "caption-word-28-0",
+          "text": "宣和",
+          "start": 47.998,
+          "end": 48.599
+        }
+      ]
+    },
+    {
+      "id": "caption-group-29",
+      "frame": 9,
+      "start": 49.126,
+      "end": 51.926,
+      "text": "开源免费 可接入 Codex 与 Claude Code",
+      "words": [
+        {
+          "id": "caption-word-29-0",
+          "text": "开源免费",
+          "start": 49.126,
+          "end": 49.823
+        },
+        {
+          "id": "caption-word-29-1",
+          "text": "可接入 Codex 与 Claude Code",
+          "start": 49.991,
+          "end": 51.806
+        }
+      ]
+    },
+    {
+      "id": "caption-group-30",
+      "frame": 9,
+      "start": 52.347,
+      "end": 52.972,
+      "text": "这一次",
+      "words": [
+        {
+          "id": "caption-word-30-0",
+          "text": "这一次",
+          "start": 52.347,
+          "end": 52.852
+        }
+      ]
+    },
+    {
+      "id": "caption-group-31",
+      "frame": 9,
+      "start": 53.176,
+      "end": 54.402,
+      "text": "史书由你来写",
+      "words": [
+        {
+          "id": "caption-word-31-0",
+          "text": "史书由你来写",
+          "start": 53.176,
+          "end": 54.282
+        }
+      ]
+    }
+  ]
+}

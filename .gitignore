@@ -42,3 +42,11 @@ videos/*/.hyperframes/hf-ids-stamped.json
 design/asset_prompts/run.log
 design/asset_prompts/__pycache__/
 design/asset_prompts/batch*.out
+# promo: local tooling, downloads, renders and generated media stay out of git
+videos/*/.venv-tts/
+videos/*/renders/
+videos/*/bgmtry/
+videos/*/art/out/
+videos/*/.hyperframes/artifacts/
+videos/*/node_modules/
+videos/*/.waveform-cache/

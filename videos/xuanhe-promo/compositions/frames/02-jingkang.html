@@ -1,0 +1,456 @@
+<template id="02-jingkang-template">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face{font-family:"Ma Shan Zheng";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/MaShanZheng-Regular.ttf") format("truetype");}
+    @font-face{font-family:"Noto Serif SC";font-weight:200 900;font-style:normal;font-display:block;src:url("assets/fonts/NotoSerifSC-VF.ttf") format("truetype");}
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    #root * { box-sizing: border-box; }
+
+    #f02-ground { position: absolute; inset: 0; background: #0b0907; }
+
+    /* camera rig: everything inside rides the push + the slam kick */
+    #f02-cam { position: absolute; inset: 0; transform-origin: 50% 50%; }
+    .f02-layer { position: absolute; inset: 0; overflow: hidden; }
+
+    /* t_glory — continues Frame 1's end state (scale 1.10 toward the palace, saturate .75) */
+    /* same plate geometry as Frame 1's end (box 1980x1320 at -30,90; origin 69% 13%) */
+    #f02-push {
+      position: absolute; left: -30px; top: 90px; width: 1980px; height: 1320px;
+      transform-origin: 69% 13%;
+    }
+    #f02-glory {
+      position: absolute; left: 0; top: 0; width: 1980px; height: 1320px;
+      display: block; object-fit: cover;
+    }
+    #f02-ghost {
+      position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+      object-fit: cover; object-position: 50% 50%;
+      transform-origin: 40% 55%;
+    }
+    #f02-ink, #f02-splat, #f02-ash { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+
+    #f02-redglow {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 760px 380px at 50% 540px, rgba(90,20,10,0.25) 0%, rgba(150,36,20,0.42) 42%, rgba(11,9,7,0) 78%);
+    }
+
+    #f02-line-wrap, #f02-slam-wrap, #f02-echo-wrap {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #f02-line {
+      font-family: "Noto Serif SC", serif; font-weight: 700; font-size: 44px; line-height: 1.3;
+      color: rgba(239,233,220,0.8);
+      letter-spacing: 0.6em; padding-left: 0.6em;
+      text-shadow: 0 0 24px rgba(11,9,7,0.95), 0 0 6px rgba(11,9,7,0.9);
+      white-space: nowrap;
+    }
+    #f02-line .f02-ch { display: inline-block; }
+    #f02-slam, #f02-echo {
+      font-family: "Ma Shan Zheng", serif; font-weight: 400; font-size: 340px; line-height: 0.95;
+      white-space: nowrap; transform-origin: 50% 52%;
+    }
+    #f02-slam {
+      color: #c23a26;
+      text-shadow: 0 0 24px rgba(11,9,7,0.95), 0 0 10px rgba(11,9,7,0.8), 0 0 64px rgba(232,121,46,0.22), 0 6px 2px rgba(11,9,7,0.6);
+    }
+    #f02-echo { color: #e8792e; }
+
+    #f02-fx { position: absolute; inset: 0; }
+    #f02-vignette {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 1150px 720px at 50% 50%, rgba(11,9,7,0) 55%, rgba(11,9,7,0.75) 100%);
+    }
+    #f02-flash {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 1300px 760px at 50% 50%, #fff3e0 0%, #e8792e 55%, #c23a26 100%);
+      mix-blend-mode: screen;
+    }
+    #f02-grain {
+      position: absolute; left: -128px; top: -128px; width: 2176px; height: 1336px;
+      opacity: 0.07; mix-blend-mode: overlay; background-repeat: repeat;
+    }
+    .f02-bar { position: absolute; left: 0; width: 1920px; height: 140px; background: #0b0907; }
+    #f02-bar-top { top: 0; }
+    #f02-bar-bot { top: 940px; }
+  </style>
+
+  <div id="root" data-composition-id="02-jingkang" data-width="1920" data-height="1080" data-duration="4.6">
+    <div id="f02-ground" class="clip" data-start="0" data-duration="4.6" data-track-index="0"></div>
+
+    <div id="f02-cam" data-layout-allow-overflow class="clip" data-start="0" data-duration="4.6" data-track-index="1">
+      <div class="f02-layer"><div id="f02-push" data-layout-allow-overflow><img id="f02-glory" data-layout-allow-overflow src="assets/t_glory.jpg" alt="" /></div></div>
+      <canvas id="f02-ink" data-layout-allow-overflow width="1920" height="1080"></canvas>
+      <div class="f02-layer" id="f02-ghost-layer"><img id="f02-ghost" data-layout-allow-overflow src="assets/ending.e_jingkang.webp" alt="" /></div>
+      <div id="f02-redglow"></div>
+      <div id="f02-vignette"></div>
+      <canvas id="f02-splat" data-layout-allow-overflow width="1920" height="1080"></canvas>
+      <canvas id="f02-ash" data-layout-allow-overflow width="1920" height="1080"></canvas>
+      <div id="f02-echo-wrap" data-layout-allow-overlap aria-hidden="true"><div id="f02-echo" data-layout-allow-overlap>靖康</div></div>
+      <div id="f02-slam-wrap"><div id="f02-slam">靖康</div></div>
+      <div id="f02-line-wrap"><div id="f02-line"><span class="f02-ch">六</span><span class="f02-ch">年</span><span class="f02-ch">之</span><span class="f02-ch">后</span></div></div>
+    </div>
+
+    <div id="f02-fx" class="clip" data-start="0" data-duration="4.6" data-track-index="2">
+      <div id="f02-grain" data-layout-allow-occlusion></div>
+      <div id="f02-flash" data-layout-allow-occlusion></div>
+    </div>
+
+    <div id="f02-letterbox" class="clip" data-start="0" data-duration="4.6" data-track-index="3">
+      <div class="f02-bar" id="f02-bar-top"></div>
+      <div class="f02-bar" id="f02-bar-bot"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+      var root = document.querySelector('[data-composition-id="02-jingkang"]');
+      var q = function (sel) { return root.querySelector(sel); };
+      var W = 1920, H = 1080, D = 4.6, F = 1 / 30;
+      var T_INK = 0.40, T_LINE = 1.84, T_SLAM = 2.86;
+
+      function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+      function frac(x) { return x - Math.floor(x); }
+      function rnd(n) { var x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+      function easeOutCubic(v) { return 1 - Math.pow(1 - v, 3); }
+      function easeOutExpo(v) { return v >= 1 ? 1 : 1 - Math.pow(2, -10 * v); }
+
+      /* ---------- gooey ink engine (blur + alpha threshold in a work buffer, pure fn of t) ---------- */
+      var LOW = 4; // current goo work-buffer downscale (set per paint)
+      function makeGoo(canvas, blurLow, low) {
+        low = low || 4;
+        var ctx = canvas.getContext("2d");
+        var work = document.createElement("canvas");
+        work.width = W / low; work.height = H / low;
+        var wctx = work.getContext("2d", { willReadFrequently: true });
+        var out = document.createElement("canvas");
+        out.width = W / low; out.height = H / low;
+        var octx = out.getContext("2d");
+        return { ctx: ctx, work: work, wctx: wctx, out: out, octx: octx, blur: blurLow, low: low };
+      }
+      // shade(alpha01) -> [r,g,b,a255]
+      function gooPaint(g, drawFn, shade) {
+        g.ctx.clearRect(0, 0, W, H);
+        LOW = g.low;
+        g.wctx.filter = "none";
+        g.wctx.clearRect(0, 0, g.work.width, g.work.height);
+        g.wctx.filter = "blur(" + g.blur + "px)";
+        g.wctx.fillStyle = "#fff";
+        var drew = drawFn(g.wctx);
+        g.wctx.filter = "none";
+        if (!drew) return;
+        var img = g.wctx.getImageData(0, 0, g.work.width, g.work.height);
+        var d = img.data;
+        for (var j = 0; j < d.length; j += 4) {
+          var s = shade(d[j + 3] / 255);
+          d[j] = s[0]; d[j + 1] = s[1]; d[j + 2] = s[2]; d[j + 3] = s[3];
+        }
+        g.octx.putImageData(img, 0, 0);
+        g.ctx.imageSmoothingEnabled = true;
+        g.ctx.drawImage(g.out, 0, 0, W, H);
+      }
+      function circ(c, x, y, r) {
+        if (r <= 0.3) return false;
+        c.beginPath(); c.arc(x / LOW, y / LOW, r / LOW, 0, Math.PI * 2); c.fill();
+        return true;
+      }
+
+      /* ink from the four corners: mother pool + lobes + satellites + spit droplets */
+      var corners = [[0, 0], [W, 0], [0, H], [W, H]];
+      var inkRows = (function () {
+        var rows = [];
+        var st = 0x2a17c0de;
+        function nx() { st = (Math.imul(1664525, st) + 1013904223) >>> 0; return st / 4294967296; }
+        for (var c = 0; c < 4; c++) {
+          var cx = corners[c][0], cy = corners[c][1];
+          var base = Math.atan2(H / 2 - cy, W / 2 - cx);
+          var corner = { cx: cx, cy: cy, base: base, delay: [0, 0.05, 0.09, 0.03][c], lobes: [], sats: [], spits: [] };
+          for (var i = 0; i < 9; i++) {
+            corner.lobes.push({ ang: base + (i / 8 - 0.5) * 1.75 + (nx() - 0.5) * 0.15, r: 70 + 110 * nx(), ph: nx() * 6.283, fr: 1.5 + nx() * 2 });
+          }
+          for (var k = 0; k < 6; k++) {
+            corner.sats.push({ ang: base + (nx() - 0.5) * 1.3, dist: 0.82 + 0.3 * nx(), r: 60 + 110 * nx(), birth: 0.05 + 0.35 * nx(), ph: nx() * 6.283 });
+          }
+          for (var m = 0; m < 5; m++) {
+            corner.spits.push({ ang: base + (nx() - 0.5) * 1.1, dist: 1.08 + 0.22 * nx(), r: 22 + 26 * nx(), birth: 0.1 + 0.6 * nx() });
+          }
+          rows.push(corner);
+        }
+        return rows;
+      })();
+      function motherR(u) {
+        var a = Math.min(u, 1);
+        return 720 * (1 - Math.pow(1 - a, 1.25)) + Math.max(0, u - 1) * 900;
+      }
+      var inkGoo = makeGoo(q("#f02-ink"), 6, 4);
+      var INK = [11, 9, 7], RIM = [214, 92, 34];
+      function inkShade(a) {
+        var aIn = clamp01(a * 22 - 9);
+        var aRim = clamp01(a * 22 - 4);
+        if (aIn >= 1) return [INK[0], INK[1], INK[2], 255];
+        var rim = (aRim - aIn) * 0.85;
+        var tot = aIn + rim * (1 - aIn);
+        if (tot <= 0) return [0, 0, 0, 0];
+        var w = aIn / tot;
+        return [
+          Math.round(INK[0] * w + RIM[0] * (1 - w)),
+          Math.round(INK[1] * w + RIM[1] * (1 - w)),
+          Math.round(INK[2] * w + RIM[2] * (1 - w)),
+          Math.round(tot * 255)
+        ];
+      }
+      function paintInk(t) {
+        if (t < T_INK) { inkGoo.ctx.clearRect(0, 0, W, H); return; }
+        if (t > 2.75) {
+          // fully swallowed: solid ink, no rim
+          inkGoo.ctx.fillStyle = "#0b0907"; inkGoo.ctx.fillRect(0, 0, W, H); return;
+        }
+        gooPaint(inkGoo, function (c) {
+          var drew = false;
+          for (var ci = 0; ci < 4; ci++) {
+            var row = inkRows[ci];
+            var u = Math.max(0, (t - T_INK - row.delay) / 1.4);
+            if (u <= 0) continue;
+            var R = motherR(u);
+            drew = circ(c, row.cx, row.cy, R) || drew;
+            for (var i = 0; i < row.lobes.length; i++) {
+              var L = row.lobes[i];
+              var lr = L.r * clamp01(u * 3) * (0.8 + 0.25 * Math.sin(u * L.fr * 6.283 + L.ph));
+              drew = circ(c, row.cx + Math.cos(L.ang) * R, row.cy + Math.sin(L.ang) * R, lr) || drew;
+            }
+            for (var k = 0; k < row.sats.length; k++) {
+              var S = row.sats[k];
+              var g = easeOutCubic(clamp01((u - S.birth) / 0.45));
+              if (g <= 0) continue;
+              var dd = R * S.dist + 18 * Math.sin(u * 9 + S.ph);
+              drew = circ(c, row.cx + Math.cos(S.ang) * dd, row.cy + Math.sin(S.ang) * dd, S.r * g) || drew;
+            }
+            for (var m = 0; m < row.spits.length; m++) {
+              var P = row.spits[m];
+              var gp = clamp01((u - P.birth) / 0.12);
+              if (gp <= 0) continue;
+              var dp = R * P.dist;
+              drew = circ(c, row.cx + Math.cos(P.ang) * dp, row.cy + Math.sin(P.ang) * dp, P.r * gp) || drew;
+            }
+          }
+          return drew;
+        }, inkShade);
+      }
+
+      /* cinnabar splatter behind the slam: goo pool + tapering tendrils + crisp flung droplets */
+      var pool = [];
+      for (var pi = 0; pi < 12; pi++) {
+        var pa = (pi / 12) * 6.283 + (rnd(pi + 20) - 0.5) * 0.4;
+        pool.push({ ang: pa, r: 55 + 60 * rnd(pi + 60) });
+      }
+      var spikes = [];
+      for (var si = 0; si < 30; si++) {
+        var sa = (si / 30) * 6.283 + (rnd(si + 40) - 0.5) * 0.3;
+        var str = Math.abs(Math.cos(sa)) * 0.6 + 0.55; // wider than tall, like the word
+        spikes.push({ ang: sa, dist: (230 + 380 * Math.pow(rnd(si + 90), 1.4)) * str, tip: 9 + 20 * rnd(si + 140), k: 11 + 9 * rnd(si + 200) });
+      }
+      var drops = [];
+      for (var di = 0; di < 70; di++) {
+        var da = rnd(di + 300) * 6.283;
+        var dstr = Math.abs(Math.cos(da)) * 0.6 + 0.5;
+        drops.push({ ang: da, dist: (320 + 640 * rnd(di + 360)) * dstr, r: 1.6 + 4.2 * Math.pow(rnd(di + 420), 2), k: 8 + 10 * rnd(di + 480), hot: rnd(di + 520) > 0.75 });
+      }
+      var splatGoo = makeGoo(q("#f02-splat"), 2.5, 2);
+      function splatShade(a) {
+        var v = clamp01(a * 18 - 7);
+        return [54, 12, 8, Math.round(v * 0.94 * 255)];
+      }
+      function paintSplat(t) {
+        var s = t - T_SLAM;
+        if (s < 0) { splatGoo.ctx.clearRect(0, 0, W, H); return; }
+        var cx = 960, cy = 548;
+        var gp = easeOutExpo(clamp01(s / 0.12));
+        gooPaint(splatGoo, function (c) {
+          // pool: squashed ellipse + lumpy lobes on its rim
+          c.save(); c.translate(cx / LOW, cy / LOW); c.scale(2.1, 0.7);
+          c.beginPath(); c.arc(0, 0, (170 * gp) / LOW, 0, 6.283); c.fill(); c.restore();
+          for (var i = 0; i < pool.length; i++) {
+            var L = pool[i];
+            circ(c, cx + Math.cos(L.ang) * 330 * gp, cy + Math.sin(L.ang) * 110 * gp, L.r * gp);
+          }
+          // tendrils: beads taper from the pool to a thin neck, then a fat tip
+          for (var k = 0; k < spikes.length; k++) {
+            var S = spikes[k];
+            var e = 1 - Math.exp(-s * S.k);
+            var d = S.dist * e;
+            var ca = Math.cos(S.ang), sa2 = Math.sin(S.ang);
+            for (var b = 0; b <= 9; b++) {
+              var f = 0.25 + 0.75 * (b / 9);
+              var rr = 20 * (1 - b / 9) + 5;
+              circ(c, cx + ca * d * f, cy + sa2 * d * f, rr * Math.min(1, e * 3));
+            }
+            circ(c, cx + ca * d, cy + sa2 * d, S.tip * Math.min(1, e * 2));
+          }
+          return true;
+        }, splatShade);
+        var ctx = splatGoo.ctx;
+        for (var j = 0; j < drops.length; j++) {
+          var p = drops[j];
+          var e2 = 1 - Math.exp(-s * p.k);
+          var dd = p.dist * e2;
+          var x2 = cx + Math.cos(p.ang) * dd, y2 = cy + Math.sin(p.ang) * dd;
+          var vel = Math.exp(-s * p.k) * p.k * p.dist; // px/s
+          var len = Math.min(90, vel * 0.02);
+          ctx.save();
+          ctx.translate(x2, y2); ctx.rotate(p.ang);
+          ctx.fillStyle = p.hot ? "rgba(232,121,46,0.95)" : "rgba(194,58,38,0.95)";
+          ctx.beginPath();
+          ctx.ellipse(-len / 2, 0, p.r + len / 2, p.r, 0, 0, 6.283);
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      /* ash + embers: drift down from the slam, a few blown outward by the shockwave */
+      var ashCtx = q("#f02-ash").getContext("2d");
+      var PHI = 0.6180339887498949, RT2 = 0.4142135623730951;
+      var ash = [];
+      for (var a = 0; a < 110; a++) {
+        var depth = rnd(a + 700);
+        ash.push({
+          x0: frac(a * PHI + 0.11) * W,
+          y0: 110 + frac(a * RT2 + 0.29) * 760,
+          size: 1.8 + depth * depth * 7,
+          fall: 38 + depth * 95,
+          sway: 6 + depth * 18, sf: 0.6 + rnd(a + 800) * 1.4, sp: rnd(a + 900) * 6.283,
+          rot: rnd(a + 1000) * 6.283, spin: (rnd(a + 1100) - 0.5) * 5,
+          alpha: 0.28 + depth * 0.5,
+          ember: rnd(a + 1200) > 0.86,
+          fade: rnd(a + 1300) * 0.35
+        });
+      }
+      function paintAsh(t) {
+        ashCtx.clearRect(0, 0, W, H);
+        var s = t - T_SLAM;
+        if (s < 0) return;
+        for (var i = 0; i < ash.length; i++) {
+          var p = ash[i];
+          var al = clamp01((s - p.fade) / 0.3) * p.alpha;
+          if (al <= 0) continue;
+          // shockwave push away from the word, decaying
+          var dx = p.x0 - 960, dy = p.y0 - 540, dl = Math.sqrt(dx * dx + dy * dy) + 1;
+          var push = 140 * (1 - Math.exp(-s * 6)) * Math.max(0, 1 - dl / 1100);
+          var x = p.x0 + (dx / dl) * push + p.sway * Math.sin(s * p.sf * 6.283 + p.sp);
+          var y = p.y0 + (dy / dl) * push + p.fall * s + 10 * s * s;
+          ashCtx.save();
+          ashCtx.translate(x, y);
+          ashCtx.rotate(p.rot + p.spin * s);
+          ashCtx.globalAlpha = al;
+          if (p.ember) {
+            ashCtx.fillStyle = "rgba(232,121,46,1)";
+            ashCtx.shadowColor = "rgba(232,121,46,0.9)";
+            ashCtx.shadowBlur = 10;
+            ashCtx.fillRect(-p.size * 0.35, -p.size * 0.35, p.size * 0.7, p.size * 0.7);
+          } else {
+            ashCtx.fillStyle = "rgb(150,146,140)";
+            ashCtx.fillRect(-p.size / 2, -p.size * 0.32, p.size, p.size * 0.64);
+          }
+          ashCtx.restore();
+        }
+      }
+
+      /* film grain: seeded noise tile, offset hops per frame (pure fn of frame index) */
+      var grainEl = q("#f02-grain");
+      (function () {
+        var gc = document.createElement("canvas");
+        gc.width = 128; gc.height = 128;
+        var g = gc.getContext("2d");
+        var id = g.createImageData(128, 128);
+        var st = 0x5eed1234;
+        for (var i = 0; i < id.data.length; i += 4) {
+          st = (Math.imul(1664525, st) + 1013904223) >>> 0;
+          var v = st >>> 24;
+          id.data[i] = v; id.data[i + 1] = v; id.data[i + 2] = v; id.data[i + 3] = 255;
+        }
+        g.putImageData(id, 0, 0);
+        grainEl.style.backgroundImage = "url(" + gc.toDataURL() + ")";
+      })();
+      function paintGrain(t) {
+        var fi = Math.floor(t * 30 + 1e-6);
+        grainEl.style.backgroundPosition = Math.floor(rnd(fi + 77) * 128) + "px " + Math.floor(rnd(fi + 177) * 128) + "px";
+      }
+
+      function paintAll(t) {
+        paintInk(t);
+        paintSplat(t);
+        paintAsh(t);
+        paintGrain(t);
+      }
+
+      /* ---------------------------------- timeline ---------------------------------- */
+      var tl = gsap.timeline({ paused: true });
+      var clock = { t: 0 };
+      tl.fromTo(clock, { t: 0 }, { t: D, duration: D, ease: "none", onUpdate: function () { paintAll(clock.t); } }, 0);
+
+      var cam = q("#f02-cam"), glory = q("#f02-glory"), ghost = q("#f02-ghost");
+      var line = q("#f02-line"), slam = q("#f02-slam"), echo = q("#f02-echo");
+      var redglow = q("#f02-redglow"), flash = q("#f02-flash");
+
+      /* Scene 1 — glory keeps pushing and drains to grey; tilt creeps (dread) */
+      tl.fromTo(q("#f02-push"), { scale: 1.10, x: -22, y: 6, rotation: 0 }, { scale: 1.19, x: -58, y: 10, rotation: -1.1, duration: 2.0, ease: "power2.in" }, 0);
+      tl.fromTo(glory,
+        { filter: "saturate(0.75) brightness(0.9) contrast(1)" },
+        { filter: "saturate(0) brightness(0.5) contrast(1.18)", duration: 1.5, ease: "power1.in" }, 0);
+      // ink hits on 「可史书上写着」: a dull thud through the camera
+      tl.fromTo(cam, { scale: 1, x: 0, y: 0, rotation: 0 }, { scale: 1.018, y: 5, duration: F, ease: "none" }, T_INK);
+      tl.to(cam, { scale: 1, y: 0, duration: 0.25, ease: "power3.out" }, T_INK + F);
+
+      /* Scene 2 — 「六年之后」 surfaces; the captive procession ghosts through the ink */
+      // tracking tightens from wide: per-glyph x spread (transform-only, sub-pixel smooth)
+      tl.fromTo(line,
+        { opacity: 0, y: 16, filter: "blur(10px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.7, ease: "power3.out" },
+        T_LINE);
+      root.querySelectorAll("#f02-line .f02-ch").forEach(function (ch, i) {
+        tl.fromTo(ch, { x: (i - 1.5) * 30 }, { x: 0, duration: 0.8, ease: "power3.out" }, T_LINE);
+      });
+      tl.fromTo(ghost,
+        { opacity: 0, scale: 1.06, x: 40, filter: "grayscale(1) brightness(1.05) contrast(1.1)" },
+        { opacity: 0.18, scale: 1.1, x: 10, duration: 1.0, ease: "power2.out" }, T_LINE);
+      // tension: the camera creeps in toward the silence before the hit
+      tl.to(cam, { scale: 1.05, duration: T_SLAM - T_LINE, ease: "power2.in" }, T_LINE);
+
+      /* Scene 3 — SLAM 「靖康」 on 2.86 */
+      tl.fromTo(slam, { opacity: 0, scale: 1.35, rotation: -5 }, { opacity: 1, scale: 1, rotation: -2, duration: 0.12, ease: "power4.out" }, T_SLAM);
+      tl.fromTo(echo, { opacity: 0, scale: 1, rotation: -2 }, { opacity: 0.7, duration: F, ease: "none" }, T_SLAM + F);
+      tl.to(echo, { opacity: 0, scale: 1.75, duration: 0.5, ease: "power2.out" }, T_SLAM + 2 * F);
+      tl.fromTo(echo, { visibility: "visible" }, { visibility: "hidden", duration: 0.001, immediateRender: false }, T_SLAM + 2 * F + 0.5);
+      // 2-frame ember flash
+      tl.fromTo(flash, { opacity: 0 }, { opacity: 0.95, duration: 0.001, ease: "none" }, T_SLAM);
+      tl.set(flash, { opacity: 0.5 }, T_SLAM + F);
+      tl.set(flash, { opacity: 0 }, T_SLAM + 2 * F);
+      // 3-frame camera kick + snap back from the creep, then micro push to the cut
+      tl.fromTo(cam, { scale: 0.99 }, { scale: 1.035, duration: D - T_SLAM, ease: "power1.out", immediateRender: false }, T_SLAM);
+      tl.set(cam, { x: 9, y: -7, rotation: 0.6 }, T_SLAM);
+      tl.set(cam, { x: -8, y: 5, rotation: -0.5 }, T_SLAM + F);
+      tl.set(cam, { x: 4, y: -2, rotation: 0.25 }, T_SLAM + 2 * F);
+      tl.set(cam, { x: 0, y: 0, rotation: 0 }, T_SLAM + 3 * F);
+      tl.to(slam, { scale: 1.035, duration: D - T_SLAM - 0.12, ease: "sine.out" }, T_SLAM + 0.12);
+      // the small line jumps up above the word
+      tl.to(line, { y: -262, scale: 0.92, duration: 0.2, ease: "power4.out" }, T_SLAM);
+      // red underglow blooms and settles; the ghost surges on the hit
+      tl.fromTo(redglow, { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none" }, T_SLAM);
+      tl.to(redglow, { opacity: 0.55, duration: 0.9, ease: "power2.out" }, T_SLAM + 0.06);
+      tl.to(ghost, { opacity: 0.34, duration: F, ease: "none" }, T_SLAM);
+      tl.to(ghost, { opacity: 0.2, scale: 1.14, x: -20, duration: D - T_SLAM - F, ease: "power1.out" }, T_SLAM + F);
+
+      paintAll(0);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["02-jingkang"] = tl;
+    })();
+  </script>
+</template>

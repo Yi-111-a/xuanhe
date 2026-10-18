@@ -1,0 +1,401 @@
+<template>
+  <div id="root" data-composition-id="04-emperor" data-width="1920" data-height="1080" data-duration="3.5">
+    <style>
+      @font-face{font-family:"Ma Shan Zheng";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/MaShanZheng-Regular.ttf") format("truetype");}
+      @font-face{font-family:"Zhi Mang Xing";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/ZhiMangXing-Regular.ttf") format("truetype");}
+
+      #root {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+      }
+      #f04-ground {
+        position: absolute;
+        inset: 0;
+        background: #0b0907;
+      }
+      #f04-world {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      #f04-kick {
+        position: absolute;
+        inset: 0;
+        transform-origin: 960px 540px;
+      }
+      #f04-cam {
+        position: absolute;
+        inset: 0;
+        transform-origin: 1120px 430px;
+      }
+      #f04-img {
+        position: absolute;
+        left: -45px;
+        top: -60px;
+        width: 2592px;
+        height: 1728px;
+        display: block;
+      }
+      #f04-dim {
+        position: absolute;
+        inset: 0;
+        background: #0b0907;
+      }
+      #f04-vignette {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse 72% 70% at 54% 42%, rgba(11, 9, 7, 0) 45%, rgba(11, 9, 7, 0.55) 80%, rgba(11, 9, 7, 0.85) 100%);
+      }
+      #f04-scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(11, 9, 7, 0.62) 0%, rgba(11, 9, 7, 0.42) 26%, rgba(11, 9, 7, 0) 44%);
+      }
+      #f04-bloom {
+        position: absolute;
+        left: 70px;
+        top: 200px;
+        width: 520px;
+        height: 520px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(11, 9, 7, 0.75) 0%, rgba(11, 9, 7, 0.45) 45%, rgba(11, 9, 7, 0) 70%);
+      }
+      #f04-embers {
+        position: absolute;
+        inset: 0;
+      }
+      .f04-ember {
+        position: absolute;
+        left: 0;
+        top: 0;
+        border-radius: 50%;
+        background: #ffd29a;
+        box-shadow: 0 0 6px 2px rgba(232, 121, 46, 0.95), 0 0 16px 5px rgba(194, 58, 38, 0.55);
+      }
+      #f04-splat {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: visible;
+      }
+      #f04-script {
+        position: absolute;
+        left: 160px;
+        top: 168px;
+        margin: 0;
+        font-family: "Zhi Mang Xing";
+        font-weight: 400;
+        font-size: 76px;
+        line-height: 1.2;
+        color: #d6b46a;
+        white-space: nowrap;
+        text-shadow: 0 0 18px rgba(11, 9, 7, 0.9), 0 0 4px rgba(11, 9, 7, 0.8);
+      }
+      #f04-ni {
+        position: absolute;
+        left: 150px;
+        top: 282px;
+        width: 360px;
+        height: 360px;
+        margin: 0;
+        font-family: "Ma Shan Zheng";
+        font-weight: 400;
+        font-size: 360px;
+        line-height: 1;
+        color: #efe9dc;
+        text-align: center;
+        white-space: nowrap;
+        transform-origin: 50% 55%;
+        text-shadow: 0 0 24px rgba(11, 9, 7, 0.95), 0 0 64px rgba(11, 9, 7, 0.7), 0 6px 2px rgba(11, 9, 7, 0.6);
+      }
+      #f04-who {
+        position: absolute;
+        left: 548px;
+        top: 192px;
+        width: 180px;
+        height: 720px;
+        margin: 0;
+        font-family: "Ma Shan Zheng";
+        font-weight: 400;
+        font-size: 180px;
+        line-height: 1;
+        writing-mode: vertical-rl;
+        color: #c23a26;
+        white-space: nowrap;
+        transform-origin: 50% 40%;
+        text-shadow: 0 0 24px rgba(11, 9, 7, 0.95), 0 0 48px rgba(11, 9, 7, 0.65), 0 4px 2px rgba(11, 9, 7, 0.7);
+      }
+      #f04-grain {
+        position: absolute;
+        inset: 0;
+        opacity: 0.07;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        background-size: 256px 256px;
+        mix-blend-mode: overlay;
+      }
+      #f04-bars {
+        position: absolute;
+        inset: 0;
+      }
+      #f04-bar-top,
+      #f04-bar-bot {
+        position: absolute;
+        left: 0;
+        width: 1920px;
+        height: 140px;
+        background: #0b0907;
+      }
+      #f04-bar-top {
+        top: 0;
+        transform-origin: 50% 0%;
+      }
+      #f04-bar-bot {
+        top: 940px;
+        transform-origin: 50% 100%;
+      }
+      #f04-flash {
+        position: absolute;
+        inset: 0;
+        background: #efe9dc;
+      }
+    </style>
+
+    <!-- Ink ground (full duration, lowest track) -->
+    <div id="f04-ground" class="clip" data-start="0" data-duration="3.5" data-track-index="0"></div>
+
+    <!-- The world: painting + camera + type, all under one kick wrapper -->
+    <div id="f04-world" class="clip" data-start="0" data-duration="3.5" data-track-index="1">
+      <div id="f04-kick">
+        <div id="f04-cam">
+          <img id="f04-img" src="assets/t_emperor.jpg" alt="" />
+        </div>
+        <div id="f04-vignette"></div>
+        <div id="f04-scrim"></div>
+        <div id="f04-dim"></div>
+        <div id="f04-embers"></div>
+        <div id="f04-bloom"></div>
+        <svg id="f04-splat" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="f04-goo" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="7" />
+              <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -10" />
+            </filter>
+          </defs>
+          <g id="f04-goo-ink" filter="url(#f04-goo)" opacity="0.92"></g>
+          <g id="f04-goo-ni" filter="url(#f04-goo)" opacity="0.9"></g>
+          <g id="f04-drops"></g>
+        </svg>
+        <p id="f04-script">这一次——</p>
+        <p id="f04-ni">你</p>
+        <p id="f04-who">是宋徽宗</p>
+      </div>
+    </div>
+
+    <!-- Film grain -->
+    <div id="f04-grain" class="clip" data-start="0" data-duration="3.5" data-track-index="2"></div>
+
+    <!-- Letterbox bars (full duration, above picture) -->
+    <div id="f04-bars" class="clip" data-start="0" data-duration="3.5" data-track-index="3">
+      <div id="f04-bar-top"></div>
+      <div id="f04-bar-bot"></div>
+    </div>
+
+    <!-- Drop flash -->
+    <div id="f04-flash" class="clip" data-start="0" data-duration="3.5" data-track-index="4"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var root = document.querySelector('[data-composition-id="04-emperor"]');
+        var $ = function (sel) { return root.querySelector(sel); };
+        var SVGNS = "http://www.w3.org/2000/svg";
+        var F = 1 / 30;
+
+        // Beats (VO word starts)
+        var T_SCRIPT = 0.2;   // 这一次
+        var T_DROP = 0.99;    // 你
+        var T_WHO = 1.48;     // 是宋徽宗
+        var END = 3.5;
+
+        // Seeded PRNG (mulberry32) — deterministic
+        function rng(seed) {
+          var a = seed >>> 0;
+          return function () {
+            a = (a + 0x6d2b79f5) >>> 0;
+            var t = a;
+            t = Math.imul(t ^ (t >>> 15), t | 1);
+            t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+            return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+          };
+        }
+
+        var cam = $("#f04-cam");
+        var kick = $("#f04-kick");
+        var dim = $("#f04-dim");
+        var scrim = $("#f04-scrim");
+        var bloom = $("#f04-bloom");
+        var script = $("#f04-script");
+        var ni = $("#f04-ni");
+        var who = $("#f04-who");
+        var splat = $("#f04-splat");
+        var embersBox = $("#f04-embers");
+        var grain = $("#f04-grain");
+        var barTop = $("#f04-bar-top");
+        var barBot = $("#f04-bar-bot");
+        var flash = $("#f04-flash");
+
+        // ---- Build splatter (gooey ink blot + flung drops), deterministic ----
+        var gInk = $("#f04-goo-ink");
+        var gNi = $("#f04-goo-ni");
+        var gDrops = $("#f04-drops");
+        var rs = rng(404);
+        var splatNodes = [];
+        function blob(parent, cx, cy, r, fill, op) {
+          var c = document.createElementNS(SVGNS, "circle");
+          c.setAttribute("cx", cx.toFixed(1));
+          c.setAttribute("cy", cy.toFixed(1));
+          c.setAttribute("r", r.toFixed(1));
+          c.setAttribute("fill", fill);
+          c.setAttribute("opacity", op.toFixed(2));
+          parent.appendChild(c);
+          return c;
+        }
+        // Burst behind the cinnabar column (x 548–728, y 192–912); flung left, never onto the face
+        var CX = 632;
+        for (var i = 0; i < 9; i++) {
+          var cyB = 250 + (i / 8) * 600 + (rs() - 0.5) * 60;
+          splatNodes.push({ el: blob(gInk, CX + (rs() - 0.5) * 70, cyB, 46 + rs() * 30, "#0b0907", 1), d: 0, op: 1 });
+        }
+        for (var i2 = 0; i2 < 16; i2++) {
+          var dxs = -1 + rs() * 1.45;
+          var cyS = 230 + rs() * 660;
+          splatNodes.push({ el: blob(gInk, CX + dxs * 150, cyS, 8 + rs() * 16, "#0b0907", 1), d: Math.abs(dxs), op: 1 });
+        }
+        for (var j = 0; j < 22; j++) {
+          var dx2 = -1 + rs() * 1.5;
+          var cy2 = 210 + rs() * 700;
+          var red = j % 3 === 0;
+          splatNodes.push({ el: blob(gDrops, CX + dx2 * 230, cy2, 2.5 + rs() * 6, red ? "#c23a26" : "#0b0907", 0.92), d: Math.abs(dx2), op: 0.92 });
+        }
+        // Ink blot + spatter around 你
+        var niSpat = [];
+        var rn = rng(77);
+        for (var k = 0; k < 14; k++) {
+          var ang = rn() * Math.PI * 2;
+          var dist = k < 5 ? 40 + rn() * 60 : 180 + rn() * 110;
+          var rr = k < 5 ? 50 + rn() * 40 : 4 + rn() * 12;
+          niSpat.push(blob(gNi, 330 + Math.cos(ang) * dist, 470 + Math.sin(ang) * dist * 0.9, rr, "#0b0907", 1));
+        }
+
+        // ---- Build embers (seeded) ----
+        var re = rng(2024);
+        var embers = [];
+        for (var m = 0; m < 54; m++) {
+          var e = document.createElement("div");
+          e.className = "f04-ember";
+          var size = 3 + re() * 7;
+          e.style.width = size.toFixed(1) + "px";
+          e.style.height = size.toFixed(1) + "px";
+          embersBox.appendChild(e);
+          embers.push({
+            el: e,
+            x: 40 + re() * 1840,
+            y: 260 + re() * 820,
+            rise: 260 + re() * 420,
+            drift: (re() - 0.5) * 120,
+            op: 0.45 + re() * 0.55
+          });
+        }
+
+        var tl = gsap.timeline({ paused: true });
+
+        // ---- Initial states ----
+        tl.set(dim, { opacity: 0.65 }, 0);
+        tl.set(scrim, { opacity: 0.35 }, 0);
+        tl.set(flash, { opacity: 0 }, 0);
+        tl.set([barTop, barBot], { scaleY: 1 }, 0);
+        tl.set(kick, { x: 0, y: 0, rotation: 0 }, 0);
+        tl.set(ni, { opacity: 0, scale: 1.35, rotation: -3 }, 0);
+        tl.set(who, { opacity: 0, scale: 1.35, rotation: 2 }, 0);
+        tl.set(bloom, { opacity: 0, scale: 0.6 }, 0);
+        splatNodes.forEach(function (n) { tl.set(n.el, { scale: 0, opacity: 0, transformOrigin: "50% 50%" }, 0); });
+        niSpat.forEach(function (n) { tl.set(n, { scale: 0, opacity: 0, transformOrigin: "50% 50%" }, 0); });
+        embers.forEach(function (o) { tl.set(o.el, { x: o.x, y: o.y, opacity: 0 }, 0); });
+
+        // ---- Scene 1 (0–0.99): dark, slow push toward his face ----
+        tl.fromTo(cam, { scale: 1.0, x: 0, y: 0 }, { scale: 1.055, x: -6, y: 2, duration: T_DROP, ease: "power1.in" }, 0);
+        // 「这一次——」 writes on (soft left→right brush wipe)
+        tl.fromTo(script,
+          { clipPath: "inset(-20% 100% -20% 0%)", x: -10, opacity: 1 },
+          { clipPath: "inset(-20% 0% -20% 0%)", x: 0, opacity: 1, duration: 0.6, ease: "power2.out" },
+          T_SCRIPT);
+
+        // ---- Scene 2 — THE DROP on 「你」 (0.99) ----
+        // 2-frame snow flash
+        tl.set(flash, { opacity: 1 }, T_DROP);
+        tl.set(flash, { opacity: 0.45 }, T_DROP + F);
+        tl.set(flash, { opacity: 0 }, T_DROP + 2 * F);
+        // Letterbox snaps open for 6 frames, then slams shut
+        tl.set([barTop, barBot], { scaleY: 0 }, T_DROP);
+        tl.fromTo([barTop, barBot], { scaleY: 0 }, { scaleY: 1, duration: 2 * F, ease: "power3.in", immediateRender: false }, T_DROP + 6 * F);
+        // Brightness snaps to full
+        tl.set(dim, { opacity: 0 }, T_DROP);
+        tl.set(scrim, { opacity: 1 }, T_DROP);
+        // Hard punch-in toward the eyes (+0.18 in 0.15s, power4)
+        tl.fromTo(cam, { scale: 1.055, x: -6, y: 2 }, { scale: 1.235, x: -10, y: 4, duration: 0.15, ease: "power4.out", immediateRender: false }, T_DROP);
+        // 「你」 slams in
+        tl.fromTo(ni, { opacity: 0, scale: 1.35, rotation: -3 }, { opacity: 1, scale: 1, rotation: -3, duration: 0.12, ease: "power4.out", immediateRender: false }, T_DROP);
+        tl.fromTo(bloom, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.2, ease: "power4.out", immediateRender: false }, T_DROP);
+        niSpat.forEach(function (n, idx) {
+          tl.set(n, { opacity: 1 }, T_DROP);
+          tl.fromTo(n, { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, transformOrigin: "50% 50%", duration: 0.14 + (idx % 3) * 0.03, ease: "power4.out", immediateRender: false }, T_DROP);
+        });
+        // Camera kick (3 frames)
+        function cameraKick(t0, amp) {
+          tl.set(kick, { x: 8 * amp, y: -5 * amp, rotation: 0.6 * amp }, t0);
+          tl.set(kick, { x: -6 * amp, y: 4 * amp, rotation: -0.45 * amp }, t0 + F);
+          tl.set(kick, { x: 3 * amp, y: -2 * amp, rotation: 0.2 * amp }, t0 + 2 * F);
+          tl.set(kick, { x: 0, y: 0, rotation: 0 }, t0 + 3 * F);
+        }
+        cameraKick(T_DROP, 1);
+
+        // Continuing slow push through the hold (no wobble)
+        tl.fromTo(cam, { scale: 1.235, x: -10, y: 4 }, { scale: 1.3, x: -22, y: 8, duration: END - (T_DROP + 0.15), ease: "power1.out", immediateRender: false }, T_DROP + 0.15);
+
+        // ---- Scene 3 — 「是宋徽宗」 (1.48) ----
+        tl.fromTo(who, { opacity: 0, scale: 1.35, rotation: 2 }, { opacity: 1, scale: 1, rotation: 2, duration: 0.12, ease: "power4.out", immediateRender: false }, T_WHO);
+        splatNodes.forEach(function (n, idx) {
+          var dly = n.d * 0.05;
+          tl.set(n.el, { opacity: n.op }, T_WHO + dly);
+          tl.fromTo(n.el, { scale: 0, transformOrigin: "50% 50%" },
+            { scale: 1, transformOrigin: "50% 50%", duration: 0.18, ease: "power4.out", immediateRender: false },
+            T_WHO + dly);
+        });
+        cameraKick(T_WHO, 0.7);
+        // Embers rise across the frame
+        embers.forEach(function (o, idx) {
+          var dur = END - T_WHO;
+          tl.fromTo(o.el, { opacity: 0 }, { opacity: o.op, duration: 0.18, ease: "power2.out", immediateRender: false }, T_WHO + (idx % 6) * 0.025);
+          tl.fromTo(o.el, { x: o.x, y: o.y }, { x: o.x + o.drift, y: o.y - o.rise, duration: dur, ease: "none", immediateRender: false }, T_WHO);
+        });
+
+        // ---- Film grain: stepped deterministic offsets every 2 frames ----
+        var rg = rng(9);
+        for (var g = 0; g * 2 * F < END; g++) {
+          tl.set(grain, { backgroundPosition: Math.floor(rg() * 256) + "px " + Math.floor(rg() * 256) + "px" }, g * 2 * F);
+        }
+
+        // Pin the timeline length to the frame duration
+        tl.set({}, {}, END);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["04-emperor"] = tl;
+      })();
+    </script>
+  </div>
+</template>
