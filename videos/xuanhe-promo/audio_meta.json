@@ -1,7 +1,7 @@
 {
   "bgm": {
     "path": "assets/bgm/track.wav",
-    "volume": 0.3,
+    "volume": 1.0,
     "source": "host",
     "duration_s": 60.0,
     "query": "HeyGen library: 'epic cinematic trailer, taiko war drums, chinese orchestra' (47s, build 0-17s, drop at 18s, break 32s) 0-41.5s, then 'intense hybrid orchestral action trailer with erhu' (52s) from 27.9s entering at 40.9s to its natural end at 60s"
@@ -281,132 +281,21 @@
   ],
   "sfx": [
     {
-      "frame": 1,
-      "file": "assets/sfx/low-boom.mp3",
-      "offset_s": 0.95,
-      "duration_s": 2.044,
-      "volume": 0.5,
-      "source": "host"
-    },
-    {
-      "frame": 2,
-      "file": "assets/sfx/taiko-hit.mp3",
-      "offset_s": 2.86,
-      "duration_s": 0.384,
-      "volume": 0.55,
-      "source": "host"
-    },
-    {
-      "frame": 3,
-      "file": "assets/sfx/impact-heavy.mp3",
-      "offset_s": 0.25,
-      "duration_s": 5.387,
-      "volume": 0.35,
-      "source": "host"
-    },
-    {
-      "frame": 3,
-      "file": "assets/sfx/taiko-hit.mp3",
-      "offset_s": 1.9,
-      "duration_s": 0.384,
-      "volume": 0.4,
-      "source": "host"
-    },
-    {
-      "frame": 3,
-      "file": "assets/sfx/taiko-hit.mp3",
-      "offset_s": 3.43,
-      "duration_s": 0.384,
-      "volume": 0.4,
-      "source": "host"
-    },
-    {
-      "frame": 3,
-      "file": "assets/sfx/war-drum.mp3",
-      "offset_s": 5.0,
-      "duration_s": 2.871,
-      "volume": 0.35,
-      "source": "host"
-    },
-    {
       "frame": 4,
       "file": "assets/sfx/impact-heavy.mp3",
-      "offset_s": 0.99,
+      "offset_s": 0.95,
       "duration_s": 5.387,
-      "volume": 0.45,
-      "source": "host"
-    },
-    {
-      "frame": 5,
-      "file": "assets/sfx/whoosh.mp3",
-      "offset_s": 0.0,
-      "duration_s": 1.58,
-      "volume": 0.35,
-      "source": "host"
-    },
-    {
-      "frame": 6,
-      "file": "assets/sfx/whoosh.mp3",
-      "offset_s": 1.2,
-      "duration_s": 1.58,
-      "volume": 0.35,
-      "source": "host"
-    },
-    {
-      "frame": 7,
-      "file": "assets/sfx/riser.mp3",
-      "offset_s": 0.5,
-      "duration_s": 4.97,
       "volume": 0.3,
       "source": "host"
     },
     {
       "frame": 7,
       "file": "assets/sfx/impact-heavy.mp3",
-      "offset_s": 3.8,
+      "offset_s": 3.75,
       "duration_s": 5.387,
-      "volume": 0.5,
-      "source": "host"
-    },
-    {
-      "frame": 7,
-      "file": "assets/sfx/war-drum.mp3",
-      "offset_s": 4.9,
-      "duration_s": 2.871,
-      "volume": 0.35,
-      "source": "host"
-    },
-    {
-      "frame": 8,
-      "file": "assets/sfx/shimmer.mp3",
-      "offset_s": 0.3,
-      "duration_s": 3.329,
-      "volume": 0.3,
-      "source": "host"
-    },
-    {
-      "frame": 9,
-      "file": "assets/sfx/low-boom.mp3",
-      "offset_s": 0.45,
-      "duration_s": 2.044,
-      "volume": 0.5,
-      "source": "host"
-    },
-    {
-      "frame": 9,
-      "file": "assets/sfx/taiko-hit.mp3",
-      "offset_s": 0.45,
-      "duration_s": 0.384,
-      "volume": 0.5,
-      "source": "host"
-    },
-    {
-      "frame": 9,
-      "file": "assets/sfx/whoosh.mp3",
-      "offset_s": 4.8,
-      "duration_s": 1.58,
-      "volume": 0.3,
+      "volume": 0.34,
       "source": "host"
     }
-  ]
+  ],
+  "mix_note": "Delivered audio is mixed outside the composition by mix/remix.py (music +5 dB, ducked per line -8/-15/-13 dB with 0.12 s ramps, 3.4 s fade-in, voice +9 dB, only two drop impacts, loudnorm -14 LUFS) and muxed onto the rendered picture; index.html's own audio is the earlier render's."
 }

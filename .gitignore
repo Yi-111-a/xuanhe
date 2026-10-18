@@ -50,3 +50,4 @@ videos/*/art/out/
 videos/*/.hyperframes/artifacts/
 videos/*/node_modules/
 videos/*/.waveform-cache/
+videos/*/mix/*.wav
